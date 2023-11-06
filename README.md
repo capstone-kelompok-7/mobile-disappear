@@ -3,6 +3,8 @@
 ### Git Flow
 Git flow terdiri dari 2 branch utama, yaitu **main** dan **development**.
 
+<img width="501" alt="image" src="https://github.com/capstone-kelompok-7/mobile-disappear/assets/43428328/5f9f0cb0-716d-46b8-a97a-131b5ac2908a">
+
 **development** adalah *branch* tempat kita ngoding, sedangkan **main** adalah *branch* utama dan branch **main** tidak boleh digunakan untuk ngoding.
 
 ### Penamaan Branch
@@ -12,6 +14,9 @@ Git flow terdiri dari 2 branch utama, yaitu **main** dan **development**.
   > `git checkout -b "feature/nama-feature"`
 - Jika kamu bermaksud untuk fix sebuah bug
   > `git checkout -b "bugfix/apa-yang-kamu-fix"`
+
+### Merging dari branch fitur ke development
+Gunakan **Pull Request** kalau ingin menggabungkan atau _merge_ branch fitur (branch yang kalian pake ngoding) ke branch **development**.
 
 ### State Management
 Untuk *state management* kita bakal pakai **provider**.
