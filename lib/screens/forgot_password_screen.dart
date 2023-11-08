@@ -9,7 +9,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Color(0xff404040),
         body: ListView(
           children: [
             /// Title
@@ -24,6 +24,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 style: GoogleFonts.inter().copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 48,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -85,12 +86,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12,
                                 ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
-                                ),
+                                filled: true,
+                                fillColor: Color(0xffF5F5F5),
                               ),
                             ),
                           ],
@@ -103,7 +100,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         width: 295,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: Colors.grey,
+                          color: Color(0xff404040),
                         ),
                         child: TextButton(
                           onPressed: () {},
@@ -112,7 +109,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                             style: GoogleFonts.inter().copyWith(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 20,
-                                color: Colors.black),
+                                color: Colors.white),
                           ),
                         ),
                       ),

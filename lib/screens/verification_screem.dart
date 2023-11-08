@@ -9,7 +9,7 @@ class VerificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Color(0xff404040),
         body: ListView(
           children: [
             /// TITLE
@@ -24,6 +24,7 @@ class VerificationScreen extends StatelessWidget {
                 style: GoogleFonts.inter().copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 48,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -82,8 +83,8 @@ class VerificationScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              height: 44,
-                              width: 44,
+                              height: 39,
+                              width: 39,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(color: Colors.black),
@@ -98,12 +99,10 @@ class VerificationScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 20,
-                            ),
+                            SizedBox(width: 10),
                             Container(
-                              height: 44,
-                              width: 44,
+                              height: 39,
+                              width: 39,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(color: Colors.black),
@@ -118,12 +117,10 @@ class VerificationScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 20,
-                            ),
+                            SizedBox(width: 10),
                             Container(
-                              height: 44,
-                              width: 44,
+                              height: 39,
+                              width: 39,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(color: Colors.black),
@@ -138,12 +135,46 @@ class VerificationScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 20,
-                            ),
+                            SizedBox(width: 10),
                             Container(
-                              height: 44,
-                              width: 44,
+                              height: 39,
+                              width: 39,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '6',
+                                  style: GoogleFonts.inter().copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Container(
+                              height: 39,
+                              width: 39,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '6',
+                                  style: GoogleFonts.inter().copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Container(
+                              height: 39,
+                              width: 39,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(color: Colors.black),
@@ -182,7 +213,7 @@ class VerificationScreen extends StatelessWidget {
                         width: 295,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: Colors.grey,
+                          color: Color(0xff404040),
                         ),
                         child: TextButton(
                           onPressed: () {},
@@ -191,7 +222,7 @@ class VerificationScreen extends StatelessWidget {
                             style: GoogleFonts.inter().copyWith(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 20,
-                                color: Colors.black),
+                                color: Colors.white),
                           ),
                         ),
                       ),
