@@ -1,6 +1,7 @@
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
   static const String routePath = '/';
@@ -72,15 +73,20 @@ class SplashScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 fixedSize: const Size(300, 40),
-                backgroundColor: const Color(0xFFACACAC),
                 padding: const EdgeInsets.all(10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
+                backgroundColor: const Color(0xFF404040),
+                // Tambahkan properti lain yang diinginkan di sini
               ),
-              child: const Text(
+              child: Text(
                 'Masuk',
-                style: TextStyle(color: Colors.black),
+                style: GoogleFonts.inter(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0,
+                ),
               ),
             ),
             const SizedBox(height: 5),
@@ -92,15 +98,23 @@ class SplashScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 fixedSize: const Size(300, 40),
-                backgroundColor: const Color(0xFFFFFFFF),
                 padding: const EdgeInsets.all(10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
+                  side: const BorderSide(
+                      width: 1, color: Colors.black), // Tambahkan garis pinggir
                 ),
+                backgroundColor: const Color(0xFFFFFFFF),
+                // Tambahkan properti lain yang diinginkan di sini
               ),
-              child: const Text(
+              child: Text(
                 'Daftar',
-                style: TextStyle(color: Colors.black),
+                style: GoogleFonts.inter(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
