@@ -1,3 +1,4 @@
+import 'package:disappear/screens/home_screen.dart';
 import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.routePath,
+      initialRoute: HomeScreen.routePath,
       routes: {
-        SplashScreen.routePath:(context) => const SplashScreen()
+        SplashScreen.routePath:(context) => const SplashScreen(),
+        HomeScreen.routePath:(context) => const HomeScreen(),
       },
     );
   }
