@@ -1,4 +1,4 @@
-import 'package:disappear/screens/detail_tantangan_screen.dart';
+import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/home_screen.dart';
 import 'package:disappear/screens/forgot_password_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
@@ -25,14 +25,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: DetailTantanganScreen.routePath,
+      initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
         ForgotPasswordScreen.routePath: (context) =>
             const ForgotPasswordScreen(),
         VerificationScreen.routePath: (context) => const VerificationScreen(),
-        DetailTantanganScreen.routePath : (context) => const DetailTantanganScreen(),
+        DetailChallengeScreen.routePath : (context) => const DetailChallengeScreen(),
         NewPasswordScreen.routePath: (context) => const NewPasswordScreen(),
       },
     );
