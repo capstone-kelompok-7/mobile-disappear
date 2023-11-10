@@ -81,7 +81,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                             TextField(
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
-                                border: UnderlineInputBorder(
+                                border: const UnderlineInputBorder(
                                     borderSide: BorderSide.none),
                                 hintText: 'Masukkan email anda',
                                 hintStyle: GoogleFonts.inter().copyWith(

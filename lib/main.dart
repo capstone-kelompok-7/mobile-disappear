@@ -19,7 +19,7 @@ void main() {
         create: (context) => HomeViewModel(),
       ),
     ],
-    child: App(),
+    child: const App(),
   ));
 }
 
