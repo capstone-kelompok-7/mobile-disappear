@@ -60,7 +60,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  contentPadding: EdgeInsets.only(left: 10)),
+                  contentPadding: const EdgeInsets.only(left: 10)),
             ),
             const SizedBox(height: 15),
             Text(
@@ -75,7 +75,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
               height: 45,
               // padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
                 border: Border.all(
                   color: Colors.grey,
                   width: 1,
@@ -83,13 +83,13 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
               ),
               child: Row(
                 children: [
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   filePicker(context),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: TextFormField(
                       readOnly: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           contentPadding: EdgeInsets.only(left: 10, bottom: 5),
                           border: InputBorder.none),
                     ),
@@ -110,7 +110,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                     ),
                   ),
                 ),
-                child: Text('Kirim'),
+                child: const Text('Kirim'),
               ),
             )
           ],
@@ -123,7 +123,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
     return ElevatedButton(
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all<Size>(
-            Size(55, 30),
+            const Size(55, 30),
           ),
         ),
         onPressed: () {
@@ -160,11 +160,11 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           contentPadding: EdgeInsets.zero,
-          title: Column(
+          title: const Column(
             children: [
               Icon(
                 Icons.check_circle_outline_outlined,
-                size: 60,
+                size: 40,
               ),
               SizedBox(height: 14),
               Text(
@@ -181,9 +181,9 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric( horizontal : 42.5),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 42.5),
+                child: Text(
                   'Data mu sudah kami simpan. Terima kasih sudah mengikuti tantangan ini !',
                   style: TextStyle(
                     color: Colors.black,
@@ -194,14 +194,15 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 24.5, bottom: 14 , left: 42.5 , right: 42.5),
+                padding: const EdgeInsets.only(
+                    top: 24.5, bottom: 4, left: 42.5, right: 42.5),
                 child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Home'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Home'),
                 ),
               ),
-        
-        
               SvgPicture.asset(
                 "assets/alertDialogComponent.svg",
                 fit: BoxFit.fill,
