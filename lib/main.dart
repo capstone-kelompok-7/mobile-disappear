@@ -1,3 +1,4 @@
+import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/home_screen.dart';
 import 'package:disappear/screens/forgot_password_screen.dart';
@@ -18,7 +19,7 @@ void main() {
         create: (context) => HomeViewModel(),
       ),
     ],
-    child: App(),
+    child: const App(),
   ));
 }
 
@@ -34,12 +35,13 @@ class App extends StatelessWidget {
         HomeScreen.routePath: (context) => const HomeScreen(),
         ForgotPasswordScreen.routePath: (context) =>
             const ForgotPasswordScreen(),
+        DetailChallengeScreen.routePath: (context) =>
+            const DetailChallengeScreen(),
+        ArticleScreen.routePath: (context) => const ArticleScreen(),
         VerificationForgotPasswordScreen.routePath: (context) =>
             const VerificationForgotPasswordScreen(),
         VerificationEmailScreen.routePath: (context) =>
             const VerificationEmailScreen(),
-        DetailChallengeScreen.routePath: (context) =>
-            const DetailChallengeScreen(),
         NewPasswordScreen.routePath: (context) => const NewPasswordScreen(),
         SuccessNewPasswordScreen.routePath: (context) =>
             const SuccessNewPasswordScreen(),
