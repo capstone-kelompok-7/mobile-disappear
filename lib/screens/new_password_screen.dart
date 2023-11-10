@@ -9,12 +9,12 @@ class NewPasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xff404040),
+        backgroundColor: const Color(0xff404040),
         body: ListView(
           children: [
             /// TITLE
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 right: 72,
                 left: 72,
                 top: 92,
@@ -31,16 +31,16 @@ class NewPasswordScreen extends StatelessWidget {
 
             /// BOTTOM SHEET
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 150,
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(40),
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 width: 390,
                 height: 573,
                 child: Center(
@@ -67,7 +67,7 @@ class NewPasswordScreen extends StatelessWidget {
                       Container(
                         height: 80,
                         width: 295,
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                           bottom: 20,
                         ),
                         child: Column(
@@ -83,15 +83,18 @@ class NewPasswordScreen extends StatelessWidget {
                             TextField(
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
+                                border: const UnderlineInputBorder(
+                                    borderSide: BorderSide.none),
                                 hintText: 'Masukkan kata sandi baru',
                                 hintStyle: GoogleFonts.inter().copyWith(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12,
                                 ),
-                                suffixIcon: Icon(Icons.remove_red_eye_outlined),
+                                suffixIcon:
+                                    const Icon(Icons.remove_red_eye_outlined),
                                 suffixIconColor: Colors.black,
                                 filled: true,
-                                fillColor: Color(0xffF5F5F5),
+                                fillColor: const Color(0xffF5F5F5),
                               ),
                             ),
                           ],
@@ -102,7 +105,7 @@ class NewPasswordScreen extends StatelessWidget {
                       Container(
                         height: 80,
                         width: 295,
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                           bottom: 40,
                         ),
                         child: Column(
@@ -118,15 +121,18 @@ class NewPasswordScreen extends StatelessWidget {
                             TextField(
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
+                                border: const UnderlineInputBorder(
+                                    borderSide: BorderSide.none),
                                 hintText: 'Masukkan konfirmasi kata sandi baru',
                                 hintStyle: GoogleFonts.inter().copyWith(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12,
                                 ),
-                                suffixIcon: Icon(Icons.remove_red_eye_outlined),
+                                suffixIcon:
+                                    const Icon(Icons.remove_red_eye_outlined),
                                 suffixIconColor: Colors.black,
                                 filled: true,
-                                fillColor: Color(0xffF5F5F5),
+                                fillColor: const Color(0xffF5F5F5),
                               ),
                             ),
                           ],
@@ -139,7 +145,7 @@ class NewPasswordScreen extends StatelessWidget {
                         width: 295,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: Color(0xff404040),
+                          color: const Color(0xff404040),
                         ),
                         child: TextButton(
                           onPressed: () {},

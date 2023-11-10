@@ -3,7 +3,10 @@ import 'package:disappear/screens/home_screen.dart';
 import 'package:disappear/screens/forgot_password_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
 import 'package:disappear/screens/splash_screen.dart';
-import 'package:disappear/screens/verification_screem.dart';
+import 'package:disappear/screens/success_email_verification.dart';
+import 'package:disappear/screens/success_new_pasword_screen.dart';
+import 'package:disappear/screens/verification_email_screen.dart';
+import 'package:disappear/screens/verification_forgot_password_screen.dart';
 import 'package:disappear/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,9 +34,17 @@ class App extends StatelessWidget {
         HomeScreen.routePath: (context) => const HomeScreen(),
         ForgotPasswordScreen.routePath: (context) =>
             const ForgotPasswordScreen(),
-        VerificationScreen.routePath: (context) => const VerificationScreen(),
-        DetailChallengeScreen.routePath : (context) => const DetailChallengeScreen(),
+        VerificationForgotPasswordScreen.routePath: (context) =>
+            const VerificationForgotPasswordScreen(),
+        VerificationEmailScreen.routePath: (context) =>
+            const VerificationEmailScreen(),
+        DetailChallengeScreen.routePath: (context) =>
+            const DetailChallengeScreen(),
         NewPasswordScreen.routePath: (context) => const NewPasswordScreen(),
+        SuccessNewPasswordScreen.routePath: (context) =>
+            const SuccessNewPasswordScreen(),
+        SuccessEmailVerificationScreen.routePath: (context) =>
+            const SuccessEmailVerificationScreen(),
       },
     );
   }
