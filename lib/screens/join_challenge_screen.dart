@@ -204,7 +204,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                 ),
               ),
               SvgPicture.asset(
-                "assets/alertDialogComponent.svg",
+                "assets/img/alertDialogComponent.svg",
                 fit: BoxFit.fill,
               )
             ],
