@@ -9,12 +9,12 @@ class ForgotPasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xff404040),
+        backgroundColor: const Color(0xff404040),
         body: ListView(
           children: [
             /// Title
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 right: 72,
                 left: 72,
                 top: 92,
@@ -31,16 +31,16 @@ class ForgotPasswordScreen extends StatelessWidget {
 
             /// Bottom Sheet
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 150,
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(40),
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 width: 390,
                 height: 573,
                 child: Center(
@@ -66,7 +66,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       Container(
                         height: 80,
                         width: 295,
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                           bottom: 40,
                         ),
                         child: Column(
@@ -81,13 +81,15 @@ class ForgotPasswordScreen extends StatelessWidget {
                             TextField(
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
+                                border: UnderlineInputBorder(
+                                    borderSide: BorderSide.none),
                                 hintText: 'Masukkan email anda',
                                 hintStyle: GoogleFonts.inter().copyWith(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12,
                                 ),
                                 filled: true,
-                                fillColor: Color(0xffF5F5F5),
+                                fillColor: const Color(0xffF5F5F5),
                               ),
                             ),
                           ],
@@ -100,7 +102,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         width: 295,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: Color(0xff404040),
+                          color: const Color(0xff404040),
                         ),
                         child: TextButton(
                           onPressed: () {},
