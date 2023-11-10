@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class VerificationScreen extends StatelessWidget {
-  static const String routePath = '/verification-screen';
-  const VerificationScreen({super.key});
+class VerificationForgotPasswordScreen extends StatelessWidget {
+  static const String routePath = '/verification-forgot-password';
+  const VerificationForgotPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xff404040),
+        backgroundColor: const Color(0xff404040),
         body: ListView(
           children: [
             /// TITLE
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 right: 72,
                 left: 72,
                 top: 92,
@@ -31,16 +31,16 @@ class VerificationScreen extends StatelessWidget {
 
             /// BOTTOM SHEET
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 150,
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(40),
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 width: 390,
                 height: 573,
                 child: Center(
@@ -64,7 +64,7 @@ class VerificationScreen extends StatelessWidget {
 
                       /// MASSUKKAN KODE VERIFIKASI
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           right: 98.5,
                           left: 98.5,
                           bottom: 30,
@@ -72,7 +72,9 @@ class VerificationScreen extends StatelessWidget {
                         child: Text(
                           'Masukkan kode verifikasi',
                           style: GoogleFonts.inter().copyWith(
-                              fontWeight: FontWeight.w700, fontSize: 16),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
 
@@ -99,7 +101,7 @@ class VerificationScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Container(
                               height: 39,
                               width: 39,
@@ -117,7 +119,7 @@ class VerificationScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Container(
                               height: 39,
                               width: 39,
@@ -135,7 +137,7 @@ class VerificationScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Container(
                               height: 39,
                               width: 39,
@@ -153,7 +155,7 @@ class VerificationScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Container(
                               height: 39,
                               width: 39,
@@ -171,7 +173,7 @@ class VerificationScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Container(
                               height: 39,
                               width: 39,
@@ -195,7 +197,7 @@ class VerificationScreen extends StatelessWidget {
 
                       /// KIRIM KEMBALI
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           bottom: 60,
                         ),
                         child: Text(
@@ -213,7 +215,7 @@ class VerificationScreen extends StatelessWidget {
                         width: 295,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: Color(0xff404040),
+                          color: const Color(0xff404040),
                         ),
                         child: TextButton(
                           onPressed: () {},
