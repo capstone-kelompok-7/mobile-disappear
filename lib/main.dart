@@ -1,3 +1,4 @@
+import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/home_screen.dart';
 import 'package:disappear/screens/forgot_password_screen.dart';
@@ -20,7 +21,7 @@ void main() {
         create: (context) => HomeViewModel(),
       ),
     ],
-    child: App(),
+    child: const App(),
   ));
 }
 
@@ -49,6 +50,7 @@ class App extends StatelessWidget {
             const SuccessEmailVerificationScreen(),
         LoginScreen.routePath: (context) => LoginScreen(),
         RegisterScreen.routePath: (context) => RegisterScreen(),
+        ArticleScreen.routePath: (context) => const ArticleScreen(),
       },
     );
   }
