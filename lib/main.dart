@@ -11,6 +11,7 @@ import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/verification_forgot_password_screen.dart';
+import 'package:disappear/screens/product_reviews_screen.dart';
 import 'package:disappear/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,6 +54,7 @@ class App extends StatelessWidget {
         LoginScreen.routePath: (context) => LoginScreen(),
         RegisterScreen.routePath: (context) => RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
+        ProductReviewsScreen.routePath: (context) => const ProductReviewsScreen(),
       },
     );
   }
