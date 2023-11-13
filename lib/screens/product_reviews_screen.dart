@@ -1,9 +1,112 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class ProductReviewsScreen extends StatelessWidget {
+import 'package:disappear/view_models/add_product_review_view_model.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class ProductReviewsScreen extends StatefulWidget {
   static const String routePath = '/product-reviews';
 
   const ProductReviewsScreen({super.key});
+
+  @override
+  State<ProductReviewsScreen> createState() => _ProductReviewsScreenState();
+}
+
+class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
+  void _showAddReviewPopup() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Form(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Berikan nilai', style: TextStyle(fontSize: 14),),
+                  const SizedBox(height: 8,),
+                  Consumer<AddProductReviewViewModel>(
+                    builder: (context, state, _) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () => state.stars = 1,
+                            child: Icon(
+                              state.stars >= 1 ? Icons.star : Icons.star_border,
+                              size: 23,
+                            )
+                          ),
+                          const SizedBox(width: 2,),
+                          GestureDetector(
+                            onTap: () => state.stars = 2,
+                            child: Icon(
+                              state.stars >= 2 ? Icons.star : Icons.star_border,
+                              size: 23,
+                            )
+                          ),
+                          const SizedBox(width: 2,),
+                          GestureDetector(
+                            onTap: () => state.stars = 3,
+                            child: Icon(
+                              state.stars >= 3 ? Icons.star : Icons.star_border,
+                              size: 23,
+                            )
+                          ),
+                          const SizedBox(width: 2,),
+                          GestureDetector(
+                            onTap: () => state.stars = 4,
+                            child: Icon(
+                              state.stars >= 4 ? Icons.star : Icons.star_border,
+                              size: 23,
+                            )
+                          ),
+                          const SizedBox(width: 2,),
+                          GestureDetector(
+                            onTap: () => state.stars = 5,
+                            child: Icon(
+                              state.stars >= 5 ? Icons.star : Icons.star_border,
+                              size: 23,
+                            )
+                          ),
+                        ],
+                      );
+                    }
+                  ),
+                  const SizedBox(height: 8,),
+                  const Text('Klik untuk menilai', style: TextStyle(fontSize: 10),),
+                  const SizedBox(height: 16,),
+                  const Text('Tambahkan foto', style: TextStyle(fontSize: 14),),
+                  const SizedBox(height: 8,),
+                  const ImagePicker(),
+                  const SizedBox(height: 8,),
+                  const Text('Klik untuk memasukkan foto', style: TextStyle(fontSize: 10),),
+                  const SizedBox(height: 16,),
+                  const Text('Ulasan foto', style: TextStyle(fontSize: 14),),
+                  const SizedBox(height: 8,),
+                  TextFormField(),
+                  const SizedBox(height: 8,),
+                  Center(
+                    child: SizedBox(
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: const Text('Kirim')
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +114,12 @@ class ProductReviewsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Ulasan'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 36),
-        child: ListView(
-          children: [
-            const SizedBox(height: 20,),
-            const Column(
+      body: ListView(
+        children: [
+          const SizedBox(height: 20,),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 36),
+            child: Column(
               children: [
                 Text('4.9', style: TextStyle(fontSize: 40),),
                 SizedBox(height: 2,),
@@ -24,13 +127,13 @@ class ProductReviewsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.star_border, size: 23,),
-                    SizedBox(height: 2,),
+                    SizedBox(width: 2,),
                     Icon(Icons.star_border, size: 23,),
-                    SizedBox(height: 2,),
+                    SizedBox(width: 2,),
                     Icon(Icons.star_border, size: 23,),
-                    SizedBox(height: 2,),
+                    SizedBox(width: 2,),
                     Icon(Icons.star_border, size: 23,),
-                    SizedBox(height: 2,),
+                    SizedBox(width: 2,),
                     Icon(Icons.star_border, size: 23,),
                   ],
                 ),
@@ -38,8 +141,11 @@ class ProductReviewsScreen extends StatelessWidget {
                 Text('berdasarkan 19 ulasan', style: TextStyle(fontSize: 12),),
               ],
             ),
-            const SizedBox(height: 24,),
-            const Column(
+          ),
+          const SizedBox(height: 24,),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 36),
+            child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -114,27 +220,37 @@ class ProductReviewsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 24,),
-            Row(
+          ),
+          const SizedBox(height: 24,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 36),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('13 Ulasan', style: TextStyle(fontSize: 14),),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _showAddReviewPopup,
                   child: const Text('Tambahkan ulasan')
                 )
               ],
             ),
-            const SizedBox(height: 24,),
-            const ProductReview(),
-            const SizedBox(height: 24,),
-            const ProductReview(),
-            const SizedBox(height: 24,),
-            const ProductReview(),
-            const SizedBox(height: 24,),
-          ],
-        )
-      ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 36),
+            child: Column(
+              children: [
+              SizedBox(height: 24,),
+              ProductReview(),
+              SizedBox(height: 24,),
+              ProductReview(),
+              SizedBox(height: 24,),
+              ProductReview(),
+              SizedBox(height: 24,),
+              ],
+            ),
+          ),
+        ],
+      )
     );
   }
 }
@@ -277,6 +393,81 @@ class _ProductReviewState extends State<ProductReview> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class ImagePicker extends StatefulWidget {
+  const ImagePicker({ super.key });
+
+  @override
+  State<ImagePicker> createState() => _ImagePickerState();
+}
+
+class _ImagePickerState extends State<ImagePicker> {
+  String? filename;
+
+  void _pickFile() async {
+    final addProductViewModel = Provider.of<AddProductReviewViewModel>(context, listen: false);
+
+    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+    if (result != null) {
+      addProductViewModel.files = result.files;
+    }
+    
+    return;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AddProductReviewViewModel>(
+      builder: (context, state, _) {
+        if (state.files.isEmpty) {
+          return GestureDetector(
+            onTap: _pickFile,
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey)
+              ),
+              child: const Icon(Icons.add_a_photo),
+            )
+          );
+        }
+
+        return GridView.builder(
+          shrinkWrap: true,
+          itemCount: state.files.length + 1,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            mainAxisExtent: 100,
+          ),
+          itemBuilder: (context, index) {
+            if (index < state.files.length) {
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.file(
+                  File(state.files[index].path!),
+                  fit: BoxFit.cover,
+                ),
+              );
+            }
+
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey)
+              ),
+              child: const Icon(Icons.add_a_photo),
+            );
+          },
+        );
+      }
     );
   }
 }
