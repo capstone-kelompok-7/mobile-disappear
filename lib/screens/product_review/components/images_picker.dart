@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:disappear/view_models/add_product_review_view_model.dart';
+import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

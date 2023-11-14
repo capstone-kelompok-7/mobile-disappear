@@ -1,5 +1,5 @@
 import 'package:disappear/screens/product_review/components/images_picker.dart';
-import 'package:disappear/view_models/add_product_review_view_model.dart';
+import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

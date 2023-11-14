@@ -12,7 +12,6 @@ import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/verification_forgot_password_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
-import 'package:disappear/view_models/add_product_review_view_model.dart';
 import 'package:disappear/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +21,6 @@ void main() {
     providers: [
       ChangeNotifierProvider(
         create: (context) => HomeViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => AddProductReviewViewModel(),
       ),
     ],
     child: const App(),

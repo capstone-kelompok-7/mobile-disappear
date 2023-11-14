@@ -1,4 +1,3 @@
-import 'package:disappear/screens/product_review/components/add_review_dialog.dart';
 import 'package:disappear/screens/product_review/components/product_review_item.dart';
 import 'package:flutter/material.dart';
 
@@ -12,15 +11,6 @@ class ProductReviewsScreen extends StatefulWidget {
 }
 
 class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
-  void _showAddReviewPopup() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const AddReviewDialog();
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +18,9 @@ class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
         title: const Text('Ulasan'),
       ),
       body: ListView(
-        children: [
-          const SizedBox(height: 20,),
-          const Padding(
+        children: const [
+          SizedBox(height: 20,),
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 36),
             child: Column(
               children: [
@@ -55,8 +45,8 @@ class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 24,),
-          const Padding(
+          SizedBox(height: 24,),
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 36),
             child: Column(
               children: [
@@ -134,21 +124,12 @@ class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 24,),
+          SizedBox(height: 24,),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 36),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('13 Ulasan', style: TextStyle(fontSize: 14),),
-                ElevatedButton(
-                  onPressed: _showAddReviewPopup,
-                  child: const Text('Tambahkan ulasan')
-                )
-              ],
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 36),
+            child: Text('13 Ulasan', style: TextStyle(fontSize: 14),),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 36),
             child: Column(
               children: [
