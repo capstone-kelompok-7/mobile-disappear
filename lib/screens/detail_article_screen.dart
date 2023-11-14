@@ -46,6 +46,7 @@ class DetailArticleScreen extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Judul
               const Text(
@@ -131,16 +132,12 @@ class DetailArticleScreen extends StatelessWidget {
                 height: 20.0,
               ),
               //Artikel Lainnya
-              const Row(
-                children: [
-                  Text(
-                    "Artikel Lainnya",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+              const Text(
+                "Artikel Lainnya",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(
                 height: 5.0,
