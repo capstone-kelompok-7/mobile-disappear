@@ -11,7 +11,7 @@ import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/verification_forgot_password_screen.dart';
-import 'package:disappear/screens/product_reviews_screen.dart';
+import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/view_models/add_product_review_view_model.dart';
 import 'package:disappear/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute:  ProductReviewsScreen.routePath,
+      initialRoute: ProductReviewsScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
