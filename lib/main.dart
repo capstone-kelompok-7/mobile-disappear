@@ -1,13 +1,18 @@
 import 'package:disappear/screens/challenge_screen.dart';
+import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/home_screen.dart';
 import 'package:disappear/screens/forgot_password_screen.dart';
+import 'package:disappear/screens/leaderboard_screen.dart';
+import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/register_screen.dart';
 import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/verification_forgot_password_screen.dart';
+import 'package:disappear/screens/voucher_screen.dart';
 import 'package:disappear/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +24,7 @@ void main() {
         create: (context) => HomeViewModel(),
       ),
     ],
-    child: App(),
+    child: const App(),
   ));
 }
 
@@ -29,7 +34,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: ChallengeScreen.routePath,
+      initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
@@ -47,6 +52,11 @@ class App extends StatelessWidget {
         SuccessEmailVerificationScreen.routePath: (context) =>
             const SuccessEmailVerificationScreen(),
         ChallengeScreen.routePath: (context) => ChallengeScreen(),
+        LoginScreen.routePath: (context) => LoginScreen(),
+        RegisterScreen.routePath: (context) => RegisterScreen(),
+        ArticleScreen.routePath: (context) => const ArticleScreen(),
+        VoucherScreen.routePath: (context) => const VoucherScreen(),
+        LeaderboardScreen.routePath: (context) => LeaderboardScreen(),
       },
     );
   }

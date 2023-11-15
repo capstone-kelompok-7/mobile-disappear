@@ -68,7 +68,7 @@ class SplashScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
+                  builder: (context) => LoginScreen(),
                 ));
               },
               style: ElevatedButton.styleFrom(
@@ -93,7 +93,7 @@ class SplashScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const RegisterScreen(),
+                  builder: (context) => RegisterScreen(),
                 ));
               },
               style: ElevatedButton.styleFrom(

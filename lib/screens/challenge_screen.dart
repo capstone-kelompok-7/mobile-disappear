@@ -38,24 +38,38 @@ List<Map> challenges = [
     'effectiveDate': 'Tantangan Berlaku Sampai Tanggal 12-03-2023',
     'exp': '15 EXP',
   },
+  {
+    'imageUrl':
+        'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
+    'challengeName': 'Tujuh Hari Tanpa Sampah',
+    'effectiveDate': 'Tantangan Berlaku Sampai Tanggal 12-03-2023',
+    'exp': '35 EXP'
+  },
+  {
+    "imageUrl":
+        'https://accurate.id/wp-content/uploads/2023/05/accurate.id-gambar-produk-ramah-lingkungan-1.png',
+    'challengeName': 'Memakai Produk Ramah Lingkungan',
+    'effectiveDate': 'Tantangan Berlaku Sampai Tanggal 12-03-2023',
+    'exp': '20 EXP',
+  },
 ];
 
 class _ChallengeScreenState extends State<ChallengeScreen> {
   Widget topButton() {
     return Container(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         left: 75,
         right: 75,
         top: 16,
         bottom: 37,
       ),
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 5,
         vertical: 5,
       ),
       width: 240,
       height: 30,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xffe4e4e4),
       ),
       child: Row(
@@ -64,11 +78,11 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
           Container(
             width: 70,
             height: 20,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xffa8a8a8),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 9,
                 vertical: 4,
               ),
@@ -81,14 +95,14 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
-          Container(
+          SizedBox(
             width: 80,
             height: 20,
             child: Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 9,
                 vertical: 4,
               ),
@@ -101,14 +115,14 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
-          Container(
+          SizedBox(
             width: 70,
             height: 20,
             child: Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 9,
                 vertical: 4,
               ),
@@ -126,72 +140,81 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
     );
   }
 
-  Widget listChallenges(int index) {
-    return Container(
-      margin: EdgeInsets.only(
-        right: 25,
-        left: 25,
-        bottom: 15,
-      ),
-      width: 340,
-      height: 171,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(
-            challenges[index]['imageUrl'].toString(),
-          ),
-        ),
-      ),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 53,
-          padding: EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 8,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.yellow,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
+  Widget listChallenges() {
+    return SizedBox(
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: challenges.length,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.only(
+              right: 25,
+              left: 25,
+              bottom: 15,
+            ),
+            width: 340,
+            height: 171,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                  challenges[index]['imageUrl'].toString(),
+                ),
+              ),
+            ),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 53,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 8,
+                ),
+                decoration: const BoxDecoration(
+                  color: Colors.yellow,
+                ),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      challenges[index]['challengeName'].toString(),
-                      style: GoogleFonts.inter().copyWith(
-                        fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            challenges[index]['challengeName'].toString(),
+                            style: GoogleFonts.inter().copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            challenges[index]['effectiveDate'].toString(),
+                            style: GoogleFonts.inter().copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 8,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(
-                      height: 5,
                     ),
                     Text(
-                      challenges[index]['effectiveDate'].toString(),
+                      challenges[index]['exp'].toString(),
                       style: GoogleFonts.inter().copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 8,
+                        fontWeight: FontWeight.w700,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
-              Text(
-                challenges[index]['exp'].toString(),
-                style: GoogleFonts.inter().copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -215,18 +238,10 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
         ),
       ),
       body: ListView(
-        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
         children: [
           topButton(),
-          SizedBox(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: challenges.length,
-              itemBuilder: (context, index) {
-                return listChallenges(index);
-              },
-            ),
-          ),
+          listChallenges(),
         ],
       ),
     );
