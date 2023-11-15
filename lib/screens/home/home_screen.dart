@@ -13,39 +13,54 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      shrinkWrap: true,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: TextFormField(),
-        ),
-        const SizedBox(height: 14,),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: SlideBanner(),
-        ),
-        const SizedBox(height: 14,),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: SlideBannerDotsIndicator()
-        ),
-        const SizedBox(height: 19,),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: Categories(),
-        ),
-        const SizedBox(height: 34,),
-        const BestSellerProducts(),
-        const SizedBox(height: 34,),
-        const LatestChallenges(),
-        const SizedBox(height: 34,),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: LatestArticles(),
-        ),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Disappear'),
+        actions: const [
+          IconButton(
+            onPressed: null,
+            icon: Icon(Icons.notifications, color: Colors.white,),
+          ),
+          IconButton(
+            onPressed: null,
+            icon: Icon(Icons.shopping_cart, color: Colors.white,)
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        shrinkWrap: true,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: TextFormField(),
+          ),
+          const SizedBox(height: 14,),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: SlideBanner(),
+          ),
+          const SizedBox(height: 14,),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: SlideBannerDotsIndicator()
+          ),
+          const SizedBox(height: 19,),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Categories(),
+          ),
+          const SizedBox(height: 34,),
+          const BestSellerProducts(),
+          const SizedBox(height: 34,),
+          const LatestChallenges(),
+          const SizedBox(height: 34,),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: LatestArticles(),
+          ),
+        ],
+      ),
     );
   }
 }
