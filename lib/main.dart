@@ -1,19 +1,26 @@
-import 'package:disappear/screens/challenge_screen.dart';
+import 'package:disappear/screens/challenge/challenge_screen.dart';
 import 'package:disappear/screens/article_screen.dart';
+import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/home_screen.dart';
 import 'package:disappear/screens/forgot_password_screen.dart';
-import 'package:disappear/screens/leaderboard_screen.dart';
+import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
+import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
+import 'package:disappear/screens/search_product/search_product_screen.dart';
+import 'package:disappear/screens/save_article_sreen.dart';
 import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/verification_forgot_password_screen.dart';
-import 'package:disappear/screens/voucher_screen.dart';
+import 'package:disappear/screens/voucher/voucher_screen.dart';
+import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/view_models/home_view_model.dart';
+import 'package:disappear/view_models/search_product/search_field_view_model.dart';
+import 'package:disappear/view_models/search_product/search_history_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +29,12 @@ void main() {
     providers: [
       ChangeNotifierProvider(
         create: (context) => HomeViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => SearchHistoryViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => SearchFieldViewModel(),
       ),
     ],
     child: const App(),
@@ -47,6 +60,7 @@ class App extends StatelessWidget {
         DetailChallengeScreen.routePath: (context) =>
             const DetailChallengeScreen(),
         NewPasswordScreen.routePath: (context) => const NewPasswordScreen(),
+        JoinChallengeScreen.routePath: (context) => const JoinChallengeScreen(),
         SuccessNewPasswordScreen.routePath: (context) =>
             const SuccessNewPasswordScreen(),
         SuccessEmailVerificationScreen.routePath: (context) =>
@@ -57,6 +71,11 @@ class App extends StatelessWidget {
         ArticleScreen.routePath: (context) => const ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
         LeaderboardScreen.routePath: (context) => LeaderboardScreen(),
+        SearchProductScreen.routePath: (context) => const SearchProductScreen(),
+        ProductReviewsScreen.routePath: (context) =>
+            const ProductReviewsScreen(),
+        DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
+        SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
       },
     );
   }
