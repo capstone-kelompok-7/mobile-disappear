@@ -1,8 +1,18 @@
+import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/home/components/latest_article_item.dart';
 import 'package:flutter/material.dart';
 
-class LatestArticles extends StatelessWidget {
+class LatestArticles extends StatefulWidget {
   const LatestArticles({super.key});
+
+  @override
+  State<LatestArticles> createState() => _LatestArticlesState();
+}
+
+class _LatestArticlesState extends State<LatestArticles> {
+  void _goToArticlesScreen() {
+    Navigator.pushNamed(context, ArticleScreen.routePath);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +31,7 @@ class LatestArticles extends StatelessWidget {
         const LatestArticleItem(),
         const SizedBox(height: 21,),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: _goToArticlesScreen,
           child: const Text('Lihat semua artikel')
         )
       ],

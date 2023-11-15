@@ -11,19 +11,6 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Disappear'),
-        actions: const [
-          IconButton(
-            onPressed: null,
-            icon: Icon(Icons.notifications, color: Colors.white,),
-          ),
-          IconButton(
-            onPressed: null,
-            icon: Icon(Icons.shopping_cart, color: Colors.white,)
-          ),
-        ],
-      ),
       body: Consumer<MainViewModel>(
         builder: (context, state, _) => state.currentScreen,
       ),
