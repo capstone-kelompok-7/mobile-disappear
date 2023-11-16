@@ -1,4 +1,5 @@
 import 'package:disappear/screens/article_screen.dart';
+import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
@@ -50,6 +51,7 @@ class App extends StatelessWidget {
         SplashScreen.routePath: (context) => const SplashScreen(),
         MainScreen.routePath: (context) => const MainScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
+        CategoriesScreen.routePath: (context) => const CategoriesScreen(),
         ForgotPasswordScreen.routePath: (context) =>
             const ForgotPasswordScreen(),
         VerificationForgotPasswordScreen.routePath: (context) =>
