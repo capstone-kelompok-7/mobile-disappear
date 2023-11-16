@@ -1,3 +1,5 @@
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class LatestArticleItem extends StatelessWidget {
@@ -18,31 +20,31 @@ class LatestArticleItem extends StatelessWidget {
                 child: Image.network('https://picsum.photos/110/125')
               ),
             ),
-            const Flexible(
+            Flexible(
               flex: 2,
               child: Padding(
-                padding: EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('24 Oktober 2023', style: TextStyle(fontSize: 12),),
-                    SizedBox(height: 10,),
-                    Text('Berapa Banyak Sampah Plastik yang Ada di Lautan?', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
-                    SizedBox(height: 15,),
-                    Row(
+                    Text('24 Oktober 2023', style: regularBody8.copyWith(color: neutral40)),
+                    const SizedBox(height: 10,),
+                    const Text('Berapa Banyak Sampah Plastik yang Ada di Lautan?', style: semiBoldBody6),
+                    const SizedBox(height: 15,),
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Row(
                           children: [
-                            Text('1 minggu yang lalu', style: TextStyle(fontSize: 8),),
+                            Text('1 minggu yang lalu', style: mediumBody8),
                             SizedBox(width: 10,),
-                            Icon(Icons.visibility, size: 15,),
+                            Icon(Icons.visibility, size: 18,),
                             SizedBox(width: 5,),
-                            Text('1045', style: TextStyle(fontSize: 8),),
+                            Text('1045', style: regularBody8),
                           ],
                         ),
-                        Icon(Icons.bookmark_outline, size: 15,),
+                        Icon(Icons.bookmark_outline, size: 18,),
                       ],
                     ),
                   ],

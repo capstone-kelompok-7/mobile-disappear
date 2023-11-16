@@ -17,6 +17,8 @@ import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/verification_forgot_password_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/theme.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
 import 'package:disappear/view_models/main_view_model.dart';
@@ -46,7 +48,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: MainScreen.routePath,
+      initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         MainScreen.routePath: (context) => const MainScreen(),
@@ -74,6 +76,12 @@ class App extends StatelessWidget {
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
       },
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        colorScheme: colorScheme,
+        inputDecorationTheme: inputDecorationTheme,
+        elevatedButtonTheme: elevatedButtonTheme,
+      ),
     );
   }
 }

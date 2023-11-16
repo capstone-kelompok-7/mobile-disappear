@@ -1,5 +1,7 @@
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/home/components/category_item.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class Categories extends StatefulWidget {
@@ -24,19 +26,19 @@ class _CategoriesState extends State<Categories> {
           children: [
             const Text(
               'Kategori',
-              style: TextStyle(fontSize: 16),
+              style: semiBoldBody5.copyWith(color: primary40),
             ),
             GestureDetector(
               onTap: _goToCategoriesScreen,
               child: const Text(
                 'Lihat semua',
-                style: TextStyle(fontSize: 12),
+                style: semiBoldBody8.copyWith(color: neutral30),
               ),
             ),
           ],
         ),
-        SizedBox(height: 15,),
-        Row(
+        const SizedBox(height: 15,),
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CategoryItem(),
