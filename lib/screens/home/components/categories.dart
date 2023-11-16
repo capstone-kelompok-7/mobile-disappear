@@ -24,13 +24,13 @@ class _CategoriesState extends State<Categories> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               'Kategori',
               style: semiBoldBody5.copyWith(color: primary40),
             ),
             GestureDetector(
               onTap: _goToCategoriesScreen,
-              child: const Text(
+              child: Text(
                 'Lihat semua',
                 style: semiBoldBody8.copyWith(color: neutral30),
               ),
