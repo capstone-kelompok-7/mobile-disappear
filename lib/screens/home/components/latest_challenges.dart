@@ -1,4 +1,6 @@
 import 'package:disappear/screens/home/components/latest_challenge_item.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class LatestChallenges extends StatelessWidget {
@@ -9,16 +11,16 @@ class LatestChallenges extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
             'Tantangan',
-            style: TextStyle(fontSize: 16),
+            style: semiBoldBody5.copyWith(color: primary40),
           ),
         ),
         const SizedBox(height: 16,),
         SizedBox(
-          height: 100,
+          height: 120,
           child: ListView(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
