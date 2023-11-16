@@ -1,3 +1,4 @@
+import 'package:disappear/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class SlideBannerDotsIndicator extends StatelessWidget {
@@ -10,41 +11,41 @@ class SlideBannerDotsIndicator extends StatelessWidget {
       children: [
         ClipOval(
           child: Container(
-            color: Colors.grey,
-            width: 7,
-            height: 7,
+            color: primary40,
+            width: 10,
+            height: 10,
           ),
         ),
-        const SizedBox(width: 5,),
+        const SizedBox(width: 1,),
         ClipOval(
           child: Container(
-            color: Colors.grey,
-            width: 7,
-            height: 7,
+            color: primary40,
+            width: 10,
+            height: 10,
           ),
         ),
-        const SizedBox(width: 5,),
+        const SizedBox(width: 1,),
         ClipOval(
           child: Container(
-            color: Colors.grey,
-            width: 7,
-            height: 7,
+            color: primary40,
+            width: 10,
+            height: 10,
           ),
         ),
-        const SizedBox(width: 5,),
+        const SizedBox(width: 1,),
         ClipOval(
           child: Container(
-            color: Colors.grey,
-            width: 7,
-            height: 7,
+            color: primary40,
+            width: 10,
+            height: 10,
           ),
         ),
-        const SizedBox(width: 5,),
+        const SizedBox(width: 1,),
         ClipOval(
           child: Container(
-            color: Colors.grey,
-            width: 7,
-            height: 7,
+            color: primary40,
+            width: 10,
+            height: 10,
           ),
         ),
       ],

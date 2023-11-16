@@ -1,4 +1,6 @@
 import 'package:disappear/screens/home/components/category_item.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class Categories extends StatelessWidget {
@@ -6,7 +8,7 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -14,16 +16,16 @@ class Categories extends StatelessWidget {
           children: [
             Text(
               'Kategori',
-              style: TextStyle(fontSize: 16),
+              style: semiBoldBody5.copyWith(color: primary40),
             ),
             Text(
               'Lihat semua',
-              style: TextStyle(fontSize: 12),
+              style: semiBoldBody8.copyWith(color: neutral30),
             ),
           ],
         ),
-        SizedBox(height: 15,),
-        Row(
+        const SizedBox(height: 15,),
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CategoryItem(),

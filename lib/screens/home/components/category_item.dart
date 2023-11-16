@@ -1,3 +1,5 @@
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -9,9 +11,9 @@ class CategoryItem extends StatelessWidget {
       children: [
         Image.asset('assets/img/CategoryExample.png', width: 60, height: 60,),
         const SizedBox(height: 2,),
-        const Text(
+        Text(
           'Kategori',
-          style: TextStyle(fontSize: 12, height: 2),
+          style: mediumBody8.copyWith(color: neutral40)
         )
       ],
     );
