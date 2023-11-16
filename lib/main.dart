@@ -1,10 +1,11 @@
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
-import 'package:disappear/screens/home_screen.dart';
+import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/forgot_password_screen.dart';
 import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
+import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
@@ -15,9 +16,9 @@ import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/verification_forgot_password_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
-import 'package:disappear/view_models/home_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
+import 'package:disappear/view_models/main_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
-        create: (context) => HomeViewModel(),
+        create: (context) => MainViewModel(),
       ),
       ChangeNotifierProvider(
         create: (context) => SearchHistoryViewModel(),
@@ -44,9 +45,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.routePath,
+      initialRoute: MainScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
+        MainScreen.routePath: (context) => const MainScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
         ForgotPasswordScreen.routePath: (context) =>
             const ForgotPasswordScreen(),
