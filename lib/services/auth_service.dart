@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:disappear/env/env.dart';
+import 'package:disappear/services/api.dart';
 
 class AuthService {
   Future<dynamic> login(String email, String password) async {
-    final dio = Dio();
+    final dio = createDio();
 
     Response response = await dio.post(
-      '${Env.apiUrl}/auth/login',
+      '/auth/login',
       data: {
         'email': email,
         'password': password
