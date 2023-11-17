@@ -10,6 +10,8 @@ import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/profile/edit_profile_screen.dart';
+import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:disappear/screens/save_article_sreen.dart';
@@ -84,6 +86,8 @@ class App extends StatelessWidget {
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
         WishListScreen.routePath: (context) => const WishListScreen(),
+        ProfileScreen.routePath: (context) => const ProfileScreen(),
+        EditProfileScreen.routePath: (context) => const EditProfileScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
