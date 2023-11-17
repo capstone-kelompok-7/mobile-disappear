@@ -20,6 +20,7 @@ import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/verification_forgot_password_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
+import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
@@ -71,12 +72,12 @@ class App extends StatelessWidget {
             const SuccessNewPasswordScreen(),
         SuccessEmailVerificationScreen.routePath: (context) =>
             const SuccessEmailVerificationScreen(),
-        ChallengeScreen.routePath: (context) => ChallengeScreen(),
+        ChallengeScreen.routePath: (context) => const ChallengeScreen(),
         LoginScreen.routePath: (context) => LoginScreen(),
         RegisterScreen.routePath: (context) => RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
-        LeaderboardScreen.routePath: (context) => LeaderboardScreen(),
+        LeaderboardScreen.routePath: (context) => const LeaderboardScreen(),
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),

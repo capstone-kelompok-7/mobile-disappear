@@ -123,7 +123,7 @@ class VerificationEmailScreen extends StatelessWidget {
                                 controller: _code1,
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
 
                             /// SECOND CODE
                             SizedBox(
@@ -148,7 +148,7 @@ class VerificationEmailScreen extends StatelessWidget {
                                 controller: _code2,
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
 
                             /// THIRD CODE
                             SizedBox(
@@ -173,7 +173,7 @@ class VerificationEmailScreen extends StatelessWidget {
                                 controller: _code3,
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
 
                             /// FOURTH CODE
                             SizedBox(
@@ -198,7 +198,7 @@ class VerificationEmailScreen extends StatelessWidget {
                                 controller: _code4,
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
 
                             /// FIFTH CODE
                             SizedBox(
@@ -223,7 +223,7 @@ class VerificationEmailScreen extends StatelessWidget {
                                 controller: _code5,
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
 
                             /// SIXTH CODE
                             SizedBox(
