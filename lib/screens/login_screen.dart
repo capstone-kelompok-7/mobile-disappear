@@ -179,32 +179,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             )
                           ],
                         ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     Container(
-                        //       width: 134.06,
-                        //       height: 1,
-                        //       color: Colors.black,
-                        //     ),
-                        //     const SizedBox(width: 10),
-                        //     Text(
-                        //       'or',
-                        //       style: GoogleFonts.inter(
-                        //         fontSize: 14,
-                        //         fontWeight: FontWeight.w400,
-                        //         height: 1.2,
-                        //         letterSpacing: 0,
-                        //       ),
-                        //     ),
-                        //     const SizedBox(width: 10),
-                        //     Container(
-                        //       width: 134.06,
-                        //       height: 1,
-                        //       color: Colors.black,
-                        //     ),
-                        //   ],
-                        // ),
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
