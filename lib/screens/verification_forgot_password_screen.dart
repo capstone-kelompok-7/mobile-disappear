@@ -1,4 +1,7 @@
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class VerificationForgotPasswordScreen extends StatelessWidget {
@@ -7,234 +10,303 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: const Color(0xff404040),
-        body: ListView(
-          children: [
-            /// TITLE
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 72,
-                left: 72,
-                top: 92,
-              ),
-              child: Text(
-                'Disappear',
-                style: GoogleFonts.inter().copyWith(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 48,
-                  color: Colors.white,
-                ),
+    TextEditingController _code1 = TextEditingController();
+    TextEditingController _code2 = TextEditingController();
+    TextEditingController _code3 = TextEditingController();
+    TextEditingController _code4 = TextEditingController();
+    TextEditingController _code5 = TextEditingController();
+    TextEditingController _code6 = TextEditingController();
+    return Scaffold(
+      backgroundColor: primary40,
+      body: ListView(
+        children: [
+          /// TITLE
+          Padding(
+            padding: const EdgeInsets.only(
+              right: 72,
+              left: 72,
+              top: 92,
+            ),
+            child: Text(
+              'Disappear',
+              style: boldTitle3.copyWith(color: whiteColor),
+              textAlign: TextAlign.center,
+            ),
+          ),
+
+          /// BOTTOM SHEET
+          Container(
+            margin: const EdgeInsets.only(
+              top: 150,
+            ),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(40),
               ),
             ),
-
-            /// BOTTOM SHEET
-            Container(
-              margin: const EdgeInsets.only(
-                top: 150,
-              ),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(40),
-                ),
-              ),
-              child: SizedBox(
-                width: 390,
-                height: 573,
-                child: Center(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 47,
-                          left: 47,
-                          top: 40,
-                          bottom: 60,
-                        ),
-                        child: Text(
-                          'Verifikasi',
-                          style: GoogleFonts.inter().copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 26,
-                          ),
+            child: SizedBox(
+              width: 390,
+              height: 520,
+              child: Center(
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(
+                        top: 40,
+                        right: 135,
+                        left: 135,
+                      ),
+                      child: Icon(
+                        Icons.forward_to_inbox_rounded,
+                        size: 100,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 15,
+                        right: 71,
+                        left: 71,
+                      ),
+                      child: Text(
+                        'Masukkan Kode Verifikasi',
+                        style: semiBoldBody3.copyWith(
+                          color: blackColor,
                         ),
                       ),
+                    ),
 
-                      /// MASSUKKAN KODE VERIFIKASI
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 98.5,
-                          left: 98.5,
-                          bottom: 30,
-                        ),
-                        child: Text(
-                          'Masukkan kode verifikasi',
-                          style: GoogleFonts.inter().copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
+                    /// MASSUKKAN KODE VERIFIKASI
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 12,
                       ),
+                      child: Text(
+                        'Kode verifikasi berhasil dikirimkan melalui Email\nkamu yang terdaftar pada akun',
+                        style: regularBody7.copyWith(
+                          color: blackColor,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
 
-                      /// VERIFICATION CODE BOX
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 30),
+                    /// VERIFICATION CODE BOX
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 35,
+                      ),
+                      child: Form(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              height: 39,
-                              width: 39,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '6',
-                                  style: GoogleFonts.inter().copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
-                                  ),
+                            /// FIRST CODE
+                            SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: TextField(
+                                obscureText: true,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context).nextFocus();
+                                  }
+                                },
+                                style: mediumBody3.copyWith(
+                                  color: blackColor,
                                 ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(1),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                controller: _code1,
                               ),
                             ),
                             const SizedBox(width: 10),
-                            Container(
-                              height: 39,
-                              width: 39,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '6',
-                                  style: GoogleFonts.inter().copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
-                                  ),
+
+                            /// SECOND CODE
+                            SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: TextField(
+                                obscureText: true,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context).nextFocus();
+                                  }
+                                },
+                                style: mediumBody3.copyWith(
+                                  color: blackColor,
                                 ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(1),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                controller: _code2,
                               ),
                             ),
                             const SizedBox(width: 10),
-                            Container(
-                              height: 39,
-                              width: 39,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '6',
-                                  style: GoogleFonts.inter().copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
-                                  ),
+
+                            /// THIRD CODE
+                            SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: TextField(
+                                obscureText: true,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context).nextFocus();
+                                  }
+                                },
+                                style: mediumBody3.copyWith(
+                                  color: blackColor,
                                 ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(1),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                controller: _code3,
                               ),
                             ),
                             const SizedBox(width: 10),
-                            Container(
-                              height: 39,
-                              width: 39,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '6',
-                                  style: GoogleFonts.inter().copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
-                                  ),
+
+                            /// FOURTH CODE
+                            SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: TextField(
+                                obscureText: true,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context).nextFocus();
+                                  }
+                                },
+                                style: mediumBody3.copyWith(
+                                  color: blackColor,
                                 ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(1),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                controller: _code4,
                               ),
                             ),
                             const SizedBox(width: 10),
-                            Container(
-                              height: 39,
-                              width: 39,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '6',
-                                  style: GoogleFonts.inter().copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
-                                  ),
+
+                            /// FIFTH CODE
+                            SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: TextField(
+                                obscureText: true,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context).nextFocus();
+                                  }
+                                },
+                                style: mediumBody3.copyWith(
+                                  color: blackColor,
                                 ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(1),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                controller: _code5,
                               ),
                             ),
                             const SizedBox(width: 10),
-                            Container(
-                              height: 39,
-                              width: 39,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '6',
-                                  style: GoogleFonts.inter().copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
-                                  ),
+
+                            /// SIXTH CODE
+                            SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: TextField(
+                                obscureText: true,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context).nextFocus();
+                                  }
+                                },
+                                style: mediumBody3.copyWith(
+                                  color: blackColor,
                                 ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(1),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                controller: _code6,
                               ),
                             ),
                           ],
                         ),
                       ),
+                    ),
 
-                      /// KIRIM KEMBALI
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 60,
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '03.00',
+                            style: GoogleFonts.poppins().copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 180,
+                          ),
+                          Text(
+                            'Kirim ulang',
+                            style: GoogleFonts.poppins().copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    /// VERIFIKASI
+                    Container(
+                      height: 44,
+                      width: 295,
+                      margin: const EdgeInsets.only(
+                        top: 30,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: primary40,
+                      ),
+                      child: TextButton(
+                        onPressed: () {},
                         child: Text(
-                          'Kirim Kembali',
-                          style: GoogleFonts.inter().copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.grey,
+                          'Verifikasi',
+                          style: semiBoldBody4.copyWith(
+                            color: whiteColor,
                           ),
                         ),
                       ),
-
-                      /// VERIFIKASI
-                      Container(
-                        height: 44,
-                        width: 295,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: const Color(0xff404040),
-                        ),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'Verifikasi',
-                            style: GoogleFonts.inter().copyWith(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
