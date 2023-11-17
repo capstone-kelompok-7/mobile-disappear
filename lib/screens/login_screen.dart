@@ -1,10 +1,10 @@
-import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -68,11 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 left: 72,
                 top: 70,
               ),
-              child: Text(
-                'Disappear',
-                style: boldTitle3.copyWith(color: whiteColor),
-                textAlign: TextAlign.center,
-              ),
+              child: SvgPicture.asset('assets/img/DisappearAuthLogo.svg'),
             ),
             Container(
               margin: const EdgeInsets.only(top: 90),
@@ -108,7 +104,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 hintText: 'Masukan email anda',
                                 contentPadding: EdgeInsets.all(10)
                               ),
-                              onChanged: (value) {},
                               validator: state.validateEmail
                             )
                           ],
@@ -170,32 +165,46 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Stack(
+                          alignment: Alignment.center,
                           children: [
+                            const Divider(thickness: 2),
                             Container(
-                              width: 134.06,
-                              height: 1,
-                              color: Colors.black,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'or',
-                              style: GoogleFonts.inter(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                height: 1.2,
-                                letterSpacing: 0,
+                              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                              color: whiteColor,
+                              child: Text(
+                                'or',
+                                style: regularBody7.copyWith(fontFamily: 'Inter'),
                               ),
-                            ),
-                            const SizedBox(width: 10),
-                            Container(
-                              width: 134.06,
-                              height: 1,
-                              color: Colors.black,
-                            ),
+                            )
                           ],
                         ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       width: 134.06,
+                        //       height: 1,
+                        //       color: Colors.black,
+                        //     ),
+                        //     const SizedBox(width: 10),
+                        //     Text(
+                        //       'or',
+                        //       style: GoogleFonts.inter(
+                        //         fontSize: 14,
+                        //         fontWeight: FontWeight.w400,
+                        //         height: 1.2,
+                        //         letterSpacing: 0,
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 10),
+                        //     Container(
+                        //       width: 134.06,
+                        //       height: 1,
+                        //       color: Colors.black,
+                        //     ),
+                        //   ],
+                        // ),
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
