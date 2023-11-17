@@ -1,4 +1,3 @@
-import 'package:disappear/screens/product_review/components/images_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -28,129 +27,127 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: Form(
         key: formkey,
-        child: Padding(
+        child: ListView(
           padding: const EdgeInsets.only(left: 42, right: 53),
-          child: ListView(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 112.5, right: 99.5, top: 35, bottom: 28),
-                    child: Stack(
-                      children: [
-                        const CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU'),
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 112.5, right: 99.5, top: 35, bottom: 28),
+                  child: Stack(
+                    children: [
+                      const CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU'),
+                      ),
+                      Positioned(
+                        right: 8,
+                        bottom: 10,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'assets/img/editProfileCameraButton.svg'),
                         ),
-                        Positioned(
-                          right: 8,
-                          bottom: 10,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: SvgPicture.asset(
-                                'assets/img/editProfileCameraButton.svg'),
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
+                ),
 
-                  //FORMFIELD NAMA
-                  const Text(
-                    'Nama',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                //FORMFIELD NAMA
+                const Text(
+                  'Nama',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
-                  TextFormField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                        hintText: 'Masukkan Nama Anda',
-                        hintStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding: const EdgeInsets.only(left: 10)),
-                  ),
+                ),
+                TextFormField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                      hintText: 'Masukkan Nama Anda',
+                      hintStyle: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding: const EdgeInsets.only(left: 10)),
+                ),
 
-                  const SizedBox(
-                    height: 34,
+                const SizedBox(
+                  height: 34,
+                ),
+                //FORMFIELD EMAIL
+                const Text(
+                  'Email',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
-                  //FORMFIELD EMAIL
-                  const Text(
-                    'Email',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  TextFormField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                        hintText: 'Masukkan Email Anda',
-                        hintStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding: const EdgeInsets.only(left: 10)),
-                  ),
+                ),
+                TextFormField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                      hintText: 'Masukkan Email Anda',
+                      hintStyle: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding: const EdgeInsets.only(left: 10)),
+                ),
 
-                  const SizedBox(
-                    height: 34,
-                  ),
+                const SizedBox(
+                  height: 34,
+                ),
 
-                  //FORMFIELD NOMOR TELPON
-                  const Text(
-                    'Nomor telepon',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                //FORMFIELD NOMOR TELPON
+                const Text(
+                  'Nomor telepon',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
-                  TextFormField(
-                    controller: numberController,
-                    decoration: InputDecoration(
-                        hintText: 'Masukkan Nomor Telepon Anda',
-                        hintStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding: const EdgeInsets.only(left: 10)),
-                  ),
+                ),
+                TextFormField(
+                  controller: numberController,
+                  decoration: InputDecoration(
+                      hintText: 'Masukkan Nomor Telepon Anda',
+                      hintStyle: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding: const EdgeInsets.only(left: 10)),
+                ),
 
-                  const SizedBox(
-                    height: 150,
-                  ),
+                const SizedBox(
+                  height: 150,
+                ),
 
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      minimumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(45)),
-                    ),
-                    onPressed: () {
-                      _showDialog();
-                    },
-                    child: const Text(
-                      'Simpan',
-                    ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    minimumSize:
+                        MaterialStateProperty.all(const Size.fromHeight(45)),
                   ),
-                ],
-              ),
-            ],
-          ),
+                  onPressed: () {
+                    _showDialog();
+                  },
+                  child: const Text(
+                    'Simpan',
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
