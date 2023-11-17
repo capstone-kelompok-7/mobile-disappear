@@ -5,7 +5,6 @@ import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -99,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             const Text('Email', style: mediumBody5),
                             const SizedBox(height: 5),
                             TextFormField(
+                              enabled: !state.isLoading,
                               controller: state.emailController,
                               decoration: const InputDecoration(
                                 hintText: 'Masukan email anda',
@@ -115,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             const Text('Kata sandi', style: mediumBody5),
                             const SizedBox(height: 5),
                             TextFormField(
+                              enabled: !state.isLoading,
                               controller: state.passwordController,
                               decoration: InputDecoration(
                                 hintText: 'Masukan kata sandi',
