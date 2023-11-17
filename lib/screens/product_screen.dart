@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
+// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables, library_private_types_in_public_api, non_constant_identifier_names
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -20,13 +20,63 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
     const List<String> images = [
       "https://pbs.twimg.com/media/F-yO2jnaMAAeb3A?format=jpg&name=900x900",
-      "https://pbs.twimg.com/media/F9uidkEbgAAWIvt?format=jpg&name=large",
-      "https://ecomaniac.org/wp-content/uploads/2022/11/The-Green-Environment.jpg",
-      "https://pbs.twimg.com/media/F5A9JP8WcAATr6B?format=jpg&name=900x900",
-      "https://pbs.twimg.com/media/F0bo5RyWwAETV8s?format=jpg&name=large",
+      "https://pbs.twimg.com/media/F-yO2ZZaEAAUq6D?format=jpg&name=900x900",
+      "https://pbs.twimg.com/media/F-8xCs_bsAAb1tG?format=jpg&name=900x900",
     ];
 
     return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        height: 61,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(
+                width: 195,
+                height: 61,
+                decoration: const BoxDecoration(
+                  color: Colors.grey,
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.shopping_cart,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  _BottomSheetProduct(context);
+                },
+                child: Container(
+                  width: 195,
+                  height: 61,
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Beli Sekarang",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Builder(builder: (context) {
@@ -42,9 +92,8 @@ class _ProductScreenState extends State<ProductScreen> {
                           CarouselSlider(
                             carouselController: carouselController,
                             options: CarouselOptions(
-                              height: 195.0,
+                              height: 214.0,
                               autoPlay: true,
-                              enlargeCenterPage: true,
                               aspectRatio: 16 / 9,
                               viewportFraction: 1,
                               onPageChanged: (index, reason) {
@@ -79,7 +128,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           ),
                           // Indicator Carousel
                           Positioned(
-                            bottom: 16.0, // Adjust the position as needed
+                            bottom: 0,
                             left: 0,
                             right: 0,
                             child: Row(
@@ -99,8 +148,8 @@ class _ProductScreenState extends State<ProductScreen> {
                                       shape: BoxShape.circle,
                                       color: (Theme.of(context).brightness ==
                                                   Brightness.dark
-                                              ? Colors.white
-                                              : Colors.black)
+                                              ? Colors.grey
+                                              : Colors.white)
                                           .withOpacity(currentIndex == entry.key
                                               ? 0.9
                                               : 0.4),
@@ -341,6 +390,68 @@ class _ProductScreenState extends State<ProductScreen> {
                           ],
                         ),
                       ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+                              ClipOval(
+                                  child: Image.network(
+                                      'https://picsum.photos/25')),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              const Text('User 2'),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Icon(
+                                Icons.star_border,
+                                size: 12,
+                              ),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              const Icon(
+                                Icons.star_border,
+                                size: 12,
+                              ),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              const Icon(
+                                Icons.star_border,
+                                size: 12,
+                              ),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              const Icon(
+                                Icons.star_border,
+                                size: 12,
+                              ),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              const Icon(
+                                Icons.star_border,
+                                size: 12,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const Text(
+                        'Barangnya buaaagusssssss, jos pokoke',
+                        style: TextStyle(fontSize: 12, height: 1.5),
+                      ),
                     ],
                   ),
                 ),
@@ -428,4 +539,201 @@ class OtherProduct extends StatelessWidget {
       ),
     );
   }
+}
+
+class ProductDetailsModal extends StatelessWidget {
+  final String productName;
+  final String imageUrl;
+  final int stock;
+
+  const ProductDetailsModal({
+    super.key,
+    required this.productName,
+    required this.imageUrl,
+    required this.stock,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    int quantity = 1; // Default quantity
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.close_sharp,
+            size: 24.0,
+          ),
+        ),
+        const SizedBox(
+          height: 4.0,
+        ),
+        Column(
+          children: [
+            SizedBox(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 49,
+                  right: 49,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(20),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.network(
+                          imageUrl,
+                          width: 115,
+                          height: 110,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            productName,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            'Stock : $stock',
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          const SizedBox(
+                            height: 14.0,
+                          ),
+                          Row(
+                            children: [
+                              QuantityControl(quantity: quantity),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 292,
+              height: 37,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text("Konfirmasi"),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class QuantityControl extends StatefulWidget {
+  final int quantity;
+
+  const QuantityControl({super.key, required this.quantity});
+
+  @override
+  _QuantityControlState createState() => _QuantityControlState();
+}
+
+class _QuantityControlState extends State<QuantityControl> {
+  late int quantity;
+
+  @override
+  void initState() {
+    super.initState();
+    quantity = widget.quantity;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 49,
+      width: 115,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(
+          color: Colors.black,
+          width: 1,
+        ),
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: () {
+              if (quantity > 1) {
+                setState(() {
+                  quantity--;
+                });
+              }
+            },
+            icon: const Icon(
+              Icons.remove,
+              size: 14,
+            ),
+          ),
+          Text(
+            '$quantity',
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {
+                quantity++;
+              });
+            },
+            icon: const Icon(
+              Icons.add,
+              size: 14,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void _BottomSheetProduct(BuildContext context) {
+  showModalBottomSheet(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    context: context,
+    builder: (BuildContext builder) {
+      return const SizedBox(
+        width: 390,
+        height: 250,
+        child: ProductDetailsModal(
+          productName: 'Totebag Kanvas',
+          imageUrl:
+              'https://pbs.twimg.com/media/F-yO2jnaMAAeb3A?format=jpg&name=900x900',
+          stock: 200,
+        ),
+      );
+    },
+  );
 }
