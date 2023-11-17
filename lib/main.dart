@@ -10,6 +10,8 @@ import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/profile/edit_profile_screen.dart';
+import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:disappear/screens/save_article_sreen.dart';
@@ -51,7 +53,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.routePath,
+      initialRoute: ProfileScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         MainScreen.routePath: (context) => const MainScreen(),
@@ -82,6 +84,9 @@ class App extends StatelessWidget {
             const ProductReviewsScreen(),
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
+        ProfileScreen.routePath:(context) => const ProfileScreen(),
+        EditProfileScreen.routePath:(context) => const EditProfileScreen(),
+
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
