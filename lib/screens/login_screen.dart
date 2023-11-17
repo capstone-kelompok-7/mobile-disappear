@@ -1,17 +1,65 @@
+import 'package:disappear/screens/home/home_screen.dart';
+import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String routePath = '/login';
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    final loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
+
+    loginViewModel.addListener(_loginMessageListener);
+    loginViewModel.addListener(_loginSuccessListener);
+
+    super.initState();
+  }
+
+  void _goToRegisterScreen() {
+    Navigator.pushReplacementNamed(context, RegisterScreen.routePath);
+  }
+
+  void _loginMessageListener() {
+    final loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
+    if (loginViewModel.message != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(loginViewModel.message!))
+      );
+
+      loginViewModel.message = null;
+    }
+  }
+
+  void _loginSuccessListener() {
+    final loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
+    if (loginViewModel.isLoginSuccess) {
+      _goToHomeScreen();
+      loginViewModel.isLoginSuccess = false;
+    }
+  }
+
+  void _goToHomeScreen() {
+    Navigator.pushNamedAndRemoveUntil(context, MainScreen.routePath, (route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFF404040),
+        backgroundColor: primary40,
         body: ListView(
           children: [
             Padding(
@@ -22,18 +70,13 @@ class LoginScreen extends StatelessWidget {
               ),
               child: Text(
                 'Disappear',
-                style: GoogleFonts.inter().copyWith(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 48,
-                    color: Colors.white),
+                style: boldTitle3.copyWith(color: whiteColor),
                 textAlign: TextAlign.center,
               ),
             ),
             Container(
-              width: 390,
-              height: 540,
               margin: const EdgeInsets.only(top: 90),
-              padding: const EdgeInsets.fromLTRB(50, 30, 40, 30),
+              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 50),
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -41,284 +84,141 @@ class LoginScreen extends StatelessWidget {
                   topRight: Radius.circular(50),
                 ),
               ),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 47),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 295,
-                            height: 37,
-                            child: Center(
-                              child: Text(
-                                'Masuk Akun',
-                                style: GoogleFonts.inter().copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 26,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 50),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              child: Consumer<LoginViewModel>(
+                builder: (context, state, _) {
+                  return Form(
+                    key: state.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          'Email',
-                          style: GoogleFonts.inter(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            height: 1.1,
-                            letterSpacing: 0,
-                          ),
+                        const Text(
+                          'Masuk Akun',
+                          style: semiBoldTitle6,
+                          textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 5),
-                        Container(
-                          width: 295,
-                          height: 37,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(width: 1),
-                          ),
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(vertical: 9),
-                              hintText: 'Masukan email anda',
-                              hintStyle: TextStyle(),
-                            ),
-                            onChanged: (value) {},
-                            validator: (value) {
-                              if (!RegExp(
-                                      r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-                                  .hasMatch(value!)) {
-                                return 'Masukan email yang benar';
-                              }
-                              return null;
-                            },
-                          ),
+                        const SizedBox(height: 50),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Email', style: mediumBody5),
+                            const SizedBox(height: 5),
+                            TextFormField(
+                              controller: state.emailController,
+                              decoration: const InputDecoration(
+                                hintText: 'Masukan email anda',
+                                contentPadding: EdgeInsets.all(10)
+                              ),
+                              onChanged: (value) {},
+                              validator: state.validateEmail
+                            )
+                          ],
                         ),
-                        if (formKey.currentState != null &&
-                            !formKey.currentState!.validate())
-                          const Text(
-                            'Oops... Email yang kamu masukan salah, nih. Coba lagi, yuk!',
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 7,
-                            ),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Kata Sandi',
-                          style: GoogleFonts.inter(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            height: 1.1,
-                            letterSpacing: 0,
-                          ),
+                        const SizedBox(height: 30),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Kata sandi', style: mediumBody5),
+                            const SizedBox(height: 5),
+                            TextFormField(
+                              controller: state.passwordController,
+                              decoration: InputDecoration(
+                                hintText: 'Masukan kata sandi',
+                                contentPadding: const EdgeInsets.all(10),
+                                suffixIcon: GestureDetector(
+                                  onTap: state.togglePasswordObscure,
+                                  child: Icon(state.isPasswordObscured ? Icons.visibility_outlined : Icons.visibility_off_outlined)
+                                )
+                              ),
+                              obscureText: state.isPasswordObscured,
+                              validator: state.validatePassword,
+                            )
+                          ],
                         ),
-                        const SizedBox(height: 5),
-                        Container(
-                          width: 295,
-                          height: 37,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(width: 1),
-                          ),
-                          child: Stack(
-                            alignment: Alignment.centerRight,
-                            children: [
-                              TextFormField(
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: 9),
-                                  hintText: 'Masukan kata sandi',
-                                  hintStyle: TextStyle(),
-                                ),
-                                validator: (value) {
-                                  if (value!.length < 6) {
-                                    return 'Kata sandi harus memiliki minimal 6 karakter';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              Positioned(
-                                right: 5,
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: const Icon(
-                                    Icons.visibility,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (formKey.currentState != null &&
-                            !formKey.currentState!.validate())
-                          const Text(
-                            'Oops... Kata sandi yang kamu masukan salah, nih. Coba lagi, yuk!',
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 12,
-                            ),
-                          ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Checkbox(
-                                value: false,
-                                onChanged: (bool? value) {},
-                              ),
-                              Text(
-                                'Ingatkan Saya',
-                                style: GoogleFonts.inter(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 0,
-                                ),
-                              ),
-                            ],
-                          ),
-                          TextButton(
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
                             onPressed: () {},
                             child: Text(
                               'Lupa Kata Sandi?',
+                              style: mediumBody7.copyWith(color: primary40, fontFamily: 'Inter')
+                            )
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        ElevatedButton(
+                          onPressed: state.isLoading ? null : state.login,
+                          child: state.isLoading
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  color: whiteColor,
+                                  strokeWidth: 3,
+                                ),
+                              )
+                            : const Text('Masuk', style: semiBoldBody3),
+                        ),
+                        const SizedBox(height: 25),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Belum memiliki akun? ', style: regularBody6),
+                            InkWell(
+                              onTap: _goToRegisterScreen,
+                              child: Text('Daftar', style: regularBody6.copyWith(color: primary40)),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 134.06,
+                              height: 1,
+                              color: Colors.black,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              'or',
                               style: GoogleFonts.inter(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 0,
-                                  color: Colors.black),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                letterSpacing: 0,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(295, 44),
-                        backgroundColor: const Color(0xFF404040),
-                        padding: const EdgeInsets.all(10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        'Masuk',
-                        style: GoogleFonts.inter(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 25),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Belum memiliki akun? ',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 1.2,
-                            letterSpacing: 0,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()),
-                            );
-                          },
-                          child: Text(
-                            'Daftar',
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              height: 1.2,
-                              letterSpacing: 0,
+                            const SizedBox(width: 10),
+                            Container(
+                              width: 134.06,
+                              height: 1,
+                              color: Colors.black,
                             ),
-                          ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: Image.asset(
+                                'assets/img/GoogleLogo.png',
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            InkWell(
+                              onTap: () {},
+                              child: Image.asset(
+                                'assets/img/FacebookLogo.png',
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 134.06,
-                          height: 1,
-                          color: Colors.black,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          'or',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 1.2,
-                            letterSpacing: 0,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          width: 134.06,
-                          height: 1,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Image.asset(
-                            'assets/img/GoogleLogo.png',
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        InkWell(
-                          onTap: () {},
-                          child: Image.asset(
-                            'assets/img/FacebookLogo.png',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  );
+                }
               ),
             ),
           ],

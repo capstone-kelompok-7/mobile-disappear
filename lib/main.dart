@@ -22,6 +22,7 @@ import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
+import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
 import 'package:disappear/view_models/main_view_model.dart';
@@ -39,6 +40,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => SearchFieldViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => LoginViewModel(),
       ),
     ],
     child: const App(),
