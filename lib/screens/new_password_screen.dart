@@ -17,12 +17,13 @@ class NewPasswordScreen extends StatelessWidget {
             padding: const EdgeInsets.only(
               right: 72,
               left: 72,
-              top: 92,
+              top: 54,
             ),
             child: Text(
               'Disappear',
               style: boldTitle3.copyWith(
                 color: Colors.white,
+                fontSize: 46,
               ),
               textAlign: TextAlign.center,
             ),
@@ -31,7 +32,7 @@ class NewPasswordScreen extends StatelessWidget {
           /// BOTTOM SHEET
           Container(
             margin: const EdgeInsets.only(
-              top: 150,
+              top: 107,
             ),
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -126,20 +127,18 @@ class NewPasswordScreen extends StatelessWidget {
                     ),
 
                     /// LANJUT
-                    Container(
-                      height: 44,
-                      width: 295,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: primary40,
+                    ElevatedButton(
+                      style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(primary40),
+                        minimumSize: MaterialStatePropertyAll(
+                          Size(295, 44),
+                        ),
                       ),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Atur ulang kata sandi',
-                          style: semiBoldBody4.copyWith(
-                            color: Colors.white,
-                          ),
+                      onPressed: () {},
+                      child: Text(
+                        'Atur ulang kata sandi',
+                        style: semiBoldBody4.copyWith(
+                          color: whiteColor,
                         ),
                       ),
                     ),
