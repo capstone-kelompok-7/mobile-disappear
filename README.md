@@ -1,6 +1,6 @@
 ﻿# Mobile Repository - Capstone Alterra Academy
 
-### Generage ENV
+### Generate ENV
 1. Copy `.env.example` dan paste menjadi `.env`
 2. Pada file `.env`, isi variabel API_URL dengan URL dari API yang disediakan oleh tim backend
 
