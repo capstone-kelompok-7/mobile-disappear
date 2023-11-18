@@ -17,13 +17,12 @@ class ForgotPasswordScreen extends StatelessWidget {
             padding: const EdgeInsets.only(
               right: 72,
               left: 72,
-              top: 54,
+              top: 92,
             ),
             child: Text(
               'Disappear',
               style: boldTitle3.copyWith(
                 color: Colors.white,
-                fontSize: 46,
               ),
               textAlign: TextAlign.center,
             ),
@@ -32,7 +31,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           /// Bottom Sheet
           Container(
             margin: const EdgeInsets.only(
-              top: 107,
+              top: 150,
             ),
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -46,8 +45,8 @@ class ForgotPasswordScreen extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
+                    Padding(
+                      padding: const EdgeInsets.only(
                         right: 47,
                         left: 47,
                         top: 40,
@@ -55,7 +54,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       ),
                       child: Text(
                         'Lupa Kata Sandi',
-                        style: semiBoldTitle6,
+                        style: semiBoldTitle6.copyWith(),
                       ),
                     ),
 
@@ -66,22 +65,22 @@ class ForgotPasswordScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(
                         bottom: 40,
                       ),
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Email',
-                            style: mediumBody5,
+                            style: mediumBody5.copyWith(),
                           ),
                           TextField(
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                              border: UnderlineInputBorder(
+                              border: const UnderlineInputBorder(
                                   borderSide: BorderSide.none),
                               hintText: 'Masukkan email anda',
-                              hintStyle: regularBody5,
+                              hintStyle: regularBody5.copyWith(),
                               filled: true,
-                              fillColor: Color(0xffF5F5F5),
+                              fillColor: const Color(0xffF5F5F5),
                             ),
                           ),
                         ],
@@ -89,18 +88,20 @@ class ForgotPasswordScreen extends StatelessWidget {
                     ),
 
                     /// Lanjut
-                    ElevatedButton(
-                      style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(primary40),
-                        minimumSize: MaterialStatePropertyAll(
-                          Size(295, 44),
-                        ),
+                    Container(
+                      height: 44,
+                      width: 295,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: primary40,
                       ),
-                      onPressed: () {},
-                      child: Text(
-                        'Lanjut',
-                        style: semiBoldBody4.copyWith(
-                          color: whiteColor,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Lanjut',
+                          style: semiBoldBody4.copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

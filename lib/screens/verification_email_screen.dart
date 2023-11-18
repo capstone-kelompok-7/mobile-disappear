@@ -26,14 +26,11 @@ class VerificationEmailScreen extends StatelessWidget {
             padding: const EdgeInsets.only(
               right: 72,
               left: 72,
-              top: 54,
+              top: 92,
             ),
             child: Text(
               'Disappear',
-              style: boldTitle3.copyWith(
-                color: whiteColor,
-                fontSize: 46,
-              ),
+              style: boldTitle3.copyWith(color: whiteColor),
               textAlign: TextAlign.center,
             ),
           ),
@@ -41,7 +38,7 @@ class VerificationEmailScreen extends StatelessWidget {
           /// BOTTOM SHEET
           Container(
             margin: const EdgeInsets.only(
-              top: 107,
+              top: 150,
             ),
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -76,12 +73,11 @@ class VerificationEmailScreen extends StatelessWidget {
                         'Masukkan Kode Verifikasi',
                         style: semiBoldBody3.copyWith(
                           color: blackColor,
-                          fontSize: 18,
                         ),
                       ),
                     ),
 
-                    /// MASUKKAN KODE VERIFIKASI
+                    /// MASSUKKAN KODE VERIFIKASI
                     Padding(
                       padding: const EdgeInsets.only(
                         top: 12,
@@ -274,14 +270,11 @@ class VerificationEmailScreen extends StatelessWidget {
                           const SizedBox(
                             width: 180,
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Kirim ulang',
-                              style: GoogleFonts.poppins().copyWith(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                              ),
+                          Text(
+                            'Kirim ulang',
+                            style: GoogleFonts.poppins().copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
                             ),
                           ),
                         ],
@@ -289,17 +282,17 @@ class VerificationEmailScreen extends StatelessWidget {
                     ),
 
                     /// VERIFIKASI
-                    Padding(
-                      padding: const EdgeInsets.only(
+                    Container(
+                      height: 44,
+                      width: 295,
+                      margin: const EdgeInsets.only(
                         top: 30,
                       ),
-                      child: ElevatedButton(
-                        style: const ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(primary40),
-                          minimumSize: MaterialStatePropertyAll(
-                            Size(295, 44),
-                          ),
-                        ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: primary40,
+                      ),
+                      child: TextButton(
                         onPressed: () {},
                         child: Text(
                           'Verifikasi',
