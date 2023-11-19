@@ -22,6 +22,7 @@ import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/verification_forgot_password_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
+import 'package:disappear/screens/wishlist_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
@@ -90,7 +91,7 @@ class App extends StatelessWidget {
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
         ProfileScreen.routePath:(context) => const ProfileScreen(),
         EditProfileScreen.routePath:(context) => const EditProfileScreen(),
-
+        WishListScreen.routePath: (context) => const WishListScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
