@@ -11,6 +11,7 @@ import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/product_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
@@ -90,6 +91,7 @@ class App extends StatelessWidget {
             const ProductReviewsScreen(),
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
+        ProductScreen.routePath: (context) => const ProductScreen(),
         ChangePasswordScreen.routePath: (context) =>
             const ChangePasswordScreen(),
         ProfileScreen.routePath:(context) => const ProfileScreen(),
