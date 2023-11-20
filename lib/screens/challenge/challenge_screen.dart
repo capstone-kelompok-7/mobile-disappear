@@ -78,20 +78,18 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
           Container(
             width: 70,
             height: 20,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 9,
+              vertical: 4,
+            ),
             decoration: const BoxDecoration(
               color: Color(0xffa8a8a8),
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 9,
-                vertical: 4,
-              ),
-              child: Text(
-                'Tantangan',
-                style: GoogleFonts.inter().copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 10,
-                ),
+            child: Text(
+              'Tantangan',
+              style: GoogleFonts.inter().copyWith(
+                fontWeight: FontWeight.w700,
+                fontSize: 10,
               ),
             ),
           ),
