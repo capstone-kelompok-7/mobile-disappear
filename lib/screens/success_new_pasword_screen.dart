@@ -1,5 +1,6 @@
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SuccessNewPasswordScreen extends StatelessWidget {
   static const String routePath = '/success-new-password';
@@ -7,44 +8,44 @@ class SuccessNewPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.check_circle_outline_rounded,
-                size: 260,
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 280,
+              height: 280,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/img/success_logo.png'),
+                ),
               ),
-              const SizedBox(
-                height: 48,
-              ),
-              Text('Kata sandi mu sudah terganti.',
-                  style: GoogleFonts.inter().copyWith(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Masuk',
-                      style: GoogleFonts.inter().copyWith(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 18,
-                      ),
-                      textAlign: TextAlign.center),
-                  Text(', yuk!',
-                      style: GoogleFonts.inter().copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                      ),
-                      textAlign: TextAlign.center),
-                ],
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 13,
+            ),
+            Text('Kata sandi mu sudah berhasil diganti.',
+                style: regularBody3.copyWith(
+                  color: blackColor,
+                ),
+                textAlign: TextAlign.center),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Masuk',
+                    style: boldBody3.copyWith(
+                      color: primary40,
+                    ),
+                    textAlign: TextAlign.center),
+                Text(', yuk!',
+                    style: regularBody3.copyWith(
+                      color: blackColor,
+                    ),
+                    textAlign: TextAlign.center),
+              ],
+            ),
+          ],
         ),
       ),
     );
