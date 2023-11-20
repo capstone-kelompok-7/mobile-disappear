@@ -1,5 +1,4 @@
 import 'package:disappear/screens/notification/empty_notification_screen.dart';
-import 'package:disappear/screens/notification/notifications_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
