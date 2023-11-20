@@ -11,7 +11,6 @@ import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
 import 'package:disappear/screens/onboarding/main_onboarding_screen.dart';
-import 'package:disappear/screens/onboarding/onboarding1_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
@@ -68,7 +67,6 @@ class App extends StatelessWidget {
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         MainOnboarding.routePath: (context) => const MainOnboarding(),
-        Onboarding1Screen.routePath: (context) => const Onboarding1Screen(),
         MainScreen.routePath: (context) => const MainScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
         CategoriesScreen.routePath: (context) => const CategoriesScreen(),
