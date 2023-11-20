@@ -1,6 +1,7 @@
 import 'package:disappear/screens/challenge/challenge_screen.dart';
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
+import 'package:disappear/screens/change_password_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
@@ -10,6 +11,7 @@ import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/product_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
@@ -23,8 +25,10 @@ import 'package:disappear/screens/verification_forgot_password_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
+
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
+import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
 import 'package:disappear/view_models/main_view_model.dart';
@@ -42,6 +46,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => SearchFieldViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => LoginViewModel(),
       ),
     ],
     child: const App(),
@@ -88,6 +95,9 @@ class App extends StatelessWidget {
         WishListScreen.routePath: (context) => const WishListScreen(),
         ProfileScreen.routePath: (context) => const ProfileScreen(),
         EditProfileScreen.routePath: (context) => const EditProfileScreen(),
+        ProductScreen.routePath: (context) => const ProductScreen(),
+        ChangePasswordScreen.routePath: (context) =>
+            const ChangePasswordScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
