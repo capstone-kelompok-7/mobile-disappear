@@ -50,7 +50,7 @@ Project ini menggunakan arsitektur **MVVM** atau Model-View-ViewModel, jadi stru
 ### API adapter
 <img width="497" alt="image" src="https://github.com/capstone-kelompok-7/mobile-disappear/assets/43428328/7b464a18-2f7d-4f56-acda-73d9723dac2a">
 <br>
-Untuk memanggil API bisa menggunakan fungsi **createDio** yang ada di `lib/services/api.dart`
+Untuk memanggil API bisa menggunakan fungsi createDio yang ada di lib/services/api.dart
 
 ### API Documentation
 Untuk API-API nya bisa dilihat disini:
