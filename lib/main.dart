@@ -10,6 +10,8 @@ import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/onboarding/main_onboarding_screen.dart';
+import 'package:disappear/screens/onboarding/onboarding1_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
@@ -26,6 +28,7 @@ import 'package:disappear/screens/wishlist_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
+import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
 import 'package:disappear/view_models/main_view_model.dart';
@@ -47,6 +50,9 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => LoginViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => OnboardingViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -58,9 +64,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: ProfileScreen.routePath,
+      initialRoute: MainOnboarding.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
+        MainOnboarding.routePath: (context) => const MainOnboarding(),
+        Onboarding1Screen.routePath: (context) => const Onboarding1Screen(),
         MainScreen.routePath: (context) => const MainScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
         CategoriesScreen.routePath: (context) => const CategoriesScreen(),
