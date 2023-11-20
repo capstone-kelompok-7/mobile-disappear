@@ -3,6 +3,7 @@ import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
+import 'package:disappear/screens/detail_order_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/forgot_password_screen.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
@@ -92,6 +93,7 @@ class App extends StatelessWidget {
         ProfileScreen.routePath:(context) => const ProfileScreen(),
         EditProfileScreen.routePath:(context) => const EditProfileScreen(),
         WishListScreen.routePath: (context) => const WishListScreen(),
+        DetailOrderScreen.routePath: (context) => const DetailOrderScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
