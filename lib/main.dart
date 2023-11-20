@@ -1,6 +1,7 @@
 import 'package:disappear/screens/challenge/challenge_screen.dart';
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
+import 'package:disappear/screens/change_password_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
@@ -89,6 +90,8 @@ class App extends StatelessWidget {
             const ProductReviewsScreen(),
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
+        ChangePasswordScreen.routePath: (context) =>
+            const ChangePasswordScreen(),
         ProfileScreen.routePath:(context) => const ProfileScreen(),
         EditProfileScreen.routePath:(context) => const EditProfileScreen(),
         WishListScreen.routePath: (context) => const WishListScreen(),
