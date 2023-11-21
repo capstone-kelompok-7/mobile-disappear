@@ -70,7 +70,7 @@ class App extends StatelessWidget {
       initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
-        MainOnboarding.routePath: (context) => const MainOnboarding(),
+        OnboardingScreen.routePath: (context) => const OnboardingScreen(),
         MainScreen.routePath: (context) => const MainScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
         CategoriesScreen.routePath: (context) => const CategoriesScreen(),
