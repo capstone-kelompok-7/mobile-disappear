@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class MainOnboarding extends StatefulWidget {
+class OnboardingScreen extends StatefulWidget {
   static const String routePath = '/main-onboarding';
 
-  const MainOnboarding({super.key});
+  const OnboardingScreen({super.key});
 
   @override
-  State<MainOnboarding> createState() => _MainOnboardingState();
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _MainOnboardingState extends State<MainOnboarding> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   void _goToRegisterScreen() {
     Navigator.pushNamedAndRemoveUntil(context, RegisterScreen.routePath, (route) => false);
   }
