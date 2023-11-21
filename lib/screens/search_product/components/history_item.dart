@@ -9,17 +9,17 @@ class HistoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final searchHistoryViewModel = Provider.of<SearchHistoryViewModel>(context, listen: false);
-    
+    final searchHistoryViewModel =
+        Provider.of<SearchHistoryViewModel>(context, listen: false);
+
     return ListTile(
       title: Text(title),
       leading: const Icon(Icons.history),
       minLeadingWidth: 0,
       horizontalTitleGap: 7,
       trailing: GestureDetector(
-        onTap: () => searchHistoryViewModel.clearHistory(title),
-        child: const Icon(Icons.clear)
-      ),
+          onTap: () => searchHistoryViewModel.clearHistory(title),
+          child: const Icon(Icons.clear)),
     );
   }
 }
