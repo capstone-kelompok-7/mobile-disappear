@@ -15,4 +15,17 @@ class AuthService {
 
     return response.data;
   }
+
+  Future<dynamic> sendResetPasswordEmail(String email) async {
+    final dio = createDio();
+
+    Response response = await dio.post(
+      '/auth/forgot-password',
+      data: {
+        'email': email
+      }
+    );
+
+    return response.data;
+  }
 }
