@@ -110,7 +110,8 @@ class App extends StatelessWidget {
             const ChangePasswordScreen(),
         ManualTransferScreen.routePath: (context) =>
             const ManualTransferScreen(),
-        WhatsappTransferScreen.routePath: (context) => WhatsappTransferScreen(),
+        WhatsappTransferScreen.routePath: (context) =>
+            const WhatsappTransferScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
