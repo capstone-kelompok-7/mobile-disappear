@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const String routePath = '/edit-profile-screen';
@@ -14,6 +18,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController numberController = TextEditingController();
+
+  File? selectedImage;
+
+  Future pickImageFromGallery() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (image == null) return;
+
+    setState(() {
+      selectedImage = File(image.path);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +54,26 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       left: 112.5, right: 99.5, top: 35, bottom: 28),
                   child: Stack(
                     children: [
-                      const CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU'),
-                      ),
+                      CircleAvatar(
+                          radius: 50,
+                          child: selectedImage != null
+                              ? ClipOval(
+                                  child: Image.file(
+                                    selectedImage!,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : SvgPicture.asset(
+                                  'assets/img/profilePicture.svg')),
                       Positioned(
                         right: 8,
                         bottom: 10,
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            pickImageFromGallery();
+                          },
                           child: SvgPicture.asset(
                               'assets/img/editProfileCameraButton.svg'),
                         ),
@@ -66,6 +92,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 TextFormField(
                   controller: nameController,
+                  keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                       hintText: 'Masukkan Nama Anda',
                       hintStyle: const TextStyle(
@@ -90,7 +117,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    const String expressionEmail = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                    RegExp regex = RegExp(expressionEmail);
+                    return !regex.hasMatch(value!)
+                        ? "Masukkan Email yang valid"
+                        : null;
+                  },
                   controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       hintText: 'Masukkan Email Anda',
                       hintStyle: const TextStyle(
@@ -116,7 +151,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    const String expressionPhoneNumber = r'^0\d{7,14}$';
+                    RegExp regex = RegExp(expressionPhoneNumber);
+                    return !regex.hasMatch(value!)
+                        ? "Masukkan Nomor yang valid"
+                        : null;
+                  },
                   controller: numberController,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       hintText: 'Masukkan Nomor Telepon Anda',
                       hintStyle: const TextStyle(
@@ -130,19 +173,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
 
                 const SizedBox(
-                  height: 150,
+                  height: 50,
                 ),
 
                 ElevatedButton(
                   style: ButtonStyle(
                     minimumSize:
-                        MaterialStateProperty.all(const Size.fromHeight(45)),
+                        MaterialStateProperty.all(const Size.fromHeight(5)),
                   ),
                   onPressed: () {
-                    _showDialog();
+                    if (formkey.currentState!.validate()) {
+                      _showDialog();
+                    }
                   },
                   child: const Text(
                     'Simpan',
+                    style: semiBoldBody4,
                   ),
                 ),
               ],
