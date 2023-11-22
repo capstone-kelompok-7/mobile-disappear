@@ -13,6 +13,7 @@ import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
 import 'package:disappear/screens/product_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
@@ -71,9 +72,10 @@ class App extends StatelessWidget {
       initialRoute: ElectronicWalletScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
-        MainOnboarding.routePath: (context) => const MainOnboarding(),
+        OnboardingScreen.routePath: (context) => const OnboardingScreen(),
         MainScreen.routePath: (context) => const MainScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
+        NotificationScreen.routePath: (context) => const NotificationScreen(),
         CategoriesScreen.routePath: (context) => const CategoriesScreen(),
         ForgotPasswordScreen.routePath: (context) =>
             const ForgotPasswordScreen(),
