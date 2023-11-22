@@ -1,4 +1,4 @@
-import 'package:disappear/screens/manualTransfer/whatsapp_transfer_screen.dart';
+import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
