@@ -11,6 +11,8 @@ import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
 import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
+import 'package:disappear/screens/manualTransfer/manual_transfer_screen.dart';
+import 'package:disappear/screens/manualTransfer/whatsapp_transfer_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
 import 'package:disappear/screens/product_screen.dart';
@@ -67,7 +69,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.routePath,
+      initialRoute: ManualTransferScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         MainOnboarding.routePath: (context) => const MainOnboarding(),
@@ -106,6 +108,9 @@ class App extends StatelessWidget {
         ProductScreen.routePath: (context) => const ProductScreen(),
         ChangePasswordScreen.routePath: (context) =>
             const ChangePasswordScreen(),
+        ManualTransferScreen.routePath: (context) =>
+            const ManualTransferScreen(),
+        WhatsappTransferScreen.routePath: (context) => WhatsappTransferScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
