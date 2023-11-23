@@ -1,14 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:disappear/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginViewModel extends ChangeNotifier {
+class ForgotPasswordViewModel extends ChangeNotifier {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
-
-  final passwordController = TextEditingController();
 
   bool _isPasswordObscured = true;
 
@@ -32,44 +29,41 @@ class LoginViewModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  String? message;
+  String? _message;
 
-  set errorMessage(String? errorMessage) {
-    message = errorMessage;
+  set message(String? message) {
+    _message = message;
     notifyListeners();
   }
 
-  String? get errorMessage => message;
+  String? get message => _message;
 
-  bool _isLoginSuccess = false;
+  bool? _isEmailSent;
 
-  set isLoginSuccess(bool isLoginSuccess) {
-    _isLoginSuccess = isLoginSuccess;
+  set isEmailSent(bool? isEmailSent) {
+    _isEmailSent = isEmailSent;
     notifyListeners();
   }
 
-  bool get isLoginSuccess => _isLoginSuccess;
+  bool? get isEmailSent => _isEmailSent;
 
-  Future<void> login() async {
+  Future<void> sendEmail() async {
     if (formKey.currentState!.validate()) {
       isLoading = true;
-      isLoginSuccess = false;
+      isEmailSent = null;
 
       try {
       final authService = AuthService();
 
-      final response = await authService.login(emailController.text, passwordController.text);
+      final response = await authService.sendResetPasswordEmail(emailController.text);
       message = response['message'];
 
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('user-token', response['data']['access_token']);
-      await prefs.setBool('is-logged-in', true);
-
-      isLoginSuccess = true;
+      isEmailSent = true;
       } on DioException catch (error) {
         if (error.response != null) {
           if ([400, 401, 404, 500].contains(error.response!.statusCode)) {
             message = error.response!.data['message'];
+            isEmailSent = false;
           }
         }
       } finally {
@@ -80,15 +74,7 @@ class LoginViewModel extends ChangeNotifier {
 
   String? validateEmail(value) {
     if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$').hasMatch(value!)) {
-      return 'Oops... Email yang kamu masukan salah, nih. Coba lagi, yuk!';
-    }
-
-    return null;
-  }
-
-  String? validatePassword(value) {
-    if (value!.length < 6) {
-      return 'Oops... Kata sandi yang kamu masukan salah, nih. Coba lagi, yuk!';
+      return 'Email tidak valid';
     }
 
     return null;

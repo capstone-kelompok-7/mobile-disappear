@@ -1,4 +1,4 @@
-import 'package:disappear/screens/login_screen.dart';
+import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/register_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class MainOnboarding extends StatefulWidget {
+class OnboardingScreen extends StatefulWidget {
   static const String routePath = '/main-onboarding';
 
-  const MainOnboarding({super.key});
+  const OnboardingScreen({super.key});
 
   @override
-  State<MainOnboarding> createState() => _MainOnboardingState();
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _MainOnboardingState extends State<MainOnboarding> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   void _goToRegisterScreen() {
     Navigator.pushNamedAndRemoveUntil(context, RegisterScreen.routePath, (route) => false);
   }
@@ -29,15 +29,16 @@ class _MainOnboardingState extends State<MainOnboarding> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 100),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Consumer<OnboardingViewModel>(
               builder: (context, state, _) {
                 return SvgPicture.asset(
                   state.data[state.selectedScreenIndex]['picture']!,
-                  width: 300,
-                  height: 300
+                  width: 200,
+                  height: 200
                 );
               }
             ),
@@ -94,16 +95,15 @@ class _MainOnboardingState extends State<MainOnboarding> {
                 );
               }
             ),
-            const SizedBox(height: 111,),
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Consumer<OnboardingViewModel>(
         builder: (context, state, _) {
           if (state.selectedScreenIndex < 2) {
             return Padding(
-              padding: const EdgeInsets.only(left: 40, right: 40, bottom: 120),
+              padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -128,7 +128,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
           }
 
           return Padding(
-            padding: const EdgeInsets.only(left: 40, right: 40, bottom: 120),
+            padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
