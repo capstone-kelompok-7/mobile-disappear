@@ -28,4 +28,38 @@ class AuthService {
 
     return response.data;
   }
+  
+  Future<dynamic> verifyForgotPasswordOTP(String email, String otp) async {
+    final dio = createDio();
+
+    Response response = await dio.post(
+      '/auth/forgot-password/verify',
+      data: {
+        'email': email,
+        'otp': otp
+      }
+    );
+
+    return response.data;
+  }
+
+  Future<dynamic> resetPassword(String newPassword, String confirmPassword, String accessToken) async {
+    final dio = createDio();
+
+    Response response = await dio.post(
+      '/auth/forgot-password/reset',
+      options: Options(
+        headers: {
+          'doesntRequireToken': true,
+          'Authorization': 'Bearer $accessToken',
+        }
+      ),
+      data: {
+        'new_password': newPassword,
+        'confirm_password': confirmPassword
+      }
+    );
+
+    return response.data;
+  }
 }
