@@ -7,12 +7,14 @@ import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
-import 'package:disappear/screens/forgot_password_screen.dart';
+import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
 import 'package:disappear/screens/join_challenge_screen.dart';
-import 'package:disappear/screens/login_screen.dart';
+import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
-import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/auth/forgot_password/new_password_screen.dart';
+import 'package:disappear/screens/product_review/add_review_screen.dart';
+import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
 import 'package:disappear/screens/product_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
@@ -24,14 +26,18 @@ import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
-import 'package:disappear/screens/verification_forgot_password_screen.dart';
+import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
+import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
+import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
+import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
+import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
@@ -57,6 +63,18 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => OnboardingViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => ForgotPasswordViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AddProductReviewViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ForgotPasswordVerificationViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => NewPasswordViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -68,17 +86,18 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: ElectronicWalletScreen.routePath,
+      initialRoute: LoginScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
-        MainOnboarding.routePath: (context) => const MainOnboarding(),
+        OnboardingScreen.routePath: (context) => const OnboardingScreen(),
         MainScreen.routePath: (context) => const MainScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
+        NotificationScreen.routePath: (context) => const NotificationScreen(),
         CategoriesScreen.routePath: (context) => const CategoriesScreen(),
         ForgotPasswordScreen.routePath: (context) =>
             const ForgotPasswordScreen(),
-        VerificationForgotPasswordScreen.routePath: (context) =>
-            const VerificationForgotPasswordScreen(),
+        ForgotPasswordVerificationScreen.routePath: (context) =>
+            const ForgotPasswordVerificationScreen(),
         VerificationEmailScreen.routePath: (context) =>
             const VerificationEmailScreen(),
         DetailChallengeScreen.routePath: (context) =>
@@ -90,7 +109,7 @@ class App extends StatelessWidget {
         SuccessEmailVerificationScreen.routePath: (context) =>
             const SuccessEmailVerificationScreen(),
         ChallengeScreen.routePath: (context) => const ChallengeScreen(),
-        LoginScreen.routePath: (context) => LoginScreen(),
+        LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
@@ -109,6 +128,7 @@ class App extends StatelessWidget {
             const ChangePasswordScreen(),
         ElectronicWalletScreen.routePath: (context) =>
             const ElectronicWalletScreen(),
+        AddReviewScreen.routePath: (context) => const AddReviewScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',

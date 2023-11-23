@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -57,12 +58,24 @@ class _ImagePickerState extends State<ImagePicker> {
           ),
           itemBuilder: (context, index) {
             if (index < state.files.length) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.file(
-                  File(state.files[index].path!),
-                  fit: BoxFit.cover,
-                ),
+              return Stack(
+                fit: StackFit.expand,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.file(
+                      File(state.files[index].path!),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      onPressed: () => state.removeFile(index),
+                      icon: const Icon(Icons.delete, color: whiteColor,),
+                    )
+                  )
+                ],
               );
             }
 
