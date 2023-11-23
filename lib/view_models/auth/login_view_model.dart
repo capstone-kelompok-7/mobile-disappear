@@ -62,7 +62,8 @@ class LoginViewModel extends ChangeNotifier {
       message = response['message'];
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('user-token', response['data']['access_token']);
+      await prefs.setString('user-token', response['data']['access_token']);
+      await prefs.setBool('is-logged-in', true);
 
       isLoginSuccess = true;
       } on DioException catch (error) {
