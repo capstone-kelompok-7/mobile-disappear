@@ -6,10 +6,10 @@ import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
-import 'package:disappear/screens/forgot_password_screen.dart';
+import 'package:disappear/screens/auth/forgot_password_screen.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
 import 'package:disappear/screens/join_challenge_screen.dart';
-import 'package:disappear/screens/login_screen.dart';
+import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
 import 'package:disappear/screens/product_review/add_review_screen.dart';
@@ -32,6 +32,7 @@ import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
+import 'package:disappear/view_models/auth/forgot_password_view_model.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
@@ -60,6 +61,9 @@ void main() {
         create: (context) => OnboardingViewModel(),
       ),
       ChangeNotifierProvider(
+        create: (context) => ForgotPasswordViewModel(),
+      ),
+      ChangeNotifierProvider(
         create: (context) => AddProductReviewViewModel(),
       ),
     ],
@@ -73,7 +77,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.routePath,
+      initialRoute: ForgotPasswordScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
