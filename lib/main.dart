@@ -12,6 +12,7 @@ import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/product_review/add_review_screen.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
 import 'package:disappear/screens/product_screen.dart';
@@ -32,6 +33,7 @@ import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
+import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
@@ -56,6 +58,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => OnboardingViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AddProductReviewViewModel(),
       ),
     ],
     child: const App(),
@@ -108,6 +113,10 @@ class App extends StatelessWidget {
         ProductScreen.routePath: (context) => const ProductScreen(),
         ChangePasswordScreen.routePath: (context) =>
             const ChangePasswordScreen(),
+        ProfileScreen.routePath:(context) => const ProfileScreen(),
+        EditProfileScreen.routePath:(context) => const EditProfileScreen(),
+        WishListScreen.routePath: (context) => const WishListScreen(),
+        AddReviewScreen.routePath: (context) => const AddReviewScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
