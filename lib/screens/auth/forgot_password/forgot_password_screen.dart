@@ -1,5 +1,4 @@
 import 'package:disappear/screens/auth/forgot_password/components/forgot_password_success_dialog.dart';
-import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
