@@ -1,27 +1,26 @@
-import 'package:disappear/screens/auth/forgot_password_verification_screen.dart';
+import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
+import 'package:disappear/screens/auth/forgot_password/new_password_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ForgotPasswordSuccessDialog extends StatefulWidget {
-  const ForgotPasswordSuccessDialog({
+class ForgotPasswordVerificationSuccessDialog extends StatefulWidget {
+  const ForgotPasswordVerificationSuccessDialog({
     super.key,
     required this.message,
-    required this.email,
   });
 
   final String message;
-  final String email;
 
   @override
-  State<ForgotPasswordSuccessDialog> createState() => _ForgotPasswordSuccessDialogState();
+  State<ForgotPasswordVerificationSuccessDialog> createState() => _ForgotPasswordVerificationSuccessDialogState();
 }
 
-class _ForgotPasswordSuccessDialogState extends State<ForgotPasswordSuccessDialog> {
-  void _goToVerificationScreen() {
+class _ForgotPasswordVerificationSuccessDialogState extends State<ForgotPasswordVerificationSuccessDialog> {
+  void _goToNewPasswordScreen() {
     Navigator.of(context).pop();
-    Navigator.pushReplacementNamed(context, ForgotPasswordVerificationScreen.routePath);
+    Navigator.pushNamed(context, NewPasswordScreen.routePath);
   }
 
   @override
@@ -42,7 +41,7 @@ class _ForgotPasswordSuccessDialogState extends State<ForgotPasswordSuccessDialo
           ),
           const SizedBox(height: 15,),
           ElevatedButton(
-            onPressed: _goToVerificationScreen,
+            onPressed: _goToNewPasswordScreen,
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(155, 35),
               padding: const EdgeInsets.all(0),

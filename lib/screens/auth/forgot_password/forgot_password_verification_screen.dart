@@ -1,9 +1,10 @@
-import 'package:disappear/screens/auth/components/forgot_password_verification_failed_dialog.dart';
-import 'package:disappear/screens/auth/components/forgot_password_verification_success_dialog.dart';
-import 'package:disappear/screens/auth/forgot_password_screen.dart';
+import 'package:disappear/screens/auth/forgot_password/components/forgot_password_verification_failed_dialog.dart';
+import 'package:disappear/screens/auth/forgot_password/components/forgot_password_verification_success_dialog.dart';
+import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/view_models/auth/forgot_password_verification_view_model.dart';
+import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
+import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,10 +33,13 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
   void _sendEmailListener() {
     if (mounted && context.mounted) {
       final forgotPasswordVerifViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
+      final newPasswordViewModel = Provider.of<NewPasswordViewModel>(context, listen: false);
 
       if (forgotPasswordVerifViewModel.isOTPCorrect == true) {
         _displaySuccessMessage(forgotPasswordVerifViewModel.message!);
+        
         forgotPasswordVerifViewModel.isOTPCorrect = null;
+        newPasswordViewModel.accessToken = forgotPasswordVerifViewModel.accessToken;
       }
 
       if (forgotPasswordVerifViewModel.isOTPCorrect == false) {
@@ -46,30 +50,20 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
   }
 
   void _displayFailedMessage(String message) {
-    final forgotPasswordViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
-
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) =>
-        ForgotPasswordVerificationFailedDialog(
-          message: message,
-          email: forgotPasswordViewModel.email!,
-        )
+        ForgotPasswordVerificationFailedDialog(message: message)
     );
   }
 
   void _displaySuccessMessage(String message) {
-    final forgotPasswordViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
-
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) =>
-        ForgotPasswordVerificationSuccessDialog(
-          message: message,
-          email: forgotPasswordViewModel.email!,
-        )
+        ForgotPasswordVerificationSuccessDialog(message: message)
     );
   }
 
@@ -97,7 +91,6 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
           Container(
             height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.only(top: 107),
-            padding: const EdgeInsets.symmetric(horizontal: 60),
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(
@@ -132,13 +125,15 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 35,
+                    left: 30,
+                    right: 30,
                   ),
                   child: Consumer<ForgotPasswordVerificationViewModel>(
                     builder: (context, state, _) {
                       return Form(
                         key: state.formKey,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             /// FIRST CODE
                             SizedBox(
@@ -330,6 +325,8 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 10,
+                    left: 30,
+                    right: 30,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -358,11 +355,17 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 30,
+                    left: 30,
+                    right: 30,
                   ),
                   child: Consumer<ForgotPasswordVerificationViewModel>(
                     builder: (context, state, _) {
                       return ElevatedButton(
-                        onPressed: state.isLoading ? null : state.verifyOTP,
+                        onPressed: state.isLoading
+                          ? null
+                          : state.isOTPEmpty()
+                            ? null
+                            : state.verifyOTP,
                         child: state.isLoading
                           ? const SizedBox(
                               width: 20,

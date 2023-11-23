@@ -13,6 +13,14 @@ class ForgotPasswordVerificationViewModel extends ChangeNotifier {
   }
 
   String? get email => _email;
+
+  String? _accessToken;
+
+  set accessToken(String? accessToken) {
+    _accessToken = accessToken;
+  }
+
+  String? get accessToken => _accessToken;
   
   TextEditingController code1 = TextEditingController();
   TextEditingController code2 = TextEditingController();
@@ -22,6 +30,15 @@ class ForgotPasswordVerificationViewModel extends ChangeNotifier {
   TextEditingController code6 = TextEditingController();
 
   String get otp => '${code1.text}${code2.text}${code3.text}${code4.text}${code5.text}${code6.text}';
+
+  bool isOTPEmpty() {
+    return code1.text.isEmpty
+      && code2.text.isEmpty
+      && code3.text.isEmpty
+      && code4.text.isEmpty
+      && code5.text.isEmpty
+      && code6.text.isEmpty;
+  }
 
   bool _isLoading = false;
 
@@ -60,6 +77,7 @@ class ForgotPasswordVerificationViewModel extends ChangeNotifier {
 
         final response = await authService.verifyForgotPasswordOTP(email!, otp);
         message = response['message'];
+        accessToken = response['data']['access_token'];
 
         isOTPCorrect = true;
 
