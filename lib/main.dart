@@ -25,7 +25,7 @@ import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
-import 'package:disappear/screens/forgot_password_verification_screen.dart';
+import 'package:disappear/screens/auth/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
@@ -91,8 +91,8 @@ class App extends StatelessWidget {
         CategoriesScreen.routePath: (context) => const CategoriesScreen(),
         ForgotPasswordScreen.routePath: (context) =>
             const ForgotPasswordScreen(),
-        VerificationForgotPasswordScreen.routePath: (context) =>
-            const VerificationForgotPasswordScreen(),
+        ForgotPasswordVerificationScreen.routePath: (context) =>
+            const ForgotPasswordVerificationScreen(),
         VerificationEmailScreen.routePath: (context) =>
             const VerificationEmailScreen(),
         DetailChallengeScreen.routePath: (context) =>

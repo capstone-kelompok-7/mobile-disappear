@@ -4,6 +4,15 @@ import 'package:flutter/material.dart';
 
 class ForgotPasswordVerificationViewModel extends ChangeNotifier {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  String? _email;
+
+  set email(String? email) {
+    _email = email;
+    notifyListeners();
+  }
+
+  String? get email => _email;
   
   TextEditingController code1 = TextEditingController();
   TextEditingController code2 = TextEditingController();
@@ -11,6 +20,8 @@ class ForgotPasswordVerificationViewModel extends ChangeNotifier {
   TextEditingController code4 = TextEditingController();
   TextEditingController code5 = TextEditingController();
   TextEditingController code6 = TextEditingController();
+
+  String get otp => '${code1.text}${code2.text}${code3.text}${code4.text}${code5.text}${code6.text}';
 
   bool _isLoading = false;
 
@@ -21,46 +32,61 @@ class ForgotPasswordVerificationViewModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  String? message;
+  String? _message;
 
-  set errorMessage(String? errorMessage) {
-    message = errorMessage;
+  set message(String? message) {
+    _message = message;
     notifyListeners();
   }
 
-  String? get errorMessage => message;
+  String? get message => _message;
 
-  bool _isOTPCorrect = false;
+  bool? _isOTPCorrect;
 
-  set isOTPCorrect(bool isOTPCorrect) {
+  set isOTPCorrect(bool? isOTPCorrect) {
     _isOTPCorrect = isOTPCorrect;
     notifyListeners();
   }
 
-  bool get isOTPCorrect => _isOTPCorrect;
+  bool? get isOTPCorrect => _isOTPCorrect;
 
-  Future<void> login() async {
+  Future<void> verifyOTP() async {
     if (formKey.currentState!.validate()) {
       isLoading = true;
-      isOTPCorrect = false;
+      isOTPCorrect = null;
 
       try {
-      final authService = AuthService();
+        final authService = AuthService();
 
-      // final response = await authService.verifyForgotPasswordOTP();
-      // message = response['message'];
+        final response = await authService.verifyForgotPasswordOTP(email!, otp);
+        message = response['message'];
 
-      isOTPCorrect = true;
+        isOTPCorrect = true;
+
+        clearOTP();
       } on DioException catch (error) {
         if (error.response != null) {
-          if ([400, 401, 404, 500].contains(error.response!.statusCode)) {
+          if (error.response!.statusCode == 400) {
             message = error.response!.data['message'];
+          } else {
+            message = 'Terjadi kesalahan pada server.';
           }
+
+          isOTPCorrect = false;
         }
       } finally {
         isLoading = false;
       }
     }
+  }
+
+  void clearOTP() {
+    code1.clear();
+    code2.clear();
+    code3.clear();
+    code4.clear();
+    code5.clear();
+    code6.clear();
   }
 
   String? validateEmail(value) {

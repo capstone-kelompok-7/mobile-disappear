@@ -1,11 +1,10 @@
-import 'package:disappear/screens/auth/forgot_password_verification_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ForgotPasswordSuccessDialog extends StatefulWidget {
-  const ForgotPasswordSuccessDialog({
+class ForgotPasswordVerificationFailedDialog extends StatefulWidget {
+  const ForgotPasswordVerificationFailedDialog({
     super.key,
     required this.message,
     required this.email,
@@ -15,13 +14,12 @@ class ForgotPasswordSuccessDialog extends StatefulWidget {
   final String email;
 
   @override
-  State<ForgotPasswordSuccessDialog> createState() => _ForgotPasswordSuccessDialogState();
+  State<ForgotPasswordVerificationFailedDialog> createState() => _ForgotPasswordVerificationFailedDialogState();
 }
 
-class _ForgotPasswordSuccessDialogState extends State<ForgotPasswordSuccessDialog> {
+class _ForgotPasswordVerificationFailedDialogState extends State<ForgotPasswordVerificationFailedDialog> {
   void _goToVerificationScreen() {
     Navigator.of(context).pop();
-    Navigator.pushReplacementNamed(context, ForgotPasswordVerificationScreen.routePath);
   }
 
   @override
@@ -33,7 +31,7 @@ class _ForgotPasswordSuccessDialogState extends State<ForgotPasswordSuccessDialo
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset('assets/img/SuccessIcon.svg'),
+          SvgPicture.asset('assets/img/FailedIcon.svg'),
           const SizedBox(height: 15,),
           Text(
             widget.message,

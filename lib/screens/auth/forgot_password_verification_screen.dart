@@ -1,3 +1,6 @@
+import 'package:disappear/screens/auth/components/forgot_password_verification_failed_dialog.dart';
+import 'package:disappear/screens/auth/components/forgot_password_verification_success_dialog.dart';
+import 'package:disappear/screens/auth/forgot_password_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/forgot_password_verification_view_model.dart';
@@ -5,10 +8,74 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 
-class VerificationForgotPasswordScreen extends StatelessWidget {
+class ForgotPasswordVerificationScreen extends StatefulWidget {
   static const String routePath = '/verification-forgot-password';
-  const VerificationForgotPasswordScreen({super.key});
+  
+  const ForgotPasswordVerificationScreen({super.key});
+
+  @override
+  State<ForgotPasswordVerificationScreen> createState() => _ForgotPasswordVerificationScreenState();
+}
+
+class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerificationScreen> {
+  @override
+  void initState() {
+    final forgotPasswordViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
+
+    forgotPasswordViewModel.addListener(_sendEmailListener);
+
+    super.initState();
+  }
+
+  void _sendEmailListener() {
+    if (mounted && context.mounted) {
+      final forgotPasswordVerifViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
+
+      if (forgotPasswordVerifViewModel.isOTPCorrect == true) {
+        _displaySuccessMessage(forgotPasswordVerifViewModel.message!);
+        forgotPasswordVerifViewModel.isOTPCorrect = null;
+      }
+
+      if (forgotPasswordVerifViewModel.isOTPCorrect == false) {
+        _displayFailedMessage(forgotPasswordVerifViewModel.message!);
+        forgotPasswordVerifViewModel.isOTPCorrect = null;
+      }
+    }
+  }
+
+  void _displayFailedMessage(String message) {
+    final forgotPasswordViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) =>
+        ForgotPasswordVerificationFailedDialog(
+          message: message,
+          email: forgotPasswordViewModel.email!,
+        )
+    );
+  }
+
+  void _displaySuccessMessage(String message) {
+    final forgotPasswordViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) =>
+        ForgotPasswordVerificationSuccessDialog(
+          message: message,
+          email: forgotPasswordViewModel.email!,
+        )
+    );
+  }
+
+  void _backToForgotPasswordScreen() {
+    Navigator.pushReplacementNamed(context, ForgotPasswordScreen.routePath);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +107,23 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
             child: ListView(
               shrinkWrap: true,
               children: [
-                SvgPicture.asset('assets/img/SendEmailVerificationIcon.svg'),
-                Text(
-                  'Masukkan Kode Verifikasi',
-                  style: semiBoldBody3.copyWith(
-                    color: blackColor,
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-
-                /// MASUKKAN KODE VERIFIKASI
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 12,
-                  ),
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Image.asset(
+                    'assets/img/SendEmailVerificationIcon.png',
+                    width: 120,
+                    height: 120,
+                  )
+                ),
+                
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
                   child: Text(
-                    'Kode verifikasi berhasil dikirimkan melalui Email kamu yang terdaftar pada akun',
-                    style: regularBody7.copyWith(color: blackColor),
+                    'Masukkan Kode Verifikasi',
+                    style: semiBoldBody3.copyWith(
+                      color: blackColor,
+                      fontSize: 18,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -79,6 +145,10 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                               height: 40,
                               width: 40,
                               child: TextField(
+                                enabled: !state.isLoading,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(0)
+                                ),
                                 obscureText: true,
                                 onChanged: (value) {
                                   if (value.length == 1) {
@@ -104,10 +174,16 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                               height: 40,
                               width: 40,
                               child: TextField(
+                                enabled: !state.isLoading,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(0)
+                                ),
                                 obscureText: true,
                                 onChanged: (value) {
                                   if (value.length == 1) {
                                     FocusScope.of(context).nextFocus();
+                                  } else if (value.isEmpty) {
+                                    FocusScope.of(context).previousFocus();
                                   }
                                 },
                                 style: mediumBody3.copyWith(
@@ -129,10 +205,16 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                               height: 40,
                               width: 40,
                               child: TextField(
+                                enabled: !state.isLoading,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(0)
+                                ),
                                 obscureText: true,
                                 onChanged: (value) {
                                   if (value.length == 1) {
                                     FocusScope.of(context).nextFocus();
+                                  } else if (value.isEmpty) {
+                                    FocusScope.of(context).previousFocus();
                                   }
                                 },
                                 style: mediumBody3.copyWith(
@@ -154,10 +236,16 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                               height: 40,
                               width: 40,
                               child: TextField(
+                                enabled: !state.isLoading,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(0)
+                                ),
                                 obscureText: true,
                                 onChanged: (value) {
                                   if (value.length == 1) {
                                     FocusScope.of(context).nextFocus();
+                                  } else if (value.isEmpty) {
+                                    FocusScope.of(context).previousFocus();
                                   }
                                 },
                                 style: mediumBody3.copyWith(
@@ -179,10 +267,16 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                               height: 40,
                               width: 40,
                               child: TextField(
+                                enabled: !state.isLoading,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(0)
+                                ),
                                 obscureText: true,
                                 onChanged: (value) {
                                   if (value.length == 1) {
                                     FocusScope.of(context).nextFocus();
+                                  } else if (value.isEmpty) {
+                                    FocusScope.of(context).previousFocus();
                                   }
                                 },
                                 style: mediumBody3.copyWith(
@@ -204,10 +298,14 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                               height: 40,
                               width: 40,
                               child: TextField(
+                                enabled: !state.isLoading,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(0)
+                                ),
                                 obscureText: true,
                                 onChanged: (value) {
-                                  if (value.length == 1) {
-                                    FocusScope.of(context).nextFocus();
+                                  if (value.isEmpty) {
+                                    FocusScope.of(context).previousFocus();
                                   }
                                 },
                                 style: mediumBody3.copyWith(
@@ -236,9 +334,17 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('03.00', style: regularBody5),
+                      TimerCountdown(
+                        format: CountDownTimerFormat.minutesSeconds,
+                        timeTextStyle: regularBody5,
+                        spacerWidth: 2,
+                        enableDescriptions: false,
+                        endTime: DateTime.now().add(
+                          const Duration(minutes: 3, seconds: 0),
+                        ),
+                      ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: _backToForgotPasswordScreen,
                         child: Text(
                           'Kirim ulang',
                           style: regularBody5.copyWith(color: primary40),
@@ -253,20 +359,22 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(
                     top: 30,
                   ),
-                  child: ElevatedButton(
-                    style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(primary40),
-                      minimumSize: MaterialStatePropertyAll(
-                        Size(295, 44),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      'Verifikasi',
-                      style: semiBoldBody4.copyWith(
-                        color: whiteColor,
-                      ),
-                    ),
+                  child: Consumer<ForgotPasswordVerificationViewModel>(
+                    builder: (context, state, _) {
+                      return ElevatedButton(
+                        onPressed: state.isLoading ? null : state.verifyOTP,
+                        child: state.isLoading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: whiteColor,
+                                strokeWidth: 3,
+                              ),
+                            )
+                          : const Text('Verifikasi', style: semiBoldBody3),
+                      );
+                    }
                   ),
                 ),
               ],

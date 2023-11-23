@@ -4,8 +4,8 @@ import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ForgotPasswordSuccessDialog extends StatefulWidget {
-  const ForgotPasswordSuccessDialog({
+class ForgotPasswordVerificationSuccessDialog extends StatefulWidget {
+  const ForgotPasswordVerificationSuccessDialog({
     super.key,
     required this.message,
     required this.email,
@@ -15,13 +15,12 @@ class ForgotPasswordSuccessDialog extends StatefulWidget {
   final String email;
 
   @override
-  State<ForgotPasswordSuccessDialog> createState() => _ForgotPasswordSuccessDialogState();
+  State<ForgotPasswordVerificationSuccessDialog> createState() => _ForgotPasswordVerificationSuccessDialogState();
 }
 
-class _ForgotPasswordSuccessDialogState extends State<ForgotPasswordSuccessDialog> {
+class _ForgotPasswordVerificationSuccessDialogState extends State<ForgotPasswordVerificationSuccessDialog> {
   void _goToVerificationScreen() {
     Navigator.of(context).pop();
-    Navigator.pushReplacementNamed(context, ForgotPasswordVerificationScreen.routePath);
   }
 
   @override
