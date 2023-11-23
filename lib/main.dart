@@ -1,3 +1,4 @@
+import 'package:disappear/screens/auth/register/register_verification_screen.dart';
 import 'package:disappear/screens/challenge/challenge_screen.dart';
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
@@ -18,13 +19,12 @@ import 'package:disappear/screens/onboarding/onboarding_screen.dart';
 import 'package:disappear/screens/product_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
-import 'package:disappear/screens/register_screen.dart';
+import 'package:disappear/screens/auth/register/register_screen.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:disappear/screens/save_article_sreen.dart';
 import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
-import 'package:disappear/screens/verification_email_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
@@ -36,6 +36,8 @@ import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
+import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
+import 'package:disappear/view_models/auth/register/register_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
@@ -74,6 +76,12 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => NewPasswordViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => RegisterViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => RegisterVerificationViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -97,8 +105,8 @@ class App extends StatelessWidget {
             const ForgotPasswordScreen(),
         ForgotPasswordVerificationScreen.routePath: (context) =>
             const ForgotPasswordVerificationScreen(),
-        VerificationEmailScreen.routePath: (context) =>
-            const VerificationEmailScreen(),
+        RegisterVerificationScreen.routePath: (context) =>
+            const RegisterVerificationScreen(),
         DetailChallengeScreen.routePath: (context) =>
             const DetailChallengeScreen(),
         NewPasswordScreen.routePath: (context) => const NewPasswordScreen(),
