@@ -28,4 +28,18 @@ class AuthService {
 
     return response.data;
   }
+  
+  Future<dynamic> verifyForgotPasswordOTP(String email, String otp) async {
+    final dio = createDio();
+
+    Response response = await dio.post(
+      '/auth/forgot-password/verify',
+      data: {
+        'email': email,
+        'otp': otp
+      }
+    );
+
+    return response.data;
+  }
 }

@@ -1,8 +1,10 @@
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/auth/forgot_password_verification_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class VerificationForgotPasswordScreen extends StatelessWidget {
   static const String routePath = '/verification-forgot-password';
@@ -10,12 +12,6 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _code1 = TextEditingController();
-    TextEditingController _code2 = TextEditingController();
-    TextEditingController _code3 = TextEditingController();
-    TextEditingController _code4 = TextEditingController();
-    TextEditingController _code5 = TextEditingController();
-    TextEditingController _code6 = TextEditingController();
     return Scaffold(
       backgroundColor: primary40,
       body: ListView(
@@ -25,81 +21,56 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
             padding: const EdgeInsets.only(
               right: 72,
               left: 72,
-              top: 54,
+              top: 70,
             ),
-            child: Text(
-              'Disappear',
-              style: boldTitle3.copyWith(
-                color: whiteColor,
-                fontSize: 46,
-              ),
-              textAlign: TextAlign.center,
-            ),
+            child: SvgPicture.asset('assets/img/DisappearAuthLogo.svg'),
           ),
 
           /// BOTTOM SHEET
           Container(
-            margin: const EdgeInsets.only(
-              top: 107,
-            ),
+            height: MediaQuery.of(context).size.height,
+            margin: const EdgeInsets.only(top: 107),
+            padding: const EdgeInsets.symmetric(horizontal: 60),
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(40),
               ),
             ),
-            child: SizedBox(
-              width: 390,
-              height: 520,
-              child: Center(
-                child: Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        top: 40,
-                        right: 135,
-                        left: 135,
-                      ),
-                      child: Icon(
-                        Icons.forward_to_inbox_rounded,
-                        size: 100,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 15,
-                        right: 71,
-                        left: 71,
-                      ),
-                      child: Text(
-                        'Masukkan Kode Verifikasi',
-                        style: semiBoldBody3.copyWith(
-                          color: blackColor,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                SvgPicture.asset('assets/img/SendEmailVerificationIcon.svg'),
+                Text(
+                  'Masukkan Kode Verifikasi',
+                  style: semiBoldBody3.copyWith(
+                    color: blackColor,
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
 
-                    /// MASUKKAN KODE VERIFIKASI
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 12,
-                      ),
-                      child: Text(
-                        'Kode verifikasi berhasil dikirimkan melalui Email\nkamu yang terdaftar pada akun',
-                        style: regularBody7.copyWith(
-                          color: blackColor,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                /// MASUKKAN KODE VERIFIKASI
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 12,
+                  ),
+                  child: Text(
+                    'Kode verifikasi berhasil dikirimkan melalui Email kamu yang terdaftar pada akun',
+                    style: regularBody7.copyWith(color: blackColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
 
-                    /// VERIFICATION CODE BOX
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 35,
-                      ),
-                      child: Form(
+                /// VERIFICATION CODE BOX
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 35,
+                  ),
+                  child: Consumer<ForgotPasswordVerificationViewModel>(
+                    builder: (context, state, _) {
+                      return Form(
+                        key: state.formKey,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -123,7 +94,7 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                                   LengthLimitingTextInputFormatter(1),
                                   FilteringTextInputFormatter.digitsOnly,
                                 ],
-                                controller: _code1,
+                                controller: state.code1,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -148,7 +119,7 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                                   LengthLimitingTextInputFormatter(1),
                                   FilteringTextInputFormatter.digitsOnly,
                                 ],
-                                controller: _code2,
+                                controller: state.code2,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -173,7 +144,7 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                                   LengthLimitingTextInputFormatter(1),
                                   FilteringTextInputFormatter.digitsOnly,
                                 ],
-                                controller: _code3,
+                                controller: state.code3,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -198,7 +169,7 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                                   LengthLimitingTextInputFormatter(1),
                                   FilteringTextInputFormatter.digitsOnly,
                                 ],
-                                controller: _code4,
+                                controller: state.code4,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -223,7 +194,7 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                                   LengthLimitingTextInputFormatter(1),
                                   FilteringTextInputFormatter.digitsOnly,
                                 ],
-                                controller: _code5,
+                                controller: state.code5,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -248,69 +219,57 @@ class VerificationForgotPasswordScreen extends StatelessWidget {
                                   LengthLimitingTextInputFormatter(1),
                                   FilteringTextInputFormatter.digitsOnly,
                                 ],
-                                controller: _code6,
+                                controller: state.code6,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ),
+                      );
+                    }
+                  ),
+                ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '03.00',
-                            style: GoogleFonts.poppins().copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 180,
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Kirim ulang',
-                              style: GoogleFonts.poppins().copyWith(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    /// VERIFIKASI
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 30,
-                      ),
-                      child: ElevatedButton(
-                        style: const ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(primary40),
-                          minimumSize: MaterialStatePropertyAll(
-                            Size(295, 44),
-                          ),
-                        ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('03.00', style: regularBody5),
+                      TextButton(
                         onPressed: () {},
                         child: Text(
-                          'Verifikasi',
-                          style: semiBoldBody4.copyWith(
-                            color: whiteColor,
-                          ),
+                          'Kirim ulang',
+                          style: regularBody5.copyWith(color: primary40),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+
+                /// VERIFIKASI
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 30,
+                  ),
+                  child: ElevatedButton(
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(primary40),
+                      minimumSize: MaterialStatePropertyAll(
+                        Size(295, 44),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      'Verifikasi',
+                      style: semiBoldBody4.copyWith(
+                        color: whiteColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -25,7 +25,7 @@ import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/verification_email_screen.dart';
-import 'package:disappear/screens/verification_forgot_password_screen.dart';
+import 'package:disappear/screens/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
@@ -33,6 +33,7 @@ import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/view_models/auth/forgot_password_view_model.dart';
+import 'package:disappear/view_models/auth/forgot_password_verification_view_model.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
@@ -65,6 +66,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => AddProductReviewViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ForgotPasswordVerificationViewModel(),
       ),
     ],
     child: const App(),
@@ -100,7 +104,7 @@ class App extends StatelessWidget {
         SuccessEmailVerificationScreen.routePath: (context) =>
             const SuccessEmailVerificationScreen(),
         ChallengeScreen.routePath: (context) => const ChallengeScreen(),
-        LoginScreen.routePath: (context) => LoginScreen(),
+        LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
@@ -117,9 +121,6 @@ class App extends StatelessWidget {
         ProductScreen.routePath: (context) => const ProductScreen(),
         ChangePasswordScreen.routePath: (context) =>
             const ChangePasswordScreen(),
-        ProfileScreen.routePath:(context) => const ProfileScreen(),
-        EditProfileScreen.routePath:(context) => const EditProfileScreen(),
-        WishListScreen.routePath: (context) => const WishListScreen(),
         AddReviewScreen.routePath: (context) => const AddReviewScreen(),
       },
       theme: ThemeData(
