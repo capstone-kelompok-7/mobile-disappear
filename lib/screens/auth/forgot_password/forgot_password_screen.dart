@@ -1,7 +1,8 @@
-import 'package:disappear/screens/auth/components/forgot_password_success_dialog.dart';
+import 'package:disappear/screens/auth/forgot_password/components/forgot_password_success_dialog.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/view_models/auth/forgot_password_view_model.dart';
+import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
+import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -25,16 +26,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   void _sendEmailListener() {
-    final forgotPasswordViewModel = Provider.of<ForgotPasswordViewModel>(context, listen: false);
+    if (mounted && context.mounted) {
+      final forgotPasswordViewModel = Provider.of<ForgotPasswordViewModel>(context, listen: false);
+      final forgotPasswordVerifViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
 
-    if (forgotPasswordViewModel.isEmailSent == true) {
-      _displaySuccessMessage(forgotPasswordViewModel.message!);
-      forgotPasswordViewModel.isEmailSent = null;
-    }
+      if (forgotPasswordViewModel.isEmailSent == true) {
+        _displaySuccessMessage(forgotPasswordViewModel.message!);
 
-    if (forgotPasswordViewModel.isEmailSent == false) {
-      _displayFailedMessage(forgotPasswordViewModel.message!);
-      forgotPasswordViewModel.isEmailSent = null;
+        forgotPasswordViewModel.isEmailSent = null;
+        forgotPasswordVerifViewModel.email = forgotPasswordViewModel.emailController.text;
+      }
+
+      if (forgotPasswordViewModel.isEmailSent == false) {
+        _displayFailedMessage(forgotPasswordViewModel.message!);
+        forgotPasswordViewModel.isEmailSent = null;
+      }
     }
   }
 
@@ -45,10 +51,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   void _displaySuccessMessage(String message) {
+    final forgotPasswordViewModel = Provider.of<ForgotPasswordViewModel>(context, listen: false);
+
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) =>
-        ForgotPasswordSuccessDialog(message: message)
+        ForgotPasswordSuccessDialog(
+          message: message,
+          email: forgotPasswordViewModel.emailController.text,
+        )
     );
   }
 

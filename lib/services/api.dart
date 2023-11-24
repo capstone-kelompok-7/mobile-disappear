@@ -15,12 +15,16 @@ Dio createDio() {
 }
 
 dynamic requestInterceptor(RequestOptions options, RequestInterceptorHandler handler) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.get('user-token');
+  if (options.headers.containsKey('doesntRequireToken')) {
+    options.headers.remove('doesntRequireToken');
+  } else {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('user-token');
 
-  if (token != null) {
-    options.headers.addAll({'Authorization': 'Bearer $token'});
+    if (token != null) {
+      options.headers.addAll({'Authorization': 'Bearer $token'});
+    }
   }
 
-	return handler.next(options);
+  return handler.next(options);
 }
