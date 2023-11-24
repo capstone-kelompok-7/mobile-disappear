@@ -1,5 +1,4 @@
 import 'package:disappear/screens/auth/login_screen.dart';
-import 'package:disappear/screens/auth/register/register_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
