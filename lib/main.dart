@@ -1,3 +1,4 @@
+import 'package:disappear/screens/auth/register/register_verification_screen.dart';
 import 'package:disappear/screens/challenge/challenge_screen.dart';
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
@@ -9,32 +10,41 @@ import 'package:disappear/screens/detail_order_screen.dart';
 import 'package:disappear/screens/environmental_issues/environmental_issues_screen.dart';
 import 'package:disappear/screens/favorite_product/favorite_product_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
-import 'package:disappear/screens/forgot_password_screen.dart';
+import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
 import 'package:disappear/screens/join_challenge_screen.dart';
-import 'package:disappear/screens/login_screen.dart';
+import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
-import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
+import 'package:disappear/screens/order_list/order_list_screen.dart';
+import 'package:disappear/screens/manual_transfer/manual_transfer_screen.dart';
+import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
+import 'package:disappear/screens/auth/forgot_password/new_password_screen.dart';
+import 'package:disappear/screens/product_review/add_review_screen.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
 import 'package:disappear/screens/product_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
-import 'package:disappear/screens/register_screen.dart';
+import 'package:disappear/screens/auth/register/register_screen.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:disappear/screens/save_article_sreen.dart';
 import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
-import 'package:disappear/screens/verification_email_screen.dart';
-import 'package:disappear/screens/verification_forgot_password_screen.dart';
+import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
-
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
+import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
+import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
+import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
+import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
+import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
@@ -60,6 +70,24 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => OnboardingViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => ForgotPasswordViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AddProductReviewViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ForgotPasswordVerificationViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => NewPasswordViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => RegisterViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => RegisterVerificationViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -81,10 +109,10 @@ class App extends StatelessWidget {
         CategoriesScreen.routePath: (context) => const CategoriesScreen(),
         ForgotPasswordScreen.routePath: (context) =>
             const ForgotPasswordScreen(),
-        VerificationForgotPasswordScreen.routePath: (context) =>
-            const VerificationForgotPasswordScreen(),
-        VerificationEmailScreen.routePath: (context) =>
-            const VerificationEmailScreen(),
+        ForgotPasswordVerificationScreen.routePath: (context) =>
+            const ForgotPasswordVerificationScreen(),
+        RegisterVerificationScreen.routePath: (context) =>
+            const RegisterVerificationScreen(),
         DetailChallengeScreen.routePath: (context) =>
             const DetailChallengeScreen(),
         NewPasswordScreen.routePath: (context) => const NewPasswordScreen(),
@@ -94,7 +122,7 @@ class App extends StatelessWidget {
         SuccessEmailVerificationScreen.routePath: (context) =>
             const SuccessEmailVerificationScreen(),
         ChallengeScreen.routePath: (context) => const ChallengeScreen(),
-        LoginScreen.routePath: (context) => LoginScreen(),
+        LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
@@ -111,12 +139,20 @@ class App extends StatelessWidget {
         ProductScreen.routePath: (context) => const ProductScreen(),
         ChangePasswordScreen.routePath: (context) =>
             const ChangePasswordScreen(),
+        ManualTransferScreen.routePath: (context) =>
+            const ManualTransferScreen(),
+        WhatsappTransferScreen.routePath: (context) =>
+            const WhatsappTransferScreen(),
         ElectronicWalletScreen.routePath: (context) =>
             const ElectronicWalletScreen(),
         EnvironmentalIssuesScreen.routePath: (context) =>
             const EnvironmentalIssuesScreen(),
         FavoriteProductScreen.routePath: (context) =>
             const FavoriteProductScreen(),
+        AddReviewScreen.routePath: (context) => const AddReviewScreen(),
+        OrderListScreen.routePath: (context) => const OrderListScreen(),
+        TelegramTransferScreen.routePath: (context) =>
+            const TelegramTransferScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',

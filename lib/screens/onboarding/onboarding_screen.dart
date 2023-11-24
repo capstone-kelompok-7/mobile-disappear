@@ -1,5 +1,5 @@
-import 'package:disappear/screens/login_screen.dart';
-import 'package:disappear/screens/register_screen.dart';
+import 'package:disappear/screens/auth/login_screen.dart';
+import 'package:disappear/screens/auth/register/register_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
@@ -29,15 +29,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 100),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Consumer<OnboardingViewModel>(
               builder: (context, state, _) {
                 return SvgPicture.asset(
                   state.data[state.selectedScreenIndex]['picture']!,
-                  width: 300,
-                  height: 300
+                  width: 200,
+                  height: 200
                 );
               }
             ),
@@ -94,16 +95,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 );
               }
             ),
-            const SizedBox(height: 111,),
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Consumer<OnboardingViewModel>(
         builder: (context, state, _) {
           if (state.selectedScreenIndex < 2) {
             return Padding(
-              padding: const EdgeInsets.only(left: 40, right: 40, bottom: 120),
+              padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -128,7 +128,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           }
 
           return Padding(
-            padding: const EdgeInsets.only(left: 40, right: 40, bottom: 120),
+            padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

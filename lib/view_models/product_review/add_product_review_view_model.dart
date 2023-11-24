@@ -19,4 +19,15 @@ class AddProductReviewViewModel extends ChangeNotifier {
     _files = files;
     notifyListeners();
   }
+
+  void removeFile(int index) {
+    _files.removeAt(index);
+    notifyListeners();
+  }
+
+  final descriptionController = TextEditingController();
+
+  Future<void> submitReview() async {
+
+  }
 }

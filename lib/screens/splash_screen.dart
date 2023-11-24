@@ -1,4 +1,4 @@
-import 'package:disappear/screens/login_screen.dart';
+import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -26,16 +26,27 @@ class _SplashScreenState extends State<SplashScreen> {
     bool firstRun = await IsFirstRun.isFirstRun();
 
     if (firstRun) {
-      Navigator.pushNamedAndRemoveUntil(context, OnboardingScreen.routePath, (route) => false);
+      _goToOnboardingScreen();
     } else {
       final prefs = await SharedPreferences.getInstance();
-
       if (prefs.getBool('is-logged-in') ?? false) {
-        Navigator.pushNamedAndRemoveUntil(context, MainScreen.routePath, (route) => false);
+        _goToMainScreen();
       } else {
-        Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routePath, (route) => false);
+        _goToLoginScreen();
       }
     }
+  }
+
+  void _goToOnboardingScreen() {
+    Navigator.pushNamedAndRemoveUntil(context, OnboardingScreen.routePath, (route) => false);
+  }
+
+  void _goToMainScreen() {
+    Navigator.pushNamedAndRemoveUntil(context, MainScreen.routePath, (route) => false);
+  }
+
+  void _goToLoginScreen() {
+    Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routePath, (route) => false);
   }
 
   @override
