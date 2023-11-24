@@ -12,7 +12,7 @@ import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
 import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
-import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
 import 'package:disappear/screens/order_list/order_list_screen.dart';
 import 'package:disappear/screens/manual_transfer/manual_transfer_screen.dart';
 import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
@@ -139,6 +139,8 @@ class App extends StatelessWidget {
             const ElectronicWalletScreen(),
         AddReviewScreen.routePath: (context) => const AddReviewScreen(),
         OrderListScreen.routePath: (context) => const OrderListScreen(),
+        TelegramTransferScreen.routePath: (context) =>
+            const TelegramTransferScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',

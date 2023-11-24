@@ -1,3 +1,4 @@
+import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
 import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -161,8 +162,7 @@ class _ManualTransferScreenState extends State<ManualTransferScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            const WhatsappTransferScreen()), //Telegram Screen belum dibuat.
+                        builder: (context) => const TelegramTransferScreen()),
                   );
                 }
               },
