@@ -4,6 +4,7 @@ import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/change_password_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
+import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
@@ -131,6 +132,8 @@ class App extends StatelessWidget {
             const ManualTransferScreen(),
         WhatsappTransferScreen.routePath: (context) =>
             const WhatsappTransferScreen(),
+        ElectronicWalletScreen.routePath: (context) =>
+            const ElectronicWalletScreen(),
         AddReviewScreen.routePath: (context) => const AddReviewScreen(),
       },
       theme: ThemeData(
