@@ -12,6 +12,8 @@ import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
 import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
+import 'package:disappear/screens/new_password_screen.dart';
+import 'package:disappear/screens/order_list/order_list_screen.dart';
 import 'package:disappear/screens/manual_transfer/manual_transfer_screen.dart';
 import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/new_password_screen.dart';
@@ -32,7 +34,6 @@ import 'package:disappear/screens/auth/forgot_password/forgot_password_verificat
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
-
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
@@ -128,6 +129,8 @@ class App extends StatelessWidget {
         ProductScreen.routePath: (context) => const ProductScreen(),
         ChangePasswordScreen.routePath: (context) =>
             const ChangePasswordScreen(),
+        ProfileScreen.routePath: (context) => const ProfileScreen(),
+        EditProfileScreen.routePath: (context) => const EditProfileScreen(),
         ManualTransferScreen.routePath: (context) =>
             const ManualTransferScreen(),
         WhatsappTransferScreen.routePath: (context) =>
@@ -135,6 +138,7 @@ class App extends StatelessWidget {
         ElectronicWalletScreen.routePath: (context) =>
             const ElectronicWalletScreen(),
         AddReviewScreen.routePath: (context) => const AddReviewScreen(),
+        OrderListScreen.routePath: (context) => const OrderListScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
