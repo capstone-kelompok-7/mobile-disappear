@@ -6,6 +6,8 @@ import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
+import 'package:disappear/screens/environmental_issues/environmental_issues_screen.dart';
+import 'package:disappear/screens/favorite_product/favorite_product_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/forgot_password_screen.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
@@ -69,7 +71,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: ElectronicWalletScreen.routePath,
+      initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
@@ -111,6 +113,10 @@ class App extends StatelessWidget {
             const ChangePasswordScreen(),
         ElectronicWalletScreen.routePath: (context) =>
             const ElectronicWalletScreen(),
+        EnvironmentalIssuesScreen.routePath: (context) =>
+            const EnvironmentalIssuesScreen(),
+        FavoriteProductScreen.routePath: (context) =>
+            const FavoriteProductScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
