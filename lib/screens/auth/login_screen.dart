@@ -1,5 +1,6 @@
+import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
-import 'package:disappear/screens/register_screen.dart';
+import 'package:disappear/screens/auth/register/register_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
@@ -27,10 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  void _goToRegisterScreen() {
-    Navigator.pushReplacementNamed(context, RegisterScreen.routePath);
-  }
-
   void _loginMessageListener() {
     final loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
     if (loginViewModel.message != null) {
@@ -50,8 +47,16 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void _goToRegisterScreen() {
+    Navigator.pushNamed(context, RegisterScreen.routePath);
+  }
+
   void _goToHomeScreen() {
     Navigator.pushNamedAndRemoveUntil(context, MainScreen.routePath, (route) => false);
+  }
+
+  void _goToForgotPasswordScreen() {
+    Navigator.pushNamed(context, ForgotPasswordScreen.routePath);
   }
 
   @override
@@ -133,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: _goToForgotPasswordScreen,
                             child: Text(
                               'Lupa Kata Sandi?',
                               style: mediumBody7.copyWith(color: primary40, fontFamily: 'Inter')
