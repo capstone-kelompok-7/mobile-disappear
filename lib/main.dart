@@ -2,6 +2,9 @@ import 'package:disappear/screens/challenge/challenge_screen.dart';
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/change_password_screen.dart';
+import 'package:disappear/screens/checkout/checkout_screen.dart';
+import 'package:disappear/screens/checkout/choose_transport_screen.dart';
+import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
@@ -108,6 +111,10 @@ class App extends StatelessWidget {
         ProductScreen.routePath: (context) => const ProductScreen(),
         ChangePasswordScreen.routePath: (context) =>
             const ChangePasswordScreen(),
+        CheckoutScreen.routePath: (context) => const CheckoutScreen(),
+        UseCouponScreen.routePath: (context) => const UseCouponScreen(),
+        ChooseTransportScreen.routePath: (context) =>
+            const ChooseTransportScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
