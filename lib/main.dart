@@ -42,6 +42,7 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/home/category_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
@@ -86,6 +87,9 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => RegisterVerificationViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => CategoryViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -121,7 +125,7 @@ class App extends StatelessWidget {
             const SuccessEmailVerificationScreen(),
         ChallengeScreen.routePath: (context) => const ChallengeScreen(),
         LoginScreen.routePath: (context) => const LoginScreen(),
-        RegisterScreen.routePath: (context) => RegisterScreen(),
+        RegisterScreen.routePath: (context) => const RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
         LeaderboardScreen.routePath: (context) => const LeaderboardScreen(),
@@ -137,8 +141,6 @@ class App extends StatelessWidget {
         ProductScreen.routePath: (context) => const ProductScreen(),
         ChangePasswordScreen.routePath: (context) =>
             const ChangePasswordScreen(),
-        ProfileScreen.routePath: (context) => const ProfileScreen(),
-        EditProfileScreen.routePath: (context) => const EditProfileScreen(),
         ManualTransferScreen.routePath: (context) =>
             const ManualTransferScreen(),
         WhatsappTransferScreen.routePath: (context) =>
