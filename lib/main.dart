@@ -10,6 +10,8 @@ import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
+import 'package:disappear/screens/environmental_issues/environmental_issues_screen.dart';
+import 'package:disappear/screens/favorite_product/favorite_product_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
@@ -150,6 +152,10 @@ class App extends StatelessWidget {
             const WhatsappTransferScreen(),
         ElectronicWalletScreen.routePath: (context) =>
             const ElectronicWalletScreen(),
+        EnvironmentalIssuesScreen.routePath: (context) =>
+            const EnvironmentalIssuesScreen(),
+        FavoriteProductScreen.routePath: (context) =>
+            const FavoriteProductScreen(),
         AddReviewScreen.routePath: (context) => const AddReviewScreen(),
         OrderListScreen.routePath: (context) => const OrderListScreen(),
         TelegramTransferScreen.routePath: (context) =>
