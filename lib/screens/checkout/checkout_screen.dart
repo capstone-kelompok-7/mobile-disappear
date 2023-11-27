@@ -25,7 +25,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         children: const [
           AddressInfomation(),
           OrderInformation(),
-          TransportInformation(),
           PaymentMethodCheckout(),
           DetailPaymentTotal(),
         ],
