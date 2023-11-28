@@ -1,9 +1,8 @@
 import 'package:disappear/screens/home/components/best_seller_products.dart';
 import 'package:disappear/screens/home/components/categories.dart';
-import 'package:disappear/screens/home/components/slide_banner_dots_indicator.dart';
 import 'package:disappear/screens/home/components/latest_articles.dart';
 import 'package:disappear/screens/home/components/latest_challenges.dart';
-import 'package:disappear/screens/home/components/slide_banner.dart';
+import 'package:disappear/screens/home/components/slide_carousel.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
@@ -88,12 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 14,),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
-            child: SlideBanner(),
-          ),
-          const SizedBox(height: 14,),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: SlideBannerDotsIndicator()
+            child: SlideCarousel(),
           ),
           const SizedBox(height: 19,),
           const Padding(
