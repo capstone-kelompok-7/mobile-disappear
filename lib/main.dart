@@ -48,6 +48,7 @@ import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
 import 'package:disappear/view_models/home/category_view_model.dart';
+import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
@@ -94,6 +95,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => CategoryViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => LatestArticlesViewModel(),
       ),
     ],
     child: const App(),
