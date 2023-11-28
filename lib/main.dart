@@ -3,6 +3,8 @@ import 'package:disappear/screens/challenge/challenge_screen.dart';
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/change_password_screen.dart';
+import 'package:disappear/screens/chatbot/chatbot_empty_screen.dart';
+import 'package:disappear/screens/chatbot/chatbot_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
@@ -99,7 +101,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.routePath,
+      initialRoute: ChatBotScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
@@ -153,6 +155,8 @@ class App extends StatelessWidget {
         OrderListScreen.routePath: (context) => const OrderListScreen(),
         TelegramTransferScreen.routePath: (context) =>
             const TelegramTransferScreen(),
+        ChatBotScreen.routePath: (context) => ChatBotScreen(),
+        ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
