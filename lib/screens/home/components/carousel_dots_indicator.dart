@@ -3,8 +3,8 @@ import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SlideCarouselDotsIndicator extends StatelessWidget {
-  const SlideCarouselDotsIndicator({
+class CarouselDotsIndicator extends StatelessWidget {
+  const CarouselDotsIndicator({
     super.key,
     required this.count
   });

@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:disappear/screens/home/components/placeholders/carousel_placeholder.dart';
-import 'package:disappear/screens/home/components/slide_carousel_dots_indicator.dart';
+import 'package:disappear/screens/home/components/carousel_dots_indicator.dart';
 import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +54,7 @@ class SlideCarousel extends StatelessWidget {
                 children: [
                   _buildView(state, snapshot),
                   const SizedBox(height: 10,),
-                  SlideCarouselDotsIndicator(count: snapshot.data!.length,)
+                  CarouselDotsIndicator(count: snapshot.data!.length,)
                 ],
               );
             }

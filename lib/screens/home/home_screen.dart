@@ -2,7 +2,7 @@ import 'package:disappear/screens/home/components/best_seller_products.dart';
 import 'package:disappear/screens/home/components/categories.dart';
 import 'package:disappear/screens/home/components/latest_articles.dart';
 import 'package:disappear/screens/home/components/latest_challenges.dart';
-import 'package:disappear/screens/home/components/slide_carousel.dart';
+import 'package:disappear/screens/home/components/carousel.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
