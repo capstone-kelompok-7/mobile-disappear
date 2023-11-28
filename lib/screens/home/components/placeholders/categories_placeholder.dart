@@ -21,7 +21,10 @@ class CategoriesPlaceholder extends StatelessWidget {
             return Container(
               width: 70,
               height: 70,
-              color: Colors.white,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
             );
           },
           separatorBuilder: (context, index) => const SizedBox(width: 10),
