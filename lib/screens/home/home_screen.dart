@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 14,),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
-            child: SlideCarousel(),
+            child: Carousel(),
           ),
           const SizedBox(height: 19,),
           const Padding(

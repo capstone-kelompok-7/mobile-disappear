@@ -5,8 +5,8 @@ import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SlideCarousel extends StatelessWidget {
-  const SlideCarousel({super.key});
+class Carousel extends StatelessWidget {
+  const Carousel({super.key});
 
   Widget _buildView(state, AsyncSnapshot snapshot) {
     return ClipRRect(
