@@ -1,4 +1,5 @@
 import 'package:disappear/models/product_model.dart';
+import 'package:disappear/screens/home/components/placeholders/best_seller_product_thumbnail_placeholder.dart';
 import 'package:disappear/screens/product_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -31,13 +32,18 @@ class _BestSellerProductItemState extends State<BestSellerProductItem> {
             borderRadius: BorderRadius.circular(10),
             child: Column(
               children: [
-                SizedBox(
+                Image.network(
+                  widget.product.thumbnail!.imageUrl,
+                  fit: BoxFit.cover,
                   width: 130,
                   height: 120,
-                  child: Image.network(
-                    widget.product.thumbnail!.imageUrl,
-                    fit: BoxFit.cover,
-                  )
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress != null) {
+                      return const BestSellerProductThumbnailPlaceholder();
+                    }
+
+                    return child;
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, right: 6.5, bottom: 10, left: 6.5),
