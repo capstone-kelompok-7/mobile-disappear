@@ -3,7 +3,7 @@ import 'package:disappear/screens/home/components/category_item.dart';
 import 'package:disappear/screens/home/components/placeholders/categories_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/view_models/home/category_view_model.dart';
+import 'package:disappear/view_models/home/home_category_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +35,7 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
-    final categoryViewModel = Provider.of<CategoryViewModel>(context, listen: false);
+    final categoryViewModel = Provider.of<HomeCategoryViewModel>(context, listen: false);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
