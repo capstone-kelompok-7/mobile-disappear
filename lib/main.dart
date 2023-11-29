@@ -3,8 +3,11 @@ import 'package:disappear/screens/challenge/challenge_screen.dart';
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/change_password_screen.dart';
+import 'package:disappear/screens/checkout/add_new_address_screen.dart';
+import 'package:disappear/screens/checkout/address_list_screen.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/checkout/choose_transport_screen.dart';
+import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
@@ -110,7 +113,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.routePath,
+      initialRoute: AddressListScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
@@ -154,6 +157,9 @@ class App extends StatelessWidget {
         UseCouponScreen.routePath: (context) => const UseCouponScreen(),
         ChooseTransportScreen.routePath: (context) =>
             const ChooseTransportScreen(),
+        AddressListScreen.routePath: (context) => const AddressListScreen(),
+        AddNewAddresScreen.routePath: (context) => const AddNewAddresScreen(),
+        EditOldAddressScreen.routePath :(context) => const EditOldAddressScreen(),
         ManualTransferScreen.routePath: (context) =>
             const ManualTransferScreen(),
         WhatsappTransferScreen.routePath: (context) =>
