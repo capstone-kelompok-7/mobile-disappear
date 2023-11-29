@@ -1,8 +1,11 @@
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/home/components/category_item.dart';
+import 'package:disappear/screens/home/components/placeholders/categories_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/home/category_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key});
@@ -16,9 +19,26 @@ class _CategoriesState extends State<Categories> {
     Navigator.pushNamed(context, CategoriesScreen.routePath);
   }
 
+  Widget _buildView(snapshot) {
+    return SizedBox(
+      height: 80,
+      child: ListView.separated(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) => CategoryItem(category: snapshot.data![index]),
+        separatorBuilder: (context, index) => const SizedBox(width: 20),
+        itemCount: snapshot.data!.length,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final categoryViewModel = Provider.of<CategoryViewModel>(context, listen: false);
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,15 +58,19 @@ class _CategoriesState extends State<Categories> {
           ],
         ),
         const SizedBox(height: 15,),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CategoryItem(),
-            CategoryItem(),
-            CategoryItem(),
-            CategoryItem(),
-            CategoryItem(),
-          ],
+        FutureBuilder(
+          future: categoryViewModel.getCategories(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('Tidak ada kategori');
+            }
+
+            if (snapshot.hasData) {
+              return _buildView(snapshot);
+            }
+            
+            return const CategoriesPlaceholder();
+          }
         ),
       ],
     );
