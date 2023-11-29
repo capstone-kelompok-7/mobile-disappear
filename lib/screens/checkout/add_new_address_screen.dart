@@ -1,6 +1,5 @@
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -13,31 +12,10 @@ class AddNewAddresScreen extends StatefulWidget {
 }
 
 class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
-  Future<List<String>> _fetchSuggestions(String searchValue) async {
-    await Future.delayed(const Duration(milliseconds: 750));
-    List<String> suggestions = [
-      'Kota Jakarta Barat',
-      'Kota Bandung',
-      'Kota Bogor',
-      'Kota Tegal',
-      'Kota Madura',
-      'Kota Madiun'
-    ];
-
-    List<String> filteredSuggestions = suggestions.where((element) {
-      return element.toLowerCase().contains(searchValue.toLowerCase());
-    }).toList();
-    return filteredSuggestions;
-  }
-
   TextEditingController nameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController provinsiController = TextEditingController();
-  TextEditingController? kotaKabupatenController = TextEditingController();
-  TextEditingController kecamatanController = TextEditingController();
-  TextEditingController postalCodeController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
+
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   bool isMainAddress = true;
 
@@ -135,10 +113,11 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
                   },
                   controller: addressController,
                   keyboardType: TextInputType.streetAddress,
-                  maxLines: null,
+                  maxLines: 4,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
-                    hintText: 'Nama Jalan, No.Rumah',
+                    hintText:
+                        'Contoh : Jl. Mawar Blok K3 no. 2 CIWIDEY, KOTA BANDUNG, JAWA BARAT ID 83728',
                     hintStyle: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -146,167 +125,9 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    contentPadding: const EdgeInsets.only(left: 10),
+                    contentPadding: const EdgeInsets.only(left: 10, top: 20),
                   ),
                 ),
-              ),
-
-              //PROVINSI
-              Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 5),
-                child: EasyAutocomplete(
-                  decoration: InputDecoration(
-                    fillColor: Colors.transparent,
-                    hintText: 'Provinsi',
-                    hintStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    contentPadding: const EdgeInsets.only(left: 10),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Field tidak boleh kosong';
-                    }
-                    return null;
-                  },
-                  controller: provinsiController,
-                  suggestions: const [
-                    'ACEH',
-                    'DKI JAKARTA',
-                    'JAWA BARAT',
-                    'JAWA TENGAH',
-                    'JAWA TIMUR',
-                    'KALIMANTAN BARAT',
-                    'KALIMANTAN TENGAH',
-                    'SULAWESI SELATAN',
-                    'PAPUA',
-                    'PAPUA BARAT'
-                  ],
-                  onChanged: (value) => debugPrint('onChanged value: $value'),
-                ),
-              ),
-
-              //KOTA/KABUPATEN
-              Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 5),
-                child: EasyAutocomplete(
-                  decoration: InputDecoration(
-                    fillColor: Colors.transparent,
-                    hintText: 'Kota/Kabupaten',
-                    hintStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    contentPadding: const EdgeInsets.only(left: 10),
-                  ),
-                  controller: kotaKabupatenController,
-                  asyncSuggestions: (searchValue) async =>
-                      await _fetchSuggestions(searchValue),
-                  onChanged: (value) => debugPrint('onChanged value: $value'),
-                ),
-              ),
-
-              //KECAMATAN
-              Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 5),
-                child: EasyAutocomplete(
-                  decoration: InputDecoration(
-                    fillColor: Colors.transparent,
-                    hintText: 'Kecamatan',
-                    hintStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    contentPadding: const EdgeInsets.only(left: 10),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Field tidak boleh kosong';
-                    }
-                    return null;
-                  },
-                  controller: kecamatanController,
-                  suggestions: const [
-                    'Tulung Agung',
-                    'Pagedangan',
-                    'Bojong',
-                    'Daan Mogot',
-                    'Keagungan',
-                  ],
-                  onChanged: (value) => debugPrint('onChanged value: $value'),
-                ),
-              ),
-
-              //KODE POS//
-              Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 5),
-                child: TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Field tidak boleh kosong';
-                    }
-                    return null;
-                  },
-                  controller: postalCodeController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    fillColor: Colors.transparent,
-                    hintText: 'Kode Pos',
-                    hintStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    contentPadding: const EdgeInsets.only(left: 10),
-                  ),
-                ),
-              ),
-
-              //NOTE
-              const SizedBox(
-                height: 25,
-              ),
-              const Text(
-                'Note',
-                style: semiBoldBody5,
-              ),
-
-              //NOTE
-              Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 5),
-                child: TextFormField(
-                  controller: noteController,
-                  keyboardType: TextInputType.name,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    fillColor: Colors.transparent,
-                    hintText: 'Misal : Dekat dengan Pos Kamling',
-                    hintStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    contentPadding: const EdgeInsets.only(left: 10),
-                  ),
-                ),
-              ),
-
-              const SizedBox(
-                height: 64,
               ),
 
               //SWITCH BUTTON

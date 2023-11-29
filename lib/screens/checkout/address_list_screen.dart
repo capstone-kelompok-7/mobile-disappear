@@ -47,7 +47,6 @@ class _AddressListScreenState extends State<AddressListScreen> {
       ),
       body: Column(
         children: [
-
           //CONTAINER SEBUAH ALAMAT
           Container(
             margin: const EdgeInsets.only(
@@ -125,11 +124,13 @@ class _AddressListScreenState extends State<AddressListScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/edit-old-address-screen');
+                      Navigator.of(context)
+                          .pushNamed('/edit-old-address-screen');
                     },
                     child: SvgPicture.asset(
                       'assets/img/editProfileButton.svg',
-                      color: primary40,
+                      colorFilter:
+                          const ColorFilter.mode(primary40, BlendMode.srcIn),
                     ),
                   )
                 ],
@@ -167,26 +168,6 @@ class _AddressListScreenState extends State<AddressListScreen> {
                           SizedBox(
                             width: 5,
                           ),
-                          // Container(
-                          //   width: 51,
-                          //   height: 21,
-                          //   decoration: ShapeDecoration(
-                          //     color: primary40,
-                          //     shape: RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.circular(5)),
-                          //   ),
-                          //   child: Center(
-                          //     child: Text(
-                          //       'Utama',
-                          //       style: TextStyle(
-                          //         color: Colors.white,
-                          //         fontSize: 10,
-                          //         fontFamily: 'Poppins',
-                          //         fontWeight: FontWeight.w600,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // )
                         ],
                       ),
                       SizedBox(
@@ -214,17 +195,14 @@ class _AddressListScreenState extends State<AddressListScreen> {
                   GestureDetector(
                     child: SvgPicture.asset(
                       'assets/img/editProfileButton.svg',
-                      color: primary40,
+                      colorFilter:
+                          const ColorFilter.mode(primary40, BlendMode.srcIn),
                     ),
                   )
                 ],
               ),
             ),
           ),
-
-
-
-
         ],
       ),
     );
