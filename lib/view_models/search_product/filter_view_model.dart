@@ -19,12 +19,7 @@ class FilterViewModel extends ChangeNotifier {
 
   int get selectedFilter => _selectedFilter;
 
-  bool _isAsc = true;
-
-  set isAsc(bool isAsc) {
-    _isAsc = isAsc;
-    notifyListeners();
+  void togglePromo() {
+    withPromo = !withPromo;
   }
-
-  bool get isAsc => _isAsc;
 }

@@ -58,7 +58,55 @@ const dummyData = [
         "image_url": "https://res.cloudinary.com/dufa4bel6/image/upload/v1700988766/disappear/di8tmdbosgcdcly9oazw.webp"
       }
     ],
-  }
+  },
+  {
+    "id": 4,
+    "name": "Test update Product",
+    "price": 100000,
+    "rating": 0,
+    "image_url": [
+      {
+        "id": 7,
+        "image_url": "https://res.cloudinary.com/dufa4bel6/image/upload/v1700988762/disappear/paybvz3r7l60wzvhjsam.webp"
+      },
+      {
+        "id": 8,
+        "image_url": "https://res.cloudinary.com/dufa4bel6/image/upload/v1700988766/disappear/di8tmdbosgcdcly9oazw.webp"
+      }
+    ],
+  },
+  {
+    "id": 4,
+    "name": "Test update Product",
+    "price": 100000,
+    "rating": 0,
+    "image_url": [
+      {
+        "id": 7,
+        "image_url": "https://res.cloudinary.com/dufa4bel6/image/upload/v1700988762/disappear/paybvz3r7l60wzvhjsam.webp"
+      },
+      {
+        "id": 8,
+        "image_url": "https://res.cloudinary.com/dufa4bel6/image/upload/v1700988766/disappear/di8tmdbosgcdcly9oazw.webp"
+      }
+    ],
+  },
+  {
+    "id": 4,
+    "name": "Test update Product",
+    "price": 100000,
+    "rating": 0,
+    "image_url": [
+      {
+        "id": 7,
+        "image_url": "https://res.cloudinary.com/dufa4bel6/image/upload/v1700988762/disappear/paybvz3r7l60wzvhjsam.webp"
+      },
+      {
+        "id": 8,
+        "image_url": "https://res.cloudinary.com/dufa4bel6/image/upload/v1700988766/disappear/di8tmdbosgcdcly9oazw.webp"
+      }
+    ],
+  },
 ];
 
 class ProductService {
@@ -85,7 +133,13 @@ class ProductService {
       .toList();
   }
 
-  Future<List<ProductModel>> getProductsByKeyword(String keyword) async {
+  Future<List<ProductModel>> getProducts({
+    required String keyword,
+    required int page,
+    int pageSize = 4,
+    bool withPromo = false,
+    int filterType = 0,
+  }) async {
     final dio = createDio();
 
     // final Response response = await dio.get('/products?page=1&pageSize=5');

@@ -19,7 +19,7 @@ class _SearchFieldState extends State<SearchField> {
       final searchHistoryViewModel = Provider.of<SearchHistoryViewModel>(context, listen: false);
       final searchProductsViewModel = Provider.of<SearchProductViewModel>(context, listen: false);
 
-      searchProductsViewModel.getProducts(keyword);
+      searchProductsViewModel.getProducts(keyword: keyword);
       
       searchHistoryViewModel.addHistory(keyword);
     }
