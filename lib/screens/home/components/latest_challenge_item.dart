@@ -1,4 +1,3 @@
-import 'package:disappear/screens/challenge/challenge_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';

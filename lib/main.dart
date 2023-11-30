@@ -5,6 +5,12 @@ import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/change_password_screen.dart';
 import 'package:disappear/screens/chatbot/chatbot_empty_screen.dart';
 import 'package:disappear/screens/chatbot/chatbot_screen.dart';
+import 'package:disappear/screens/checkout/add_new_address_screen.dart';
+import 'package:disappear/screens/checkout/address_list_screen.dart';
+import 'package:disappear/screens/checkout/checkout_screen.dart';
+import 'package:disappear/screens/checkout/choose_transport_screen.dart';
+import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
+import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
@@ -46,6 +52,9 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/home/carousel_view_model.dart';
+import 'package:disappear/view_models/home/category_view_model.dart';
+import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
@@ -90,6 +99,15 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => RegisterVerificationViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => CategoryViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => CarouselViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => BestSellerProductViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -101,7 +119,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.routePath,
+      initialRoute: AddressListScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
@@ -125,7 +143,7 @@ class App extends StatelessWidget {
             const SuccessEmailVerificationScreen(),
         ChallengeScreen.routePath: (context) => const ChallengeScreen(),
         LoginScreen.routePath: (context) => const LoginScreen(),
-        RegisterScreen.routePath: (context) => RegisterScreen(),
+        RegisterScreen.routePath: (context) => const RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
         LeaderboardScreen.routePath: (context) => const LeaderboardScreen(),
@@ -141,6 +159,13 @@ class App extends StatelessWidget {
         ProductScreen.routePath: (context) => const ProductScreen(),
         ChangePasswordScreen.routePath: (context) =>
             const ChangePasswordScreen(),
+        CheckoutScreen.routePath: (context) => const CheckoutScreen(),
+        UseCouponScreen.routePath: (context) => const UseCouponScreen(),
+        ChooseTransportScreen.routePath: (context) =>
+            const ChooseTransportScreen(),
+        AddressListScreen.routePath: (context) => const AddressListScreen(),
+        AddNewAddresScreen.routePath: (context) => const AddNewAddresScreen(),
+        EditOldAddressScreen.routePath :(context) => const EditOldAddressScreen(),
         ManualTransferScreen.routePath: (context) =>
             const ManualTransferScreen(),
         WhatsappTransferScreen.routePath: (context) =>
