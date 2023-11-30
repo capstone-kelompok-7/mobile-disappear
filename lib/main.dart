@@ -52,6 +52,7 @@ import 'package:disappear/view_models/auth/register/register_verification_view_m
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
 import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:disappear/view_models/home/category_view_model.dart';
+import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
@@ -101,6 +102,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => CarouselViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => BestSellerProductViewModel(),
       ),
     ],
     child: const App(),
