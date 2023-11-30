@@ -2,7 +2,6 @@ import 'package:disappear/screens/checkout/components/address_information.dart';
 import 'package:disappear/screens/checkout/components/detail_payment_total.dart';
 import 'package:disappear/screens/checkout/components/order_information.dart';
 import 'package:disappear/screens/checkout/components/payment_method_checkout.dart';
-import 'package:disappear/screens/checkout/components/transport_information.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutScreen extends StatefulWidget {

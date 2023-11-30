@@ -12,7 +12,7 @@ class CategoriesPlaceholder extends StatelessWidget {
       baseColor: neutral00,
       highlightColor: neutral20,
       child: SizedBox(
-        height: 70,
+        height: 60,
         child: ListView.separated(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
@@ -27,7 +27,7 @@ class CategoriesPlaceholder extends StatelessWidget {
               ),
             );
           },
-          separatorBuilder: (context, index) => const SizedBox(width: 10),
+          separatorBuilder: (context, index) => const SizedBox(width: 20),
           itemCount: 5
         ),
       )
