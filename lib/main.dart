@@ -57,9 +57,11 @@ import 'package:disappear/view_models/home/category_view_model.dart';
 import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
+import 'package:disappear/view_models/search_product/filter_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
 import 'package:disappear/view_models/main_view_model.dart';
+import 'package:disappear/view_models/search_product/search_products_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -107,6 +109,12 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => BestSellerProductViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => SearchProductViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => FilterViewModel(),
       ),
     ],
     child: const App(),
