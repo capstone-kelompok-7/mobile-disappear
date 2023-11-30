@@ -30,12 +30,57 @@ class SearchProductViewModel extends ChangeNotifier {
 
   List<ProductModel> get products => _products;
 
-  Future<void> getProducts(String keyword) async {
+  int _page = 1;
+
+  set page(int page) {
+    _page = page;
+    notifyListeners();
+  }
+
+  int get page => _page;
+
+  Future<void> getProducts({
+    required String keyword,
+    bool withPromo = false,
+    int filterType = 0,
+  }) async {
+    page = 1;
+
+    products = [];
+
     isOnSearch = true;
     isSearching = true;
 
     final productService = ProductService();
-    products = await productService.getProductsByKeyword(keyword);
+    products = await productService.getProducts(
+      keyword: keyword,
+      page: page,
+      withPromo: withPromo,
+      filterType: filterType,
+    );
+
+    isSearching = false;
+  }
+
+  Future<void> getMoreProducts({
+    required String keyword,
+    bool withPromo = false,
+    int filterType = 0,
+  }) async {
+    page++;
+
+    isOnSearch = true;
+    isSearching = true;
+
+    final productService = ProductService();
+    final newProducts = await productService.getProducts(
+      keyword: keyword,
+      page: page,
+      withPromo: withPromo,
+      filterType: filterType,
+    );
+    
+    products = [...products, ...newProducts];
 
     isSearching = false;
   }

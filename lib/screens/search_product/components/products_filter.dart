@@ -3,8 +3,8 @@ import 'package:disappear/view_models/search_product/filter_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Filter extends StatelessWidget {
-  const Filter({super.key});
+class ProductsFilter extends StatelessWidget {
+  const ProductsFilter({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,10 @@ class Filter extends StatelessWidget {
                     Consumer<FilterViewModel>(
                       builder: (context, state, _) {
                         return TextButton(
-                          onPressed: () => state.selectedFilter = 0,
+                          onPressed: () {
+                            state.selectedFilter = 0;
+                            Navigator.pop(context);
+                          },
                           child: const Text('Clear'),
                         );
                       }
@@ -50,7 +53,10 @@ class Filter extends StatelessWidget {
               Consumer<FilterViewModel>(
                 builder: (context, state, _) {
                   return GestureDetector(
-                    onTap: () => state.selectedFilter = 1,
+                    onTap: () {
+                      state.selectedFilter = 1;
+                      Navigator.pop(context);
+                    },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 54),
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -75,7 +81,10 @@ class Filter extends StatelessWidget {
               Consumer<FilterViewModel>(
                 builder: (context, state, _) {
                   return GestureDetector(
-                    onTap: () => state.selectedFilter = 2,
+                    onTap: () {
+                      state.selectedFilter = 2;
+                      Navigator.pop(context);
+                    },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 54),
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -100,7 +109,10 @@ class Filter extends StatelessWidget {
               Consumer<FilterViewModel>(
                 builder: (context, state, _) {
                   return GestureDetector(
-                    onTap: () => state.selectedFilter = 3,
+                    onTap: () {
+                      state.selectedFilter = 3;
+                      Navigator.pop(context);
+                    },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 54),
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -125,7 +137,10 @@ class Filter extends StatelessWidget {
               Consumer<FilterViewModel>(
                 builder: (context, state, _) {
                   return GestureDetector(
-                    onTap: () => state.selectedFilter = 4,
+                    onTap: () {
+                      state.selectedFilter = 4;
+                      Navigator.pop(context);
+                    },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 54),
                       padding: const EdgeInsets.symmetric(vertical: 10),
