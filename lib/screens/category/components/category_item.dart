@@ -1,8 +1,12 @@
+import 'package:disappear/models/category_model.dart';
+import 'package:disappear/screens/category/components/category_item_thumbnail_placeholder.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatefulWidget {
-  const CategoryItem({super.key});
+  final CategoryModel category;
+
+  const CategoryItem({super.key, required this.category});
 
   @override
   State<CategoryItem> createState() => _CategoryItemState();
@@ -19,11 +23,26 @@ class _CategoryItemState extends State<CategoryItem> {
       onTap: _goToSearchScreen,
       child: Column(
         children: [
-          Image.asset('assets/img/CategoryExample.png', width: 90, height: 90,),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              widget.category.photo,
+              width: 90,
+              height: 90,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress != null) {
+                  return const CategoryItemThumbnailPlaceholder();
+                }
+
+                return child;
+              },
+            ),
+          ),
           const SizedBox(height: 2,),
-          const Text(
-            'Kategori',
-            style: TextStyle(fontSize: 12, height: 2),
+          Text(
+            widget.category.name,
+            style: const TextStyle(fontSize: 12, height: 2),
           )
         ],
       ),

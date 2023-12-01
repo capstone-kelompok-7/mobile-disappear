@@ -52,8 +52,9 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/category/category_view_model.dart';
+import 'package:disappear/view_models/home/home_category_view_model.dart';
 import 'package:disappear/view_models/home/carousel_view_model.dart';
-import 'package:disappear/view_models/home/category_view_model.dart';
 import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
@@ -98,6 +99,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => RegisterVerificationViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => HomeCategoryViewModel(),
       ),
       ChangeNotifierProvider(
         create: (context) => CategoryViewModel(),
