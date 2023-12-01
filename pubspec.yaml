@@ -47,6 +47,8 @@ dependencies:
   envied: ^0.5.1
   is_first_run: ^1.0.0
   flutter_timer_countdown: ^1.0.7
+  shimmer: ^3.0.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
