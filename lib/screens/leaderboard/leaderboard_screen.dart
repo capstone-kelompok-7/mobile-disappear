@@ -71,102 +71,11 @@ List<Map<String, dynamic>> expLeaderboard = [
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
   @override
   Widget build(BuildContext context) {
-    Widget topButton() {
-      return Container(
-        margin: const EdgeInsets.only(
-          left: 75,
-          right: 75,
-          top: 16,
-        ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 5,
-          vertical: 5,
-        ),
-        width: 240,
-        height: 30,
-        decoration: const BoxDecoration(
-          color: Color(0xffe4e4e4),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              width: 70,
-              height: 20,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 9,
-                  vertical: 4,
-                ),
-                child: Center(
-                  child: Text(
-                    'Tantangan',
-                    style: GoogleFonts.inter().copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Container(
-              width: 80,
-              height: 20,
-              decoration: const BoxDecoration(
-                color: Color(0xffa8a8a8),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 9,
-                  vertical: 4,
-                ),
-                child: Center(
-                  child: Text(
-                    'Leaderboard',
-                    style: GoogleFonts.inter().copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            SizedBox(
-              width: 70,
-              height: 20,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 9,
-                  vertical: 4,
-                ),
-                child: Center(
-                  child: Text(
-                    'Kupon ku',
-                    style: GoogleFonts.inter().copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
     Widget leaderboard() {
       return Padding(
         padding: const EdgeInsets.only(
           left: 72,
           right: 72,
-          top: 71,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -448,29 +357,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 2.5,
-        leading: const Icon(Icons.arrow_back_ios),
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: const Color(0xFFFFFFFF),
-        title: Text(
-          'Leaderboard',
-          style: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
-      ),
-      body: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: [
-          topButton(),
-          leaderboard(),
-          listExp(),
-        ],
-      ),
+    return Column(
+      children: [
+        leaderboard(),
+        listExp(),
+      ],
     );
   }
 }

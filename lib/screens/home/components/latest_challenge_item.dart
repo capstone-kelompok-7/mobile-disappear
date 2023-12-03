@@ -1,5 +1,5 @@
-import 'package:disappear/screens/challenge/challenge_screen.dart';
-import 'package:disappear/screens/detail_challenge_screen.dart';
+import 'package:disappear/screens/challenge/challenge_components.dart';
+import 'package:disappear/screens/challenge/detail_challenge_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
@@ -30,27 +30,32 @@ class _LatestChallengeItemState extends State<LatestChallengeItem> {
               alignment: Alignment.centerRight,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.network('https://picsum.photos/130/80')
-                ),
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network('https://picsum.photos/130/80')),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 5),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 17, horizontal: 5),
                   height: 80,
                   decoration: BoxDecoration(
-                    color: secondary00,
-                    borderRadius: BorderRadius.circular(10)
-                  ),
+                      color: secondary00,
+                      borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('150', style: semiBoldBody3.copyWith(color: neutral40, fontFamily: 'Inter')),
-                      Text('EXP', style: regularBody8.copyWith(color: neutral40, fontFamily: 'Inter')),
+                      Text('150',
+                          style: semiBoldBody3.copyWith(
+                              color: neutral40, fontFamily: 'Inter')),
+                      Text('EXP',
+                          style: regularBody8.copyWith(
+                              color: neutral40, fontFamily: 'Inter')),
                     ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(
+              height: 5,
+            ),
             Flexible(
               child: Text(
                 'Tantangan menanam pohon',
