@@ -1,3 +1,4 @@
+import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/main_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,6 +21,7 @@ class MainScreen extends StatelessWidget {
             currentIndex: state.selectedScreenIndex,
             onTap: (value) => state.selectedScreenIndex = value,
             showUnselectedLabels: true,
+            backgroundColor: secondary00,
             type: BottomNavigationBarType.fixed,
             selectedItemColor: Colors.green,
             items: [
