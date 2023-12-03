@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ChallengeScreen extends StatefulWidget {
+class ChallengComponents extends StatefulWidget {
   static const String routePath = '/challenge';
-  const ChallengeScreen({super.key});
+  const ChallengComponents({super.key});
 
   @override
-  State<ChallengeScreen> createState() => _ChallengeScreenState();
+  State<ChallengComponents> createState() => _ChallengeComponentsState();
 }
 
 List<Map> challenges = [
@@ -54,90 +54,7 @@ List<Map> challenges = [
   },
 ];
 
-class _ChallengeScreenState extends State<ChallengeScreen> {
-  Widget topButton() {
-    return Container(
-      margin: const EdgeInsets.only(
-        left: 75,
-        right: 75,
-        top: 16,
-        bottom: 37,
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 5,
-        vertical: 5,
-      ),
-      width: 240,
-      height: 30,
-      decoration: const BoxDecoration(
-        color: Color(0xffe4e4e4),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            width: 70,
-            height: 20,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 9,
-              vertical: 4,
-            ),
-            decoration: const BoxDecoration(
-              color: Color(0xffa8a8a8),
-            ),
-            child: Text(
-              'Tantangan',
-              style: GoogleFonts.inter().copyWith(
-                fontWeight: FontWeight.w700,
-                fontSize: 10,
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          SizedBox(
-            width: 80,
-            height: 20,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 9,
-                vertical: 4,
-              ),
-              child: Text(
-                'Leaderboard',
-                style: GoogleFonts.inter().copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 10,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          SizedBox(
-            width: 70,
-            height: 20,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 9,
-                vertical: 4,
-              ),
-              child: Text(
-                'Kupon ku',
-                style: GoogleFonts.inter().copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 10,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
+class _ChallengeComponentsState extends State<ChallengComponents> {
   Widget listChallenges() {
     return SizedBox(
       child: ListView.builder(
@@ -219,29 +136,6 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 2.5,
-        leading: const Icon(Icons.arrow_back_ios),
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: const Color(0xFFFFFFFF),
-        title: Text(
-          'Tantangan',
-          style: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
-      ),
-      body: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: [
-          topButton(),
-          listChallenges(),
-        ],
-      ),
-    );
+    return listChallenges();
   }
 }

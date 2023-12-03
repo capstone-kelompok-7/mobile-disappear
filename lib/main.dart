@@ -1,13 +1,15 @@
 import 'package:disappear/screens/auth/register/register_verification_screen.dart';
-import 'package:disappear/screens/challenge/challenge_screen.dart';
+import 'package:disappear/screens/challenge/challenge_main_screen.dart';
+import 'package:disappear/screens/challenge/challenge_components.dart';
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
+import 'package:disappear/screens/challenge/detail_challenge_screen.dart';
+import 'package:disappear/screens/challenge/join_challenge_screen.dart';
 import 'package:disappear/screens/change_password_screen.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/checkout/choose_transport_screen.dart';
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/screens/detail_article_screen.dart';
-import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
 import 'package:disappear/screens/environmental_issues/environmental_issues_screen.dart';
@@ -15,7 +17,6 @@ import 'package:disappear/screens/favorite_product/favorite_product_screen.dart'
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
-import 'package:disappear/screens/join_challenge_screen.dart';
 import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
@@ -47,6 +48,7 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:disappear/view_models/home/category_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
@@ -95,6 +97,9 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => CategoryViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => ChallengeMainViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -128,7 +133,8 @@ class App extends StatelessWidget {
             const SuccessNewPasswordScreen(),
         SuccessEmailVerificationScreen.routePath: (context) =>
             const SuccessEmailVerificationScreen(),
-        ChallengeScreen.routePath: (context) => const ChallengeScreen(),
+        ChallengeMainScreen.routePath: (context) => const ChallengeMainScreen(),
+        ChallengComponents.routePath: (context) => const ChallengComponents(),
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
