@@ -52,6 +52,7 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:disappear/view_models/category/category_view_model.dart';
 import 'package:disappear/view_models/home/home_category_view_model.dart';
 import 'package:disappear/view_models/home/carousel_view_model.dart';
@@ -108,6 +109,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => CarouselViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => LatestArticlesViewModel(),
       ),
       ChangeNotifierProvider(
         create: (context) => BestSellerProductViewModel(),
