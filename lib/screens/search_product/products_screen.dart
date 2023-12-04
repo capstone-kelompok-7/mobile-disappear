@@ -143,31 +143,31 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         Icon(
                                           Icons.star,
                                           size: 16,
-                                          color: state.products[index].rating >= 1 ? Colors.orange : neutral00
+                                          color: state.products[index].rating >= 1 ? warning20 : neutral20
                                         ),
                                         const SizedBox(width: 2,),
                                         Icon(
                                           Icons.star,
                                           size: 16,
-                                          color: state.products[index].rating >= 2 ? Colors.orange : neutral00
+                                          color: state.products[index].rating >= 2 ? warning20 : neutral20
                                         ),
                                         const SizedBox(width: 2,),
                                         Icon(
                                           Icons.star,
                                           size: 16,
-                                          color: state.products[index].rating >= 3 ? Colors.orange : neutral00
+                                          color: state.products[index].rating >= 3 ? warning20 : neutral20
                                         ),
                                         const SizedBox(width: 2,),
                                         Icon(
                                           Icons.star,
                                           size: 16,
-                                          color: state.products[index].rating >= 4 ? Colors.orange : neutral00
+                                          color: state.products[index].rating >= 4 ? warning20 : neutral20
                                         ),
                                         const SizedBox(width: 2,),
                                         Icon(
                                           Icons.star,
                                           size: 16,
-                                          color: state.products[index].rating >= 5 ? Colors.orange : neutral00
+                                          color: state.products[index].rating >= 5 ? warning20 : neutral20
                                         ),
                                       ],
                                     ),
@@ -190,7 +190,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 }
       
                 if (!state.isSearching) {
-                  return const Center(child: Text('Produk tidak ditemukan'));
+                  return const Column(
+                    children: [
+                      SizedBox(height: 200,),
+                      Text('Produk tidak ditemukan')
+                    ],
+                  );
                 }
       
                 return const SizedBox.shrink();

@@ -8,22 +8,26 @@ class ProductService {
 
     final Response response = await dio.get('/products?page=1&pageSize=5');
 
-    return response.data['data']
-      .map<ProductModel>((data) {
-        final product = ProductModel(
-          id: data['id'] as int,
-          name: data['name'] as String,
-          rating: data['rating'] as num,
-          price: data['price'] as int
-        );
+    if (response.data['data'] != null) {
+      return response.data['data']
+        .map<ProductModel>((data) {
+          final product = ProductModel(
+            id: data['id'] as int,
+            name: data['name'] as String,
+            rating: data['rating'] as num,
+            price: data['price'] as int
+          );
 
-        if (data['image_url'] != null) {
-          product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
-        }
+          if (data['image_url'] != null) {
+            product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
+          }
 
-        return product;
-      })
-      .toList();
+          return product;
+        })
+        .toList();
+    }
+
+    return [];
   }
 
   Future<List<ProductModel>> getProducts({
@@ -49,21 +53,25 @@ class ProductService {
 
     final Response response = await dio.get('/products?search=$keyword&page=$page&pageSize=$pageSize&filter=$filter');
 
-    return response.data['data']
-      .map<ProductModel>((data) {
-        final product = ProductModel(
-          id: data['id'] as int,
-          name: data['name'] as String,
-          rating: data['rating'] as num,
-          price: data['price'] as int
-        );
+    if (response.data['data'] != null) {
+      return response.data['data']
+        .map<ProductModel>((data) {
+          final product = ProductModel(
+            id: data['id'] as int,
+            name: data['name'] as String,
+            rating: data['rating'] as num,
+            price: data['price'] as int
+          );
 
-        if (data['image_url'] != null) {
-          product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
-        }
+          if (data['image_url'] != null) {
+            product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
+          }
 
-        return product;
-      })
-      .toList();
+          return product;
+        })
+        .toList();
+    }
+
+    return [];
   }
 }
