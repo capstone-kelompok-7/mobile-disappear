@@ -57,6 +57,13 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
+  /// Beli Sekarang, langsung ngarah ke halaman checkout
+  void _purchaseNow() {
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+
+    productViewModel.productId; // Ini id produknya
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartViewModel = Provider.of<AddToCartViewModel>(context, listen: false);
@@ -394,7 +401,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _purchaseNow,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primary40,
                         shape: const BeveledRectangleBorder(),
