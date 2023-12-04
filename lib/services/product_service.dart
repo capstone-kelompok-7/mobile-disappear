@@ -7,7 +7,7 @@ const dummyData = [
   "id": 1,
   "name": "Hello 8",
   "price": 100000,
-  "rating": 0,
+  "rating": 0.0,
   "image_url": [
     {
       "id": 1,
@@ -31,7 +31,7 @@ const dummyData = [
   "id": 2,
   "name": "Hello 10",
   "price": 100000,
-  "rating": 0,
+  "rating": 0.0,
   "image_url": [
     {
       "id": 5,
@@ -47,7 +47,7 @@ const dummyData = [
   "id": 3,
   "name": "Test update Product",
   "price": 100000,
-  "rating": 0,
+  "rating": 0.0,
   "image_url": [
     {
       "id": 7,
@@ -70,7 +70,7 @@ const dummyProduct = {
   "discount": 10,
   "exp": 20231231,
   "price": 100000,
-  "rating": 0,
+  "rating": 0.0,
   "total_review": 0,
   "categories": [
     {
@@ -120,7 +120,7 @@ class ProductService {
         final product = ProductModel(
           id: data['id'] as int,
           name: data['name'] as String,
-          rating: data['rating'] as int,
+          rating: data['rating'] as double,
           price: data['price'] as int
         );
 
@@ -134,24 +134,33 @@ class ProductService {
   Future<ProductModel> getProductById(int id) async {
     final dio = createDio();
 
-    // final Response response = await dio.get('/products?page=1&pageSize=5');
-    final response = await Future.delayed(const Duration(seconds: 1), () => dummyProduct);
-
+    final Response response = await dio.get('/products/$id');
+    final data = response.data['data'];
+    
     final product = ProductModel(
-      id: response['id'] as int,
-      name: response['name'] as String,
-      description: response['description'] as String,
-      gramPlastic: response['gram_plastic'] as int,
-      stock: response['stock'] as int,
-      discount: response['discount'] as int,
-      exp: response['exp'] as int,
-      totalReview: response['total_review'] as int,
-      rating: response['rating'] as int,
-      price: response['price'] as int
+      id: data['id'] as int,
+      name: data['name'] as String,
+      description: data['description'] as String,
+      gramPlastic: data['gram_plastic'] as int,
+      stock: data['stock'] as int,
+      discount: data['discount'] as int,
+      exp: data['exp'] as int,
+      totalReview: data['total_review'] as int,
+      rating: data['rating'] as double,
+      price: data['price'] as int
     );
 
-    product.addImagesFromListOfMap(response['image_url'] as List<Map<dynamic, dynamic>>);
+    product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
 
     return product;
+  }
+
+  Future<void> addProductToCart(int productId, int quantity) async {
+    final dio = createDio();
+
+    await dio.post('/carts', data: {
+      'product_id': productId,
+      'quantity': quantity
+    });
   }
 }

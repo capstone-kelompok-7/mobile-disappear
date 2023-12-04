@@ -7,7 +7,6 @@ class ProductViewModel extends ChangeNotifier {
 
   set productId(int? productId) {
     _productId = productId;
-    notifyListeners();
   }
 
   int? get productId => _productId;
@@ -20,4 +19,13 @@ class ProductViewModel extends ChangeNotifier {
 
     return null;
   }
+
+  bool _isExpanded = false;
+
+  set isExpanded(bool isExpanded) {
+    _isExpanded = isExpanded;
+    notifyListeners();
+  }
+
+  bool get isExpanded => _isExpanded;
 }

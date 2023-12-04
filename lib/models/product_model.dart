@@ -10,7 +10,7 @@ class ProductModel {
   int? stock;
   int? discount;
   int? exp;
-  int rating;
+  double rating;
   int price;
   int? totalReview;
 
@@ -43,7 +43,7 @@ class ProductModel {
     images.add(ProductImageModel(id: image['id'], imageUrl: image['image_url']));
   }
 
-  void addImagesFromListOfMap(List<Map> images) {
+  void addImagesFromListOfMap(List<Map<dynamic, dynamic>> images) {
     for (Map image in images) {
       addImageFromMap(image);
     }
@@ -53,7 +53,7 @@ class ProductModel {
     categories.add(CategoryModel(id: category['id'], name: category['name'], photo: category['photo']));
   }
 
-  void addCategoriesFromListOfMap(List<Map> categories) {
+  void addCategoriesFromListOfMap(List<Map<dynamic, dynamic>> categories) {
     for (Map category in categories) {
       addCategoryFromMap(category);
     }

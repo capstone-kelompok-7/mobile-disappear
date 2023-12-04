@@ -1,6 +1,6 @@
 import 'package:disappear/models/product_model.dart';
 import 'package:disappear/screens/home/components/placeholders/best_seller_product_thumbnail_placeholder.dart';
-import 'package:disappear/screens/product_screen.dart';
+import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/product/product_view_model.dart';
