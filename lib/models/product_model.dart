@@ -10,7 +10,7 @@ class ProductModel {
   int? stock;
   int? discount;
   int? exp;
-  double rating;
+  num rating;
   int price;
   int? totalReview;
 
