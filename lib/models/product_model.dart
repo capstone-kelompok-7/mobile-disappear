@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 class ProductModel {
   int id;
   String name;
-  int rating;
+  num rating;
   int price;
   List<ProductImageModel> images = [];
 

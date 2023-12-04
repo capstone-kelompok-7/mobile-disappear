@@ -107,11 +107,24 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           borderRadius: BorderRadius.circular(10),
                           child: Column(
                             children: [
-                              Image.network(
-                                state.products[index].thumbnail!.imageUrl,
-                                width: 200,
-                                height: 200,
-                                fit: BoxFit.cover,
+                              Builder(
+                                builder: (context) {
+                                  if (state.products[index].thumbnail != null) {
+                                    return Image.network(
+                                      state.products[index].thumbnail!.imageUrl,
+                                      width: 200,
+                                      height: 200,
+                                      fit: BoxFit.cover,
+                                    );
+                                  }
+
+                                  return Image.asset(
+                                    'assets/img/alat_makan.png',
+                                    fit: BoxFit.cover,
+                                    width: 200,
+                                    height: 200,
+                                  );
+                                }
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8),

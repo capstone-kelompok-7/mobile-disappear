@@ -89,10 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
           //   child: Carousel(),
           // ),
           const SizedBox(height: 19,),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: Categories(),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 12),
+          //   child: Categories(),
+          // ),
           const SizedBox(height: 34,),
           const BestSellerProducts(),
           const SizedBox(height: 34,),
