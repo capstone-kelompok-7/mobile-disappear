@@ -1,8 +1,11 @@
 import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/home/components/latest_article_item.dart';
+import 'package:disappear/screens/home/components/placeholders/latest_articles_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LatestArticles extends StatefulWidget {
   const LatestArticles({super.key});
@@ -26,11 +29,30 @@ class _LatestArticlesState extends State<LatestArticles> {
           style: semiBoldBody5.copyWith(color: primary40),
         ),
         const SizedBox(height: 15,),
-        const LatestArticleItem(),
-        const SizedBox(height: 10,),
-        const LatestArticleItem(),
-        const SizedBox(height: 10,),
-        const LatestArticleItem(),
+        Consumer<LatestArticlesViewModel>(
+          builder: (context, state, _) {
+            return FutureBuilder(
+              future: state.getLatestArticles(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Tidak ada kategori');
+                }
+            
+                if (snapshot.hasData) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => LatestArticleItem(article: snapshot.data![index]),
+                    separatorBuilder: (context, index) => const SizedBox(height: 10),
+                    itemCount: snapshot.data!.length,
+                  );
+                }
+                
+                return const LatestArticlesPlaceholder();
+              }
+            );
+          }
+        ),
         const SizedBox(height: 21,),
         ElevatedButton(
           onPressed: _goToArticlesScreen,

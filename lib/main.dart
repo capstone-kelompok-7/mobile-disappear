@@ -31,7 +31,7 @@ import 'package:disappear/screens/auth/forgot_password/new_password_screen.dart'
 import 'package:disappear/screens/product_review/add_review_screen.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
-import 'package:disappear/screens/product_screen.dart';
+import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/auth/register/register_screen.dart';
@@ -52,10 +52,14 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:disappear/view_models/category/category_view_model.dart';
 import 'package:disappear/view_models/home/home_category_view_model.dart';
 import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
+import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
+import 'package:disappear/view_models/product/product_carousel_view_model.dart';
+import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
 import 'package:disappear/view_models/search_product/filter_view_model.dart';
@@ -112,6 +116,9 @@ void main() {
         create: (context) => CarouselViewModel(),
       ),
       ChangeNotifierProvider(
+        create: (context) => LatestArticlesViewModel(),
+      ),
+      ChangeNotifierProvider(
         create: (context) => BestSellerProductViewModel(),
       ),
       ChangeNotifierProvider(
@@ -119,6 +126,15 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => FilterViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ProductViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ProductCarouselViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AddToCartViewModel(),
       ),
     ],
     child: const App(),
