@@ -37,18 +37,31 @@ class _BestSellerProductItemState extends State<BestSellerProductItem> {
             borderRadius: BorderRadius.circular(10),
             child: Column(
               children: [
-                Image.network(
-                  widget.product.thumbnail!.imageUrl,
-                  fit: BoxFit.cover,
-                  width: 130,
-                  height: 120,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress != null) {
-                      return const BestSellerProductThumbnailPlaceholder();
+                Builder(
+                  builder: (context) {
+                    if (widget.product.thumbnail != null) {
+                      return Image.network(
+                        widget.product.thumbnail!.imageUrl,
+                        fit: BoxFit.cover,
+                        width: 130,
+                        height: 120,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress != null) {
+                            return const BestSellerProductThumbnailPlaceholder();
+                          }
+                      
+                          return child;
+                        },
+                      );
                     }
 
-                    return child;
-                  },
+                    return Image.asset(
+                      'assets/img/alat_makan.png',
+                      fit: BoxFit.cover,
+                      width: 130,
+                      height: 120,
+                    );
+                  }
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, right: 6.5, bottom: 10, left: 6.5),

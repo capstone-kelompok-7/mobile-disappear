@@ -49,6 +49,7 @@ dependencies:
   flutter_timer_countdown: ^1.0.7
   shimmer: ^3.0.0
   intl: ^0.18.1
+  scroll_edge_listener: ^0.1.1
 
 dev_dependencies:
   flutter_test:
