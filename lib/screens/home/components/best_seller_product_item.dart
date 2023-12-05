@@ -1,9 +1,11 @@
 import 'package:disappear/models/product_model.dart';
 import 'package:disappear/screens/home/components/placeholders/best_seller_product_thumbnail_placeholder.dart';
-import 'package:disappear/screens/product_screen.dart';
+import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BestSellerProductItem extends StatefulWidget {
   final ProductModel product;
@@ -15,14 +17,17 @@ class BestSellerProductItem extends StatefulWidget {
 }
 
 class _BestSellerProductItemState extends State<BestSellerProductItem> {
-  void _goToProductScreen() {
+  void _goToProductScreen(int productId) {
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    productViewModel.productId = productId;
+
     Navigator.pushNamed(context, ProductScreen.routePath);
   }
   
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _goToProductScreen,
+      onTap: () => _goToProductScreen(widget.product.id),
       child: SizedBox(
         width: 130,
         height: 200,
