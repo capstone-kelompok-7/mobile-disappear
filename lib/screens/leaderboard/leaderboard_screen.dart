@@ -1,9 +1,12 @@
+import 'package:disappear/models/leaderboard_model.dart';
+import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LeaderboardScreen extends StatefulWidget {
-  static const String routePath = '/leaderboard-screen';
-  const LeaderboardScreen({super.key});
+  final LeaderboardModel leaderboardModel;
+  const LeaderboardScreen({super.key, required this.leaderboardModel});
 
   @override
   State<LeaderboardScreen> createState() => _LeaderboardScreenState();
@@ -95,7 +98,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                        expLeaderboard[1]['imageUrl'],
+                        expLeaderboard[2]['imageUrl'],
                       ),
                     ),
                   ),
@@ -284,83 +287,85 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     }
 
     Widget listExp() {
-      return SizedBox(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: expLeaderboard.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 9.5,
-                vertical: 15,
+      // leaderboards
+      //  List<LeaderboardModel> leaderboardList = await fetchLeaderboard();
+      // int index = Provider.of<ChallengeMainViewModel>(context)
+      //     .leaderboardList
+      //     .indexWhere((item) => item.id == widget.leaderboardModel.id);
+
+      // // Increment the index by 1 to display as 1-based counting instead of 0-based
+      // int displayIndex = index + 1;
+      return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 9.5,
+          vertical: 5,
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 0.5,
+                offset: const Offset(0, 3),
               ),
-              child: Container(
-                padding: const EdgeInsets.all(10),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                  height: 20,
+                  width: 10,
+                  child: Text(widget.leaderboardModel.id.toString())),
+              const SizedBox(
+                width: 10,
+              ),
+              Container(
+                width: 25,
+                height: 25,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 0.5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Text(expLeaderboard[index]['number'].toString()),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Container(
-                      width: 25,
-                      height: 25,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: const Color(
-                          0xffd9d9d9,
-                        ),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image:
-                              NetworkImage(expLeaderboard[index]['imageUrl']),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${expLeaderboard[index]['name']}',
-                        style: GoogleFonts.inter().copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      '${expLeaderboard[index]['exp']} EXP',
-                      style: GoogleFonts.inter().copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
+                  shape: BoxShape.circle,
+                  color: const Color(
+                    0xffd9d9d9,
+                  ),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        widget.leaderboardModel.photoProfile.toString()),
+                  ),
                 ),
               ),
-            );
-          },
+              const SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: Text(
+                  '${widget.leaderboardModel.name.toString()}',
+                  style: GoogleFonts.inter().copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+              Text(
+                '${widget.leaderboardModel.exp.toString()} EXP',
+                style: GoogleFonts.inter().copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
 
     return Column(
       children: [
-        leaderboard(),
-        listExp(),
+        leaderboard()
       ],
     );
   }
