@@ -1,3 +1,7 @@
+import 'package:disappear/models/challenge_model.dart';
+import 'package:disappear/models/leaderboard_model.dart';
+import 'package:disappear/services/challenge_service.dart';
+import 'package:disappear/services/leaderboard_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +13,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
     return Container(
       margin: const EdgeInsets.only(
         left: 75,
-        right: 70,
+        right: 75,
         top: 16,
         bottom: 37,
       ),
@@ -17,7 +21,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
         horizontal: 5,
         vertical: 5,
       ),
-      width: 200,
+      width: 250,
       height: 30,
       decoration: const BoxDecoration(
         color: primary40,
@@ -50,7 +54,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
           ),
           GestureDetector(
             onTap: () {
-               selectedTabChallenge = 2;
+              selectedTabChallenge = 2;
               notifyListeners();
             },
             child: Container(
@@ -95,5 +99,23 @@ class ChallengeMainViewModel extends ChangeNotifier {
         ],
       ),
     );
+  }
+
+  Future<List<ChallengesModel>> fetchAllChallenge() async {
+    try {
+      final challengeService = ChallengeService();
+      return await challengeService.fetchAllChallenge();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<LeaderboardModel>> fetchLeaderboard() async {
+    try {
+      final leaderboardService = LeaderboardService();
+      return await leaderboardService.fetchLeaderboard();
+    } catch (e) {
+      rethrow;
+    }
   }
 }

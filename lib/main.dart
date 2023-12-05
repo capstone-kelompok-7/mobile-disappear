@@ -128,7 +128,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: AddressListScreen.routePath,
+      initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
@@ -151,12 +151,10 @@ class App extends StatelessWidget {
         SuccessEmailVerificationScreen.routePath: (context) =>
             const SuccessEmailVerificationScreen(),
         ChallengeMainScreen.routePath: (context) => const ChallengeMainScreen(),
-        ChallengComponents.routePath: (context) => const ChallengComponents(),
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
-        LeaderboardScreen.routePath: (context) => const LeaderboardScreen(),
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),
