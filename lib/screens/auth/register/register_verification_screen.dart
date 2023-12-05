@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
+import 'package:another_flushbar/flushbar.dart';
 
 class RegisterVerificationScreen extends StatefulWidget {
   static const String routePath = '/verification-register';
@@ -45,14 +46,23 @@ class _RegisterVerificationScreenState extends State<RegisterVerificationScreen>
     }
   }
 
-  void _resendOTPListener() {
+  void _resendOTPListener() async {
     if (mounted && context.mounted) {
       final registerVerifViewModel = Provider.of<RegisterVerificationViewModel>(context, listen: false);
 
       if (registerVerifViewModel.isOTPSent != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(registerVerifViewModel.message!))
-        );
+        await Flushbar(
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: const Color(0xffE3FFF1),
+          messageColor: neutral40,
+          borderColor: const Color(0xff04C800),
+          borderWidth: 1,
+          margin: const EdgeInsets.only(left: 60, top: 10, right: 10, bottom: 10),
+          borderRadius: BorderRadius.circular(5),
+          icon: SvgPicture.asset('assets/img/SuccessIcon.svg', width: 20, height: 20,),
+          message: registerVerifViewModel.message!,
+          duration: const Duration(seconds: 3),
+        ).show(context);
 
         registerVerifViewModel.isOTPSent = null;
       }

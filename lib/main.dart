@@ -127,7 +127,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: AddressListScreen.routePath,
+      initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
