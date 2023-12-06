@@ -118,4 +118,48 @@ class ChallengeMainViewModel extends ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<LeaderboardModel?> fetchFirstPosition() async {
+    try {
+      final fetchFirstPlace = LeaderboardService();
+      return await fetchFirstPlace.fetchFirstLeaderboard();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<LeaderboardModel?> fetchSecondPosition() async {
+    try {
+      final fetchSecondPlace = LeaderboardService();
+      return await fetchSecondPlace.fetchSecondLeaderboard();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<LeaderboardModel?> fetchThirdPosition() async {
+    try {
+      final fetchThirdPlace = LeaderboardService();
+      return await fetchThirdPlace.fetchThirdLeaderboard();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<LeaderboardModel?> fetchFourthPosition() async {
+    try {
+      final fetchFourthPlace = LeaderboardService();
+      return await fetchFourthPlace.fetchFourthLeaderboard();
+    } catch (e) {
+      rethrow;
+    }
+  }
+  Future<LeaderboardModel?> fetchFifthPosition() async {
+    try {
+      final fetchFifthPlace = LeaderboardService();
+      return await fetchFifthPlace.fetchFifthLeaderboard();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

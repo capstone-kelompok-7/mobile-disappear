@@ -98,22 +98,12 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                                   child: Column(
                                     children: [
                                       LeaderboardScreen(
-                                              leaderboardModel:
-                                                  snapshot.data![0]),
-                                        
+                                          leaderboardModel: snapshot.data![0]),
                                       SizedBox(
                                         height: 30,
                                       ),
-                                      ListView.builder(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: snapshot.data!.length,
-                                        itemBuilder: (context, index) {
-                                          return LeaderboardComponentStanding(
-                                              leaderboardModel:
-                                                  snapshot.data![index]);
-                                        },
-                                      ),
+                                      LeaderboardComponentStanding(
+                                          leaderboardModel: snapshot.data![0])
                                     ],
                                   ),
                                 );
