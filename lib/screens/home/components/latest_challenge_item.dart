@@ -1,10 +1,13 @@
+import 'package:disappear/models/home_challenge_model.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class LatestChallengeItem extends StatefulWidget {
-  const LatestChallengeItem({super.key});
+  final HomeChallengeModel challenge;
+
+  const LatestChallengeItem({super.key, required this.challenge});
 
   @override
   State<LatestChallengeItem> createState() => _LatestChallengeItemState();
@@ -30,7 +33,19 @@ class _LatestChallengeItemState extends State<LatestChallengeItem> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network('https://picsum.photos/130/80')
+                  child: Builder(
+                    builder: (context) {
+                      if (widget.challenge.photo != '') {
+                        return Image.network(
+                          widget.challenge.photo,
+                          width: 130,
+                          height: 80,
+                        );
+                      }
+
+                      return Image.network('https://picsum.photos/130/80');
+                    }
+                  )
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 5),
@@ -42,7 +57,7 @@ class _LatestChallengeItemState extends State<LatestChallengeItem> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('150', style: semiBoldBody3.copyWith(color: neutral40, fontFamily: 'Inter')),
+                      Text('${widget.challenge.exp}', style: semiBoldBody3.copyWith(color: neutral40, fontFamily: 'Inter')),
                       Text('EXP', style: regularBody8.copyWith(color: neutral40, fontFamily: 'Inter')),
                     ],
                   ),
@@ -52,7 +67,7 @@ class _LatestChallengeItemState extends State<LatestChallengeItem> {
             const SizedBox(height: 5,),
             Flexible(
               child: Text(
-                'Tantangan menanam pohon',
+                widget.challenge.title,
                 style: mediumBody8.copyWith(color: neutral40),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
