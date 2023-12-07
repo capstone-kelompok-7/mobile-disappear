@@ -1,5 +1,9 @@
 import 'package:disappear/screens/product_review/components/product_review_item.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/product/product_review_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductReviewsScreen extends StatefulWidget {
   static const String routePath = '/product-reviews';
@@ -15,133 +19,224 @@ class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ulasan'),
+        backgroundColor: primary40,
+        leading: IconButton(
+          icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+          onPressed: () => Navigator.of(context).pop(),
+        ), 
+        title: Text('Ulasan', style: semiBoldBody1.copyWith(color: whiteColor),),
+        centerTitle: true,
       ),
       body: ListView(
-        children: const [
-          SizedBox(height: 20,),
+        children: [
+          const SizedBox(height: 20,),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36),
+            padding: const EdgeInsets.symmetric(horizontal: 36),
             child: Column(
               children: [
-                Text('4.9', style: TextStyle(fontSize: 40),),
-                SizedBox(height: 2,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.star_border, size: 23,),
-                    SizedBox(width: 2,),
-                    Icon(Icons.star_border, size: 23,),
-                    SizedBox(width: 2,),
-                    Icon(Icons.star_border, size: 23,),
-                    SizedBox(width: 2,),
-                    Icon(Icons.star_border, size: 23,),
-                    SizedBox(width: 2,),
-                    Icon(Icons.star_border, size: 23,),
-                  ],
+                Consumer<ProductReviewViewModel>(
+                  builder: (context, state, _) {
+                    return Text('${state.product!.rating}', style: boldTitle4.copyWith(color: primary40),);
+                  }
                 ),
-                SizedBox(height: 2,),
-                Text('berdasarkan 19 ulasan', style: TextStyle(fontSize: 12),),
-              ],
-            ),
-          ),
-          SizedBox(height: 24,),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Text('Sangat baik', style: TextStyle(fontSize: 12),)
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.grey,
-                        value: 0.4,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      ),
-                    )
-                  ],
+                const SizedBox(height: 4,),
+                Consumer<ProductReviewViewModel>(
+                  builder: (context, state, _) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          color: state.product!.rating >= 1 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 28,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: state.product!.rating >= 2 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 28,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: state.product!.rating >= 3 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 28,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: state.product!.rating >= 4 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 28,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: state.product!.rating >= 5 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 28,
+                        ),
+                      ],
+                    );
+                  }
                 ),
-                SizedBox(height: 16,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Text('Baik', style: TextStyle(fontSize: 12),)
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.grey,
-                        value: 0.7,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 16,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Text('Rata-rata', style: TextStyle(fontSize: 12),)
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.grey,
-                        value: 0.5,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 16,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Text('Buruk', style: TextStyle(fontSize: 12),)
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.grey,
-                        value: 0.3,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      ),
-                    )
-                  ],
+                const SizedBox(height: 10,),
+                Consumer<ProductReviewViewModel>(
+                  builder: (context, state, _) {
+                    return Text('berdasarkan ${state.product!.reviews.length} ulasan', style: TextStyle(fontSize: 12),);
+                  }
                 ),
               ],
             ),
           ),
-          SizedBox(height: 24,),
+          const SizedBox(height: 24,),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36),
-            child: Text('13 Ulasan', style: TextStyle(fontSize: 14),),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36),
+            padding: const EdgeInsets.symmetric(horizontal: 36),
             child: Column(
               children: [
-              // SizedBox(height: 24,),
-              // ProductReviewItem(),
-              // SizedBox(height: 24,),
-              // ProductReviewItem(),
-              // SizedBox(height: 24,),
-              // ProductReviewItem(),
-              // SizedBox(height: 24,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(
+                      flex: 1,
+                      child: Text('Sangat baik', style: mediumBody7,)
+                    ),
+                    const SizedBox(width: 20,),
+                    Expanded(
+                      flex: 3,
+                      child: Consumer<ProductReviewViewModel>(
+                        builder: (context, state, _) {
+                          return LinearProgressIndicator(
+                            minHeight: 5,
+                            backgroundColor: neutral00,
+                            value: state.product!.currentRatingFive / state.product!.totalReview!.toInt(),
+                            valueColor: const AlwaysStoppedAnimation<Color>(warning20),
+                          );
+                        }
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 16,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(
+                      flex: 1,
+                      child: Text('Baik', style: mediumBody7,)
+                    ),
+                    const SizedBox(width: 20,),
+                    Expanded(
+                      flex: 3,
+                      child: Consumer<ProductReviewViewModel>(
+                        builder: (context, state, _) {
+                          return LinearProgressIndicator(
+                            minHeight: 5,
+                            backgroundColor: neutral00,
+                            value: state.product!.currentRatingFour / state.product!.totalReview!.toInt(),
+                            valueColor: const AlwaysStoppedAnimation<Color>(warning20),
+                          );
+                        }
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 16,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(
+                      flex: 1,
+                      child: Text('Rata-rata', style: mediumBody7,)
+                    ),
+                    const SizedBox(width: 20,),
+                    Expanded(
+                      flex: 3,
+                      child: Consumer<ProductReviewViewModel>(
+                        builder: (context, state, _) {
+                          return LinearProgressIndicator(
+                            minHeight: 5,
+                            backgroundColor: neutral00,
+                            value: state.product!.currentRatingThree / state.product!.totalReview!.toInt(),
+                            valueColor: const AlwaysStoppedAnimation<Color>(warning20),
+                          );
+                        }
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 16,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(
+                      flex: 1,
+                      child: Text('Buruk', style: mediumBody7,)
+                    ),
+                    const SizedBox(width: 20,),
+                    Expanded(
+                      flex: 3,
+                      child: Consumer<ProductReviewViewModel>(
+                        builder: (context, state, _) {
+                          return LinearProgressIndicator(
+                            minHeight: 5,
+                            backgroundColor: neutral00,
+                            value: state.product!.currentRatingTwo / state.product!.totalReview!.toInt(),
+                            valueColor: const AlwaysStoppedAnimation<Color>(warning20),
+                          );
+                        }
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 16,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(
+                      flex: 1,
+                      child: Text('Sangat buruk', style: mediumBody7,)
+                    ),
+                    const SizedBox(width: 20,),
+                    Expanded(
+                      flex: 3,
+                      child: Consumer<ProductReviewViewModel>(
+                        builder: (context, state, _) {
+                          return LinearProgressIndicator(
+                            minHeight: 5,
+                            backgroundColor: neutral00,
+                            value: state.product!.currentRatingOne / state.product!.totalReview!.toInt(),
+                            valueColor: const AlwaysStoppedAnimation<Color>(warning20),
+                          );
+                        }
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
+          ),
+          const SizedBox(height: 24,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 36),
+            child: Consumer<ProductReviewViewModel>(
+              builder: (context, state, _) {
+                return Text('${state.product!.reviews.length} Ulasan', style: mediumBody6,);
+              }
+            ),
+          ),
+          const SizedBox(height: 24,),
+          Consumer<ProductReviewViewModel>(
+            builder: (context, state, _) {
+              return ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 36),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ProductReviewItem(review: state.product!.reviews[index]);
+                },
+                separatorBuilder: (context, index) => const SizedBox(height: 30,),
+                itemCount: state.product!.reviews.length
+              );
+            }
           ),
         ],
       )

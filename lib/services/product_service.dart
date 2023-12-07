@@ -92,7 +92,12 @@ class ProductService {
       totalReview: data['total_review'] as int,
       rating: data['rating'] as num,
       price: data['price'] as int,
-      totalSold: data['total_sold'] as int
+      totalSold: data['total_sold'] as int,
+      currentRatingOne: data['current_rating_one'] as int,
+      currentRatingTwo: data['current_rating_two'] as int,
+      currentRatingThree: data['current_rating_three'] as int,
+      currentRatingFour: data['current_rating_four'] as int,
+      currentRatingFive: data['current_rating_five'] as int,
     );
 
     if (data['image_url'] != null) {

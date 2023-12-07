@@ -59,6 +59,7 @@ import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
 import 'package:disappear/view_models/product/product_carousel_view_model.dart';
+import 'package:disappear/view_models/product/product_review_view_model.dart';
 import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
@@ -132,6 +133,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => ProductCarouselViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ProductReviewViewModel(),
       ),
       ChangeNotifierProvider(
         create: (context) => AddToCartViewModel(),

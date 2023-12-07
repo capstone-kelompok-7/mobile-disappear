@@ -42,25 +42,25 @@ class _ProductReviewItemState extends State<ProductReviewItem> {
                     Row(
                       children: [
                         Icon(
-                          color: widget.review.rating > 1 ? warning30 : neutral00,
+                          color: widget.review.rating >= 1 ? warning30 : neutral00,
                           Icons.star,
                           size: 18,
                         ),
                         const SizedBox(width: 2),
                         Icon(
-                          color: widget.review.rating > 2 ? warning30 : neutral00,
+                          color: widget.review.rating >= 2 ? warning30 : neutral00,
                           Icons.star,
                           size: 18,
                         ),
                         const SizedBox(width: 2),
                         Icon(
-                          color: widget.review.rating > 3 ? warning30 : neutral00,
+                          color: widget.review.rating >= 3 ? warning30 : neutral00,
                           Icons.star,
                           size: 18,
                         ),
                         const SizedBox(width: 2),
                         Icon(
-                          color: widget.review.rating > 4 ? warning30 : neutral00,
+                          color: widget.review.rating >= 4 ? warning30 : neutral00,
                           Icons.star,
                           size: 18,
                         ),

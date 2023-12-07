@@ -2,7 +2,6 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:disappear/models/product_model.dart';
-import 'package:disappear/models/review_model.dart';
 import 'package:disappear/screens/home/components/placeholders/best_seller_products_placeholder.dart';
 import 'package:disappear/screens/product/components/add_to_cart_dialog.dart';
 import 'package:disappear/screens/product/components/other_product.dart';
@@ -12,6 +11,7 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
 import 'package:disappear/view_models/product/product_carousel_view_model.dart';
+import 'package:disappear/view_models/product/product_review_view_model.dart';
 import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,10 +33,12 @@ class _ProductScreenState extends State<ProductScreen> {
   Future<ProductModel?> _getProduct() async {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
     final carouselViewModel = Provider.of<ProductCarouselViewModel>(context, listen: false);
+    final reviewViewModel = Provider.of<ProductReviewViewModel>(context, listen: false);
 
     final product = await productViewModel.getProductById();
 
     carouselViewModel.product = product;
+    reviewViewModel.product = product;
 
     return product;
   }
@@ -218,25 +220,25 @@ class _ProductScreenState extends State<ProductScreen> {
                           Row(
                             children: [
                               Icon(
-                                color: snapshot.data!.rating > 1 ? warning30 : neutral00,
+                                color: snapshot.data!.rating >= 1 ? warning30 : neutral00,
                                 Icons.star,
                                 size: 22,
                               ),
                               const SizedBox(width: 2),
                               Icon(
-                                color: snapshot.data!.rating > 2 ? warning30 : neutral00,
+                                color: snapshot.data!.rating >= 2 ? warning30 : neutral00,
                                 Icons.star,
                                 size: 22,
                               ),
                               const SizedBox(width: 2),
                               Icon(
-                                color: snapshot.data!.rating > 3 ? warning30 : neutral00,
+                                color: snapshot.data!.rating >= 3 ? warning30 : neutral00,
                                 Icons.star,
                                 size: 22,
                               ),
                               const SizedBox(width: 2),
                               Icon(
-                                color: snapshot.data!.rating > 4 ? warning30 : neutral00,
+                                color: snapshot.data!.rating >= 4 ? warning30 : neutral00,
                                 Icons.star,
                                 size: 22,
                               ),
@@ -405,21 +407,24 @@ class _ProductScreenState extends State<ProductScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: _goToReviewScreen,
-                                  child: const Text(
-                                    'Lihat Semua',
-                                    style: mediumBody8,
+                          Visibility(
+                            visible: snapshot.data!.reviews.length > 1,
+                            child: SizedBox(
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: _goToReviewScreen,
+                                    child: const Text(
+                                      'Lihat Semua',
+                                      style: mediumBody8,
+                                    ),
                                   ),
-                                ),
-                                const Icon(
-                                  Icons.keyboard_arrow_right,
-                                  size: 16,
-                                ),
-                              ],
+                                  const Icon(
+                                    Icons.keyboard_arrow_right,
+                                    size: 16,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
