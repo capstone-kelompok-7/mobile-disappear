@@ -1,5 +1,6 @@
 import 'package:disappear/models/category_model.dart';
 import 'package:disappear/models/product_image_model.dart';
+import 'package:disappear/models/review_model.dart';
 import 'package:intl/intl.dart';
 
 class ProductModel {
@@ -13,10 +14,13 @@ class ProductModel {
   num rating;
   int price;
   int? totalReview;
+  int? totalSold;
 
   List<CategoryModel> categories = [];
 
   List<ProductImageModel> images = [];
+
+  List<ProductReviewModel> reviews = [];
 
   ProductModel({
     required this.id,
@@ -28,7 +32,8 @@ class ProductModel {
     this.exp,
     required this.rating,
     required this.price,
-    this.totalReview
+    this.totalReview,
+    this.totalSold
   });
 
   ProductImageModel? get thumbnail {
@@ -56,6 +61,29 @@ class ProductModel {
   void addCategoriesFromListOfMap(List<Map<dynamic, dynamic>> categories) {
     for (Map category in categories) {
       addCategoryFromMap(category);
+    }
+  }
+
+  void addReviewFromMap(Map review) {
+    final productReview = ProductReviewModel(
+      id: review['id'] as int,
+      userId: review['user_id'] as int,
+      name: review['name'] as String,
+      description: review['description'] as String,
+      photoProfile: review['photo_profile'] as String,
+      rating: review['rating'] as num,
+    );
+
+    if (review['photo'] != null) {
+      productReview.addPhotosFromListOfMap((review['photo'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
+    }
+
+    reviews.add(productReview);
+  }
+
+  void addReviewsFromListOfMap(List<Map<dynamic, dynamic>> categories) {
+    for (Map category in categories) {
+      addReviewFromMap(category);
     }
   }
 

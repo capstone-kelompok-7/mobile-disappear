@@ -2,9 +2,12 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:disappear/models/product_model.dart';
+import 'package:disappear/models/review_model.dart';
+import 'package:disappear/screens/home/components/placeholders/best_seller_products_placeholder.dart';
 import 'package:disappear/screens/product/components/add_to_cart_dialog.dart';
 import 'package:disappear/screens/product/components/other_product.dart';
 import 'package:disappear/screens/product_review/components/product_review_item.dart';
+import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
@@ -24,18 +27,23 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   late final Future productFuture = _getProduct();
+  
+  late final Future _otherProductFuture = _getOtherProduct();
 
   Future<ProductModel?> _getProduct() async {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
     final carouselViewModel = Provider.of<ProductCarouselViewModel>(context, listen: false);
-
-    productViewModel.productId = 1;
 
     final product = await productViewModel.getProductById();
 
     carouselViewModel.product = product;
 
     return product;
+  }
+
+  Future<List<ProductModel>> _getOtherProduct() async {
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    return await productViewModel.getOtherProducts();
   }
 
   void _showAddToCartDialog() {
@@ -64,6 +72,10 @@ class _ProductScreenState extends State<ProductScreen> {
     productViewModel.productId; // Ini id produknya
   }
 
+  void _goToReviewScreen() {
+    Navigator.of(context).pushNamed(ProductReviewsScreen.routePath);
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartViewModel = Provider.of<AddToCartViewModel>(context, listen: false);
@@ -72,13 +84,34 @@ class _ProductScreenState extends State<ProductScreen> {
       future: productFuture,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          Navigator.pop(context);
+
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: primary40,
+              leading: IconButton(
+                icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+                onPressed: () => Navigator.of(context).pop(),
+              ), 
+              title: Text('Detail Produk', style: semiBoldBody1.copyWith(color: whiteColor),),
+              centerTitle: true,
+            ),
+            body: const Center(child: Text('Produk tidak ditemukan'))
+          );
         }
 
         if (snapshot.hasData) {
           cartViewModel.product = snapshot.data!;
 
           return Scaffold(
+            appBar: AppBar(
+              backgroundColor: primary40,
+              leading: IconButton(
+                icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+                onPressed: () => Navigator.of(context).pop(),
+              ), 
+              title: Text('Detail Produk', style: semiBoldBody1.copyWith(color: whiteColor),),
+              centerTitle: true,
+            ),
             body: ListView(
               children: [
                 Column(
@@ -216,8 +249,8 @@ class _ProductScreenState extends State<ProductScreen> {
                             ],
                           ),
                           const SizedBox(height: 8,),
-                          const Text(
-                            "500 Terjual",
+                          Text(
+                            '${snapshot.data!.totalSold} Terjual',
                             style: regularBody7,
                           ),
                         ],
@@ -232,7 +265,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     children: [
                       const SizedBox(height: 20),
                       Text(
-                        "Deskripsi Produk",
+                        'Deskripsi Produk',
                         style: semiBoldBody5.copyWith(color: primary40),
                       ),
                       const SizedBox(height: 5),
@@ -282,49 +315,69 @@ class _ProductScreenState extends State<ProductScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 20,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        "Produk Lainnya",
+                        'Produk Lainnya',
                         style: semiBoldBody5.copyWith(color: primary40),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      height: 200,
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 6,
-                        separatorBuilder: (context, index) => const SizedBox(width: 5,),
-                        itemBuilder: (context, index) {
-                          const product = OtherProduct();
-            
-                          if (index == 0) {
-                            return const Row(
-                              children: [
-                                SizedBox(width: 20,),
-                                product
-                              ],
+                    const SizedBox(height: 10),
+                    Consumer<ProductViewModel>(
+                      builder: (context, state, _) {
+                        return FutureBuilder(
+                          future: _otherProductFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              if (snapshot.data!.isNotEmpty) {
+                                return SizedBox(
+                                  height: 220,
+                                  child: ListView.separated(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: snapshot.data!.length,
+                                    separatorBuilder: (context, index) => const SizedBox(width: 5,),
+                                    itemBuilder: (context, index) {
+                                      final product = OtherProduct(product: snapshot.data![index],);
+                                            
+                                      if (index == 0) {
+                                        return Row(
+                                          children: [
+                                            const SizedBox(width: 20,),
+                                            product
+                                          ],
+                                        );
+                                      }
+                                            
+                                      if (index == snapshot.data!.length - 1) {
+                                        return Row(
+                                          children: [
+                                            product,
+                                            const SizedBox(width: 20,),
+                                          ],
+                                        ); 
+                                      }
+                                            
+                                      return Row(children: [product]);
+                                    },
+                                  ),
+                                );
+                              }
+
+                              return const Center(child: Text('Tidak ada produk'));
+                            }
+
+                            return const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: BestSellerProductsPlaceholder(),
                             );
                           }
-            
-                          if (index == 5) {
-                            return const Row(
-                              children: [
-                                product,
-                                SizedBox(width: 20,),
-                              ],
-                            ); 
-                          }
-            
-                          return product;
-                        },
-                      ),
+                        );
+                      }
                     )
                   ],
                 ),
@@ -346,20 +399,23 @@ class _ProductScreenState extends State<ProductScreen> {
                                 style: semiBoldBody5.copyWith(color: primary40),
                               ),
                               const SizedBox(height: 4),
-                              const Text(
-                                '100 Ulasan',
+                              Text(
+                                '${snapshot.data!.reviews.length} Ulasan',
                                 style: regularBody7,
                               ),
                             ],
                           ),
-                          const SizedBox(
+                          SizedBox(
                             child: Row(
                               children: [
-                                Text(
-                                  'Lihat Semua',
-                                  style: mediumBody8,
+                                GestureDetector(
+                                  onTap: _goToReviewScreen,
+                                  child: const Text(
+                                    'Lihat Semua',
+                                    style: mediumBody8,
+                                  ),
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.keyboard_arrow_right,
                                   size: 16,
                                 ),
@@ -369,7 +425,25 @@ class _ProductScreenState extends State<ProductScreen> {
                         ],
                       ),
                       const Divider(thickness: 0.3, color: neutral10,),
-                      const ProductReviewItem()
+                      Builder(
+                        builder: (context) {
+                          if (snapshot.data!.reviews.isNotEmpty) {
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return ProductReviewItem(review: snapshot.data!.reviews[index]);
+                              },
+                              separatorBuilder: (context, index) => const SizedBox(height: 30,),
+                              itemCount: snapshot.data!.reviews.length > 3
+                                ? 3
+                                : snapshot.data!.reviews.length
+                            );
+                          }
+
+                          return const Center(child: Text('Tidak ada review'));
+                        }
+                      )
                     ],
                   ),
                 )
@@ -383,9 +457,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        _showAddToCartDialog();
-                      },
+                      onPressed: _showAddToCartDialog,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: secondary00,
                         shape: const BeveledRectangleBorder(

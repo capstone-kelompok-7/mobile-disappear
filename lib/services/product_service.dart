@@ -90,13 +90,47 @@ class ProductService {
       discount: data['discount'] as int,
       exp: data['exp'] as int,
       totalReview: data['total_review'] as int,
-      rating: data['rating'] as double,
-      price: data['price'] as int
+      rating: data['rating'] as num,
+      price: data['price'] as int,
+      totalSold: data['total_sold'] as int
     );
 
-    product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
+    if (data['image_url'] != null) {
+      product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
+    }
+
+    if (data['reviews'] != null) {
+      product.addReviewsFromListOfMap((data['reviews'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
+    }
 
     return product;
+  }
+
+  Future<List<ProductModel>> getOtherProducts() async {
+    final dio = createDio();
+
+    final Response response = await dio.get('/products?page=1');
+
+    if (response.data['data'] != null) {
+      return response.data['data']
+        .map<ProductModel>((data) {
+          final product = ProductModel(
+            id: data['id'] as int,
+            name: data['name'] as String,
+            rating: data['rating'] as num,
+            price: data['price'] as int
+          );
+
+          if (data['image_url'] != null) {
+            product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
+          }
+
+          return product;
+        })
+        .toList();
+    }
+
+    return [];
   }
 
   Future<void> addProductToCart(int productId, int quantity) async {
