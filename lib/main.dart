@@ -42,7 +42,7 @@ import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
-import 'package:disappear/screens/product_review/product_reviews_screen.dart';
+import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
