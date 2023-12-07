@@ -6,7 +6,7 @@ import 'package:disappear/screens/home/components/placeholders/best_seller_produ
 import 'package:disappear/screens/product/components/add_to_cart_dialog.dart';
 import 'package:disappear/screens/product/components/other_product.dart';
 import 'package:disappear/screens/product_review/components/product_review_item.dart';
-import 'package:disappear/screens/product_review/product_reviews_screen.dart';
+import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
