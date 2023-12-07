@@ -696,6 +696,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  scroll_edge_listener:
+    dependency: "direct main"
+    description:
+      name: scroll_edge_listener
+      sha256: d9f02eb4c8c0e6c0a21fe3c1cf493757ccfcee4d75c0bb649b8759db744a95b2
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   shared_preferences:
     dependency: "direct main"
     description:
