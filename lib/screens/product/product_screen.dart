@@ -86,7 +86,6 @@ class _ProductScreenState extends State<ProductScreen> {
       future: productFuture,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-
           return Scaffold(
             appBar: AppBar(
               backgroundColor: primary40,
@@ -296,7 +295,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        state.isExpanded ? "Selengkapnya" : "Tutup",
+                                        state.isExpanded ? 'Selengkapnya' : 'Tutup',
                                         style: mediumBody8.copyWith(color: neutral20),
                                       ),
                                       Icon(
@@ -407,26 +406,21 @@ class _ProductScreenState extends State<ProductScreen> {
                               ),
                             ],
                           ),
-                          Visibility(
-                            visible: snapshot.data!.reviews.length > 1,
-                            child: SizedBox(
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: _goToReviewScreen,
-                                    child: const Text(
-                                      'Lihat Semua',
-                                      style: mediumBody8,
-                                    ),
-                                  ),
-                                  const Icon(
-                                    Icons.keyboard_arrow_right,
-                                    size: 16,
-                                  ),
-                                ],
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: _goToReviewScreen,
+                                child: const Text(
+                                  'Lihat Semua',
+                                  style: mediumBody8,
+                                ),
                               ),
-                            ),
-                          ),
+                              const Icon(
+                                Icons.keyboard_arrow_right,
+                                size: 16,
+                              ),
+                            ],
+                          )
                         ],
                       ),
                       const Divider(thickness: 0.3, color: neutral10,),
@@ -440,9 +434,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 return ProductReviewItem(review: snapshot.data!.reviews[index]);
                               },
                               separatorBuilder: (context, index) => const SizedBox(height: 30,),
-                              itemCount: snapshot.data!.reviews.length > 3
-                                ? 3
-                                : snapshot.data!.reviews.length
+                              itemCount: snapshot.data!.reviews.length
                             );
                           }
 
@@ -495,8 +487,17 @@ class _ProductScreenState extends State<ProductScreen> {
           );
         }
 
-        return const Scaffold(
-          body: Center(
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: primary40,
+            leading: IconButton(
+              icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+              onPressed: () => Navigator.of(context).pop(),
+            ), 
+            title: Text('Detail Produk', style: semiBoldBody1.copyWith(color: whiteColor),),
+            centerTitle: true,
+          ),
+          body: const Center(
             child: SizedBox(
               width: 30,
               height: 30,

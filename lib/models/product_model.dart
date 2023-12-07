@@ -15,17 +15,12 @@ class ProductModel {
   int price;
   int? totalReview;
   int? totalSold;
-  int currentRatingFive = 0;
-  int currentRatingFour = 0;
-  int currentRatingThree = 0;
-  int currentRatingTwo = 0;
-  int currentRatingOne = 0;
 
   List<CategoryModel> categories = [];
 
   List<ProductImageModel> images = [];
 
-  List<ProductReviewModel> reviews = [];
+  List<ProductReviewItemModel> reviews = [];
 
   ProductModel({
     required this.id,
@@ -39,11 +34,6 @@ class ProductModel {
     required this.price,
     this.totalReview,
     this.totalSold,
-    this.currentRatingFive = 0,
-    this.currentRatingFour = 0,
-    this.currentRatingThree = 0,
-    this.currentRatingTwo = 0,
-    this.currentRatingOne = 0,
   });
 
   ProductImageModel? get thumbnail {
@@ -75,13 +65,14 @@ class ProductModel {
   }
 
   void addReviewFromMap(Map review) {
-    final productReview = ProductReviewModel(
+    final productReview = ProductReviewItemModel(
       id: review['id'] as int,
       userId: review['user_id'] as int,
       name: review['name'] as String,
       description: review['description'] as String,
       photoProfile: review['photo_profile'] as String,
       rating: review['rating'] as num,
+      date: review['date'] as String
     );
 
     if (review['photo'] != null) {

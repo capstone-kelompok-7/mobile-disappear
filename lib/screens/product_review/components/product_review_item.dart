@@ -1,10 +1,12 @@
 import 'package:disappear/models/review_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/timeago_message.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ProductReviewItem extends StatefulWidget {
-  final ProductReviewModel review;
+  final ProductReviewItemModel review;
 
   const ProductReviewItem({super.key, required this.review});
 
@@ -13,6 +15,11 @@ class ProductReviewItem extends StatefulWidget {
 }
 
 class _ProductReviewItemState extends State<ProductReviewItem> {
+  String showDate() {
+    final reviewDate = DateTime.parse(widget.review.date);
+    return timeago.format(reviewDate, locale: 'id');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,6 +38,7 @@ class _ProductReviewItemState extends State<ProductReviewItem> {
                       : 'https://picsum.photos/30',
                     width: 30,
                     height: 30,
+                    fit: BoxFit.cover,
                   )
                 ),
                 const SizedBox(width: 8,),
@@ -78,7 +86,7 @@ class _ProductReviewItemState extends State<ProductReviewItem> {
                 )
               ],
             ),
-            const Text('Satu hari yang lalu', style: regularBody8,)
+            Text(showDate(), style: regularBody8,)
           ],
         ),
         const SizedBox(height: 12,),

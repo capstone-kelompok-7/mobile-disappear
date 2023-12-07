@@ -46,6 +46,7 @@ import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
+import 'package:disappear/timeago_message.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
@@ -71,7 +72,11 @@ import 'package:disappear/view_models/search_product/search_products_view_model.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:timeago/timeago.dart' as timeago;
+
 void main() {
+  timeago.setLocaleMessages('id', IndonesianMessage());
+  
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -151,7 +156,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: AddressListScreen.routePath,
+      debugShowCheckedModeBanner: false,
+      initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
