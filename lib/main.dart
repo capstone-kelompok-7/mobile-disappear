@@ -44,6 +44,7 @@ import 'package:disappear/screens/auth/forgot_password/forgot_password_verificat
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product_review/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
+import 'package:disappear/services/home_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
@@ -52,6 +53,7 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:disappear/view_models/category/category_view_model.dart';
 import 'package:disappear/view_models/home/home_category_view_model.dart';
@@ -105,6 +107,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => RegisterVerificationViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => HomeViewModel(),
       ),
       ChangeNotifierProvider(
         create: (context) => HomeCategoryViewModel(),
