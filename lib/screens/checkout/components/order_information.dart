@@ -29,63 +29,13 @@ class _OrderInformationState extends State<OrderInformation> {
               style: semiBoldBody7,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 15, left: 39),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 67,
-                  height: 77,
-                  child: Image.asset(
-                    'assets/img/totebeg_kanvas.png',
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                const SizedBox(
-                  width: 25,
-                ),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Totebag Kanvas',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: mediumBody6,
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      '1 Produk | 20 Gram',
-                      style: regularBody8,
-                    ),
-                    SizedBox(
-                      height: 11,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          'Rp. 20.000',
-                          style: mediumBody6,
-                        ),
-                        SizedBox(
-                          width: 130,
-                        ),
-                        Text(
-                          'x 6',
-                          style: mediumBody6,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 16.5,
-                ),
-              ],
-            ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+            itemBuilder: (context, index) => const OrderItem(),
+            separatorBuilder: (context, index) => const SizedBox(height: 20,),
+            itemCount: 3,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -103,46 +53,82 @@ class _OrderInformationState extends State<OrderInformation> {
               maxLines: null,
             ),
           ),
-          const Divider(
-            height: 1,
-            thickness: 2,
-          ),
-          
           GestureDetector(
             onTap: () {
               Navigator.of(context).pushNamed('/use-coupon-screen');
             },
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 39, right: 19, bottom: 15, top: 15),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+              decoration: const BoxDecoration(
+                border: Border.symmetric(horizontal: BorderSide(width: 1, color: neutral00))
+              ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset('assets/img/CheckoutCoupon.svg'),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Text(
-                    'Kupon Toko',
-                    style: mediumBody7,
-                  ),
-                  const SizedBox(
-                    width: 198,
+                  Row(
+                    children: [
+                      SvgPicture.asset('assets/img/CheckoutCoupon.svg'),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Kupon Toko',
+                        style: mediumBody7,
+                      )
+                    ],
                   ),
                   const Icon(
                     Icons.arrow_forward_ios,
-                    color: Color.fromRGBO(37, 116, 90, 1),
+                    color: primary40,
                     size: 14,
                   ),
                 ],
               ),
             ),
           ),
-          const Divider(
-            thickness: 1,
-            height: 1,
-          ),
         ],
       ),
+    );
+  }
+}
+
+class OrderItem extends StatelessWidget {
+  const OrderItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(2),
+              child: Image.asset(
+                'assets/img/totebeg_kanvas.png',
+                fit: BoxFit.cover,
+                width: 68,
+                height: 78,
+              ),
+            ),
+            const SizedBox(width: 10,),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Totebag Kanvas',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: mediumBody6,
+                ),
+                SizedBox(height: 6),
+                Text('20 Gram', style: regularBody8),
+                SizedBox(height: 5),
+                Text('Rp. 20.000', style: mediumBody6)
+              ],
+            ),
+          ],
+        ),
+        const Text('x 6', style: mediumBody6)
+      ],
     );
   }
 }

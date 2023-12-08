@@ -17,7 +17,6 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
         Container(
           color: neutral00,
           padding: const EdgeInsets.only(top: 15, bottom: 15, left: 25, right: 25),
-          height: 48,
           width: double.infinity,
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,14 +33,9 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
           ),
         ),
 
-        const Divider(
-          height: 1,
-          thickness: 1,
-        ),
-
         //TRANSFER BANK
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: GestureDetector(
             onTap: () {},
             child: const ListTile(
@@ -50,7 +44,7 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
                 style: mediumBody7,
               ),
               subtitle: Text(
-                'Bank Mandiri, Bank BCA, Bank BNI, Bank BRI.',
+                'Bank Permata, Bank BCA, Bank BNI, Bank BRI.',
                 style: regularBody8,
                 overflow: TextOverflow.fade,
                 maxLines: 1,
@@ -58,7 +52,7 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
               trailing: Icon(
                 Icons.arrow_forward_ios_outlined,
                 size: 14,
-                color: Color.fromRGBO(37, 116, 90, 1),
+                color: primary40,
               ),
             ),
           ),
@@ -66,12 +60,12 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
 
         const Divider(
           height: 1,
-          thickness: 1,
+          thickness: 0.1,
         ),
 
         //KARTU KREDIT / DEBIT
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: GestureDetector(
             onTap: () {},
             child: const ListTile(
@@ -96,12 +90,12 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
 
         const Divider(
           height: 1,
-          thickness: 1,
+          thickness: 0.1,
         ),
 
         //E-WALLET
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: GestureDetector(
             onTap: () {},
             child: const ListTile(
@@ -126,15 +120,15 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
 
         const Divider(
           height: 1,
-          thickness: 1,
+          thickness: 0.1,
         ),
 
         //GERAI RITEL
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: GestureDetector(
             onTap: () {},
-            child:const  ListTile(
+            child: const  ListTile(
               title: Text(
                 'Gerai Ritel',
                 style: mediumBody7,
@@ -156,12 +150,12 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
 
         const Divider(
           height: 1,
-          thickness: 1,
+          thickness: 0.1,
         ),
 
         //MANUAL TRANSFER
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: GestureDetector(
             onTap: () {},
             child: const  ListTile(
