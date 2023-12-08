@@ -11,7 +11,7 @@ class DetailPaymentTotal extends StatelessWidget {
       children: [
         Container(
           color: neutral00,
-          padding: const EdgeInsets.only(top: 15, bottom: 15, left: 25),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           height: 48,
           width: double.infinity,
           child: const Text(
@@ -20,7 +20,7 @@ class DetailPaymentTotal extends StatelessWidget {
           ),
         ),
         const Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           child: Column(
             children: [
               Row(
@@ -28,7 +28,7 @@ class DetailPaymentTotal extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Total Pembayaran',
+                    'Total Produk',
                     style: semiBoldBody8,
                   ),
                   Text(
@@ -37,26 +37,7 @@ class DetailPaymentTotal extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Pengiriman ( Kelas Ekonomi )',
-                    style: regularBody8,
-                  ),
-                  Text(
-                    'Rp. 45.000',
-                    style: regularBody8,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 15,
-              ),
+              SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -113,7 +94,7 @@ class DetailPaymentTotal extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Total',
+                    'Total Pembayaran',
                     style: semiBoldBody8,
                   ),
                   Text(
@@ -125,14 +106,11 @@ class DetailPaymentTotal extends StatelessWidget {
             ],
           ),
         ),
-        const Divider(
-          thickness: 1,
-        ),
+        const Divider(height: 1, thickness: 0.1,),
         const Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 'Dibayar Oleh Pelanggan',
@@ -146,40 +124,40 @@ class DetailPaymentTotal extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 62,
+          height: 60,
           width: double.infinity,
           child: Row(
             children: [
-              Container(
-                width: 220,
-                height: double.infinity,
-                color: neutral00,
-                child: const Padding(
-                  padding:  EdgeInsets.only(left: 100, top: 7),
-                  child: Column(
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: const EdgeInsets.only(right: 20),
+                  height: double.infinity,
+                  color: neutral00,
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Total Pembayaran',
                         style: mediumBody8,
                       ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('Rp. 142.000')
+                      SizedBox(height: 8),
+                      Text('Rp. 142.000', style: semiBoldBody7,)
                     ],
-                  ),
+                  )
                 ),
               ),
               Expanded(
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    color: primary30,
-                    height: double.infinity,
-                    child: const Center(
-                      child: Text('Buat Pesanan'),
-                    ),
+                flex: 2,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primary30,
+                    shape: const BeveledRectangleBorder()
                   ),
+                  child: Text('Buat Pesanan', style: semiBoldBody6.copyWith(color: whiteColor)
+                ),
                 ),
               ),
             ],

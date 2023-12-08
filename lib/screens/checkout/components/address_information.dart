@@ -28,60 +28,56 @@ class _AddressInfomationState extends State<AddressInfomation> {
           ),
         ),
         Padding(
-          padding:
-              const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 25),
-          child: Column(
+          padding: const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset('assets/img/CheckoutPinpoint.svg'),
-                  const SizedBox(
-                    width: 10,
+                  Row(
+                    children: [
+                      SvgPicture.asset('assets/img/CheckoutPinpoint.svg', width: 17, height: 17,),
+                      const SizedBox(width: 10),
+                      const Text('Alamat Pengiriman', style: mediumBody8,),
+                    ],
                   ),
-                  const Text('Alamat Pengiriman', style: mediumBody8,),
+                  const SizedBox(height: 10),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //NAMA ALAMAT
+                      Padding(
+                        padding: EdgeInsets.only(left: 27),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Dimas Bayuwangis',
+                              style: mediumBody8,
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              '0848-7965-7909 | Jln. Merpati Blok B no.12 ',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              style: mediumBody8,
+                            ),
+                            Text(
+                              'MERPATI, KOTA KAYANGAN, KAYANGAN. \nID 45362',
+                              style: mediumBody8,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
-              const SizedBox(
-                height: 10,
+              const Icon(
+                Icons.keyboard_arrow_right_outlined,
+                color: primary40,
               ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  //NAMA ALAMAT
-                  Padding(
-                    padding:  EdgeInsets.only(
-                      left: 27,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Dimas Bayuwangis',
-                          style: mediumBody8,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          '0848-7965-7909 | Jln. Merpati Blok B no.12 ',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
-                          style: mediumBody8,
-                        ),
-                        Text(
-                          'MERPATI, KOTA KAYANGAN, KAYANGAN. \nID 45362',
-                          style: mediumBody8,
-                        )
-                      ],
-                    ),
-                  ),
-
-                  Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    color: Color.fromRGBO(37, 116, 90, 1),
-                  ),
-                ],
-              )
             ],
           ),
         ),
