@@ -133,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 contentPadding: const EdgeInsets.all(10),
                                 suffixIcon: GestureDetector(
                                   onTap: state.togglePasswordObscure,
-                                  child: Icon(state.isPasswordObscured ? Icons.visibility_outlined : Icons.visibility_off_outlined)
+                                  child: Icon(state.isPasswordObscured ? Icons.visibility_off_outlined : Icons.visibility_outlined)
                                 )
                               ),
                               obscureText: state.isPasswordObscured,

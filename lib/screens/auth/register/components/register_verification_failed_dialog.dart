@@ -31,6 +31,12 @@ class _RegisterVerificationFailedDialogState extends State<RegisterVerificationF
         children: [
           SvgPicture.asset('assets/img/FailedIcon.svg'),
           const SizedBox(height: 15,),
+          const Text(
+            'Ooops!!',
+            style: semiBoldBody3,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 5,),
           Text(
             widget.message,
             style: regularBody6,

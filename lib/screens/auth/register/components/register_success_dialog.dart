@@ -19,7 +19,7 @@ class RegisterSuccessDialog extends StatefulWidget {
 class _RegisterSuccessDialogState extends State<RegisterSuccessDialog> {
   void _goToRegisterVerificationScreen() {
     Navigator.of(context).pop();
-    Navigator.pushReplacementNamed(context, RegisterVerificationScreen.routePath);
+    Navigator.of(context).pushNamedAndRemoveUntil(RegisterVerificationScreen.routePath, (route) => false);
   }
 
   @override
