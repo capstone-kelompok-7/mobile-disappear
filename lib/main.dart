@@ -53,6 +53,7 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:disappear/view_models/category/category_view_model.dart';
@@ -140,6 +141,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => AddToCartViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => CheckoutVoucherViewModel(),
       ),
     ],
     child: const App(),
