@@ -20,10 +20,14 @@ class _ManualTransferScreenState extends State<ManualTransferScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios),
-        title: const Text(
+        backgroundColor: primary40,
+        leading: GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: const Icon(Icons.arrow_back_ios, color: whiteColor)
+        ),
+        title: Text(
           'Manual Transfer',
-          style: semiBoldBody1,
+          style: semiBoldBody1.copyWith(color: whiteColor),
         ),
         centerTitle: true,
       ),

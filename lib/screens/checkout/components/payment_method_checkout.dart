@@ -1,3 +1,4 @@
+import 'package:disappear/screens/manual_transfer/manual_transfer_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,10 @@ class PaymentMethodCheckout extends StatefulWidget {
 }
 
 class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
+  void _goToManualTransferOptionsScreen() {
+    Navigator.of(context).pushNamed(ManualTransferScreen.routePath);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -154,11 +159,11 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
         ),
 
         //MANUAL TRANSFER
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: GestureDetector(
-            onTap: () {},
-            child: const  ListTile(
+        GestureDetector(
+          onTap: _goToManualTransferOptionsScreen,
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: ListTile(
               title: Text(
                 'Manual Transfer',
                 style: mediumBody7,
