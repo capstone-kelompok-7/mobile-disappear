@@ -1,21 +1,27 @@
 import 'package:disappear/models/article_model.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
-import 'package:disappear/screens/home/components/placeholders/latest_article_thumbnail_placeholder.dart';
+import 'package:disappear/screens/article/placeholders/list_article_thumbnail_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class LatestArticleItem extends StatefulWidget {
+class ListArticleItem extends StatefulWidget {
   final ArticleModel article;
 
-  const LatestArticleItem({super.key, required this.article});
+  const ListArticleItem({super.key, required this.article});
 
   @override
-  State<LatestArticleItem> createState() => _LatestArticleItemState();
+  State<ListArticleItem> createState() => _ListArticleItemState();
 }
 
-class _LatestArticleItemState extends State<LatestArticleItem> {
+class _ListArticleItemState extends State<ListArticleItem> {
   void _goToDetailArticleScreen() {
+    final articleViewModel =
+        Provider.of<DetailArticlesViewModel>(context, listen: false);
+    articleViewModel.articleId = widget.article.id;
+
     Navigator.pushNamed(context, DetailArticleScreen.routePath);
   }
 
@@ -32,29 +38,19 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
               Flexible(
                 flex: 1,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: Builder(builder: (context) {
-                      if (widget.article.photo != '') {
-                        return Image.network(
-                          widget.article.photo,
-                          height: 120,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress != null) {
-                              return const LatestArticleThumbnailPlaceholder();
-                            }
-
-                            return child;
-                          },
-                        );
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.network(
+                    widget.article.photo,
+                    height: 120,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress != null) {
+                        return const ListArticleThumbnailPlaceholder();
                       }
-
-                      return Image.asset(
-                        'assets/img/tumbler.png',
-                        height: 120,
-                        fit: BoxFit.cover,
-                      );
-                    })),
+                      return child;
+                    },
+                  ),
+                ),
               ),
               Flexible(
                 flex: 2,
@@ -64,7 +60,7 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(widget.article.formattedDate,
-                          style: regularBody8.copyWith(color: neutral40)),
+                          style: mediumBody8.copyWith(color: primary40)),
                       const SizedBox(
                         height: 10,
                       ),
@@ -78,8 +74,12 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                         children: [
                           Row(
                             children: [
-                              const Text('1 minggu yang lalu',
-                                  style: mediumBody8),
+                              Text(
+                                '1 minggu yang lalu',
+                                style: regularBody8.copyWith(
+                                  color: primary40,
+                                ),
+                              ),
                               const SizedBox(
                                 width: 10,
                               ),
@@ -90,8 +90,12 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              Text(widget.article.views.toString(),
-                                  style: regularBody8),
+                              Text(
+                                widget.article.views.toString(),
+                                style: regularBody8.copyWith(
+                                  color: primary40,
+                                ),
+                              ),
                             ],
                           ),
                           const Icon(
