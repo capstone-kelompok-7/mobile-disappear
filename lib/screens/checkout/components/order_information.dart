@@ -1,3 +1,4 @@
+import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,11 @@ class OrderInformation extends StatefulWidget {
 
 class _OrderInformationState extends State<OrderInformation> {
   TextEditingController notesController = TextEditingController();
+
+  void _goToCouponScreen() {
+    Navigator.of(context).pushNamed(UseCouponScreen.routePath);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -54,9 +60,7 @@ class _OrderInformationState extends State<OrderInformation> {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed('/use-coupon-screen');
-            },
+            onTap: _goToCouponScreen,
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
               decoration: const BoxDecoration(
