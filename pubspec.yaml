@@ -51,6 +51,7 @@ dependencies:
   intl: ^0.18.1
   another_flushbar: ^1.12.30
   scroll_edge_listener: ^0.1.1
+  timeago: ^3.6.0
 
 dev_dependencies:
   flutter_test:

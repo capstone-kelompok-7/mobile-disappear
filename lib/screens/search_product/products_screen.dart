@@ -1,7 +1,9 @@
+import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/search_product/components/products_filter.dart';
 import 'package:disappear/screens/search_product/components/placeholders/products_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:disappear/view_models/search_product/filter_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_products_view_model.dart';
@@ -54,6 +56,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
+  void _goToDetailProductScreen(int id) {
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    productViewModel.productId = id;
+
+    Navigator.pushNamed(context, ProductScreen.routePath);
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -102,86 +111,89 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       mainAxisExtent: 280,
                     ),
                     itemBuilder: (context, index) {
-                      return Card(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Column(
-                            children: [
-                              Builder(
-                                builder: (context) {
-                                  if (state.products[index].thumbnail != null) {
-                                    return Image.network(
-                                      state.products[index].thumbnail!.imageUrl,
+                      return GestureDetector(
+                        onTap: () => _goToDetailProductScreen(state.products[index].id),
+                        child: Card(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Column(
+                              children: [
+                                Builder(
+                                  builder: (context) {
+                                    if (state.products[index].thumbnail != null) {
+                                      return Image.network(
+                                        state.products[index].thumbnail!.imageUrl,
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      );
+                                    }
+                        
+                                    return Image.asset(
+                                      'assets/img/alat_makan.png',
+                                      fit: BoxFit.cover,
                                       width: 200,
                                       height: 200,
-                                      fit: BoxFit.cover,
                                     );
                                   }
-
-                                  return Image.asset(
-                                    'assets/img/alat_makan.png',
-                                    fit: BoxFit.cover,
-                                    width: 200,
-                                    height: 200,
-                                  );
-                                }
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      state.products[index].name,
-                                      style: regularBody7,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
-                                    const SizedBox(height: 3,),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.star,
-                                          size: 16,
-                                          color: state.products[index].rating >= 1 ? warning20 : neutral20
-                                        ),
-                                        const SizedBox(width: 2,),
-                                        Icon(
-                                          Icons.star,
-                                          size: 16,
-                                          color: state.products[index].rating >= 2 ? warning20 : neutral20
-                                        ),
-                                        const SizedBox(width: 2,),
-                                        Icon(
-                                          Icons.star,
-                                          size: 16,
-                                          color: state.products[index].rating >= 3 ? warning20 : neutral20
-                                        ),
-                                        const SizedBox(width: 2,),
-                                        Icon(
-                                          Icons.star,
-                                          size: 16,
-                                          color: state.products[index].rating >= 4 ? warning20 : neutral20
-                                        ),
-                                        const SizedBox(width: 2,),
-                                        Icon(
-                                          Icons.star,
-                                          size: 16,
-                                          color: state.products[index].rating >= 5 ? warning20 : neutral20
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 3,),
-                                    Text(
-                                      state.products[index].formattedPrice,
-                                      style: regularBody7,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
-                                  ],
                                 ),
-                              )
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        state.products[index].name,
+                                        style: regularBody7,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                      const SizedBox(height: 3,),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            size: 16,
+                                            color: state.products[index].rating >= 1 ? warning20 : neutral20
+                                          ),
+                                          const SizedBox(width: 2,),
+                                          Icon(
+                                            Icons.star,
+                                            size: 16,
+                                            color: state.products[index].rating >= 2 ? warning20 : neutral20
+                                          ),
+                                          const SizedBox(width: 2,),
+                                          Icon(
+                                            Icons.star,
+                                            size: 16,
+                                            color: state.products[index].rating >= 3 ? warning20 : neutral20
+                                          ),
+                                          const SizedBox(width: 2,),
+                                          Icon(
+                                            Icons.star,
+                                            size: 16,
+                                            color: state.products[index].rating >= 4 ? warning20 : neutral20
+                                          ),
+                                          const SizedBox(width: 2,),
+                                          Icon(
+                                            Icons.star,
+                                            size: 16,
+                                            color: state.products[index].rating >= 5 ? warning20 : neutral20
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 3,),
+                                      Text(
+                                        state.products[index].formattedPrice,
+                                        style: regularBody7,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );

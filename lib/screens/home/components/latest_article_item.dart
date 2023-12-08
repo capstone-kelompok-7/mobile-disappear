@@ -33,17 +33,29 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                 flex: 1,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
-                  child: Image.network(
-                    widget.article.photo,
-                    height: 120,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress != null) {
-                        return const LatestArticleThumbnailPlaceholder();
+                  child: Builder(
+                    builder: (context) {
+                      if (widget.article.photo != '') {
+                        return Image.network(
+                          widget.article.photo,
+                          height: 120,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress != null) {
+                              return const LatestArticleThumbnailPlaceholder();
+                            }
+                        
+                            return child;
+                          },
+                        );
                       }
 
-                      return child;
-                    },
+                      return Image.asset(
+                        'assets/img/tumbler.png',
+                        height: 120,
+                        fit: BoxFit.cover,
+                      );
+                    }
                   )
                 ),
               ),

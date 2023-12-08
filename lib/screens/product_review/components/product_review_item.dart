@@ -1,18 +1,29 @@
+import 'package:disappear/models/review_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/timeago_message.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ProductReviewItem extends StatefulWidget {
-  const ProductReviewItem({super.key});
+  final ProductReviewItemModel review;
+
+  const ProductReviewItem({super.key, required this.review});
 
   @override
   State<ProductReviewItem> createState() => _ProductReviewItemState();
 }
 
 class _ProductReviewItemState extends State<ProductReviewItem> {
+  String showDate() {
+    final reviewDate = DateTime.parse(widget.review.date);
+    return timeago.format(reviewDate, locale: 'id');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -22,57 +33,95 @@ class _ProductReviewItemState extends State<ProductReviewItem> {
               children: [
                 ClipOval(
                   child: Image.network(
-                    'https://picsum.photos/30',
+                    widget.review.photoProfile.isNotEmpty
+                      ? widget.review.photoProfile
+                      : 'https://picsum.photos/30',
                     width: 30,
                     height: 30,
+                    fit: BoxFit.cover,
                   )
                 ),
                 const SizedBox(width: 8,),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('User 1'),
-                    SizedBox(width: 5,),
+                    Text(widget.review.name.isNotEmpty ? widget.review.name : 'User'),
+                    const SizedBox(width: 5,),
                     Row(
                       children: [
-                        Icon(Icons.star, size: 16, color: blackColor),
-                        SizedBox(width: 2,),
-                        Icon(Icons.star, size: 16, color: blackColor),
-                        SizedBox(width: 2,),
-                        Icon(Icons.star, size: 16, color: blackColor),
-                        SizedBox(width: 2,),
-                        Icon(Icons.star, size: 16, color: blackColor),
-                        SizedBox(width: 2,),
-                        Icon(Icons.star, size: 16, color: blackColor),
-                        SizedBox(width: 4,),
-                        Text('5.0')
+                        Icon(
+                          color: widget.review.rating >= 1 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: widget.review.rating >= 2 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: widget.review.rating >= 3 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: widget.review.rating >= 4 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: widget.review.rating >= 5 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 5),
+                        Text('${widget.review.rating}')
                       ],
                     ),
                   ],
                 )
               ],
             ),
-            const Text('Satu hari yang lalu', style: regularBody8,)
+            Text(showDate(), style: regularBody8,)
           ],
         ),
         const SizedBox(height: 12,),
-        Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Image.network('https://picsum.photos/120/80'),
-            ),
-            const SizedBox(width: 8,),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Image.network('https://picsum.photos/120/80'),
-            ),
-          ],
+        Visibility(
+          visible: widget.review.photos.isNotEmpty,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 80,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        widget.review.photos[index].photo,
+                        width: 120,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(width: 10,),
+                  itemCount: widget.review.photos.length
+                ),
+              ),
+              const SizedBox(height: 10,),
+            ],
+          ),
         ),
-        const SizedBox(height: 12,),
-        const Text(
-          'Totebag kanvas ini jadi favorit sehari-hari saya. Kuat, awet, dan stylish! Bisa dipake buat belanja atau jalan-jalan. Plus, love the eco-friendly vibe! 💚🌿',
-          style: TextStyle(fontSize: 12, height: 1.5),
+        Text(
+          widget.review.description,
+          style: const TextStyle(fontSize: 12, height: 1.5),
+          textAlign: TextAlign.left,
         ),
       ],
     );
