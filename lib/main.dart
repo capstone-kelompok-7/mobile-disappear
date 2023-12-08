@@ -42,18 +42,20 @@ import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
-import 'package:disappear/screens/product_review/product_reviews_screen.dart';
+import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
-import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
+import 'package:disappear/timeago_message.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:disappear/view_models/category/category_view_model.dart';
 import 'package:disappear/view_models/home/home_category_view_model.dart';
@@ -61,16 +63,23 @@ import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
 import 'package:disappear/view_models/product/product_carousel_view_model.dart';
+import 'package:disappear/view_models/product/product_review_view_model.dart';
 import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
+import 'package:disappear/view_models/search_product/filter_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
 import 'package:disappear/view_models/main_view_model.dart';
+import 'package:disappear/view_models/search_product/search_products_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:timeago/timeago.dart' as timeago;
+
 void main() {
+  timeago.setLocaleMessages('id', IndonesianMessage());
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -107,6 +116,9 @@ void main() {
         create: (context) => RegisterVerificationViewModel(),
       ),
       ChangeNotifierProvider(
+        create: (context) => HomeViewModel(),
+      ),
+      ChangeNotifierProvider(
         create: (context) => HomeCategoryViewModel(),
       ),
       ChangeNotifierProvider(
@@ -122,6 +134,12 @@ void main() {
         create: (context) => BestSellerProductViewModel(),
       ),
       ChangeNotifierProvider(
+        create: (context) => SearchProductViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => FilterViewModel(),
+      ),
+      ChangeNotifierProvider(
         create: (context) => ProductViewModel(),
       ),
       ChangeNotifierProvider(
@@ -132,6 +150,12 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => AddToCartViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ProductReviewViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => DetailArticlesViewModel(),
       ),
     ],
     child: const App(),
@@ -144,7 +168,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: ArticleScreen.routePath,
+      debugShowCheckedModeBanner: false,
+      initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
@@ -169,7 +194,7 @@ class App extends StatelessWidget {
         ChallengeScreen.routePath: (context) => const ChallengeScreen(),
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
-        ArticleScreen.routePath: (context) => const ArticleScreen(),
+        ArticleScreen.routePath: (context) => ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
         LeaderboardScreen.routePath: (context) => const LeaderboardScreen(),
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),

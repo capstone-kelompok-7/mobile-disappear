@@ -3,7 +3,9 @@ import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/placeholders/list_article_thumbnail_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListArticleItem extends StatefulWidget {
   final ArticleModel article;
@@ -16,6 +18,10 @@ class ListArticleItem extends StatefulWidget {
 
 class _ListArticleItemState extends State<ListArticleItem> {
   void _goToDetailArticleScreen() {
+    final articleViewModel =
+        Provider.of<DetailArticlesViewModel>(context, listen: false);
+    articleViewModel.articleId = widget.article.id;
+
     Navigator.pushNamed(context, DetailArticleScreen.routePath);
   }
 

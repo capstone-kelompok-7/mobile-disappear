@@ -1,3 +1,4 @@
+import 'package:disappear/models/article_model.dart';
 import 'package:disappear/screens/article/article_screen.dart';
 import 'package:disappear/screens/home/components/latest_article_item.dart';
 import 'package:disappear/screens/home/components/placeholders/latest_articles_placeholder.dart';
@@ -8,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LatestArticles extends StatefulWidget {
-  const LatestArticles({super.key});
+  final List<ArticleModel> articles;
+
+  const LatestArticles({super.key, required this.articles});
 
   @override
   State<LatestArticles> createState() => _LatestArticlesState();

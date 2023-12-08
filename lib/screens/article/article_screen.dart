@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class ArticleScreen extends StatefulWidget {
-  static const String routePath = '/article-screen';
-  const ArticleScreen({Key? key}) : super(key: key);
+  static String routePath = '/article-screen';
+  ArticleScreen({Key? key}) : super(key: key);
 
   @override
   State<ArticleScreen> createState() => _ArticleScreenState();
@@ -38,16 +38,18 @@ class _ArticleScreenState extends State<ArticleScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: primary40,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () => Navigator.of(context).pop(),
           icon: const Icon(
             Icons.arrow_back_ios,
             size: 24.0,
+            color: Colors.white,
           ),
         ),
-        title: const Text(
+        title: Text(
           "Artikel",
-          style: semiBoldBody1,
+          style: semiBoldBody1.copyWith(color: whiteColor),
         ),
         centerTitle: true,
         actions: [
