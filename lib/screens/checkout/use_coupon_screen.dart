@@ -11,60 +11,6 @@ class UseCouponScreen extends StatefulWidget {
 }
 
 class _UseCouponScreenState extends State<UseCouponScreen> {
-  int? selectedRadio;
-
-  List<Map<String, dynamic>> vouchers = [
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '5000',
-      'minimumSpending': '30.000',
-      'effectiveDate': '5 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '15.000',
-      'minimumSpending': '50.000',
-      'effectiveDate': '10 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '10.000',
-      'minimumSpending': '40.000',
-      'effectiveDate': '6 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '50.000',
-      'minimumSpending': '10.000',
-      'effectiveDate': '20 Des 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '15.000',
-      'minimumSpending': '50.000',
-      'effectiveDate': '10 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '10.000',
-      'minimumSpending': '40.000',
-      'effectiveDate': '6 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '100.000',
-      'minimumSpending': '10.000',
-      'effectiveDate': '20 Des 2023'
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,11 +19,7 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
         centerTitle: true,
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          left: 26,
-          right: 26,
-          bottom: 15,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 26),
         child: ElevatedButton(
           onPressed: () {},
           style: ButtonStyle(
@@ -90,84 +32,100 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
           ),
         ),
       ),
-      body: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: vouchers.length,
-            itemBuilder: (context, index) {
-              return Container(
-                height: 100,
-                width: 219,
-                margin: const EdgeInsets.only(
-                  top: 18,
-                  left: 37,
-                  right: 36,
-                  bottom: 2,
+      body: ListView.separated(
+        padding: const EdgeInsets.all(10),
+        shrinkWrap: true,
+        itemCount: 9,
+        separatorBuilder: (context, index) => const SizedBox(height: 15,),
+        itemBuilder: (context, index) {
+          return Container(
+            height: 100,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(
+                width: 1,
+                color: blackColor,
+              )
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          border: Border(right: BorderSide(width: 1, color: blackColor)),
+                          color: primary40
+                        ),
+                        child: Image.asset(
+                          'assets/img/Coupon.png',
+                          height: double.infinity,
+                          width: 113,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          color: warning30,
+                          borderRadius: BorderRadiusDirectional.only(
+                            topStart: Radius.circular(4),
+                            bottomEnd: Radius.circular(8)
+                          )
+                        ),
+                        child: Text(
+                          'Gold',
+                          style: semiBoldBody8.copyWith(color: whiteColor)
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                  color: Colors.black,
-                )),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 113,
-                      width: 100,
-                      child: Image.network(
-                        'https://s3.amazonaws.com/thumbnails.venngage.com/template/5456834b-ba95-41a9-85b2-4abd4d313c11.png',
-                        fit: BoxFit.fill,
+                const SizedBox(width: 10,),
+                const Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Kupon Potongan Harga Rp5.000',
+                        style: mediumBody7,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    Container(
-                      width: 166,
-                      height: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 11,
-                        vertical: 10.5,
+                      SizedBox(height: 10),
+                      Text(
+                        'Min. Blj Rp30.000',
+                        style: mediumBody8,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Kupon Potongan Harga ',
-                            style: mediumBody7,
-                          ),
-                          Text('Rp${vouchers[index]['discounts']}',
-                              style: mediumBody7),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Min. Blj Rp${vouchers[index]['minimumSpending']}',
-                            style: mediumBody8,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            'Berakhir dalam : ${vouchers[index]['effectiveDate']}',
-                            style: regularBody8,
-                          ),
-                        ],
+                      SizedBox(height: 10),
+                      Text(
+                        'Berakhir dalam : 5 Nov 23',
+                        style: regularBody8,
                       ),
-                    ),
-                    Radio(
-                      value: index,
-                      groupValue: selectedRadio,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedRadio = value;
-                        });
-                      },
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              );
-            },
-          ),
-        ],
-      ),
+                Expanded(
+                  flex: 1,
+                  child: Radio(
+                    value: index,
+                    groupValue: 2,
+                    onChanged: (value) {
+                      
+                    },
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      )
     );
   }
 }
