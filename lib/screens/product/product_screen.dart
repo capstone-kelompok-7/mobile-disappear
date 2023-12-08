@@ -69,9 +69,9 @@ class _ProductScreenState extends State<ProductScreen> {
 
   /// Beli Sekarang, langsung ngarah ke halaman checkout
   void _purchaseNow() {
-    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    // final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
 
-    productViewModel.productId; // Ini id produknya
+    // productViewModel.productId; // Ini id produknya
   }
 
   void _goToReviewScreen() {

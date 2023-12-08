@@ -7,15 +7,21 @@ class CarouselPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      enabled: true,
-      baseColor: neutral00,
-      highlightColor: neutral20,
-      child: Container(
-        width: double.infinity,
-        height: 200,
-        color: Colors.white,
-      )
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Shimmer.fromColors(
+        enabled: true,
+        baseColor: neutral00,
+        highlightColor: neutral20,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10)
+          ),
+          width: double.infinity,
+          height: 200,
+        )
+      ),
     );
   }
 }
