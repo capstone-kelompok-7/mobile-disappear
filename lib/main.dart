@@ -44,7 +44,6 @@ import 'package:disappear/screens/auth/forgot_password/forgot_password_verificat
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
-import 'package:disappear/services/home_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
@@ -168,7 +167,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routePath,
       routes: {
-        SplashScreen.routePath: (context) => const SplashScreen(),
+        // SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
         MainScreen.routePath: (context) => const MainScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
