@@ -29,8 +29,6 @@ class _ProductScreenState extends State<ProductScreen> {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
     final carouselViewModel = Provider.of<ProductCarouselViewModel>(context, listen: false);
 
-    productViewModel.productId = 1;
-
     final product = await productViewModel.getProductById();
 
     carouselViewModel.product = product;
@@ -59,9 +57,9 @@ class _ProductScreenState extends State<ProductScreen> {
 
   /// Beli Sekarang, langsung ngarah ke halaman checkout
   void _purchaseNow() {
-    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    // final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
 
-    productViewModel.productId; // Ini id produknya
+    // productViewModel.productId; // Ini id produknya
   }
 
   @override

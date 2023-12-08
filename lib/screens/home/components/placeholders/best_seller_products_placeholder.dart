@@ -1,4 +1,5 @@
 import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -7,48 +8,57 @@ class BestSellerProductsPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      enabled: true,
-      baseColor: neutral00,
-      highlightColor: neutral20,
-      child: SizedBox(
-        height: 200,
-        child: ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            const SizedBox(width: 10,),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Produk terlaris',
+                style: semiBoldBody5.copyWith(color: primary40),
               ),
-              width: 130,
-              height: 200,
-            ),
-            const SizedBox(width: 10,),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              width: 130,
-              height: 200,
-            ),
-            const SizedBox(width: 10,),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              width: 130,
-              height: 200,
-            ),
-            const SizedBox(width: 10,)
-          ],
-        ),
-      )
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Shimmer.fromColors(
+            enabled: true,
+            baseColor: neutral00,
+            highlightColor: neutral20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  width: 120,
+                  height: 200,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  width: 120,
+                  height: 200,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  width: 120,
+                  height: 200,
+                ),
+              ],
+            )
+          ),
+        ],
+      ),
     );
   }
 }

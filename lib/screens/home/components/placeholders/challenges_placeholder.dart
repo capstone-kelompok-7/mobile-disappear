@@ -3,8 +3,8 @@ import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class CategoriesPlaceholder extends StatelessWidget {
-  const CategoriesPlaceholder({super.key});
+class ChallengesPlaceholder extends StatelessWidget {
+  const ChallengesPlaceholder({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,12 @@ class CategoriesPlaceholder extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Kategori',
+                'Tantangan',
                 style: semiBoldBody5.copyWith(color: primary40),
               ),
             ],
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 10,),
           Shimmer.fromColors(
             enabled: true,
             baseColor: neutral00,
@@ -31,44 +31,28 @@ class CategoriesPlaceholder extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 70,
-                  height: 70,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
+                  width: 120,
+                  height: 80,
                 ),
                 Container(
-                  width: 70,
-                  height: 70,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
+                  width: 120,
+                  height: 80,
                 ),
                 Container(
-                  width: 70,
-                  height: 70,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
-                ),
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                ),
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
+                  width: 120,
+                  height: 80,
                 ),
               ],
             )

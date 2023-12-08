@@ -25,18 +25,30 @@ class _CategoryItemState extends State<CategoryItem> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              widget.category.photo,
-              width: 90,
-              height: 90,
-              fit: BoxFit.cover,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress != null) {
-                  return const CategoryItemThumbnailPlaceholder();
+            child: Builder(
+              builder: (context) {
+                if (widget.category.photo != '') {
+                  return Image.network(
+                    widget.category.photo,
+                    width: 90,
+                    height: 90,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress != null) {
+                        return const CategoryItemThumbnailPlaceholder();
+                      }
+                  
+                      return child;
+                    },
+                  );
                 }
 
-                return child;
-              },
+                return Image.asset(
+                  'assets/img/CategoryExample.png',
+                  width: 90,
+                  height: 90,
+                );
+              }
             ),
           ),
           const SizedBox(height: 2,),
