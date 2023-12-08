@@ -42,11 +42,12 @@ import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
-import 'package:disappear/screens/product_review/product_reviews_screen.dart';
+import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 import 'package:disappear/services/home_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
+import 'package:disappear/timeago_message.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
@@ -61,6 +62,7 @@ import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
 import 'package:disappear/view_models/product/product_carousel_view_model.dart';
+import 'package:disappear/view_models/product/product_review_view_model.dart';
 import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
@@ -72,7 +74,11 @@ import 'package:disappear/view_models/search_product/search_products_view_model.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:timeago/timeago.dart' as timeago;
+
 void main() {
+  timeago.setLocaleMessages('id', IndonesianMessage());
+  
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -139,6 +145,9 @@ void main() {
         create: (context) => ProductCarouselViewModel(),
       ),
       ChangeNotifierProvider(
+        create: (context) => ProductReviewViewModel(),
+      ),
+      ChangeNotifierProvider(
         create: (context) => AddToCartViewModel(),
       ),
     ],
@@ -152,7 +161,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: AddressListScreen.routePath,
+      debugShowCheckedModeBanner: false,
+      initialRoute: SplashScreen.routePath,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),

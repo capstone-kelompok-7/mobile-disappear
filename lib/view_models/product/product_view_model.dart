@@ -20,6 +20,11 @@ class ProductViewModel extends ChangeNotifier {
     return null;
   }
 
+  Future<List<ProductModel>> getOtherProducts() async {
+    final productService = ProductService();
+    return await productService.getOtherProducts();
+  }
+
   bool _isExpanded = false;
 
   set isExpanded(bool isExpanded) {
