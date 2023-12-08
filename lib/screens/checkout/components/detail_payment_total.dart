@@ -1,6 +1,8 @@
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetailPaymentTotal extends StatelessWidget {
   const DetailPaymentTotal({super.key});
@@ -19,11 +21,11 @@ class DetailPaymentTotal extends StatelessWidget {
             style: semiBoldBody7,
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           child: Column(
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -37,8 +39,8 @@ class DetailPaymentTotal extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(height: 15),
-              Row(
+              const SizedBox(height: 15),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -52,27 +54,31 @@ class DetailPaymentTotal extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
+                  const Text(
                     'Voucher',
                     style: regularBody8,
                   ),
-                  Text(
-                    'Rp. 20.000',
-                    style: regularBody8,
+                  Consumer<CheckoutVoucherViewModel>(
+                    builder: (context, state, _) {
+                      if (state.voucher != null) {
+                        return Text(
+                          state.voucher!.voucher.formattedDiscount,
+                          style: regularBody8,
+                        );
+                      }
+
+                      return const Text('Rp 0', style: regularBody8);
+                    }
                   ),
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
+              const SizedBox(height: 15),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -81,7 +87,7 @@ class DetailPaymentTotal extends StatelessWidget {
                     style: regularBody8,
                   ),
                   Text(
-                    'Rp. 5.000',
+                    'Rp. 20.000',
                     style: regularBody8,
                   ),
                 ],
