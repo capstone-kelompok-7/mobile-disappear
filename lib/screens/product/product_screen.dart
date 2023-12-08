@@ -2,6 +2,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:disappear/models/product_model.dart';
+import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/home/components/placeholders/best_seller_products_placeholder.dart';
 import 'package:disappear/screens/product/components/add_to_cart_dialog.dart';
 import 'package:disappear/screens/product/components/other_product.dart';
@@ -72,6 +73,8 @@ class _ProductScreenState extends State<ProductScreen> {
     // final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
 
     // productViewModel.productId; // Ini id produknya
+
+    Navigator.of(context).pushNamed(CheckoutScreen.routePath);
   }
 
   void _goToReviewScreen() {
