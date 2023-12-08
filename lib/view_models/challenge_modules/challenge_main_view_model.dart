@@ -1,12 +1,15 @@
 import 'package:disappear/models/challenge_model.dart';
 import 'package:disappear/models/leaderboard_model.dart';
+import 'package:disappear/models/voucher_model.dart';
 import 'package:disappear/services/challenge_service.dart';
 import 'package:disappear/services/leaderboard_service.dart';
+import 'package:disappear/services/voucher_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeMainViewModel extends ChangeNotifier {
+  int? challengeId;
   int selectedTabChallenge = 1;
 
   Widget topButton() {
@@ -35,7 +38,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
               notifyListeners();
             },
             child: Container(
-              width: 70,
+              width: 72,
               height: 20,
               padding: const EdgeInsets.symmetric(
                 horizontal: 6,
@@ -46,7 +49,10 @@ class ChallengeMainViewModel extends ChangeNotifier {
                       color: secondary00,
                     )
                   : null,
-              child: const Text('Tantangan', style: semiBoldBody8),
+              child: Text('Tantangan',
+                  style: selectedTabChallenge == 1
+                      ? semiBoldBody8
+                      : semiBoldBody8.copyWith(color: Colors.white)),
             ),
           ),
           const SizedBox(
@@ -58,7 +64,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
               notifyListeners();
             },
             child: Container(
-              width: 80,
+              width: 85,
               height: 20,
               padding: const EdgeInsets.only(
                 left: 8,
@@ -70,7 +76,10 @@ class ChallengeMainViewModel extends ChangeNotifier {
                       color: secondary00,
                     )
                   : null,
-              child: const Text('Leaderboard', style: semiBoldBody8),
+              child: Text('Leaderboard',
+                  style: selectedTabChallenge == 2
+                      ? semiBoldBody8
+                      : semiBoldBody8.copyWith(color: Colors.white)),
             ),
           ),
           const SizedBox(
@@ -82,17 +91,19 @@ class ChallengeMainViewModel extends ChangeNotifier {
               notifyListeners();
             },
             child: Container(
-              width: 70,
+              width: 65,
               height: 20,
-              padding: const EdgeInsets.only(left: 14, top: 2),
+              padding: const EdgeInsets.only(left: 10, top: 2),
               decoration: selectedTabChallenge == 3
                   ? const BoxDecoration(
                       color: secondary00,
                     )
                   : null,
-              child: const Text(
+              child: Text(
                 'Kuponku',
-                style: semiBoldBody8,
+                style: selectedTabChallenge == 3
+                    ? semiBoldBody8
+                    : semiBoldBody8.copyWith(color: Colors.white),
               ),
             ),
           ),
@@ -110,6 +121,16 @@ class ChallengeMainViewModel extends ChangeNotifier {
     }
   }
 
+  Future<ChallengesModel?> getChallengeById() async {
+    if (challengeId != null) {
+      final challengeByIdService = ChallengeService();
+      return await challengeByIdService.getChallengeById(challengeId!);
+    }
+
+    return null;
+  }
+
+//LEADERBOARD TAB FEATURE//
   Future<List<LeaderboardModel>> fetchLeaderboard() async {
     try {
       final leaderboardService = LeaderboardService();
@@ -154,10 +175,30 @@ class ChallengeMainViewModel extends ChangeNotifier {
       rethrow;
     }
   }
+
   Future<LeaderboardModel?> fetchFifthPosition() async {
     try {
       final fetchFifthPlace = LeaderboardService();
       return await fetchFifthPlace.fetchFifthLeaderboard();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//VOUCHERS TAB FEATURE//
+  Future<List<VoucherModel>> fetchVouchersToClaim() async {
+    try {
+      final voucherService = VoucherService();
+      return await voucherService.fetchVoucherToClaim();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<VoucherModel>> fetchUserVOucher() async {
+    try {
+      final voucherService = VoucherService();
+      return await voucherService.fetchUserVoucher();
     } catch (e) {
       rethrow;
     }

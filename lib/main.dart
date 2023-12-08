@@ -178,7 +178,6 @@ class App extends StatelessWidget {
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
-        VoucherScreen.routePath: (context) => const VoucherScreen(),
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),

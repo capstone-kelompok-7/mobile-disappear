@@ -5,6 +5,7 @@ import 'package:disappear/view_models/challenge_modules/challenge_main_view_mode
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LeaderboardComponentStanding extends StatefulWidget {
   final LeaderboardModel leaderboardModel;
@@ -32,16 +33,62 @@ class _LeaderboardComponentStandingState
             Consumer<ChallengeMainViewModel>(
                 builder: (context, leaderboardStanding, _) {
               return FutureBuilder<LeaderboardModel?>(
-                  future: leaderboardStanding.fetchFirstPosition(),
-                  builder: (context, firstPositionSnapshot) {
-                    LeaderboardModel? firstPosition =
-                        firstPositionSnapshot.data;
+                future: leaderboardStanding.fetchFirstPosition(),
+                builder: (context, firstPositionSnapshot) {
+                  LeaderboardModel? firstPosition = firstPositionSnapshot.data;
 
-                    if (firstPositionSnapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // While data is loading
-                    }
+                  if (firstPositionSnapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Shimmer.fromColors(
+                        baseColor: neutral00,
+                        highlightColor: neutral20,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const SizedBox(
+                                child: SizedBox(
+                                  height: 20,
+                                  width: 10,
+                                  child: Text('1'),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                width: 25,
+                                height: 25,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(
+                                    0xffd9d9d9,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Text('', style: semiBoldBody5),
+                              Expanded(
+                                  child: Text('',
+                                      style: mediumBody8.copyWith(
+                                          color: neutral20))),
+                              const Text(' EXP', style: semiBoldBody8),
+                            ],
+                          ),
+                        ));
+                  }
 
+                  // On error
+                  else if (firstPositionSnapshot.hasError) {
+                    return Text(
+                        'Error: ${firstPositionSnapshot.error}'); // On error
+                  }
+
+                  //SUCCESS GET DATA BUT NO DATA INSIDE//
+                  else if (!firstPositionSnapshot.hasData) {
                     return Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -58,7 +105,7 @@ class _LeaderboardComponentStandingState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
+                          const SizedBox(
                             height: 20,
                             width: 10,
                             child: Text('1'),
@@ -69,28 +116,27 @@ class _LeaderboardComponentStandingState
                           Container(
                             width: 25,
                             height: 25,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                              color: const Color(
+                              color: Color(
                                 0xffd9d9d9,
                               ),
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(
-                                    firstPosition!.photoProfile.toString()),
+                                image: NetworkImage('-'),
                               ),
                             ),
                           ),
                           const SizedBox(
                             width: 5,
                           ),
-                          Text('${firstPosition.name} ', style: semiBoldBody5),
+                          const Text('-', style: semiBoldBody5),
                           Expanded(
-                              child: Text(firstPosition.level.toString(),
+                              child: Text('',
                                   style:
                                       mediumBody8.copyWith(color: neutral20))),
                           Text(
-                            '${firstPosition.exp} EXP',
+                            '- EXP',
                             style: GoogleFonts.inter().copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 10,
@@ -99,12 +145,64 @@ class _LeaderboardComponentStandingState
                         ],
                       ),
                     );
-                  });
+                  }
+
+                  return Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 0.5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                          width: 10,
+                          child: Text('1'),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          width: 25,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: const Color(
+                              0xffd9d9d9,
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  firstPosition!.photoProfile.toString()),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text('${firstPosition.name} ', style: semiBoldBody5),
+                        Expanded(
+                            child: Text(firstPosition.level.toString(),
+                                style: mediumBody8.copyWith(color: neutral20))),
+                        Text('${firstPosition.exp} EXP', style: semiBoldBody8),
+                      ],
+                    ),
+                  );
+                },
+              );
             }),
 
-            Divider(
-              thickness: 1,
-              height: 1,
+            const SizedBox(
+              height: 5,
             ),
 
             //PERINGKAT 2
@@ -118,13 +216,54 @@ class _LeaderboardComponentStandingState
 
                     if (secondPositionSnapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // While data is loading
+                      return Shimmer.fromColors(
+                          baseColor: neutral00,
+                          highlightColor: neutral20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                  width: 10,
+                                  child: Text('2'),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: 25,
+                                  height: 25,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(
+                                      0xffd9d9d9,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Text('', style: semiBoldBody5),
+                                Expanded(
+                                    child: Text('',
+                                        style: mediumBody8.copyWith(
+                                            color: neutral20))),
+                                const Text(' EXP', style: semiBoldBody8),
+                              ],
+                            ),
+                          ));
                     }
+
                     // On error
                     else if (secondPositionSnapshot.hasError) {
                       return Text(
                           'Error: ${secondPositionSnapshot.error}'); // On error
-                    } else if (!secondPositionSnapshot.hasData) {
+                    }
+
+                    //SUCCESS GET DATA BUT NO DATA INSIDE//
+                    else if (!secondPositionSnapshot.hasData) {
                       return Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -141,7 +280,7 @@ class _LeaderboardComponentStandingState
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
+                            const SizedBox(
                               height: 20,
                               width: 10,
                               child: Text('2'),
@@ -152,9 +291,9 @@ class _LeaderboardComponentStandingState
                             Container(
                               width: 25,
                               height: 25,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: const Color(
+                                color: Color(
                                   0xffd9d9d9,
                                 ),
                                 image: DecorationImage(
@@ -166,13 +305,13 @@ class _LeaderboardComponentStandingState
                             const SizedBox(
                               width: 5,
                             ),
-                            Text('-', style: semiBoldBody5),
+                            const Text('-', style: semiBoldBody5),
                             Expanded(
                                 child: Text('',
                                     style: mediumBody8.copyWith(
                                         color: neutral20))),
                             Text(
-                              '0 EXP',
+                              '- EXP',
                               style: GoogleFonts.inter().copyWith(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 10,
@@ -199,7 +338,7 @@ class _LeaderboardComponentStandingState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
+                          const SizedBox(
                             height: 20,
                             width: 10,
                             child: Text('2'),
@@ -243,9 +382,8 @@ class _LeaderboardComponentStandingState
                   });
             }),
 
-            Divider(
-              thickness: 1,
-              height: 1,
+            const SizedBox(
+              height: 5,
             ),
 
             //PERINGKAT 3
@@ -259,18 +397,54 @@ class _LeaderboardComponentStandingState
 
                     if (thirdPositionSnapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // While data is loading
+                      return Shimmer.fromColors(
+                          baseColor: neutral00,
+                          highlightColor: neutral20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                  width: 10,
+                                  child: Text('3'),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: 25,
+                                  height: 25,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(
+                                      0xffd9d9d9,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Text('', style: semiBoldBody5),
+                                Expanded(
+                                    child: Text('',
+                                        style: mediumBody8.copyWith(
+                                            color: neutral20))),
+                                const Text(' EXP', style: semiBoldBody8),
+                              ],
+                            ),
+                          )); // While data is loading
                     }
 
-                    if (thirdPositionSnapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // While data is loading
-                    }
                     // On error
                     else if (thirdPositionSnapshot.hasError) {
                       return Text(
                           'Error: ${thirdPositionSnapshot.error}'); // On error
-                    } else if (!thirdPositionSnapshot.hasData) {
+                    }
+
+                    //NO DATA
+                    else if (!thirdPositionSnapshot.hasData) {
                       return Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -287,7 +461,7 @@ class _LeaderboardComponentStandingState
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
+                            const SizedBox(
                               height: 20,
                               width: 10,
                               child: Text('3'),
@@ -298,9 +472,9 @@ class _LeaderboardComponentStandingState
                             Container(
                               width: 25,
                               height: 25,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: const Color(
+                                color: Color(
                                   0xffd9d9d9,
                                 ),
                                 image: DecorationImage(
@@ -312,13 +486,13 @@ class _LeaderboardComponentStandingState
                             const SizedBox(
                               width: 5,
                             ),
-                            Text('-', style: semiBoldBody5),
+                            const Text('-', style: semiBoldBody5),
                             Expanded(
                                 child: Text('',
                                     style: mediumBody8.copyWith(
                                         color: neutral20))),
                             Text(
-                              '0 EXP',
+                              '- EXP',
                               style: GoogleFonts.inter().copyWith(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 10,
@@ -345,7 +519,7 @@ class _LeaderboardComponentStandingState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
+                          const SizedBox(
                             height: 20,
                             width: 10,
                             child: Text('3'),
@@ -389,9 +563,8 @@ class _LeaderboardComponentStandingState
                   });
             }),
 
-            Divider(
-              thickness: 1,
-              height: 1,
+            const SizedBox(
+              height: 5,
             ),
 
             //PERINGKAT 4
@@ -405,23 +578,54 @@ class _LeaderboardComponentStandingState
 
                     if (fourthPositionSnapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // While data is loading
+                      return Shimmer.fromColors(
+                          baseColor: neutral00,
+                          highlightColor: neutral20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                  width: 10,
+                                  child: Text('4'),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: 25,
+                                  height: 25,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(
+                                      0xffd9d9d9,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Text('', style: semiBoldBody5),
+                                Expanded(
+                                    child: Text('',
+                                        style: mediumBody8.copyWith(
+                                            color: neutral20))),
+                                const Text(' EXP', style: semiBoldBody8),
+                              ],
+                            ),
+                          )); // While data is loading
                     }
 
-                    if (fourthPositionSnapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // While data is loading
-                    }
-
-                    if (fourthPositionSnapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // While data is loading
-                    }
                     // On error
                     else if (fourthPositionSnapshot.hasError) {
                       return Text(
                           'Error: ${fourthPositionSnapshot.error}'); // On error
-                    } else if (!fourthPositionSnapshot.hasData) {
+                    }
+
+                    //NO DATA
+                    else if (!fourthPositionSnapshot.hasData) {
                       return Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -438,7 +642,7 @@ class _LeaderboardComponentStandingState
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
+                            const SizedBox(
                               height: 20,
                               width: 10,
                               child: Text('4'),
@@ -449,9 +653,9 @@ class _LeaderboardComponentStandingState
                             Container(
                               width: 25,
                               height: 25,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: const Color(
+                                color: Color(
                                   0xffd9d9d9,
                                 ),
                                 image: DecorationImage(
@@ -463,7 +667,7 @@ class _LeaderboardComponentStandingState
                             const SizedBox(
                               width: 5,
                             ),
-                            Text('-', style: semiBoldBody5),
+                            const Text('-', style: semiBoldBody5),
                             Expanded(
                                 child: Text('',
                                     style: mediumBody8.copyWith(
@@ -496,7 +700,7 @@ class _LeaderboardComponentStandingState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
+                          const SizedBox(
                             height: 20,
                             width: 10,
                             child: Text('4'),
@@ -540,9 +744,8 @@ class _LeaderboardComponentStandingState
                   });
             }),
 
-            Divider(
-              thickness: 1,
-              height: 1,
+            const SizedBox(
+              height: 5,
             ),
 
             //PERINGKAT 5
@@ -554,17 +757,55 @@ class _LeaderboardComponentStandingState
                     LeaderboardModel? fifthPosition =
                         fifthPositionSnapshot.data;
 
+                    // While data is loading
                     if (fifthPositionSnapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // While data is loading
+                      return Shimmer.fromColors(
+                          baseColor: neutral00,
+                          highlightColor: neutral20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                  width: 10,
+                                  child: Text('5'),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: 25,
+                                  height: 25,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(
+                                      0xffd9d9d9,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Text('', style: semiBoldBody5),
+                                Expanded(
+                                    child: Text('',
+                                        style: mediumBody8.copyWith(
+                                            color: neutral20))),
+                                const Text(' EXP', style: semiBoldBody8),
+                              ],
+                            ),
+                          ));
                     }
 
                     // On error
                     else if (fifthPositionSnapshot.hasError) {
                       return Text(
                           'Error: ${fifthPositionSnapshot.error}'); // On error
-                    } 
-                    
+                    }
+
                     //NO DATA
                     else if (!fifthPositionSnapshot.hasData) {
                       return Container(
@@ -583,7 +824,7 @@ class _LeaderboardComponentStandingState
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
+                            const SizedBox(
                               height: 20,
                               width: 10,
                               child: Text('5'),
@@ -594,9 +835,9 @@ class _LeaderboardComponentStandingState
                             Container(
                               width: 25,
                               height: 25,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: const Color(
+                                color: Color(
                                   0xffd9d9d9,
                                 ),
                                 image: DecorationImage(
@@ -608,13 +849,13 @@ class _LeaderboardComponentStandingState
                             const SizedBox(
                               width: 5,
                             ),
-                            Text('-', style: semiBoldBody5),
+                            const Text('-', style: semiBoldBody5),
                             Expanded(
                                 child: Text('',
                                     style: mediumBody8.copyWith(
                                         color: neutral20))),
                             Text(
-                              '0 EXP',
+                              '- EXP',
                               style: GoogleFonts.inter().copyWith(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 10,
@@ -641,7 +882,7 @@ class _LeaderboardComponentStandingState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
+                          const SizedBox(
                             height: 20,
                             width: 10,
                             child: Text('5'),

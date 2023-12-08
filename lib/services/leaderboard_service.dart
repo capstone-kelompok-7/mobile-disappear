@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:disappear/models/challenge_model.dart';
 import 'package:disappear/models/leaderboard_model.dart';
 import 'package:disappear/services/api.dart';
 

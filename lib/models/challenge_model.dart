@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 class ChallengesModel {
-  late final int? id;
+  late final int id;
   final String? title;
   final String? photo;
   final String? startDate;

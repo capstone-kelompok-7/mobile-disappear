@@ -1,6 +1,10 @@
 import 'package:disappear/screens/challenge/challenge_components.dart';
+import 'package:disappear/screens/challenge/challenge_placeholder.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_component_standing.dart';
+import 'package:disappear/screens/leaderboard/leaderboard_placeholder.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
+import 'package:disappear/screens/voucher/voucher_placeholder.dart';
+import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:flutter/material.dart';
@@ -48,56 +52,60 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
               height: 5,
             ),
             Consumer<ChallengeMainViewModel>(
-              builder: (context, bodyConsumer, _) {
-                return bodyConsumer.selectedTabChallenge == 1
-                    ? Expanded(
-                        child: FutureBuilder(
-                            future: bodyConsumer.fetchAllChallenge(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Container(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator());
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (!snapshot.hasData ||
-                                  snapshot.data!.isEmpty) {
-                                return Text('Tidak ada Tantangan Tersedia');
-                              } else {
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder: (context, index) {
-                                    return ChallengeComponents(
-                                      challengesModel: snapshot.data![index],
-                                    );
-                                  },
-                                );
-                              }
-                            }),
-                      )
-                    : Expanded(
-                        child: FutureBuilder(
-                            future: bodyConsumer.fetchLeaderboard(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Container(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator());
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (!snapshot.hasData ||
-                                  snapshot.data!.isEmpty) {
-                                return Text('Tidak ada Challenge Tersedia');
-                              } else {
-                                return SingleChildScrollView(
-                                  child: Column(
+                builder: (context, bodyConsumer, _) {
+              return bodyConsumer.selectedTabChallenge == 1
+                  ? Expanded(
+                      child: FutureBuilder(
+                          future: bodyConsumer.fetchAllChallenge(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: 8,
+                                itemBuilder: (context, index) {
+                                  return ChallengePlaceholder();
+                                },
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else if (!snapshot.hasData ||
+                                snapshot.data!.isEmpty) {
+                              return Text('Tidak ada Tantangan Tersedia');
+                            } else {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  return ChallengeComponents(
+                                    challengesModel: snapshot.data![index],
+                                  );
+                                },
+                              );
+                            }
+                          }),
+                    )
+
+                  //LEADERBOARD
+                  : bodyConsumer.selectedTabChallenge == 2
+                      ? Expanded(
+                          child: FutureBuilder(
+                              future: bodyConsumer.fetchLeaderboard(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return LeaderboardPlaceholder();
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else if (!snapshot.hasData ||
+                                    snapshot.data!.isEmpty) {
+                                  return Text('Tidak ada Challenge Tersedia');
+                                } else {
+                                  return ListView(
+                                    shrinkWrap: true,
                                     children: [
-                                      LeaderboardScreen(
+                                      LeaderboardComponentPodium(
                                           leaderboardModel: snapshot.data![0]),
                                       SizedBox(
                                         height: 30,
@@ -105,13 +113,39 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                                       LeaderboardComponentStanding(
                                           leaderboardModel: snapshot.data![0])
                                     ],
-                                  ),
-                                );
-                              }
+                                  );
+                                }
+                              }),
+                        )
+
+                      //VOUCHER
+                      : Expanded(
+                          child: ListView(
+                          children: [
+                            Consumer<ChallengeMainViewModel>(
+                                builder: (context, state, _) {
+                              return FutureBuilder(
+                                  future: bodyConsumer.fetchVouchersToClaim(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    } else if (snapshot.hasData) {
+                                      return ListView.builder(
+                                          itemCount: snapshot.data!.length,
+                                          itemBuilder: (context, index) {
+                                            return VoucherScreen(
+                                              voucherModel:
+                                                  snapshot.data![index],
+                                            );
+                                          });
+                                    }
+
+                                    return VoucherPlaceholder();
+                                  });
                             }),
-                      );
-              },
-            ),
+                          ],
+                        ));
+            }),
           ],
         )
 
