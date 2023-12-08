@@ -102,34 +102,36 @@ class OrderItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(2),
-              child: Image.asset(
-                'assets/img/totebeg_kanvas.png',
-                fit: BoxFit.cover,
-                width: 68,
-                height: 78,
-              ),
-            ),
-            const SizedBox(width: 10,),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Totebag Kanvas',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: mediumBody6,
+        Expanded(
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(2),
+                child: Image.asset(
+                  'assets/img/totebeg_kanvas.png',
+                  fit: BoxFit.cover,
+                  width: 68,
+                  height: 78,
                 ),
-                SizedBox(height: 6),
-                Text('20 Gram', style: regularBody8),
-                SizedBox(height: 5),
-                Text('Rp. 20.000', style: mediumBody6)
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(width: 10,),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Totebag Kanvas',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: mediumBody6,
+                  ),
+                  SizedBox(height: 6),
+                  Text('20 Gram', style: regularBody8),
+                  SizedBox(height: 5),
+                  Text('Rp. 20.000', style: mediumBody6)
+                ],
+              )
+            ],
+          ),
         ),
         const Text('x 6', style: mediumBody6)
       ],
