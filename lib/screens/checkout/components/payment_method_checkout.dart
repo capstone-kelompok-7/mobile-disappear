@@ -1,7 +1,9 @@
 import 'package:disappear/screens/manual_transfer/manual_transfer_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PaymentMethodCheckout extends StatefulWidget {
   const PaymentMethodCheckout({super.key});
@@ -23,16 +25,20 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
           color: neutral00,
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           width: double.infinity,
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Metode Pembayaran',
                 style: semiBoldBody7,
               ),
-              Text(
-                'Bank BNI',
-                style: mediumBody8,
+              Consumer<CheckoutPaymentMethodViewModel>(
+                builder: (context, state, _) {
+                  return Text(
+                    state.methodName,
+                    style: mediumBody8,
+                  );
+                }
               ),
             ],
           ),

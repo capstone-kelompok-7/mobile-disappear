@@ -1,8 +1,10 @@
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 //INFORMASI PESANAN KOMPONEN CHECKOUT SCREEN//
 
@@ -14,8 +16,6 @@ class OrderInformation extends StatefulWidget {
 }
 
 class _OrderInformationState extends State<OrderInformation> {
-  TextEditingController notesController = TextEditingController();
-
   void _goToCouponScreen() {
     Navigator.of(context).pushNamed(UseCouponScreen.routePath);
   }
@@ -45,18 +45,22 @@ class _OrderInformationState extends State<OrderInformation> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextFormField(
-              controller: notesController,
-              decoration: const InputDecoration(
-                fillColor: Colors.transparent,
-                hintText: 'Tambah Catatan',
-                focusedBorder: InputBorder.none,
-                border: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                contentPadding: EdgeInsets.all(12),
-              ),
-              maxLines: null,
+            child: Consumer<CheckoutViewModel>(
+              builder: (context, state, _) {
+                return TextFormField(
+                  controller: state.notesController,
+                  decoration: const InputDecoration(
+                    fillColor: Colors.transparent,
+                    hintText: 'Tambah Catatan',
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.all(12),
+                  ),
+                  maxLines: null,
+                );
+              }
             ),
           ),
           GestureDetector(

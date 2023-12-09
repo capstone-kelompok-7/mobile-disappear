@@ -2,7 +2,9 @@ import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart'
 import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ManualTransferScreen extends StatefulWidget {
   static const String routePath = '/manualTransfer';
@@ -13,9 +15,6 @@ class ManualTransferScreen extends StatefulWidget {
 }
 
 class _ManualTransferScreenState extends State<ManualTransferScreen> {
-  bool isSelected1 = false;
-  bool isSelected2 = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,139 +40,123 @@ class _ManualTransferScreenState extends State<ManualTransferScreen> {
         child: Column(
           children: [
             /// WhatSapp
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isSelected1 = !isSelected1;
-                  isSelected2 = false;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 20,
-                ),
-                margin: const EdgeInsets.only(
-                  bottom: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: neutral10,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 15,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/img/whatsappLogo.png'),
-                        ),
+            Consumer<CheckoutPaymentMethodViewModel>(
+              builder: (context, state, _) {
+                return InkWell(
+                  onTap: () => state.selectedMethod = 'whatsapp',
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 20,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: neutral10,
                       ),
                     ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Text(
-                      'WhatsApp',
-                      style: mediumBody8.copyWith(
-                        color: blackColor,
-                      ),
-                    ),
-                    const Spacer(),
-                    isSelected1
-                        ? const Icon(Icons.check_rounded)
-                        : const Icon(
-                            Icons.check_rounded,
-                            color: whiteColor,
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 15,
+                          width: 50,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/img/whatsappLogo.png'),
+                            ),
                           ),
-                  ],
-                ),
-              ),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          'WhatsApp',
+                          style: mediumBody8.copyWith(
+                            color: blackColor,
+                          ),
+                        ),
+                        const Spacer(),
+                        state.selectedMethod == 'whatsapp'
+                            ? const Icon(Icons.check_rounded)
+                            : const Icon(
+                                Icons.check_rounded,
+                                color: whiteColor,
+                              ),
+                      ],
+                    ),
+                  ),
+                );
+              }
             ),
 
+            const SizedBox(height: 10,),
+
             /// Telegram
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isSelected1 = false;
-                  isSelected2 = !isSelected2;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 20,
-                ),
-                margin: const EdgeInsets.only(
-                  bottom: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: neutral10,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 24,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/img/telegramLogo.png'),
-                        ),
+            Consumer<CheckoutPaymentMethodViewModel>(
+              builder: (context, state, _) {
+                return InkWell(
+                  onTap: () => state.selectedMethod = 'telegram',
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 20,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: neutral10,
                       ),
                     ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Text(
-                      'Telegram',
-                      style: mediumBody8.copyWith(
-                        color: blackColor,
-                      ),
-                    ),
-                    const Spacer(),
-                    isSelected2
-                        ? const Icon(Icons.check_rounded)
-                        : const Icon(
-                            Icons.check_rounded,
-                            color: whiteColor,
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 24,
+                          width: 50,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/img/telegramLogo.png'),
+                            ),
                           ),
-                  ],
-                ),
-              ),
+                        ),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        Text(
+                          'Telegram',
+                          style: mediumBody8.copyWith(
+                            color: blackColor,
+                          ),
+                        ),
+                        const Spacer(),
+                        state.selectedMethod == 'telegram'
+                          ? const Icon(Icons.check_rounded)
+                          : const Icon(
+                              Icons.check_rounded,
+                              color: whiteColor,
+                            ),
+                      ],
+                    ),
+                  ),
+                );
+              }
             ),
             const Spacer(),
-            ElevatedButton(
-              style: const ButtonStyle(
-                minimumSize: MaterialStatePropertyAll(
-                  Size(340, 45),
-                ),
-              ),
-              onPressed: () {
-                int selected = isSelected1 ? 1 : (isSelected2 ? 2 : 0);
-                if (selected == 1) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const WhatsappTransferScreen()),
-                  );
-                } else if (selected == 2) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const TelegramTransferScreen()),
-                  );
-                }
-              },
-              child: const Text(
-                'Konfirmasi',
-                style: mediumBody8,
-              ),
+            Consumer<CheckoutPaymentMethodViewModel>(
+              builder: (context, state, _) {
+                return ElevatedButton(
+                  style: const ButtonStyle(
+                    minimumSize: MaterialStatePropertyAll(
+                      Size(340, 45),
+                    ),
+                  ),
+                  onPressed: () {
+                    state.method = state.selectedMethod;
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Konfirmasi',
+                    style: mediumBody8,
+                  ),
+                );
+              }
             ),
           ],
         ),
