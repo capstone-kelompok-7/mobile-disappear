@@ -85,7 +85,7 @@ class RegisterVerificationViewModel extends ChangeNotifier {
       try {
         final authService = AuthService();
 
-        // final response = await authService.verifyRegisterOTP(email!, otp);
+        final response = await authService.verifyRegisterOTP(email!, otp);
         // message = response['message'];
 
         message = 'Selamat! Verifikasi email mu berhasil, nih. Silahkan ke step selanjutnya, yuk!';

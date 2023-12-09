@@ -12,17 +12,6 @@ class BestSellerProductsPlaceholder extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Produk terlaris',
-                style: semiBoldBody5.copyWith(color: primary40),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10,),
           Shimmer.fromColors(
             enabled: true,
             baseColor: neutral00,
