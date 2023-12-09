@@ -12,7 +12,7 @@ BestSellerProduct bestSellerProductFromMap(String str) => BestSellerProduct.from
 String bestSellerProductToMap(BestSellerProduct data) => json.encode(data.toMap());
 
 class BestSellerProduct {
-  int id = 1;
+  int id;
   String name;
   num rating;
   int price;
@@ -24,6 +24,7 @@ class BestSellerProduct {
   }
 
   BestSellerProduct({
+    required this.id,
     required this.name,
     required this.rating,
     required this.price,
@@ -31,6 +32,7 @@ class BestSellerProduct {
   });
 
   factory BestSellerProduct.fromMap(Map < String, dynamic > json) => BestSellerProduct(
+    id: json["id"],
     name: json["name"],
     rating: json["rating"],
     price: json["price"],
@@ -38,6 +40,7 @@ class BestSellerProduct {
   );
 
   Map < String, dynamic > toMap() => {
+    "id": id,
     "name": name,
     "rating": rating,
     "price": price,

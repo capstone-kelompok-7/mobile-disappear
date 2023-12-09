@@ -4,7 +4,6 @@ import 'package:disappear/models/carousel_model.dart';
 import 'package:disappear/models/category_model.dart';
 import 'package:disappear/models/home_challenge_model.dart';
 import 'package:disappear/models/product/best_seller_product_model.dart';
-import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/services/api.dart';
 
 class HomeService {

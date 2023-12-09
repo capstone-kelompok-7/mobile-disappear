@@ -3,9 +3,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
-import 'package:disappear/screens/home/components/placeholders/best_seller_products_placeholder.dart';
 import 'package:disappear/screens/product/components/add_to_cart_dialog.dart';
 import 'package:disappear/screens/product/components/other_product.dart';
+import 'package:disappear/screens/product/components/other_products_placeholder.dart';
 import 'package:disappear/screens/product_review/components/product_review_item.dart';
 import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -381,7 +381,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                             return const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: BestSellerProductsPlaceholder(),
+                              child: OtherProductsPlaceholder(),
                             );
                           }
                         );
