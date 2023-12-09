@@ -1,8 +1,10 @@
-import 'package:disappear/screens/checkout/address_list_screen.dart';
+import 'package:disappear/screens/checkout/address/checkout_address_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_address_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 //INFORMASI PENGIRIMAN KOMPONEN CHECKOUT SCREEN//f
 
@@ -14,15 +16,22 @@ class AddressInfomation extends StatefulWidget {
 }
 
 class _AddressInfomationState extends State<AddressInfomation> {
+  @override
+  void initState() {
+    final checkoutAddressViewModel = Provider.of<CheckoutAddressViewModel>(context, listen: false);
+
+    checkoutAddressViewModel.getAddress();
+
+    super.initState();
+  }
+
   void _goToAddressListScreen() {
-    Navigator.pushNamed(context, AddressListScreen.routePath);
+    Navigator.pushNamed(context, CheckoutAddressScreen.routePath);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _goToAddressListScreen,
-      child: Column(
+    return Column(
         children: [
           Container(
             color: neutral00,
@@ -34,62 +43,79 @@ class _AddressInfomationState extends State<AddressInfomation> {
               style: semiBoldBody7,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset('assets/img/CheckoutPinpoint.svg', width: 17, height: 17,),
-                        const SizedBox(width: 10),
-                        const Text('Alamat Pengiriman', style: mediumBody8,),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    const Row(
+          InkWell(
+            onTap: _goToAddressListScreen,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 25),
+              child: Consumer<CheckoutAddressViewModel>(
+                builder: (context, state, _) {
+                  if (state.isLoading) {
+                    return const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: primary40,
+                        strokeWidth: 3,
+                      ),
+                    );
+                  }
+
+                  if (state.address != null) {
+                    return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        //NAMA ALAMAT
-                        Padding(
-                          padding: EdgeInsets.only(left: 27),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Dimas Bayuwangis',
-                                style: mediumBody8,
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                '0848-7965-7909 | Jln. Merpati Blok B no.12 ',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 3,
-                                style: mediumBody8,
-                              ),
-                              Text(
-                                'MERPATI, KOTA KAYANGAN, KAYANGAN. \nID 45362',
-                                style: mediumBody8,
-                              )
-                            ],
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset('assets/img/CheckoutPinpoint.svg', width: 17, height: 17,),
+                                const SizedBox(width: 10),
+                                const Text('Alamat Pengiriman', style: mediumBody8,),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //NAMA ALAMAT
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 27),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        state.address!.acceptedName,
+                                        style: mediumBody8,
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        '${state.address!.phone} | ${state.address!.address}',
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                        style: mediumBody8,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        const Icon(
+                          Icons.keyboard_arrow_right_outlined,
+                          color: primary40,
                         ),
                       ],
-                    )
-                  ],
-                ),
-                const Icon(
-                  Icons.keyboard_arrow_right_outlined,
-                  color: primary40,
-                ),
-              ],
+                    );
+                  }
+
+                  return const Text('Pilih alamat', style: mediumBody8,);
+                }
+              ),
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 }

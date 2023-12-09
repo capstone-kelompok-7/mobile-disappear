@@ -6,6 +6,7 @@ import 'package:disappear/screens/change_password_screen.dart';
 import 'package:disappear/screens/chatbot/chatbot_empty_screen.dart';
 import 'package:disappear/screens/chatbot/chatbot_screen.dart';
 import 'package:disappear/screens/checkout/add_new_address_screen.dart';
+import 'package:disappear/screens/checkout/address/checkout_address_screen.dart';
 import 'package:disappear/screens/checkout/address_list_screen.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/checkout/choose_transport_screen.dart';
@@ -53,6 +54,7 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_address_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:disappear/view_models/home/latest_articles_view_model.dart';
@@ -153,6 +155,9 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => CheckoutVoucherViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => CheckoutAddressViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -167,7 +172,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routePath,
       routes: {
-        // SplashScreen.routePath: (context) => const SplashScreen(),
+        SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
         MainScreen.routePath: (context) => const MainScreen(),
         HomeScreen.routePath: (context) => const HomeScreen(),
@@ -207,6 +212,7 @@ class App extends StatelessWidget {
             const ChangePasswordScreen(),
         CheckoutScreen.routePath: (context) => const CheckoutScreen(),
         UseCouponScreen.routePath: (context) => const UseCouponScreen(),
+        CheckoutAddressScreen.routePath: (context) => const CheckoutAddressScreen(),
         ChooseTransportScreen.routePath: (context) =>
             const ChooseTransportScreen(),
         AddressListScreen.routePath: (context) => const AddressListScreen(),

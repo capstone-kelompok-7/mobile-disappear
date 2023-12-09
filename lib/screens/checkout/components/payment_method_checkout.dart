@@ -21,7 +21,7 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
       children: [
         Container(
           color: neutral00,
-          padding: const EdgeInsets.only(top: 15, bottom: 15, left: 25, right: 25),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           width: double.infinity,
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
