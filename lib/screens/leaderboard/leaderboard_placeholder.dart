@@ -116,6 +116,7 @@ class LeaderboardPlaceholder extends StatelessWidget {
 
           //STANDING KLASMEN PLACEHOLDER
           ListView.builder(
+            shrinkWrap: true,
             itemCount: 5,
             itemBuilder: (context, index) {
               int displayIndex = index + 1;

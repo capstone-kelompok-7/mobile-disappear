@@ -75,7 +75,7 @@ class LeaderboardService {
       List<LeaderboardModel> leaderboardList = await fetchLeaderboard();
 
       if (leaderboardList.length >= 4) {
-        return leaderboardList[4];
+        return leaderboardList[3];
       } else {
         return null; // Return null if the list is empty
       }
@@ -89,7 +89,7 @@ class LeaderboardService {
       List<LeaderboardModel> leaderboardList = await fetchLeaderboard();
 
       if (leaderboardList.length == 5) {
-        return leaderboardList[5];
+        return leaderboardList[4];
       } else {
         return null; // Return null if the list is empty
       }

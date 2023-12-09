@@ -3,6 +3,7 @@ import 'package:disappear/screens/challenge/challenge_placeholder.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_component_standing.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_placeholder.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
+import 'package:disappear/screens/voucher/user_voucher_components.dart';
 import 'package:disappear/screens/voucher/voucher_placeholder.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -100,7 +101,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                                   return Text('Error: ${snapshot.error}');
                                 } else if (!snapshot.hasData ||
                                     snapshot.data!.isEmpty) {
-                                  return Text('Tidak ada Challenge Tersedia');
+                                  return Text('Tidak ada Leaderboard Tersedia');
                                 } else {
                                   return ListView(
                                     shrinkWrap: true,
@@ -122,22 +123,84 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                       : Expanded(
                           child: ListView(
                           children: [
+                            //voucher SAYA (sudah klaim)
                             Consumer<ChallengeMainViewModel>(
                                 builder: (context, state, _) {
                               return FutureBuilder(
-                                  future: bodyConsumer.fetchVouchersToClaim(),
+                                  future: state.fetchUserVoucher(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Column(
+                                        children: [VoucherPlaceholder()],
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    } else if (!snapshot.hasData ||
+                                        snapshot.data!.isEmpty) {
+                                      return Text('Tidak ada Kupon Tersedia');
+                                    } else {
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 170,
+                                                left: 29,
+                                                top: 25,
+                                                bottom: 15),
+                                            child: Text('Kupon Saya',
+                                                style: mediumBody5.copyWith()),
+                                          ),
+                                          ListView.builder(
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: snapshot.data!.length,
+                                              itemBuilder: (context, index) {
+                                                return UserVoucherComponents(
+                                                    voucherModel:
+                                                        snapshot.data![index]);
+                                              }),
+                                        ],
+                                      );
+                                    }
+                                  });
+                            }),
+
+                            //USER BISA DIKLAIM
+                            Consumer<ChallengeMainViewModel>(
+                                builder: (context, state, _) {
+                              return FutureBuilder(
+                                  future: state.fetchVouchersToClaim(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
                                       return Text('Error: ${snapshot.error}');
                                     } else if (snapshot.hasData) {
-                                      return ListView.builder(
-                                          itemCount: snapshot.data!.length,
-                                          itemBuilder: (context, index) {
-                                            return VoucherScreen(
-                                              voucherModel:
-                                                  snapshot.data![index],
-                                            );
-                                          });
+                                      return Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 170,
+                                                left: 29,
+                                                top: 25,
+                                                bottom: 15),
+                                            child: Text('Kupon Potongan Harga',
+                                                style: mediumBody5.copyWith()),
+                                          ),
+                                          ListView.builder(
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: snapshot.data!.length,
+                                              itemBuilder: (context, index) {
+                                                return VoucherScreen(
+                                                  voucherModel:
+                                                      snapshot.data![index],
+                                                );
+                                              }),
+                                        ],
+                                      );
                                     }
 
                                     return VoucherPlaceholder();

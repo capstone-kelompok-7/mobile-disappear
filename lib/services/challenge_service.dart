@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:disappear/models/challenge_model.dart';
 import 'package:disappear/services/api.dart';
+import 'package:flutter/material.dart';
 
 class ChallengeService {
   Future<List<ChallengesModel>> fetchAllChallenge() async {
@@ -45,5 +46,23 @@ class ChallengeService {
     );
 
     return challengesById;
+  }
+
+  Future<dynamic> postSubmitChallenge(
+      int id, String username, String photo) async {
+    final dio = createDio();
+
+    try {
+      final Response response = await dio.post('/challenges/submit', data: {
+        'challenge_id': id,
+        'username': username,
+        'photo': photo,
+      });
+
+      debugPrint(response.data.toString());
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

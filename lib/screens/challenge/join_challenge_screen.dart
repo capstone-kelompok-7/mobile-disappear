@@ -13,6 +13,9 @@ class JoinChallengeScreen extends StatefulWidget {
 }
 
 class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController fileController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +54,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
               ),
             ),
             TextFormField(
+              controller: usernameController,
               decoration: InputDecoration(
                   hintText: 'Masukkan username instagram anda',
                   hintStyle: GoogleFonts.inter().copyWith(
@@ -88,6 +92,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: TextFormField(
+                      controller: fileController,
                       readOnly: true,
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.only(left: 10, bottom: 5),
@@ -98,7 +103,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, left: 230),
+              padding: const EdgeInsets.only(top: 20, left: 180),
               child: ElevatedButton(
                 onPressed: () {
                   _showDialog();
@@ -121,9 +126,11 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
 
   Widget filePicker(BuildContext context) {
     return ElevatedButton(
+      
         style: ButtonStyle(
+          padding: MaterialStateProperty.all(EdgeInsets.all(5)),
           minimumSize: MaterialStateProperty.all<Size>(
-            const Size(55, 30),
+            const Size(30, 20),
           ),
         ),
         onPressed: () {
@@ -141,16 +148,15 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
 
   void _pickFile() async {
     final result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
+    if (result != null) {}
 
-    final file = result.files.first;
-    _openFile(file);
+    // _openFile(file);
   }
 
-  void _openFile(PlatformFile file) {
-    OpenFile.open(file.path);
-    debugPrint(file.path);
-  }
+  // void _openFile(PlatformFile file) {
+  //   OpenFile.open(file.path);
+  //   debugPrint(file.path);
+  // }
 
   void _showDialog() {
     showDialog(

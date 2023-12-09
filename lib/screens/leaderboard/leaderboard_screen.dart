@@ -14,64 +14,64 @@ class LeaderboardComponentPodium extends StatefulWidget {
   State<LeaderboardComponentPodium> createState() => _LeaderboardComponentPodiumState();
 }
 
-List<Map<String, dynamic>> expLeaderboard = [
-  {
-    'number': 1,
-    'imageUrl':
-        'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699833600&semt=ais',
-    'name': 'Daud',
-    'exp': 2000,
-  },
-  {
-    'number': 2,
-    'imageUrl':
-        'https://img.freepik.com/free-photo/smiley-man-relaxing-outdoors_23-2148739334.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699833600&semt=sph',
-    'name': 'Faza',
-    'exp': 1500,
-  },
-  {
-    'number': 3,
-    'imageUrl':
-        'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
-    'name': 'Rudi',
-    'exp': 1000,
-  },
-  {
-    'number': 3,
-    'imageUrl':
-        'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
-    'name': 'Rudi',
-    'exp': 1000,
-  },
-  {
-    'number': 3,
-    'imageUrl':
-        'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
-    'name': 'Rudi',
-    'exp': 1000,
-  },
-  {
-    'number': 3,
-    'imageUrl':
-        'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
-    'name': 'Rudi',
-    'exp': 1000,
-  },
-  {
-    'number': 3,
-    'imageUrl':
-        'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
-    'name': 'Rudi',
-    'exp': 1000,
-  },
-  {
-    'number': 3,
-    'imageUrl':
-        'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
-    'name': 'Rudi',
-    'exp': 1000,
-  },
-];
+// List<Map<String, dynamic>> expLeaderboard = [
+//   {
+//     'number': 1,
+//     'imageUrl':
+//         'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699833600&semt=ais',
+//     'name': 'Daud',
+//     'exp': 2000,
+//   },
+//   {
+//     'number': 2,
+//     'imageUrl':
+//         'https://img.freepik.com/free-photo/smiley-man-relaxing-outdoors_23-2148739334.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699833600&semt=sph',
+//     'name': 'Faza',
+//     'exp': 1500,
+//   },
+//   {
+//     'number': 3,
+//     'imageUrl':
+//         'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
+//     'name': 'Rudi',
+//     'exp': 1000,
+//   },
+//   {
+//     'number': 3,
+//     'imageUrl':
+//         'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
+//     'name': 'Rudi',
+//     'exp': 1000,
+//   },
+//   {
+//     'number': 3,
+//     'imageUrl':
+//         'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
+//     'name': 'Rudi',
+//     'exp': 1000,
+//   },
+//   {
+//     'number': 3,
+//     'imageUrl':
+//         'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
+//     'name': 'Rudi',
+//     'exp': 1000,
+//   },
+//   {
+//     'number': 3,
+//     'imageUrl':
+//         'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
+//     'name': 'Rudi',
+//     'exp': 1000,
+//   },
+//   {
+//     'number': 3,
+//     'imageUrl':
+//         'https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
+//     'name': 'Rudi',
+//     'exp': 1000,
+//   },
+// ];
 
 class _LeaderboardComponentPodiumState extends State<LeaderboardComponentPodium> {
   @override
@@ -133,7 +133,7 @@ class _LeaderboardComponentPodiumState extends State<LeaderboardComponentPodium>
                         'Error: ${secondPositionSnapshot.error}'); // On error
                   }
 
-                  // If no data is fetched//
+                  // If success connect server , tapi gaada data di servor//
                   else if (!secondPositionSnapshot.hasData) {
                     return Column(
                       children: [

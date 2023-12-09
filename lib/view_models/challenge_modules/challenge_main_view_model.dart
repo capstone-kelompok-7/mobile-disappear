@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:disappear/models/challenge_model.dart';
 import 'package:disappear/models/leaderboard_model.dart';
 import 'package:disappear/models/voucher_model.dart';
@@ -11,6 +12,17 @@ import 'package:flutter/material.dart';
 class ChallengeMainViewModel extends ChangeNotifier {
   int? challengeId;
   int selectedTabChallenge = 1;
+
+  String? message;
+  set errorMessage(String? errorMessage) {
+    message = errorMessage;
+    notifyListeners();
+  }
+
+  String? get errorMessage => message;
+
+  bool _isLoadingVoucherClaim = false;
+  bool get isLoadingVoucherClaim => _isLoadingVoucherClaim;
 
   Widget topButton() {
     return Container(
@@ -195,11 +207,25 @@ class ChallengeMainViewModel extends ChangeNotifier {
     }
   }
 
-  Future<List<VoucherModel>> fetchUserVOucher() async {
+  Future<List<VoucherModel>> fetchUserVoucher() async {
     try {
       final voucherService = VoucherService();
       return await voucherService.fetchUserVoucher();
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future claimVoucher(int id) async {
+    try {
+      final claimVoucher = VoucherService();
+      return await claimVoucher.postClaimVoucher(id);
+    } on DioException catch (e) {
+      if (e.response != null) {
+        if ([500, 501].contains(e.response!.statusCode)) {
+          message = e.response!.data['message'];
+        }
+      }
       rethrow;
     }
   }

@@ -22,7 +22,7 @@ class ChallengesModel {
   });
 
   String get formattedDate {
-    final f = DateFormat('d-MM-yyyy');
+    final f = DateFormat('yyyy-MM-d');
     return f.format(DateTime.parse(endDate));
   }
 }

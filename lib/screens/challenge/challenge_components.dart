@@ -74,7 +74,7 @@ class _ChallengeComponentsState extends State<ChallengeComponents> {
                         height: 10,
                       ),
                       Text(
-                        'Tantangan berlaku sampai  ${widget.challengesModel.formattedDate}',
+                        'Tantangan berlaku sampai ${widget.challengesModel.formattedDate}',
                         style: regularBody7,
                         overflow: TextOverflow.ellipsis,
                       ),
