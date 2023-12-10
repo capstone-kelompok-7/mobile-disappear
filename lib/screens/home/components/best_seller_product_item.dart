@@ -40,7 +40,7 @@ class _BestSellerProductItemState extends State<BestSellerProductItem> {
               children: [
                 Builder(
                   builder: (context) {
-                    if (widget.product.photos != null) {
+                    if (widget.product.photos.url != '') {
                       return Image.network(
                         widget.product.photos.url,
                         fit: BoxFit.cover,

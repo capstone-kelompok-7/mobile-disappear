@@ -28,7 +28,6 @@ class ChallengesPlaceholder extends StatelessWidget {
             baseColor: neutral00,
             highlightColor: neutral20,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   decoration: BoxDecoration(
@@ -38,14 +37,7 @@ class ChallengesPlaceholder extends StatelessWidget {
                   width: 120,
                   height: 80,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                  width: 120,
-                  height: 80,
-                ),
+                const SizedBox(width: 10,),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),

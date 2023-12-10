@@ -72,37 +72,37 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           const SearchField(),
           const SizedBox(height: 14,),
-          // Consumer<HomeViewModel>(
-          //   builder: (context, state, _) {
-          //     return FutureBuilder(
-          //       future: _carouselCategoryProductFuture,
-          //       builder: (context, snapshot) {
-          //         if (snapshot.hasData) {
-          //           return Column(
-          //             crossAxisAlignment: CrossAxisAlignment.start,
-          //             children: [
-          //               Carousel(carousels: snapshot.data['carousel'],),
-          //               const SizedBox(height: 20,),
-          //               Categories(categories: snapshot.data['category'],),
-          //               const SizedBox(height: 20,),
-          //               BestSellerProducts(products: snapshot.data['product']),
-          //             ],
-          //           );
-          //         }
+          Consumer<HomeViewModel>(
+            builder: (context, state, _) {
+              return FutureBuilder(
+                future: _carouselCategoryProductFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Carousel(carousels: snapshot.data['carousel'],),
+                        const SizedBox(height: 20,),
+                        Categories(categories: snapshot.data['category'],),
+                        const SizedBox(height: 20,),
+                        BestSellerProducts(products: snapshot.data['product']),
+                      ],
+                    );
+                  }
 
-          //         return const Column(
-          //           children: [
-          //             CarouselPlaceholder(),
-          //             SizedBox(height: 20,),
-          //             CategoriesPlaceholder(),
-          //             SizedBox(height: 20,),
-          //             BestSellerProductsPlaceholder()
-          //           ],
-          //         );
-          //       }
-          //     );
-          //   }
-          // ),
+                  return const Column(
+                    children: [
+                      CarouselPlaceholder(),
+                      SizedBox(height: 20,),
+                      CategoriesPlaceholder(),
+                      SizedBox(height: 20,),
+                      BestSellerProductsPlaceholder()
+                    ],
+                  );
+                }
+              );
+            }
+          ),
           const SizedBox(height: 20,),
           Consumer<HomeViewModel>(
             builder: (context, state, _) {
