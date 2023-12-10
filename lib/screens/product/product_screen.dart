@@ -69,7 +69,6 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  /// Beli Sekarang, langsung ngarah ke halaman checkout
   void _purchaseNow() {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
     final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
@@ -476,16 +475,20 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                   Expanded(
-                    child: ElevatedButton(
-                      onPressed: _purchaseNow,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primary40,
-                        shape: const BeveledRectangleBorder(),
-                      ),
-                      child: const Text(
-                        'Beli Sekarang',
-                        style: semiBoldBody6,
-                      ),
+                    child: Consumer<ProductViewModel>(
+                      builder: (context, state, _) {
+                        return ElevatedButton(
+                          onPressed: state.product!.stock! > 0 ? _purchaseNow : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primary40,
+                            shape: const BeveledRectangleBorder(),
+                          ),
+                          child: Text(
+                            state.product!.stock! > 0 ? 'Beli Sekarang' : 'Stok habis',
+                            style: semiBoldBody6,
+                          ),
+                        );
+                      }
                     ),
                   ),
                 ],

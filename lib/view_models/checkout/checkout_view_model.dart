@@ -40,13 +40,13 @@ class CheckoutViewModel extends ChangeNotifier {
     return f.format(totalProductDiscount);
   }
 
-  String totalPrice({ required CheckoutVoucher? voucher }) {
+  String totalPrice({ required CheckoutVoucher? checkoutVoucher }) {
     int total = (totalProductPrice + fee);
 
     total -= totalProductDiscount;
 
-    if (voucher?.voucher != null) {
-      total -= voucher!.voucher.discount;
+    if (checkoutVoucher?.voucher != null) {
+      total -= checkoutVoucher!.voucher.discount;
     }
 
     if (total < 0) total = 0;

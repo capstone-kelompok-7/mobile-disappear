@@ -58,6 +58,7 @@ import 'package:disappear/view_models/checkout/checkout_address_view_model.dart'
 import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
+import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:disappear/view_models/category/category_view_model.dart';
@@ -165,6 +166,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => CheckoutPaymentMethodViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ManualTransferViewModel(),
       ),
     ],
     child: const App(),

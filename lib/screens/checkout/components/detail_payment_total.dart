@@ -1,10 +1,13 @@
 import 'package:disappear/models/checkout/created_order_model.dart';
+import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
+import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/checkout/checkout_address_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
+import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,14 +25,21 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
     final checkoutAddressViewModel = Provider.of<CheckoutAddressViewModel>(context, listen: false);
     final checkoutVoucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
     final checkoutPaymentMethodViewModel = Provider.of<CheckoutPaymentMethodViewModel>(context, listen: false);
+    final manualTransferViewModel = Provider.of<ManualTransferViewModel>(context, listen: false);
 
     final CreatedOrder? createdOrder = await checkoutViewModel.createOrder(
       addressId: checkoutAddressViewModel.address!.id,
-      voucherId: checkoutVoucherViewModel.voucher!.voucherId,
+      voucherId: checkoutVoucherViewModel.voucher?.voucherId,
       paymentMethod: checkoutPaymentMethodViewModel.method!
     );
 
-    
+    manualTransferViewModel.createdOrder = createdOrder;
+
+    if (checkoutPaymentMethodViewModel.method == 'whatsapp') {
+      Navigator.pushNamed(context, WhatsappTransferScreen.routePath);
+    } else if (checkoutPaymentMethodViewModel.method == 'telegram') {
+      Navigator.pushNamed(context, TelegramTransferScreen.routePath);
+    }
   }
 
   @override
@@ -84,7 +94,6 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text(
                     'Voucher',
@@ -132,14 +141,10 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
                   ),
                   Consumer2<CheckoutViewModel, CheckoutVoucherViewModel>(
                     builder: (context, stateCheckout, stateVoucher, _) {
-                      if (stateVoucher.voucher != null) {
-                        return Text(
-                          stateCheckout.totalPrice(voucher: stateVoucher.voucher!),
-                          style: regularBody8,
-                        );
-                      }
-
-                      return const Text('Rp 0');
+                      return Text(
+                        stateCheckout.totalPrice(checkoutVoucher: stateVoucher.voucher),
+                        style: regularBody8,
+                      );
                     }
                   ),
                 ],
@@ -160,7 +165,7 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
               Consumer2<CheckoutViewModel, CheckoutVoucherViewModel>(
                 builder: (context, stateCheckout, stateVoucher, _) {
                   return Text(
-                    stateCheckout.totalPrice(voucher: stateVoucher.voucher),
+                    stateCheckout.totalPrice(checkoutVoucher: stateVoucher.voucher),
                     style: semiBoldBody7,
                   );
                 }
@@ -191,7 +196,7 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
                       Consumer2<CheckoutViewModel, CheckoutVoucherViewModel>(
                         builder: (context, stateCheckout, stateVoucher, _) {
                           return Text(
-                            stateCheckout.totalPrice(voucher: stateVoucher.voucher),
+                            stateCheckout.totalPrice(checkoutVoucher: stateVoucher.voucher),
                             style: semiBoldBody7,
                           );
                         }
@@ -202,15 +207,24 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
               ),
               Expanded(
                 flex: 2,
-                child: Consumer2<CheckoutAddressViewModel, CheckoutPaymentMethodViewModel>(
-                  builder: (context, stateAddress, statePayment, _) {
+                child: Consumer3<CheckoutViewModel, CheckoutAddressViewModel, CheckoutPaymentMethodViewModel>(
+                  builder: (context, stateCheckout, stateAddress, statePayment, _) {
                     return ElevatedButton(
-                      onPressed: (stateAddress.address != null && statePayment.method != null) ? _createOrder : null,
+                      onPressed: (!stateCheckout.isCheckingOut && (stateAddress.address != null && statePayment.method != null)) ? _createOrder : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primary30,
                         shape: const BeveledRectangleBorder()
                       ),
-                      child: Text('Buat Pesanan', style: semiBoldBody6.copyWith(color: whiteColor)
+                      child: stateCheckout.isCheckingOut
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: whiteColor,
+                              strokeWidth: 3,
+                            ),
+                          )
+                        : Text('Buat Pesanan', style: semiBoldBody6.copyWith(color: whiteColor)
                     ),
                     );
                   }

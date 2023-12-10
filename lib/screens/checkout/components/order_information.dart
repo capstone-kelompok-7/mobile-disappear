@@ -2,6 +2,7 @@ import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/checkout/checkout_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -94,9 +95,20 @@ class _OrderInformationState extends State<OrderInformation> {
                     children: [
                       SvgPicture.asset('assets/img/CheckoutCoupon.svg'),
                       const SizedBox(width: 10),
-                      const Text(
-                        'Kupon Toko',
-                        style: mediumBody7,
+                      Consumer<CheckoutVoucherViewModel>(
+                        builder: (context, state, _) {
+                          if (state.voucher != null) {
+                            return Text(
+                              state.voucher!.voucher.name,
+                              style: mediumBody7,
+                            );
+                          }
+
+                          return const Text(
+                            'Kupon toko',
+                            style: mediumBody7,
+                          );
+                        }
                       )
                     ],
                   ),

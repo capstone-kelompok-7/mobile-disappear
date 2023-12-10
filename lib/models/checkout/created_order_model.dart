@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 CreatedOrder createdOrderFromMap(String str) => CreatedOrder.fromMap(json.decode(str));
 
 String createdOrderToMap(CreatedOrder data) => json.encode(data.toMap());
@@ -28,6 +30,21 @@ class CreatedOrder {
   String paymentMethod;
   DateTime createdAt;
   List < OrderDetail > orderDetails;
+
+  String get formattedTotalAmountPaid {
+    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    return f.format(totalAmountPaid);
+  }
+
+  String get formattedCreatedAt {
+    final f = DateFormat('d-M-yyyy | HH.m a');
+    return f.format(createdAt);
+  }
+
+  String get formattedPayUntil {
+    final f = DateFormat('HH.m a');
+    return f.format(createdAt.add(const Duration(hours: 1, minutes: 30)));
+  }
 
   CreatedOrder({
     required this.id,
