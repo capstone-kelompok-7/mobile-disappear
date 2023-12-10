@@ -1,6 +1,8 @@
+import 'package:disappear/screens/article/article_screen.dart';
+import 'package:disappear/screens/article/detail_article_screen.dart';
+import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/screens/auth/register/register_verification_screen.dart';
 import 'package:disappear/screens/challenge/challenge_screen.dart';
-import 'package:disappear/screens/article_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/change_password_screen.dart';
 import 'package:disappear/screens/chatbot/chatbot_empty_screen.dart';
@@ -11,7 +13,6 @@ import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/checkout/choose_transport_screen.dart';
 import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
-import 'package:disappear/screens/detail_article_screen.dart';
 import 'package:disappear/screens/detail_challenge_screen.dart';
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
@@ -36,7 +37,6 @@ import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/auth/register/register_screen.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
-import 'package:disappear/screens/save_article_sreen.dart';
 import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
@@ -44,10 +44,10 @@ import 'package:disappear/screens/auth/forgot_password/forgot_password_verificat
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/screens/wishlist/wishlist_screen.dart';
-import 'package:disappear/services/home_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
+import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
@@ -78,7 +78,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 void main() {
   timeago.setLocaleMessages('id', IndonesianMessage());
-  
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -150,6 +150,9 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => AddToCartViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => DetailArticlesViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -187,7 +190,7 @@ class App extends StatelessWidget {
         ChallengeScreen.routePath: (context) => const ChallengeScreen(),
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
-        ArticleScreen.routePath: (context) => const ArticleScreen(),
+        ArticleScreen.routePath: (context) => ArticleScreen(),
         VoucherScreen.routePath: (context) => const VoucherScreen(),
         LeaderboardScreen.routePath: (context) => const LeaderboardScreen(),
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),
@@ -208,7 +211,8 @@ class App extends StatelessWidget {
             const ChooseTransportScreen(),
         AddressListScreen.routePath: (context) => const AddressListScreen(),
         AddNewAddresScreen.routePath: (context) => const AddNewAddresScreen(),
-        EditOldAddressScreen.routePath :(context) => const EditOldAddressScreen(),
+        EditOldAddressScreen.routePath: (context) =>
+            const EditOldAddressScreen(),
         ManualTransferScreen.routePath: (context) =>
             const ManualTransferScreen(),
         WhatsappTransferScreen.routePath: (context) =>
