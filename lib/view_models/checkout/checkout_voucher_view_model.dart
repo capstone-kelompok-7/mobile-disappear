@@ -17,7 +17,12 @@ class CheckoutVoucherViewModel extends ChangeNotifier {
   CheckoutVoucher? _selectedVoucher;
 
   set selectedVoucher(CheckoutVoucher? voucher) {
-    _selectedVoucher = voucher;
+    if (_selectedVoucher == voucher) {
+      _selectedVoucher = null;
+    } else {
+      _selectedVoucher = voucher;
+    }
+    
     notifyListeners();
   }
 

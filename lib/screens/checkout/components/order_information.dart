@@ -35,13 +35,30 @@ class _OrderInformationState extends State<OrderInformation> {
               style: semiBoldBody7,
             ),
           ),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-            itemBuilder: (context, index) => const OrderItem(),
-            separatorBuilder: (context, index) => const SizedBox(height: 20,),
-            itemCount: 3,
+          Consumer<CheckoutViewModel>(
+            builder: (context, state, _) {
+              if (state.purchaseType == 'buy-now') {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  child: OrderItem(
+                    imageUrl: state.product!.thumbnail?.imageUrl,
+                    name: state.product!.name!,
+                    gramPlastic: state.product!.gramPlastic!,
+                    formattedPrice: state.product!.formattedPrice,
+                    quantity: 1,
+                  )
+                );
+              }
+              
+              return ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                itemBuilder: (context, index) => const OrderItem(imageUrl: '', name: '', gramPlastic: 0, formattedPrice: '', quantity: 1,),
+                separatorBuilder: (context, index) => const SizedBox(height: 20,),
+                itemCount: 3,
+              );
+            }
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -63,7 +80,7 @@ class _OrderInformationState extends State<OrderInformation> {
               }
             ),
           ),
-          GestureDetector(
+          InkWell(
             onTap: _goToCouponScreen,
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
@@ -99,7 +116,20 @@ class _OrderInformationState extends State<OrderInformation> {
 }
 
 class OrderItem extends StatelessWidget {
-  const OrderItem({super.key});
+  final String? imageUrl;
+  final String name;
+  final int gramPlastic;
+  final String formattedPrice;
+  final int quantity;
+
+  const OrderItem({
+    super.key,
+    required this.imageUrl,
+    required this.name,
+    required this.gramPlastic,
+    required this.formattedPrice,
+    required this.quantity
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -111,33 +141,46 @@ class OrderItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(2),
-                child: Image.asset(
-                  'assets/img/totebeg_kanvas.png',
-                  fit: BoxFit.cover,
-                  width: 68,
-                  height: 78,
+                child: Builder(
+                  builder: (context) {
+                    if (imageUrl != null) {
+                      return Image.network(
+                        imageUrl!,
+                        fit: BoxFit.cover,
+                        width: 68,
+                        height: 78,
+                      );
+                    }
+
+                    return Image.asset(
+                      'assets/img/totebeg_kanvas.png',
+                      fit: BoxFit.cover,
+                      width: 68,
+                      height: 78,
+                    );
+                  }
                 ),
               ),
               const SizedBox(width: 10,),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Totebag Kanvas',
+                    name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: mediumBody6,
                   ),
-                  SizedBox(height: 6),
-                  Text('20 Gram', style: regularBody8),
-                  SizedBox(height: 5),
-                  Text('Rp. 20.000', style: mediumBody6)
+                  const SizedBox(height: 6),
+                  Text('$gramPlastic Gram', style: regularBody8),
+                  const SizedBox(height: 5),
+                  Text(formattedPrice, style: mediumBody6)
                 ],
               )
             ],
           ),
         ),
-        const Text('x 6', style: mediumBody6)
+        Text('x $quantity', style: mediumBody6)
       ],
     );
   }

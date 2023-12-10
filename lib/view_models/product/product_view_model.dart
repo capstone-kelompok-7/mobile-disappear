@@ -14,7 +14,11 @@ class ProductViewModel extends ChangeNotifier {
   Future<Product?> getProductById() async {
     if (product != null) {
       final productService = ProductService();
-      return await productService.getProductById(product!.id);
+      final product = await productService.getProductById(this.product!.id);
+      
+      this.product = product;
+
+      return this.product;
     }
 
     return null;

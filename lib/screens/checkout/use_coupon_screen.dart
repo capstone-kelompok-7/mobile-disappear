@@ -1,6 +1,7 @@
 import 'package:disappear/models/checkout/voucher/checkout_voucher_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,22 +63,22 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.isNotEmpty) {
+                  final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
+                  final vouchers = snapshot.data!
+                    .where((element) => checkoutViewModel.product!.price! >= element.voucher.minPurchase)
+                    .where((element) => element.voucher.endDate.isAfter(DateTime.now()))
+                    .toList();
+
                   return ListView.separated(
                     padding: const EdgeInsets.all(10),
                     shrinkWrap: true,
-                    itemCount: snapshot.data!.length,
+                    itemCount: vouchers.length,
                     separatorBuilder: (context, index) => const SizedBox(height: 15,),
                     itemBuilder: (context, index) {
                       return Consumer<CheckoutVoucherViewModel>(
                         builder: (context, state, _) {
-                          return GestureDetector(
-                            onTap: () {
-                              if (state.selectedVoucher != snapshot.data![index]) {
-                                state.selectedVoucher = snapshot.data![index];
-                              } else {
-                                state.selectedVoucher = null;
-                              }
-                            },
+                          return InkWell(
+                            onTap: () => state.selectedVoucher = vouchers[index],
                             child: Container(
                               height: 100,
                               width: double.infinity,
@@ -108,15 +109,15 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                                           ),
                                         ),
                                         Visibility(
-                                          visible: snapshot.data![index].voucher.category != 'All Customer',
+                                          visible: vouchers[index].voucher.category != 'All Customer',
                                           child: Container(
                                             padding: const EdgeInsets.all(5),
                                             decoration: BoxDecoration(
-                                              color: snapshot.data![index].voucher.category == 'Bronze'
+                                              color: vouchers[index].voucher.category == 'Bronze'
                                               ? warning40
-                                                : snapshot.data![index].voucher.category == 'Silver'
+                                                : vouchers[index].voucher.category == 'Silver'
                                                 ? neutral00
-                                                  : snapshot.data![index].voucher.category == 'Gold'
+                                                  : vouchers[index].voucher.category == 'Gold'
                                                   ? warning30
                                                     : null,
                                               borderRadius: const BorderRadiusDirectional.only(
@@ -125,7 +126,7 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                                               )
                                             ),
                                             child: Text(
-                                              snapshot.data![index].voucher.category,
+                                              vouchers[index].voucher.category,
                                               style: semiBoldBody8.copyWith(color: whiteColor)
                                             ),
                                           )
@@ -141,20 +142,20 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          snapshot.data![index].voucher.name,
+                                          vouchers[index].voucher.name,
                                           style: mediumBody7,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                          'Min. Blj ${snapshot.data![index].voucher.formattedMinPurchase}',
+                                          'Min. Blj ${vouchers[index].voucher.formattedMinPurchase}',
                                           style: mediumBody8,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                          'Berakhir dalam : ${snapshot.data![index].voucher.formattedEndDate}',
+                                          'Berakhir dalam : ${vouchers[index].voucher.formattedEndDate}',
                                           style: regularBody8,
                                         ),
                                       ],
@@ -163,15 +164,9 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                                   Expanded(
                                     flex: 1,
                                     child: Radio<CheckoutVoucher>(
-                                      value: snapshot.data![index],
+                                      value: vouchers[index],
                                       groupValue: state.selectedVoucher,
-                                      onChanged: (value) {
-                                        if (state.selectedVoucher != value) {
-                                          state.selectedVoucher = value;
-                                        } else {
-                                          state.selectedVoucher = null;
-                                        }
-                                      },
+                                      onChanged: (value) => state.selectedVoucher = value,
                                     ),
                                   )
                                 ],

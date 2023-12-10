@@ -1,11 +1,36 @@
+import 'package:disappear/models/checkout/created_order_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_address_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DetailPaymentTotal extends StatelessWidget {
+class DetailPaymentTotal extends StatefulWidget {
   const DetailPaymentTotal({super.key});
+
+  @override
+  State<DetailPaymentTotal> createState() => _DetailPaymentTotalState();
+}
+
+class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
+  void _createOrder() async {
+    final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
+
+    final checkoutAddressViewModel = Provider.of<CheckoutAddressViewModel>(context, listen: false);
+    final checkoutVoucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
+    final checkoutPaymentMethodViewModel = Provider.of<CheckoutPaymentMethodViewModel>(context, listen: false);
+
+    final CreatedOrder? createdOrder = await checkoutViewModel.createOrder(
+      addressId: checkoutAddressViewModel.address!.id,
+      voucherId: checkoutVoucherViewModel.voucher!.voucherId,
+      paymentMethod: checkoutPaymentMethodViewModel.method!
+    );
+
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,33 +50,35 @@ class DetailPaymentTotal extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           child: Column(
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
+                  const Text(
                     'Total Produk',
                     style: semiBoldBody8,
                   ),
-                  Text(
-                    'Rp. 120.000',
-                    style: regularBody8,
+                  Consumer<CheckoutViewModel>(
+                    builder: (context, state, _) {
+                      return Text(
+                        state.formattedTotalProductPrice,
+                        style: regularBody8,
+                      );
+                    }
                   )
                 ],
               ),
               const SizedBox(height: 15),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     'Biaya Admin',
                     style: regularBody8,
                   ),
                   Text(
-                    'Rp. 2.000',
+                    'Rp 2.000',
                     style: regularBody8,
-                  ),
+                  )
                 ],
               ),
               const SizedBox(height: 15),
@@ -78,34 +105,42 @@ class DetailPaymentTotal extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
+                  const Text(
                     'Diskon Produk',
                     style: regularBody8,
                   ),
-                  Text(
-                    'Rp. 20.000',
-                    style: regularBody8,
+                  Consumer<CheckoutViewModel>(
+                    builder: (context, state, _) {
+                      return Text(
+                        state.formattedTotalProductDiscount,
+                        style: regularBody8,
+                      );
+                    }
                   ),
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
+                  const Text(
                     'Total Pembayaran',
                     style: semiBoldBody8,
                   ),
-                  Text(
-                    'Rp. 142.000',
-                    style: regularBody8,
+                  Consumer2<CheckoutViewModel, CheckoutVoucherViewModel>(
+                    builder: (context, stateCheckout, stateVoucher, _) {
+                      if (stateVoucher.voucher != null) {
+                        return Text(
+                          stateCheckout.totalPrice(voucher: stateVoucher.voucher!),
+                          style: regularBody8,
+                        );
+                      }
+
+                      return const Text('Rp 0');
+                    }
                   ),
                 ],
               ),
@@ -113,18 +148,22 @@ class DetailPaymentTotal extends StatelessWidget {
           ),
         ),
         const Divider(height: 1, thickness: 0.1,),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Dibayar Oleh Pelanggan',
                 style: regularBody8,
               ),
-              Text(
-                'Rp. 142.000',
-                style: regularBody8,
+              Consumer2<CheckoutViewModel, CheckoutVoucherViewModel>(
+                builder: (context, stateCheckout, stateVoucher, _) {
+                  return Text(
+                    stateCheckout.totalPrice(voucher: stateVoucher.voucher),
+                    style: semiBoldBody7,
+                  );
+                }
               ),
             ],
           ),
@@ -140,30 +179,41 @@ class DetailPaymentTotal extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 20),
                   height: double.infinity,
                   color: neutral00,
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Total Pembayaran',
                         style: mediumBody8,
                       ),
-                      SizedBox(height: 8),
-                      Text('Rp. 142.000', style: semiBoldBody7,)
+                      const SizedBox(height: 8),
+                      Consumer2<CheckoutViewModel, CheckoutVoucherViewModel>(
+                        builder: (context, stateCheckout, stateVoucher, _) {
+                          return Text(
+                            stateCheckout.totalPrice(voucher: stateVoucher.voucher),
+                            style: semiBoldBody7,
+                          );
+                        }
+                      ),
                     ],
                   )
                 ),
               ),
               Expanded(
                 flex: 2,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primary30,
-                    shape: const BeveledRectangleBorder()
-                  ),
-                  child: Text('Buat Pesanan', style: semiBoldBody6.copyWith(color: whiteColor)
-                ),
+                child: Consumer2<CheckoutAddressViewModel, CheckoutPaymentMethodViewModel>(
+                  builder: (context, stateAddress, statePayment, _) {
+                    return ElevatedButton(
+                      onPressed: (stateAddress.address != null && statePayment.method != null) ? _createOrder : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primary30,
+                        shape: const BeveledRectangleBorder()
+                      ),
+                      child: Text('Buat Pesanan', style: semiBoldBody6.copyWith(color: whiteColor)
+                    ),
+                    );
+                  }
                 ),
               ),
             ],

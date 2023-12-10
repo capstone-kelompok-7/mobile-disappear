@@ -4,7 +4,10 @@ import 'package:disappear/screens/checkout/components/order_information.dart';
 import 'package:disappear/screens/checkout/components/payment_method_checkout.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_address_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
   static const String routePath = '/checkout-screen';
@@ -15,6 +18,17 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
+  @override
+  void initState() {
+    final checkoutAddressViewModel = Provider.of<CheckoutAddressViewModel>(context, listen: false);
+    final checkoutVoucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
+    
+    checkoutAddressViewModel.addressFuture = null;
+    checkoutVoucherViewModel.voucherFuture = null;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
