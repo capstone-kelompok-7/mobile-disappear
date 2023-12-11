@@ -1,6 +1,6 @@
 import 'package:disappear/main.dart';
 import 'package:disappear/models/cart/cart_model.dart';
-import 'package:disappear/screens/wishlist/components/loading_dialog.dart';
+import 'package:disappear/screens/cart/components/loading_dialog.dart';
 import 'package:disappear/services/cart_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:flutter/material.dart';

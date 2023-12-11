@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class WishListScreen extends StatefulWidget {
-  static const String routePath = '/wishlist';
+class CartScreen extends StatefulWidget {
+  static const String routePath = '/cart';
 
-  const WishListScreen({super.key});
+  const CartScreen({super.key});
 
   @override
-  State<WishListScreen> createState() => _WishListScreenState();
+  State<CartScreen> createState() => _CartScreenState();
 }
 
-class _WishListScreenState extends State<WishListScreen> {
+class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     final cartViewModel = Provider.of<CartViewModel>(context, listen: false);

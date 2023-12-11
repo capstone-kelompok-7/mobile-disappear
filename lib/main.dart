@@ -43,7 +43,7 @@ import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product/product_reviews_screen.dart';
-import 'package:disappear/screens/wishlist/wishlist_screen.dart';
+import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
@@ -205,7 +205,7 @@ class App extends StatelessWidget {
             const ProductReviewsScreen(),
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
-        WishListScreen.routePath: (context) => const WishListScreen(),
+        CartScreen.routePath: (context) => const CartScreen(),
         DetailOrderScreen.routePath: (context) => const DetailOrderScreen(),
         ProfileScreen.routePath: (context) => const ProfileScreen(),
         EditProfileScreen.routePath: (context) => const EditProfileScreen(),

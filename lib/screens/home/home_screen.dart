@@ -10,7 +10,7 @@ import 'package:disappear/screens/home/components/placeholders/challenges_placeh
 import 'package:disappear/screens/home/components/placeholders/latest_articles_placeholder.dart';
 import 'package:disappear/screens/home/components/search_field.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
-import 'package:disappear/screens/wishlist/wishlist_screen.dart';
+import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -45,8 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.pushNamed(context, NotificationScreen.routePath);
   }
 
-  void _goToWishlistScreen() {
-    Navigator.pushNamed(context, WishListScreen.routePath);
+  void _goToCartScreen() {
+    Navigator.pushNamed(context, CartScreen.routePath);
   }
 
   @override
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: SvgPicture.asset('assets/img/NotificationIcon.svg'),
           ),
           IconButton(
-            onPressed: _goToWishlistScreen,
+            onPressed: _goToCartScreen,
             icon: SvgPicture.asset('assets/img/CartIcon.svg')
           ),
         ],
