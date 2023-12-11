@@ -1,24 +1,27 @@
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/cart/cart_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WishListScreen extends StatefulWidget {
   static const String routePath = '/wishlist';
-  const WishListScreen({
-    super.key,
-  });
+
+  const WishListScreen({super.key});
 
   @override
   State<WishListScreen> createState() => _WishListScreenState();
 }
 
 class _WishListScreenState extends State<WishListScreen> {
-  int quantity1 = 1;
-  int quantity2 = 1;
-  int quantity3 = 1;
-  bool isSelected1 = false;
-  bool isSelected2 = false;
-  bool isSelected3 = false;
+  @override
+  void initState() {
+    final cartViewModel = Provider.of<CartViewModel>(context, listen: false);
+    
+    cartViewModel.getCart();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +39,9 @@ class _WishListScreenState extends State<WishListScreen> {
             color: whiteColor,
           ),
         ),
+        centerTitle: true,
       ),
-      body: ListView(
+      body: Column(
         children: [
           Container(
             padding: const EdgeInsets.symmetric(
@@ -52,377 +56,166 @@ class _WishListScreenState extends State<WishListScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  '1 produk dipilih',
-                  style: regularBody7,
+                Consumer<CartViewModel>(
+                  builder: (context, state, _) {
+                    return Text(
+                      '${state.selectedItems.length} produk dipilih',
+                      style: regularBody7,
+                    );
+                  }
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.delete_outline,
-                    size: 20,
-                    color: primary40,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          /// TOTEBEG KANVAS
-          Container(
-            margin: const EdgeInsets.only(
-              top: 25,
-              left: 23,
-              right: 23,
-            ),
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: primary40,
-              ),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isSelected1 = !isSelected1;
-                    });
-                  },
-                  child: isSelected1
-                      ? const Icon(
-                          Icons.check_box_rounded,
-                          size: 25,
-                          color: primary40,
-                        )
-                      : const Icon(
-                          Icons.check_box_outline_blank_rounded,
-                          size: 25,
-                          color: primary40,
-                        ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  width: 67,
-                  height: 77,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/img/totebeg_kanvas.png'),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 25),
-                const Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Totebeg Kanvas',
-                        style: mediumBody6,
+                Consumer<CartViewModel>(
+                  builder: (context, state, _) {
+                    return InkWell(
+                      onTap: state.selectedItems.isNotEmpty ? state.removeSelectedItems : null,
+                      child: const Icon(
+                        Icons.delete_outline,
+                        size: 20,
+                        color: primary40,
                       ),
-                      SizedBox(height: 6),
-                      Text(
-                        '1 Produk | 20 Gram',
-                        style: regularBody8,
-                      ),
-                      SizedBox(height: 11),
-                      Text(
-                        'Rp. 20.000',
-                        style: mediumBody6,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  width: 75,
-                  margin: const EdgeInsets.only(
-                    top: 30,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: primary40,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (quantity1 > 1) {
-                              quantity1--;
-                            }
-                          });
-                        },
-                        child: const Icon(
-                          Icons.remove,
-                          size: 18,
-                          color: primary40,
-                        ),
-                      ),
-                      Text(
-                        '$quantity1',
-                        style: semiBoldBody6,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            quantity1++;
-                          });
-                        },
-                        child: const Icon(
-                          Icons.add,
-                          size: 18,
-                          color: primary40,
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  }
                 ),
               ],
             ),
           ),
+          Consumer<CartViewModel>(
+            builder: (context, state, _) {
+              if (state.isLoading) {
+                  return const Expanded(
+                    child: Center(
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: CircularProgressIndicator(
+                          color: primary40,
+                          strokeWidth: 3,
+                        ),
+                      ),
+                    ),
+                  );
+                }
 
-          /// TUMBLER
-          Container(
-            margin: const EdgeInsets.only(
-              top: 25,
-              left: 23,
-              right: 23,
-            ),
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: primary40,
-              ),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isSelected2 = !isSelected2;
-                    });
-                  },
-                  child: isSelected2
-                      ? const Icon(
-                          Icons.check_box_rounded,
-                          size: 25,
-                          color: primary40,
-                        )
-                      : const Icon(
-                          Icons.check_box_outline_blank_rounded,
-                          size: 25,
-                          color: primary40,
-                        ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  width: 67,
-                  height: 77,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/img/tumbler.png'),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 25),
-                const Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Tumbler',
-                        style: mediumBody6,
-                      ),
-                      SizedBox(height: 6),
-                      Text(
-                        '1 Produk | 20 Gram',
-                        style: regularBody8,
-                      ),
-                      SizedBox(height: 11),
-                      Text(
-                        'Rp. 20.000',
-                        style: mediumBody6,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  width: 75,
-                  margin: const EdgeInsets.only(
-                    top: 30,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: primary40,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (quantity2 > 1) {
-                              quantity2--;
-                            }
-                          });
-                        },
-                        child: const Icon(
-                          Icons.remove,
-                          size: 18,
-                          color: primary40,
-                        ),
-                      ),
-                      Text(
-                        '$quantity2',
-                        style: semiBoldBody6,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            quantity2++;
-                          });
-                        },
-                        child: const Icon(
-                          Icons.add,
-                          size: 18,
-                          color: primary40,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+                if (state.cart != null && state.cart!.cartItems.isNotEmpty) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(12),
+                    itemCount: state.cart!.cartItems.length,
+                    separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                    itemBuilder: (context, index) {
+                      final cartItem = state.cart!.cartItems[index];
 
-          /// ALAT MAKAN
-          Container(
-            margin: const EdgeInsets.only(
-              top: 25,
-              left: 23,
-              right: 23,
-            ),
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: primary40,
-              ),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isSelected3 = !isSelected3;
-                    });
-                  },
-                  child: isSelected3
-                      ? const Icon(
-                          Icons.check_box_rounded,
-                          size: 25,
-                          color: primary40,
-                        )
-                      : const Icon(
-                          Icons.check_box_outline_blank_rounded,
-                          size: 25,
-                          color: primary40,
+                      return Container(
+                        width: double.infinity,
+                        height: 100,
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: primary40,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  width: 67,
-                  height: 77,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/img/alat_makan.png'),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 25),
-                const Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Alat Makan',
-                        style: mediumBody6,
-                      ),
-                      SizedBox(height: 6),
-                      Text(
-                        '1 Produk | 20 Gram',
-                        style: regularBody8,
-                      ),
-                      SizedBox(height: 11),
-                      Text(
-                        'Rp. 20.000',
-                        style: mediumBody6,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  width: 75,
-                  margin: const EdgeInsets.only(
-                    top: 30,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: primary40,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (quantity3 > 1) {
-                              quantity3--;
-                            }
-                          });
-                        },
-                        child: const Icon(
-                          Icons.remove,
-                          size: 18,
-                          color: primary40,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: Checkbox(
+                                value: state.selectedItems.contains(cartItem),
+                                onChanged: (value) => state.toggleSelectedItem(value, cartItem),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Builder(
+                                  builder: (context) {
+                                    if (cartItem.product.productPhotos[0].url != '') {
+                                      return Image.network(
+                                        cartItem.product.productPhotos[0].url,
+                                        width: 70,
+                                        height: 80,
+                                        fit: BoxFit.cover,
+                                      );
+                                    }
+                                    
+                                    return Image.asset(
+                                      'assets/img/totebeg_kanvas.png',
+                                      width: 70,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    );
+                                  }
+                                ),
+                                const SizedBox(width: 10),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      cartItem.product.name,
+                                      maxLines: 1,
+                                      style: mediumBody6,
+                                      overflow: TextOverflow.ellipsis
+                                    ,),
+                                    Text('${cartItem.gramPlastic} gram', style: regularBody8),
+                                    Text(cartItem.formattedPrice, style: mediumBody6, overflow: TextOverflow.ellipsis,),
+                                  ],
+                                )
+                              ],
+                            ),
+                            const Spacer(),
+                            Column(
+                              children: [
+                                const Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(color: primary40),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(vertical: 5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () => state.reduceItemQuantity(cartItem),
+                                        child: const Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 8),
+                                          child: Icon(
+                                            Icons.remove,
+                                            size: 16,
+                                            color: primary40,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(cartItem.quantity.toString(), style: semiBoldBody7),
+                                      GestureDetector(
+                                        onTap: () => state.addItemQuantity(cartItem),
+                                        child: const Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 8),
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 16,
+                                            color: primary40,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                      ),
-                      Text(
-                        '$quantity3',
-                        style: semiBoldBody6,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            quantity3++;
-                          });
-                        },
-                        child: const Icon(
-                          Icons.add,
-                          size: 18,
-                          color: primary40,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+                      );
+                    },
+                  );
+                }
+
+                return const Text('Tidak ada produk yang disimpan');
+            }
           ),
         ],
       ),
