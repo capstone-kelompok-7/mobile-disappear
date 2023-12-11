@@ -1,3 +1,4 @@
+import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/models/product_model.dart';
 import 'package:disappear/services/product_service.dart';
 import 'package:flutter/foundation.dart';
@@ -21,14 +22,14 @@ class SearchProductViewModel extends ChangeNotifier {
 
   bool get isSearching => _isSearching;
 
-  List<ProductModel> _products = [];
+  List<Product> _products = [];
 
-  set products(List<ProductModel> products) {
+  set products(List<Product> products) {
     _products = products;
     notifyListeners();
   }
 
-  List<ProductModel> get products => _products;
+  List<Product> get products => _products;
 
   int _page = 1;
 

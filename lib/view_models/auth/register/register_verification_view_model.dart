@@ -86,18 +86,22 @@ class RegisterVerificationViewModel extends ChangeNotifier {
         final authService = AuthService();
 
         final response = await authService.verifyRegisterOTP(email!, otp);
-        message = response['message'];
+        // message = response['message'];
+
+        message = 'Selamat! Verifikasi email mu berhasil, nih. Silahkan ke step selanjutnya, yuk!';
 
         isOTPCorrect = true;
 
         clearOTP();
       } on DioException catch (error) {
         if (error.response != null) {
-          if (error.response!.statusCode == 400) {
-            message = error.response!.data['message'];
-          } else {
-            message = 'Terjadi kesalahan pada server.';
-          }
+          // if (error.response!.statusCode == 400) {
+          //   message = error.response!.data['message'];
+          // } else {
+          //   message = 'Terjadi kesalahan pada server.';
+          // }
+
+          message = 'Sepertinya kode OTP mu salah atau sudah kadaluwarsa, nih. Coba cek lagi atau klik kirim ulang, yuk!';
 
           isOTPCorrect = false;
         }
@@ -115,7 +119,8 @@ class RegisterVerificationViewModel extends ChangeNotifier {
       final authService = AuthService();
 
       final response = await authService.resendOTP(email!);
-      message = response['message'];
+      // message = response['message'];
+      message = 'Kode OTP berhasil di kirim ulang!';
 
       isOTPSent = true;
 

@@ -55,15 +55,15 @@ class RegisterViewModel extends ChangeNotifier {
       isEmailSent = null;
 
       try {
-      final authService = AuthService();
+        final authService = AuthService();
 
-      final response = await authService.register(
-        emailController.text,
-        passwordController.text
-      );
-      message = response['message'];
+        final response = await authService.register(
+          emailController.text,
+          passwordController.text
+        );
+        message = response['message'];
 
-      isEmailSent = true;
+        isEmailSent = true;
       } on DioException catch (error) {
         if (error.response != null) {
           if ([400, 401, 404, 409, 500].contains(error.response!.statusCode)) {
@@ -90,6 +90,10 @@ class RegisterViewModel extends ChangeNotifier {
 
   String? validatePassword(value) {
     if (value!.length < 8) {
+      return 'Kata sandi mininal harus berisi 8 karakter';
+    }
+
+    if (value!.trim().isEmpty) {
       return 'Kata sandi mininal harus berisi 8 karakter';
     }
 

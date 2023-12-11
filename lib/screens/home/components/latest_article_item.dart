@@ -1,5 +1,5 @@
 import 'package:disappear/models/article_model.dart';
-import 'package:disappear/screens/detail_article_screen.dart';
+import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/home/components/placeholders/latest_article_thumbnail_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -32,9 +32,8 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
               Flexible(
                 flex: 1,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Builder(
-                    builder: (context) {
+                    borderRadius: BorderRadius.circular(5),
+                    child: Builder(builder: (context) {
                       if (widget.article.photo != '') {
                         return Image.network(
                           widget.article.photo,
@@ -44,7 +43,7 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                             if (loadingProgress != null) {
                               return const LatestArticleThumbnailPlaceholder();
                             }
-                        
+
                             return child;
                           },
                         );
@@ -55,9 +54,7 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                         height: 120,
                         fit: BoxFit.cover,
                       );
-                    }
-                  )
-                ),
+                    })),
               ),
               Flexible(
                 flex: 2,
@@ -66,24 +63,41 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.article.formattedDate, style: regularBody8.copyWith(color: neutral40)),
-                      const SizedBox(height: 10,),
+                      Text(widget.article.formattedDate,
+                          style: regularBody8.copyWith(color: neutral40)),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(widget.article.title, style: semiBoldBody6),
-                      const SizedBox(height: 15,),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Row(
                             children: [
-                              const Text('1 minggu yang lalu', style: mediumBody8),
-                              const SizedBox(width: 10,),
-                              const Icon(Icons.visibility, size: 18,),
-                              const SizedBox(width: 5,),
-                              Text(widget.article.views.toString(), style: regularBody8),
+                              const Text('1 minggu yang lalu',
+                                  style: mediumBody8),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Icon(
+                                Icons.visibility,
+                                size: 18,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(widget.article.views.toString(),
+                                  style: regularBody8),
                             ],
                           ),
-                          const Icon(Icons.bookmark_outline, size: 18,),
+                          const Icon(
+                            Icons.bookmark_outline,
+                            size: 18,
+                          ),
                         ],
                       ),
                     ],

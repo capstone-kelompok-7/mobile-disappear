@@ -112,7 +112,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                 contentPadding: const EdgeInsets.all(10),
                                 suffixIcon: GestureDetector(
                                   onTap: state.togglePasswordObscure,
-                                  child: Icon(state.isPasswordObscured ? Icons.visibility_outlined : Icons.visibility_off_outlined)
+                                  child: Icon(state.isPasswordObscured ? Icons.visibility_off_outlined : Icons.visibility_outlined)
                                 )
                               ),
                               obscureText: state.isPasswordObscured,
@@ -134,7 +134,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                 contentPadding: const EdgeInsets.all(10),
                                 suffixIcon: GestureDetector(
                                   onTap: state.togglePasswordConfirmationObscure,
-                                  child: Icon(state.isPasswordConfirmationObscured ? Icons.visibility_outlined : Icons.visibility_off_outlined)
+                                  child: Icon(state.isPasswordConfirmationObscured ? Icons.visibility_off_outlined : Icons.visibility_outlined)
                                 )
                               ),
                               obscureText: state.isPasswordConfirmationObscured,
