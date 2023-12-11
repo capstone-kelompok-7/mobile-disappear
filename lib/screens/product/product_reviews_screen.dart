@@ -254,7 +254,7 @@ class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
           }
 
           if (snapshot.hasError) {
-            return const Text('Terjadi kesalahan');
+            return const Center(child: Text('Terjadi kesalahan'));
           }
 
           return const Center(

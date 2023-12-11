@@ -1,14 +1,16 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables, library_private_types_in_public_api, non_constant_identifier_names
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:disappear/models/product_model.dart';
-import 'package:disappear/screens/home/components/placeholders/best_seller_products_placeholder.dart';
+import 'package:disappear/models/product/product_model.dart';
+import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/product/components/add_to_cart_dialog.dart';
 import 'package:disappear/screens/product/components/other_product.dart';
+import 'package:disappear/screens/product/components/other_products_placeholder.dart';
 import 'package:disappear/screens/product_review/components/product_review_item.dart';
 import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
 import 'package:disappear/view_models/product/product_carousel_view_model.dart';
 import 'package:disappear/view_models/product/product_review_view_model.dart';
@@ -30,7 +32,7 @@ class _ProductScreenState extends State<ProductScreen> {
   
   late final Future _otherProductFuture = _getOtherProduct();
 
-  Future<ProductModel?> _getProduct() async {
+  Future<Product?> _getProduct() async {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
     final carouselViewModel = Provider.of<ProductCarouselViewModel>(context, listen: false);
     final reviewViewModel = Provider.of<ProductReviewViewModel>(context, listen: false);
@@ -43,7 +45,7 @@ class _ProductScreenState extends State<ProductScreen> {
     return product;
   }
 
-  Future<List<ProductModel>> _getOtherProduct() async {
+  Future<List<Product>> _getOtherProduct() async {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
     return await productViewModel.getOtherProducts();
   }
@@ -67,11 +69,14 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  /// Beli Sekarang, langsung ngarah ke halaman checkout
   void _purchaseNow() {
-    // final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
 
-    // productViewModel.productId; // Ini id produknya
+    checkoutViewModel.purchaseType = 'buy-now';
+    checkoutViewModel.product = productViewModel.product;
+
+    Navigator.of(context).pushNamed(CheckoutScreen.routePath);
   }
 
   void _goToReviewScreen() {
@@ -86,6 +91,7 @@ class _ProductScreenState extends State<ProductScreen> {
       future: productFuture,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
+          
           return Scaffold(
             appBar: AppBar(
               backgroundColor: primary40,
@@ -134,7 +140,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                     state.currentIndex = index;
                                   },
                                 ),
-                                items: state.product!.images.map((image) {
+                                items: state.product!.imageUrl!.map((image) {
                                   return Builder(
                                     builder: (BuildContext context) {
                                       return Container(
@@ -157,7 +163,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 right: 0,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: state.product!.images.asMap().entries.map((entry) {
+                                  children: state.product!.imageUrl!.asMap().entries.map((entry) {
                                     return Container(
                                       width: 10,
                                       height: 10,
@@ -374,7 +380,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                             return const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: BestSellerProductsPlaceholder(),
+                              child: OtherProductsPlaceholder(),
                             );
                           }
                         );
@@ -469,16 +475,20 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                   Expanded(
-                    child: ElevatedButton(
-                      onPressed: _purchaseNow,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primary40,
-                        shape: const BeveledRectangleBorder(),
-                      ),
-                      child: const Text(
-                        'Beli Sekarang',
-                        style: semiBoldBody6,
-                      ),
+                    child: Consumer<ProductViewModel>(
+                      builder: (context, state, _) {
+                        return ElevatedButton(
+                          onPressed: state.product!.stock! > 0 ? _purchaseNow : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primary40,
+                            shape: const BeveledRectangleBorder(),
+                          ),
+                          child: Text(
+                            state.product!.stock! > 0 ? 'Beli Sekarang' : 'Stok habis',
+                            style: semiBoldBody6,
+                          ),
+                        );
+                      }
                     ),
                   ),
                 ],

@@ -1,10 +1,10 @@
-import 'package:disappear/models/product_model.dart';
-import 'package:disappear/models/review_model.dart';
+import 'package:disappear/models/product/product_model.dart';
+import 'package:disappear/models/product/product_review_model.dart';
 import 'package:disappear/services/product_service.dart';
 import 'package:flutter/material.dart';
 
 class ProductReviewViewModel extends ChangeNotifier {
-  ProductModel? product;
+  Product? product;
 
   int _page = 1;
 
@@ -23,16 +23,16 @@ class ProductReviewViewModel extends ChangeNotifier {
 
   bool get isLoadingMore => _isLoadingMore;
 
-  List<ProductReviewItemModel> _reviews = [];
+  List<Review> _reviews = [];
 
-  set reviews(List<ProductReviewItemModel> reviews) {
+  set reviews(List<Review> reviews) {
     _reviews = reviews;
     notifyListeners();
   }
 
-  List<ProductReviewItemModel> get reviews => _reviews;
+  List<Review> get reviews => _reviews;
 
-  Future<ProductReviewModel?> getProductReviews() async {
+  Future<ProductReview?> getProductReviews() async {
     page = 1;
 
     final productService = ProductService();

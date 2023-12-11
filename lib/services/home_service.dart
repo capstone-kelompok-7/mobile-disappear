@@ -3,7 +3,7 @@ import 'package:disappear/models/article_model.dart';
 import 'package:disappear/models/carousel_model.dart';
 import 'package:disappear/models/category_model.dart';
 import 'package:disappear/models/home_challenge_model.dart';
-import 'package:disappear/models/product_model.dart';
+import 'package:disappear/models/product/best_seller_product_model.dart';
 import 'package:disappear/services/api.dart';
 
 class HomeService {
@@ -28,14 +28,7 @@ class HomeService {
           .toList(),
         
         'product': (data['product'] as List)
-          .map((product) {
-            return ProductModel(
-              id: 1,
-              name: product['name'] as String,
-              price: product['price'] as int,
-              rating: product['rating'] as num
-            );
-          })
+          .map((product) => BestSellerProduct.fromMap(product))
           .toList(),
       };
     }
