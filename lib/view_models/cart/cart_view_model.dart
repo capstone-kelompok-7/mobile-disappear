@@ -5,6 +5,7 @@ import 'package:disappear/services/cart_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:intl/intl.dart';
 
 class CartViewModel extends ChangeNotifier {
   Cart? _cart;
@@ -71,6 +72,16 @@ class CartViewModel extends ChangeNotifier {
     }
   }
 
+  void selectAllItems(bool? checked) {
+    if (checked == true) {
+      if (cart != null && cart!.cartItems.isNotEmpty) {
+        selectedItems = cart!.cartItems;
+      }
+    } else {
+      selectedItems = [];
+    }
+  }
+
   bool _isRemovingSelectedItems = false;
 
   set isRemovingSelectedItems(bool isRemovingSelectedItems) {
@@ -121,5 +132,16 @@ class CartViewModel extends ChangeNotifier {
       message: 'Keranjang berhasil dihapus',
       duration: const Duration(seconds: 3),
     ).show(navigatorKey.currentContext!);
+  }
+
+  String get totalPrice {
+    int price = 0;
+
+    for (CartItem item in selectedItems) {
+      price += (item.price * item.quantity);
+    }
+
+    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    return f.format(price);
   }
 }

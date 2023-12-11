@@ -8,7 +8,7 @@ class CartService {
 
     final Response response = await dio.get('/carts');
 
-    if (response.data['data'] != null) {
+    if (response.data['data'] != null && response.data['data']['cart_items'] != null) {
       return Cart.fromMap(response.data['data']);
     }
 
