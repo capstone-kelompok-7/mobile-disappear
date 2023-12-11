@@ -44,7 +44,7 @@ import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
 import 'package:disappear/screens/product/product_reviews_screen.dart';
-import 'package:disappear/screens/wishlist/wishlist_screen.dart';
+import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
@@ -55,6 +55,7 @@ import 'package:disappear/view_models/auth/forgot_password/new_password_view_mod
 import 'package:disappear/view_models/auth/login_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
+import 'package:disappear/view_models/cart/cart_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_address_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_view_model.dart';
@@ -81,6 +82,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:timeago/timeago.dart' as timeago;
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   timeago.setLocaleMessages('id', IndonesianMessage());
@@ -172,6 +175,9 @@ void main() {
         create: (context) => DetailArticlesViewModel(),
       ),
       ChangeNotifierProvider(
+        create: (context) => CartViewModel(),
+      ),
+      ChangeNotifierProvider(
         create: (context) => ManualTransferViewModel(),
       ),
     ],
@@ -187,6 +193,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routePath,
+      navigatorKey: navigatorKey,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
         OnboardingScreen.routePath: (context) => const OnboardingScreen(),
@@ -219,7 +226,7 @@ class App extends StatelessWidget {
             const ProductReviewsScreen(),
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
-        WishListScreen.routePath: (context) => const WishListScreen(),
+        CartScreen.routePath: (context) => const CartScreen(),
         DetailOrderScreen.routePath: (context) => const DetailOrderScreen(),
         ProfileScreen.routePath: (context) => const ProfileScreen(),
         EditProfileScreen.routePath: (context) => const EditProfileScreen(),
