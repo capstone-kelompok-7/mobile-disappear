@@ -21,8 +21,12 @@ class ChallengeMainViewModel extends ChangeNotifier {
 
   String? get errorMessage => message;
 
-  bool _isLoadingVoucherClaim = false;
-  bool get isLoadingVoucherClaim => _isLoadingVoucherClaim;
+  int? _isLoadingVoucherClaim;
+  int? get isLoadingVoucherClaim => _isLoadingVoucherClaim;
+
+
+  //VARIABEL POSTFILE KE SERVER IKUT TANTANGAN
+  String? filePath;
 
   Widget topButton() {
     return Container(
@@ -124,6 +128,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
     );
   }
 
+//Challenge Viewmodel FEATURE//
   Future<List<ChallengesModel>> fetchAllChallenge() async {
     try {
       final challengeService = ChallengeService();
@@ -140,6 +145,16 @@ class ChallengeMainViewModel extends ChangeNotifier {
     }
 
     return null;
+  }
+
+  Future postChallenge(int id, String username, String filePath) async {
+    
+    try {
+      final postChallengeService = ChallengeService();
+      return await postChallengeService.postSubmitChallenge(id, username, filePath);
+    } catch (e) {
+      rethrow;
+    }
   }
 
 //LEADERBOARD TAB FEATURE//
@@ -217,6 +232,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
   }
 
   Future claimVoucher(int id) async {
+    _isLoadingVoucherClaim = id;
+    notifyListeners();
+
     try {
       final claimVoucher = VoucherService();
       return await claimVoucher.postClaimVoucher(id);
@@ -227,6 +245,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
         }
       }
       rethrow;
+    } finally {
+      _isLoadingVoucherClaim = null;
+      notifyListeners();
     }
   }
 }

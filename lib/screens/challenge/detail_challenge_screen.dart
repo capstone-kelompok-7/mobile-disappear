@@ -102,7 +102,7 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.of(context).pushNamed('/join-challenge-screen');
+                              Navigator.of(context).pushNamed('/join-challenge-screen', arguments: snapshot.data.id);
                             },
                             child: Text(
                               'Ikuti Tantangan',

@@ -244,7 +244,10 @@ class _VoucherScreenState extends State<VoucherScreen> {
                           onPressed: () {
                             state.claimVoucher(widget.voucherModel.id);
                           },
-                          child: Text('Klaim'),
+                          child: state.isLoadingVoucherClaim ==
+                                  widget.voucherModel.id
+                              ? CircularProgressIndicator()
+                              : Text('Klaim'),
                           style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(primary30),
