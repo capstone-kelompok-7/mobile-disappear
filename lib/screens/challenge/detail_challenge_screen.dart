@@ -36,7 +36,7 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
         elevation: 2.5,
         leading: const Icon(Icons.arrow_back_ios),
         iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: primary40,
         title: Text('Detail Tantangan', style: semiBoldBody1),
       ),
       body: FutureBuilder(
@@ -87,7 +87,10 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(snapshot.data.description , style: regularBody7,)
+                        Text(
+                          snapshot.data.description,
+                          style: regularBody7,
+                        )
                       ],
                     ),
                   ),
@@ -102,7 +105,9 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.of(context).pushNamed('/join-challenge-screen', arguments: snapshot.data.id);
+                              Navigator.of(context).pushNamed(
+                                  '/join-challenge-screen',
+                                  arguments: snapshot.data.id);
                             },
                             child: Text(
                               'Ikuti Tantangan',

@@ -1,3 +1,4 @@
+import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
         elevation: 2.5,
         leading: const Icon(Icons.arrow_back_ios),
         iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: primary40,
         title: Text(
           'Ikuti Tantangan',
           style: GoogleFonts.inter(

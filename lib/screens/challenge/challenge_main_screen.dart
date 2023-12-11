@@ -6,6 +6,7 @@ import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
 import 'package:disappear/screens/voucher/user_voucher_components.dart';
 import 'package:disappear/screens/voucher/voucher_placeholder.dart';
 import 'package:disappear/screens/voucher/voucher_screen.dart';
+import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,8 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: primary40,
           elevation: 2.5,
-          leading: const Icon(Icons.arrow_back_ios),
           title: Consumer<ChallengeMainViewModel>(
             builder: (context, appBar, _) {
               return challengeProvider.selectedTabChallenge == 1
@@ -141,7 +142,8 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                                       return Text('Tidak ada Kupon Tersedia');
                                     } else {
                                       return Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only(
