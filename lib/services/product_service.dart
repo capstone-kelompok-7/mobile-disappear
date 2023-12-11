@@ -1,37 +1,24 @@
 import 'package:dio/dio.dart';
-import 'package:disappear/models/product_model.dart';
-import 'package:disappear/models/review_model.dart';
+import 'package:disappear/models/product/product_model.dart';
+import 'package:disappear/models/product/product_review_model.dart';
 import 'package:disappear/services/api.dart';
 
 class ProductService {
-  Future<List<ProductModel>> getBestSellerProducts() async {
+  Future<List<Product>> getBestSellerProducts() async {
     final dio = createDio();
 
     final Response response = await dio.get('/products?page=1&pageSize=5');
 
     if (response.data['data'] != null) {
       return response.data['data']
-        .map<ProductModel>((data) {
-          final product = ProductModel(
-            id: data['id'] as int,
-            name: data['name'] as String,
-            rating: data['rating'] as num,
-            price: data['price'] as int
-          );
-
-          if (data['image_url'] != null) {
-            product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
-          }
-
-          return product;
-        })
+        .map((data) => Product.fromMap(response.data['data']))
         .toList();
     }
 
     return [];
   }
 
-  Future<List<ProductModel>> getProducts({
+  Future<List<Product>> getProducts({
     required String keyword,
     required int page,
     int pageSize = 4,
@@ -56,108 +43,48 @@ class ProductService {
 
     if (response.data['data'] != null) {
       return response.data['data']
-        .map<ProductModel>((data) {
-          final product = ProductModel(
-            id: data['id'] as int,
-            name: data['name'] as String,
-            rating: data['rating'] as num,
-            price: data['price'] as int
-          );
-
-          if (data['image_url'] != null) {
-            product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
-          }
-
-          return product;
-        })
+        .map<Product>((data) => Product.fromMap(data))
         .toList();
     }
 
     return [];
   }
 
-  Future<ProductModel> getProductById(int id) async {
+  Future<Product?> getProductById(int id) async {
     final dio = createDio();
 
     final Response response = await dio.get('/products/$id');
     final data = response.data['data'];
-    
-    final product = ProductModel(
-      id: data['id'] as int,
-      name: data['name'] as String,
-      description: data['description'] as String,
-      gramPlastic: data['gram_plastic'] as int,
-      stock: data['stock'] as int,
-      discount: data['discount'] as int,
-      exp: data['exp'] as int,
-      totalReview: data['total_review'] as int,
-      rating: data['rating'] as num,
-      price: data['price'] as int,
-      totalSold: data['total_sold'] as int,
-    );
 
-    if (data['image_url'] != null) {
-      product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
+    if (data != null) {
+      return Product.fromMap(data);
     }
 
-    if (data['reviews'] != null) {
-      product.addReviewsFromListOfMap((data['reviews'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
-    }
-
-    return product;
+    return null;
   }
 
-  Future<List<ProductModel>> getOtherProducts() async {
+  Future<List<Product>> getOtherProducts() async {
     final dio = createDio();
 
     final Response response = await dio.get('/products/other-products');
 
     if (response.data['data'] != null) {
       return response.data['data']
-        .map<ProductModel>((data) {
-          final product = ProductModel(
-            id: data['id'] as int,
-            name: data['name'] as String,
-            rating: data['rating'] as num,
-            price: data['price'] as int
-          );
-
-          if (data['image_url'] != null) {
-            product.addImagesFromListOfMap((data['image_url'] as List<dynamic>).cast<Map<dynamic, dynamic>>());
-          }
-
-          return product;
-        })
+        .map<Product>((data) => Product.fromMap(data))
         .toList();
     }
 
     return [];
   }
 
-  Future<ProductReviewModel?> getProductReviews({ required productId, int page = 1}) async {
+  Future<ProductReview?> getProductReviews({ required productId, int page = 1}) async {
     final dio = createDio();
 
     final Response response = await dio.get('/reviews/detail/$productId?page=$page');
     final data = response.data['data'];
 
     if (data != null) {
-      final productReview = ProductReviewModel(
-        id: data['id'] as int,
-        name: data['name'] as String,
-        currentRatingFive: data['current_rating_five'] as int,
-        currentRatingFour: data['current_rating_four'] as int,
-        currentRatingThree: data['current_rating_three'] as int,
-        currentRatingTwo: data['current_rating_two'] as int,
-        currentRatingOne: data['current_rating_one'] as int,
-        rating: data['rating'] as num,
-        totalReview: data['total_review'] as int,
-      );
-
-      if (data['reviews'] != null) {
-        productReview.addReviewsFromListOfMap((data['reviews'] as List < dynamic > ).cast < Map < dynamic, dynamic >> ());
-      }
-
-      return productReview;
+      return ProductReview.fromMap(data);
     }
 
     return null;

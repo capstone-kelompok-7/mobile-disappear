@@ -1,26 +1,30 @@
-import 'package:disappear/models/product_model.dart';
+import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/services/product_service.dart';
 import 'package:flutter/material.dart';
 
 class ProductViewModel extends ChangeNotifier {
-  int? _productId;
+  Product? _product;
 
-  set productId(int? productId) {
-    _productId = productId;
+  set product(Product? product) {
+    _product = product;
   }
 
-  int? get productId => _productId;
+  Product? get product => _product;
 
-  Future<ProductModel?> getProductById() async {
-    if (productId != null) {
+  Future<Product?> getProductById() async {
+    if (product != null) {
       final productService = ProductService();
-      return await productService.getProductById(productId!);
+      final product = await productService.getProductById(this.product!.id);
+      
+      this.product = product;
+
+      return this.product;
     }
 
     return null;
   }
 
-  Future<List<ProductModel>> getOtherProducts() async {
+  Future<List<Product>> getOtherProducts() async {
     final productService = ProductService();
     return await productService.getOtherProducts();
   }

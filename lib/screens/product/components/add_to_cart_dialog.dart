@@ -77,7 +77,9 @@ class _AddToCartDialogState extends State<AddToCartDialog> {
                 child: Consumer<AddToCartViewModel>(
                   builder: (context, state, _) {
                     return Image.network(
-                      state.product!.thumbnail!.imageUrl,
+                      state.product!.thumbnail != null
+                        ? state.product!.thumbnail!.imageUrl
+                        : 'https://picsum.photos/130/130',
                       width: 130,
                       height: 130,
                       fit: BoxFit.fitHeight,
@@ -92,7 +94,7 @@ class _AddToCartDialogState extends State<AddToCartDialog> {
                   Consumer<AddToCartViewModel>(
                     builder: (context, state, _) {
                       return Text(
-                        state.product!.name,
+                        state.product!.name!,
                         style: semiBoldBody5,
                       );
                     }

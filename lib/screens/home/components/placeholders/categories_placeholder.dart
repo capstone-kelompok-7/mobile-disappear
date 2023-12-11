@@ -28,7 +28,6 @@ class CategoriesPlaceholder extends StatelessWidget {
             baseColor: neutral00,
             highlightColor: neutral20,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   width: 70,
@@ -38,6 +37,7 @@ class CategoriesPlaceholder extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+                const SizedBox(width: 10,),
                 Container(
                   width: 70,
                   height: 70,
@@ -46,22 +46,7 @@ class CategoriesPlaceholder extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                ),
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                ),
+                const SizedBox(width: 10,),
                 Container(
                   width: 70,
                   height: 70,
