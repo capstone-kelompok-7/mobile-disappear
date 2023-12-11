@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:disappear/models/product_model.dart';
+import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/services/product_service.dart';
 import 'package:flutter/material.dart';
 
 class AddToCartViewModel extends ChangeNotifier {
-  ProductModel? _product;
+  Product? _product;
 
-  set product(ProductModel? product) {
+  set product(Product? product) {
     _product = product;
   }
 
-  ProductModel? get product => _product;
+  Product? get product => _product;
 
   bool _isLoading = false;
 

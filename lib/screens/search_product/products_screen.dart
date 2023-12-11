@@ -1,3 +1,4 @@
+import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/search_product/components/products_filter.dart';
 import 'package:disappear/screens/search_product/components/placeholders/products_placeholder.dart';
@@ -56,9 +57,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  void _goToDetailProductScreen(int id) {
+  void _goToProductScreen(Product product) {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
-    productViewModel.productId = id;
+    productViewModel.product = product;
 
     Navigator.pushNamed(context, ProductScreen.routePath);
   }
@@ -112,7 +113,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     ),
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () => _goToDetailProductScreen(state.products[index].id),
+                        onTap: () => _goToProductScreen(state.products[index]),
                         child: Card(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
@@ -143,7 +144,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        state.products[index].name,
+                                        state.products[index].name!,
                                         style: regularBody7,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
@@ -154,31 +155,31 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 1 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 1 ? warning20 : neutral20
                                           ),
                                           const SizedBox(width: 2,),
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 2 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 2 ? warning20 : neutral20
                                           ),
                                           const SizedBox(width: 2,),
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 3 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 3 ? warning20 : neutral20
                                           ),
                                           const SizedBox(width: 2,),
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 4 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 4 ? warning20 : neutral20
                                           ),
                                           const SizedBox(width: 2,),
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 5 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 5 ? warning20 : neutral20
                                           ),
                                         ],
                                       ),

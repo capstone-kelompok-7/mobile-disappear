@@ -46,15 +46,6 @@ class LatestArticlesPlaceholder extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                ),
               ],
             )
           ),
