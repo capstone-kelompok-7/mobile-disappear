@@ -198,7 +198,6 @@ class App extends StatelessWidget {
     return MaterialApp(
       initialRoute: SplashScreen.routePath,
       debugShowCheckedModeBanner: false,
-     
       navigatorKey: navigatorKey,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
@@ -224,7 +223,8 @@ class App extends StatelessWidget {
         ChallengeMainScreen.routePath: (context) => const ChallengeMainScreen(),
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
-        ArticleScreen.routePath: (context) =>  ArticleScreen(),
+        ArticleScreen.routePath: (context) => ArticleScreen(),
+        ArticleScreen.routePath: (context) => ArticleScreen(),
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),
@@ -239,7 +239,8 @@ class App extends StatelessWidget {
             const ChangePasswordScreen(),
         CheckoutScreen.routePath: (context) => const CheckoutScreen(),
         UseCouponScreen.routePath: (context) => const UseCouponScreen(),
-        CheckoutAddressScreen.routePath: (context) => const CheckoutAddressScreen(),
+        CheckoutAddressScreen.routePath: (context) =>
+            const CheckoutAddressScreen(),
         ChooseTransportScreen.routePath: (context) =>
             const ChooseTransportScreen(),
         AddressListScreen.routePath: (context) => const AddressListScreen(),
