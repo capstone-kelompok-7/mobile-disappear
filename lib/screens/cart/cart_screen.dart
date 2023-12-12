@@ -58,12 +58,12 @@ class _CartScreenState extends State<CartScreen> {
       centerTitle: true,
     );
 
-    return Consumer<CartViewModel>(
-      builder: (context, state, _) {
-        if (state.isLoading) {
-          return Scaffold(
-            appBar: appBar,
-            body: const Expanded(
+    return Scaffold(
+      appBar: appBar,
+      body: Consumer<CartViewModel>(
+        builder: (context, state, _) {
+          if (state.isLoading) {
+            return const Expanded(
               child: Center(
                 child: SizedBox(
                   width: 30,
@@ -74,14 +74,11 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
               ),
-            )
-          );
-        }
+            );
+          }
 
-        if (state.cart != null && state.cart!.cartItems.isNotEmpty) {
-          return Scaffold(
-            appBar: appBar,
-            body: Column(
+          if (state.cart != null && state.cart!.cartItems.isNotEmpty) {
+            return Column(
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -228,9 +225,24 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 const SizedBox(height: 70,),
               ],
-            ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: Row(
+            );
+          }
+
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset('assets/img/EmptyCart.svg', width: 200, height: 200,),
+              const SizedBox(height: 40,),
+              const Text('Oops.. Keranjang masih kosong, nih.', style: mediumBody3, textAlign: TextAlign.center,)
+            ],
+          );
+        }
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Consumer<CartViewModel>(
+        builder: (context, state, _) {
+          if (state.cart != null && state.cart!.cartItems.isNotEmpty) {
+            return Row(
               children: [
                 Flexible(
                   flex: 4,
@@ -276,25 +288,12 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 )
               ],
-            ),
-          );
-        }
+            );
+          }
 
-        return Scaffold(
-          appBar: appBar,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset('assets/img/EmptyCart.svg', width: 200, height: 200,),
-                const SizedBox(height: 40,),
-                const Text('Oops.. Keranjang masih kosong, nih.', style: mediumBody3, textAlign: TextAlign.center,)
-              ],
-            ),
-          )
-        );
-      },
+          return const SizedBox.shrink();
+        }
+      ),
     );
   }
 }
