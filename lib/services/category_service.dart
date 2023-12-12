@@ -9,6 +9,7 @@ class CategoryService {
     Response response = await dio.get('/categories?page=1&pageSize=5');
 
     return response.data['data']
+    
       .map<CategoryModel>((data) => CategoryModel(id: data['id'], name: data['name'], photo: data['photo']))
       .toList();
   }

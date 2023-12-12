@@ -19,31 +19,34 @@ class CategoriesScreen extends StatelessWidget {
       body: Consumer<CategoryViewModel>(
         builder: (context, state, _) {
           return FutureBuilder(
-            future: state.getCategories(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return const Text('Tidak ada kategori');
-              }
+              future: state.getCategories(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Tidak ada kategori');
+                }
 
-              if (snapshot.hasData) {
-                return GridView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: 54, horizontal: 29),
-                  itemCount: snapshot.data!.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisExtent: 140,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemBuilder: (context, index) {
-                    return CategoryItem(category: snapshot.data![index],);
-                  },
-                );
-              }
+                if (snapshot.hasData) {
+                  return GridView.builder(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 54, horizontal: 29),
+                    itemCount: snapshot.data!.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisExtent: 140,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemBuilder: (context, index) {
+                      return CategoryItem(
+                        category: snapshot.data![index],
+                      );
+                    },
+                  );
+                }
 
-              return const CategoriesPlaceholder();
-            }
-          );
+                return const CategoriesPlaceholder();
+              });
         },
       ),
     );
