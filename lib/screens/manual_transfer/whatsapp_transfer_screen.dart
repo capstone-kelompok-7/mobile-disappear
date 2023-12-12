@@ -215,7 +215,6 @@ class _WhatsappTransferScreenState extends State<WhatsappTransferScreen> {
               ],
             ),
           ),
-          const Spacer(),
           Padding(
             padding: const EdgeInsets.all(30),
             child: ElevatedButton(

@@ -19,15 +19,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
-    final cartViewModel = Provider.of<CartViewModel>(context, listen: false);
-    
-    cartViewModel.getCart();
-
-    super.initState();
-  }
-
   void _goToCheckoutScreen() {
     final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
     final cartViewModel = Provider.of<CartViewModel>(context, listen: false);
@@ -48,18 +39,16 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(
-      backgroundColor: primary40,
-      leading: IconButton(
-        icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
-        onPressed: () => Navigator.of(context).pop(),
-      ), 
-      title: Text('Keranjang', style: semiBoldBody1.copyWith(color: whiteColor),),
-      centerTitle: true,
-    );
-
     return Scaffold(
-      appBar: appBar,
+      appBar: AppBar(
+        backgroundColor: primary40,
+        leading: IconButton(
+          icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+          onPressed: () => Navigator.of(context).pop(),
+        ), 
+        title: Text('Keranjang', style: semiBoldBody1.copyWith(color: whiteColor),),
+        centerTitle: true,
+      ),
       body: Consumer<CartViewModel>(
         builder: (context, state, _) {
           if (state.isLoading) {
@@ -291,7 +280,7 @@ class _CartScreenState extends State<CartScreen> {
             );
           }
 
-          return const SizedBox.shrink();
+          return const Text('');
         }
       ),
     );

@@ -20,7 +20,7 @@ class CategoriesScreen extends StatelessWidget {
           icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('Keranjang', style: semiBoldBody1.copyWith(color: whiteColor),),
+        title: Text('Kategori', style: semiBoldBody1.copyWith(color: whiteColor),),
         centerTitle: true,
       ),
       body: Consumer<CategoryViewModel>(
