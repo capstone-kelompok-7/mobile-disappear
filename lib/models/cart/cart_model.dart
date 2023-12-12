@@ -87,12 +87,14 @@ class CartProduct {
   int id;
   String name;
   int price;
+  int discount;
   List < CartProductPhoto > productPhotos;
 
   CartProduct({
     required this.id,
     required this.name,
     required this.price,
+    required this.discount,
     required this.productPhotos,
   });
 
@@ -100,6 +102,7 @@ class CartProduct {
     id: json["id"],
     name: json["name"],
     price: json["price"],
+    discount: json["discount"],
     productPhotos: List < CartProductPhoto > .from(json["product_photos"].map((x) => CartProductPhoto.fromMap(x))),
   );
 

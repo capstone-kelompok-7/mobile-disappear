@@ -1,6 +1,10 @@
+import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/cart/cart_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +26,24 @@ class _CartScreenState extends State<CartScreen> {
     cartViewModel.getCart();
 
     super.initState();
+  }
+
+  void _goToCheckoutScreen() {
+    final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
+    final cartViewModel = Provider.of<CartViewModel>(context, listen: false);
+
+    checkoutViewModel.purchaseType = 'buy-by-cart';
+    checkoutViewModel.product = null;
+    checkoutViewModel.selectedItems = cartViewModel.selectedItems;
+
+    final checkoutVoucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
+    final checkoutPaymentMethodViewModel = Provider.of<CheckoutPaymentMethodViewModel>(context, listen: false);
+    
+    checkoutVoucherViewModel.voucher = null;
+    checkoutPaymentMethodViewModel.method = null;
+    checkoutPaymentMethodViewModel.selectedMethod = null;
+
+    Navigator.of(context).pushNamed(CheckoutScreen.routePath);
   }
 
   @override
@@ -244,7 +266,7 @@ class _CartScreenState extends State<CartScreen> {
                     height: 70,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: state.selectedItems.isNotEmpty ? () {} : null,
+                      onPressed: state.selectedItems.isNotEmpty ? _goToCheckoutScreen : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primary30,
                         shape: const BeveledRectangleBorder(),

@@ -1,7 +1,12 @@
+import 'package:another_flushbar/flushbar.dart';
+import 'package:dio/dio.dart';
+import 'package:disappear/main.dart';
+import 'package:disappear/models/cart/cart_model.dart';
 import 'package:disappear/models/checkout/created_order_model.dart';
 import 'package:disappear/models/checkout/voucher/checkout_voucher_model.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/services/checkout_service.dart';
+import 'package:disappear/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,6 +15,15 @@ class CheckoutViewModel extends ChangeNotifier {
 
   Product? product;
 
+  List<CartItem> _selectedItems = [];
+
+  set selectedItems(List<CartItem> selectedItems) {
+    _selectedItems = selectedItems;
+    notifyListeners();
+  }
+
+  List<CartItem> get selectedItems => _selectedItems;
+
   TextEditingController notesController = TextEditingController();
 
   int fee = 2000;
@@ -17,6 +31,16 @@ class CheckoutViewModel extends ChangeNotifier {
   int get totalProductPrice {
     if (purchaseType == 'buy-now') {
       return product!.price!;
+    }
+
+    if (purchaseType == 'buy-by-cart') {
+      int price = 0;
+
+      for (CartItem item in selectedItems) {
+        price += (item.price * item.quantity);
+      }
+
+      return price;
     }
 
     return 0;
@@ -30,6 +54,16 @@ class CheckoutViewModel extends ChangeNotifier {
   int get totalProductDiscount {
     if (purchaseType == 'buy-now') {
       return product!.discount!;
+    }
+
+    if (purchaseType == 'buy-by-cart') {
+      int discount = 0;
+
+      for (CartItem item in selectedItems) {
+        discount += (item.product.discount * item.quantity);
+      }
+
+      return discount;
     }
 
     return 0;
@@ -77,6 +111,47 @@ class CheckoutViewModel extends ChangeNotifier {
         productId: product!.id,
         addressId: addressId,
         note: notesController.text,
+        voucherId: voucherId,
+        paymentMethod: paymentMethod
+      );
+
+      return createdOrder;
+    } on DioException catch (e) {
+      if ([403, 500].contains(e.response?.statusCode)) {
+        await Flushbar(
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: error10,
+          messageColor: whiteColor,
+          borderColor: error30,
+          borderWidth: 1,
+          margin: const EdgeInsets.all(10),
+          borderRadius: BorderRadius.circular(5),
+          message: e.response!.data['message'],
+          duration: const Duration(seconds: 3),
+        ).show(navigatorKey.currentContext!);
+      }
+      // TODO
+    } finally {
+      isCheckingOut = false;
+    }
+
+    return null;
+  }
+
+  Future<CreatedOrder?> createOrderByCart({
+    required int addressId,
+    required String paymentMethod,
+    int? voucherId,
+  }) async {
+    isCheckingOut = true;
+
+    try {
+      final service = CheckoutService();
+      final CreatedOrder createdOrder = await service.createOrderByCart(
+        cartItems: selectedItems,
+        addressId: addressId,
+        note: notesController.text,
+        voucherId: voucherId,
         paymentMethod: paymentMethod
       );
 
