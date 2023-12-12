@@ -17,7 +17,11 @@ class CategoryItem extends StatefulWidget {
 class _CategoryItemState extends State<CategoryItem> {
   void _goToSearchScreen() {
     final searchFieldViewModel = Provider.of<SearchFieldViewModel>(context, listen: false);
-    searchFieldViewModel.searchController.text = widget.category.name;
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      searchFieldViewModel.searchController.text = widget.category.name;
+      searchFieldViewModel.formKey.currentState?.save();
+    });
 
     Navigator.pushNamed(context, SearchProductScreen.routePath);
   }

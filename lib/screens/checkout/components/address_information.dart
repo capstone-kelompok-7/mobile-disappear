@@ -78,7 +78,6 @@ class _AddressInfomationState extends State<AddressInfomation> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                //NAMA ALAMAT
                                 Padding(
                                   padding: const EdgeInsets.only(left: 27),
                                   child: Column(
@@ -110,7 +109,10 @@ class _AddressInfomationState extends State<AddressInfomation> {
                     );
                   }
 
-                  return const Text('Pilih alamat', style: mediumBody8,);
+                  return const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Text('Pilih alamat', style: mediumBody8,)]
+                  );
                 }
               ),
             ),

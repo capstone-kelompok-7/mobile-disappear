@@ -25,13 +25,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   void initState() {
     final filterViewModel = Provider.of<FilterViewModel>(context, listen: false);
-    final searchFieldViewModel = Provider.of<SearchFieldViewModel>(context, listen: false);
-
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (searchFieldViewModel.searchController.text != '') {
-        searchFieldViewModel.formKey.currentState?.save();
-      }
-    });
 
     filterViewModel.addListener(_getProducts);
 

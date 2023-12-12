@@ -37,10 +37,12 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
             listener: state.addAddress,
             child: Scaffold(
               appBar: AppBar(
-                title: const Text(
-                  'Alamat',
-                  style: semiBoldBody1,
-                ),
+                backgroundColor: primary40,
+                leading: IconButton(
+                  icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+                  onPressed: () => Navigator.of(context).pop(),
+                ), 
+                title: Text('Alamat', style: semiBoldBody1.copyWith(color: whiteColor),),
                 centerTitle: true,
               ),
               body: Builder(
