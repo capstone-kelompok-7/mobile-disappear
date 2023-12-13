@@ -44,19 +44,24 @@ class _CategoriesState extends State<Categories> {
             ],
           ),
         ),
-        const SizedBox(height: 15,),
+        const SizedBox(
+          height: 15,
+        ),
         SizedBox(
           height: 80,
           child: ListView.separated(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              final challenge = CategoryItem(category: widget.categories[index]);
+              final challenge =
+                  CategoryItem(category: widget.categories[index]);
 
               if (index == 0) {
                 return Row(
                   children: [
-                    const SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     challenge
                   ],
                 );
@@ -66,7 +71,9 @@ class _CategoriesState extends State<Categories> {
                 return Row(
                   children: [
                     challenge,
-                    const SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                   ],
                 );
               }

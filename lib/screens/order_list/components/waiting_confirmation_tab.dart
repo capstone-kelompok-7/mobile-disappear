@@ -1,207 +1,63 @@
-import 'package:disappear/themes/color_scheme.dart';
-import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/screens/order_list/components/wating_confirmation_card.dart';
+import 'package:disappear/view_models/order/order_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class WaitingConfirmationTab extends StatelessWidget {
+class WaitingConfirmationTab extends StatefulWidget {
   final String title;
 
   const WaitingConfirmationTab({Key? key, required this.title})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 15, bottom: 15),
-        child: Column(
-          children: [
-            WaitingConfirmationTabCard(onTap: () {}),
-            const SizedBox(height: 15),
-            WaitingConfirmationTabCard(onTap: () {}),
-            const SizedBox(height: 15),
-            WaitingConfirmationTabCard(onTap: () {}),
-            const SizedBox(height: 15),
-            WaitingConfirmationTabCard(onTap: () {}),
-          ],
-        ),
-      ),
-    );
-  }
+  State<WaitingConfirmationTab> createState() => _WaitingConfirmationTabState();
 }
 
-class WaitingConfirmationTabCard extends StatelessWidget {
-  final VoidCallback? onTap;
-  const WaitingConfirmationTabCard({super.key, this.onTap});
+class _WaitingConfirmationTabState extends State<WaitingConfirmationTab> {
+  @override
+  void initState() {
+    final orderViewModel = Provider.of<OrderViewModel>(context, listen: false);
+    orderViewModel.orderStatus = 'menunggu konfirmasi';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: 370,
-        height: 198,
-        padding: const EdgeInsets.all(11),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 7),
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: warning00,
-                ),
-                child: Text(
-                  'Menunggu Konfirmasi',
-                  style: regularBody3.copyWith(
-                      fontSize: 12, fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-            const SizedBox(height: 2),
-            Padding(
-              padding: const EdgeInsets.only(left: 7),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      width: 68,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                      child: Image.asset(
-                        'assets/img/ProductToteBag.png',
-                        width: 68,
-                        height: 48,
-                        fit: BoxFit.cover,
-                      )),
-                  const SizedBox(width: 10),
-                  Expanded(
+    return Consumer<OrderViewModel>(
+      builder: (context, state, _) {
+        return FutureBuilder(
+          future: state.getAllOrderUser(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: const CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Text('No data available');
+            }
+
+            /// Success
+            else {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 15, bottom: 15),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Totebag Kanvas',
-                            style: mediumBody2.copyWith(
-                                fontSize: 13, fontWeight: FontWeight.w600)),
-                        const SizedBox(height: 1),
-                        Text(
-                          '1 Produk | 20 Gram',
-                          style: regularBody3.copyWith(
-                              fontSize: 12,
-                              color: neutral30,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(height: 1),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Rp. 120.000',
-                                style: boldBody2.copyWith(
-                                  fontSize: 13,
-                                  color: neutral40,
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 7),
-                              child: Text(
-                                'x1',
-                                style: mediumBody3.copyWith(
-                                    fontSize: 13, fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ],
+                        WaitingConfirmationTabCard(
+                          order: snapshot.data![index]!,
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 5),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 500,
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 3),
-                Text('Tampilkan produk lagi',
-                    style: mediumBody3.copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: neutral30)),
-                const SizedBox(height: 3),
-                Container(
-                  width: 500,
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 3),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('1 Produk',
-                          style: regularBody3.copyWith(
-                              fontSize: 13, fontWeight: FontWeight.w400)),
-                      RichText(
-                        text: TextSpan(
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: 'Total produk : ',
-                                style: semiBoldBody3.copyWith(
-                                    fontSize: 13, fontWeight: FontWeight.w300)),
-                            TextSpan(
-                                text: 'Rp 30.000',
-                                style: semiBoldBody3.copyWith(
-                                    fontSize: 13, fontWeight: FontWeight.w700)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Container(
-                  width: 500,
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 5),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Penjual sedang memeriksa bukti \npembayaran',
-                        style: regularBody4.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: neutral30,
-                            height: 1.2)),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+                  );
+                },
+              );
+            }
+          },
+        );
+      },
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/screens/auth/register/register_verification_screen.dart';
 import 'package:disappear/screens/challenge/challenge_main_screen.dart';
-import 'package:disappear/screens/challenge/challenge_components.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/challenge/detail_challenge_screen.dart';
 import 'package:disappear/screens/challenge/join_challenge_screen.dart';
@@ -18,23 +17,23 @@ import 'package:disappear/screens/checkout/choose_transport_screen.dart';
 import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
-import 'package:disappear/screens/detail_order_screen.dart';
 import 'package:disappear/screens/environmental_issues/environmental_issues_screen.dart';
 import 'package:disappear/screens/favorite_product/favorite_product_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
-import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
 import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
+import 'package:disappear/screens/order_detail/detail_order_screen.dart';
 import 'package:disappear/screens/order_list/order_list_screen.dart';
 import 'package:disappear/screens/manual_transfer/manual_transfer_screen.dart';
 import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/new_password_screen.dart';
+import 'package:disappear/screens/product/product_reviews_screen.dart';
+import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/product_review/add_review_screen.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
-import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/auth/register/register_screen.dart';
@@ -43,12 +42,9 @@ import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/screens/success_email_verification.dart';
 import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
-import 'package:disappear/screens/voucher/voucher_screen.dart';
-import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
-import 'package:disappear/timeago_message.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
@@ -64,32 +60,23 @@ import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:disappear/view_models/home/home_view_model.dart';
-import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:disappear/view_models/category/category_view_model.dart';
 import 'package:disappear/view_models/home/home_category_view_model.dart';
 import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
-import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
-import 'package:disappear/view_models/product/product_carousel_view_model.dart';
-import 'package:disappear/view_models/product/product_review_view_model.dart';
-import 'package:disappear/view_models/product/product_view_model.dart';
+import 'package:disappear/view_models/home/latest_articles_view_model.dart';
+import 'package:disappear/view_models/order/order_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
-import 'package:disappear/view_models/search_product/filter_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
 import 'package:disappear/view_models/main_view_model.dart';
-import 'package:disappear/view_models/search_product/search_products_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:timeago/timeago.dart' as timeago;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
-  timeago.setLocaleMessages('id', IndonesianMessage());
-
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -126,9 +113,6 @@ void main() {
         create: (context) => RegisterVerificationViewModel(),
       ),
       ChangeNotifierProvider(
-        create: (context) => HomeViewModel(),
-      ),
-      ChangeNotifierProvider(
         create: (context) => HomeCategoryViewModel(),
       ),
       ChangeNotifierProvider(
@@ -141,28 +125,13 @@ void main() {
         create: (context) => CarouselViewModel(),
       ),
       ChangeNotifierProvider(
-        create: (context) => LatestArticlesViewModel(),
-      ),
-      ChangeNotifierProvider(
         create: (context) => BestSellerProductViewModel(),
       ),
       ChangeNotifierProvider(
-        create: (context) => SearchProductViewModel(),
+        create: (context) => OrderViewModel(),
       ),
       ChangeNotifierProvider(
-        create: (context) => FilterViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ProductViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ProductCarouselViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ProductReviewViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => AddToCartViewModel(),
+        create: (context) => HomeViewModel(),
       ),
       ChangeNotifierProvider(
         create: (context) => CheckoutViewModel(),
@@ -185,6 +154,9 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => ManualTransferViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => LatestArticlesViewModel(),
+      )
     ],
     child: const App(),
   ));
