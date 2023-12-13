@@ -68,34 +68,21 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.article.formattedDate, style: regularBody8.copyWith(color: neutral40)),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      Text(widget.article.formattedDate, maxLines: 2, style: regularBody8.copyWith(color: neutral40), overflow: TextOverflow.ellipsis,),
+                      const SizedBox(height: 10),
                       Text(widget.article.title, style: semiBoldBody6),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Row(
                             children: [
-                              const Text('1 minggu yang lalu',
-                                  style: mediumBody8),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Icon(
-                                Icons.visibility,
-                                size: 18,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(widget.article.views.toString(),
-                                  style: regularBody8),
+                              Text(widget.article.createdAgo, style: mediumBody8),
+                              const SizedBox(width: 10),
+                              const Icon(Icons.visibility, size: 18),
+                              const SizedBox(width: 5),
+                              Text(widget.article.views.toString(), style: regularBody8),
                             ],
                           ),
                           const Icon(
