@@ -24,7 +24,6 @@ class _HistoryItemState extends State<HistoryItem> {
 
     searchFieldViewModel.searchController.text = widget.title;
     
-    filterViewModel.withPromo = false;
     filterViewModel.selectedFilter = 0;
     
     searchProductsViewModel.getProducts(keyword: widget.title);

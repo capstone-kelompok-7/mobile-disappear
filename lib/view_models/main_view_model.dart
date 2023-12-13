@@ -1,4 +1,5 @@
-import 'package:disappear/screens/challenge/challenge_screen.dart';
+import 'package:disappear/screens/challenge/challenge_main_screen.dart';
+import 'package:disappear/screens/challenge/challenge_components.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/order_list/order_list_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 class MainViewModel extends ChangeNotifier {
   final List<Widget> _screens = [
     const HomeScreen(),
-    const ChallengeScreen(),
+    const ChallengeMainScreen(),
     const OrderListScreen(),
     const ProfileScreen(),
   ];

@@ -1,5 +1,7 @@
 import 'package:disappear/screens/category/components/categories_placeholder.dart';
 import 'package:disappear/screens/category/components/category_item.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/category/category_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +15,12 @@ class CategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kategori'),
+        backgroundColor: primary40,
+        leading: IconButton(
+          icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text('Kategori', style: semiBoldBody1.copyWith(color: whiteColor),),
         centerTitle: true,
       ),
       body: Consumer<CategoryViewModel>(
@@ -27,7 +34,7 @@ class CategoriesScreen extends StatelessWidget {
 
               if (snapshot.hasData) {
                 return GridView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: 54, horizontal: 29),
+                  padding: const EdgeInsets.all(20),
                   itemCount: snapshot.data!.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,

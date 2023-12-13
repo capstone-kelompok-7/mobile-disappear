@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SearchFieldViewModel extends ChangeNotifier {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   final searchController = TextEditingController();
 
   String _keyword = '';

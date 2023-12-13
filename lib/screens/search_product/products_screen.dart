@@ -39,7 +39,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
       
       searchProductViewModel.getProducts(
         keyword: searchFieldViewModel.keyword,
-        withPromo: filterViewModel.withPromo,
         filterType: filterViewModel.selectedFilter,
       );
     }
@@ -52,7 +51,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
     
     searchProductViewModel.getMoreProducts(
       keyword: searchFieldViewModel.keyword,
-      withPromo: filterViewModel.withPromo,
       filterType: filterViewModel.selectedFilter,
     );
   }
@@ -249,7 +247,6 @@ class _FilterState extends State<Filter> {
     
     searchProductViewModel.getProducts(
       keyword: searchFieldViewModel.keyword,
-      withPromo: filterViewModel.withPromo,
       filterType: filterViewModel.selectedFilter,
     );
   }
@@ -283,15 +280,15 @@ class _FilterState extends State<Filter> {
             SearchFieldViewModel
           >(
             builder: (context, filterState, searchProductState, searchFieldState, _) {
-              return GestureDetector(
-                onTap: filterState.togglePromo,
+              return InkWell(
+                onTap: () => filterState.selectedFilter = (filterState.selectedFilter == 5) ? 0 : 5,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
                   decoration: BoxDecoration(
-                    color: filterState.withPromo ? primary40 : primary00,
+                    color: filterState.selectedFilter == 5 ? primary40 : primary00,
                     borderRadius: BorderRadius.circular(5)
                   ),
-                  child: Text('Promo', style: regularBody6.copyWith(color: filterState.withPromo ? whiteColor : blackColor),),
+                  child: Text('Promo', style: regularBody6.copyWith(color: filterState.selectedFilter == 5 ? whiteColor : blackColor),),
                 ),
               );
             }
@@ -299,12 +296,12 @@ class _FilterState extends State<Filter> {
           const SizedBox(width: 10,),
           Consumer<FilterViewModel>(
             builder: (context, state, _) {
-              return GestureDetector(
+              return InkWell(
                 onTap: _showFilterBottomDialog,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
                   decoration: BoxDecoration(
-                    color: state.selectedFilter != 0 ? primary40 : primary00,
+                    color: (state.selectedFilter != 0 && state.selectedFilter != 5) ? primary40 : primary00,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   constraints: const BoxConstraints(minWidth: 200),
@@ -335,7 +332,7 @@ class _FilterState extends State<Filter> {
                       Icon(
                         Icons.keyboard_arrow_down,
                         size: 20,
-                        color: state.selectedFilter != 0 ? whiteColor : blackColor
+                        color: state.selectedFilter != 0 && state.selectedFilter != 5 ? whiteColor : blackColor
                       )
                     ],
                   ),

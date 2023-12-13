@@ -34,7 +34,7 @@ class _CategoriesState extends State<Categories> {
                 'Kategori',
                 style: semiBoldBody5.copyWith(color: primary40),
               ),
-              GestureDetector(
+              InkWell(
                 onTap: _goToCategoriesScreen,
                 child: Text(
                   'Lihat semua',

@@ -1,7 +1,11 @@
 import 'dart:io';
 
+import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,8 +43,8 @@ class _WhatsappTransferScreenState extends State<WhatsappTransferScreen> {
       appBar: AppBar(
         backgroundColor: primary40,
         leading: IconButton(
-          icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
-          onPressed: () => Navigator.of(context).pop(),
+          icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor),
+          onPressed: () => Navigator.popUntil(context, ModalRoute.withName(MainScreen.routePath)),
         ),
         title: Text('Detail Pembayaran', style: semiBoldBody1.copyWith(color: whiteColor),),
         centerTitle: true,
@@ -211,7 +215,6 @@ class _WhatsappTransferScreenState extends State<WhatsappTransferScreen> {
               ],
             ),
           ),
-          const Spacer(),
           Padding(
             padding: const EdgeInsets.all(30),
             child: ElevatedButton(

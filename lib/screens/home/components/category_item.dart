@@ -3,7 +3,9 @@ import 'package:disappear/screens/home/components/placeholders/category_thumbnai
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CategoryItem extends StatefulWidget {
   final CategoryModel category;
@@ -19,6 +21,13 @@ class CategoryItem extends StatefulWidget {
 
 class _CategoryItemState extends State<CategoryItem> {
   void _goToSearchScreen() {
+    final searchFieldViewModel = Provider.of<SearchFieldViewModel>(context, listen: false);
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      searchFieldViewModel.searchController.text = widget.category.name;
+      searchFieldViewModel.formKey.currentState?.save();
+    });
+
     Navigator.pushNamed(context, SearchProductScreen.routePath);
   }
   
