@@ -1,6 +1,10 @@
+import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/cart/cart_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -15,33 +19,40 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
+  void _goToCheckoutScreen() {
+    final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
     final cartViewModel = Provider.of<CartViewModel>(context, listen: false);
-    
-    cartViewModel.getCart();
 
-    super.initState();
+    checkoutViewModel.purchaseType = 'buy-by-cart';
+    checkoutViewModel.product = null;
+    checkoutViewModel.selectedItems = cartViewModel.selectedItems;
+
+    final checkoutVoucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
+    final checkoutPaymentMethodViewModel = Provider.of<CheckoutPaymentMethodViewModel>(context, listen: false);
+    
+    checkoutVoucherViewModel.voucher = null;
+    checkoutPaymentMethodViewModel.method = null;
+    checkoutPaymentMethodViewModel.selectedMethod = null;
+
+    Navigator.of(context).pushNamed(CheckoutScreen.routePath);
   }
 
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(
-      backgroundColor: primary40,
-      leading: IconButton(
-        icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
-        onPressed: () => Navigator.of(context).pop(),
-      ), 
-      title: Text('Keranjang', style: semiBoldBody1.copyWith(color: whiteColor),),
-      centerTitle: true,
-    );
-
-    return Consumer<CartViewModel>(
-      builder: (context, state, _) {
-        if (state.isLoading) {
-          return Scaffold(
-            appBar: appBar,
-            body: const Expanded(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primary40,
+        leading: IconButton(
+          icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+          onPressed: () => Navigator.of(context).pop(),
+        ), 
+        title: Text('Keranjang', style: semiBoldBody1.copyWith(color: whiteColor),),
+        centerTitle: true,
+      ),
+      body: Consumer<CartViewModel>(
+        builder: (context, state, _) {
+          if (state.isLoading) {
+            return const Expanded(
               child: Center(
                 child: SizedBox(
                   width: 30,
@@ -52,14 +63,11 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
               ),
-            )
-          );
-        }
+            );
+          }
 
-        if (state.cart != null && state.cart!.cartItems.isNotEmpty) {
-          return Scaffold(
-            appBar: appBar,
-            body: Column(
+          if (state.cart != null && state.cart!.cartItems.isNotEmpty) {
+            return Column(
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -206,9 +214,27 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 const SizedBox(height: 70,),
               ],
+            );
+          }
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(child: SvgPicture.asset('assets/img/EmptyCart.svg', width: 200, height: 200,)),
+                const SizedBox(height: 40,),
+                const Text('Oops.. Keranjang masih kosong, nih.', style: mediumBody3, textAlign: TextAlign.center,)
+              ],
             ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: Row(
+          );
+        }
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Consumer<CartViewModel>(
+        builder: (context, state, _) {
+          if (state.cart != null && state.cart!.cartItems.isNotEmpty) {
+            return Row(
               children: [
                 Flexible(
                   flex: 4,
@@ -244,7 +270,7 @@ class _CartScreenState extends State<CartScreen> {
                     height: 70,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: state.selectedItems.isNotEmpty ? () {} : null,
+                      onPressed: state.selectedItems.isNotEmpty ? _goToCheckoutScreen : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primary30,
                         shape: const BeveledRectangleBorder(),
@@ -254,25 +280,12 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 )
               ],
-            ),
-          );
-        }
+            );
+          }
 
-        return Scaffold(
-          appBar: appBar,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset('assets/img/EmptyCart.svg', width: 200, height: 200,),
-                const SizedBox(height: 40,),
-                const Text('Oops.. Keranjang masih kosong, nih.', style: mediumBody3, textAlign: TextAlign.center,)
-              ],
-            ),
-          )
-        );
-      },
+          return const Text('');
+        }
+      ),
     );
   }
 }

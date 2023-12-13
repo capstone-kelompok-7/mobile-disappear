@@ -12,6 +12,7 @@ import 'package:disappear/screens/home/components/search_field.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/view_models/cart/cart_view_model.dart';
 import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,6 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _goToCartScreen() {
+    final cartViewModel = Provider.of<CartViewModel>(context, listen: false);
+    cartViewModel.getCart();
+    
     Navigator.pushNamed(context, CartScreen.routePath);
   }
 

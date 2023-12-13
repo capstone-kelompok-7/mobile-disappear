@@ -42,7 +42,6 @@ class SearchProductViewModel extends ChangeNotifier {
 
   Future<void> getProducts({
     required String keyword,
-    bool withPromo = false,
     int filterType = 0,
   }) async {
     page = 1;
@@ -56,7 +55,6 @@ class SearchProductViewModel extends ChangeNotifier {
     products = await productService.getProducts(
       keyword: keyword,
       page: page,
-      withPromo: withPromo,
       filterType: filterType,
     );
 
@@ -65,7 +63,6 @@ class SearchProductViewModel extends ChangeNotifier {
 
   Future<void> getMoreProducts({
     required String keyword,
-    bool withPromo = false,
     int filterType = 0,
   }) async {
     page++;
@@ -77,7 +74,6 @@ class SearchProductViewModel extends ChangeNotifier {
     final newProducts = await productService.getProducts(
       keyword: keyword,
       page: page,
-      withPromo: withPromo,
       filterType: filterType,
     );
     

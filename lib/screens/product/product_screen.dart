@@ -10,7 +10,9 @@ import 'package:disappear/screens/product_review/components/product_review_item.
 import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
 import 'package:disappear/view_models/product/product_carousel_view_model.dart';
 import 'package:disappear/view_models/product/product_review_view_model.dart';
@@ -75,6 +77,14 @@ class _ProductScreenState extends State<ProductScreen> {
 
     checkoutViewModel.purchaseType = 'buy-now';
     checkoutViewModel.product = productViewModel.product;
+    checkoutViewModel.selectedItems = [];
+
+    final checkoutVoucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
+    final checkoutPaymentMethodViewModel = Provider.of<CheckoutPaymentMethodViewModel>(context, listen: false);
+    
+    checkoutVoucherViewModel.voucher = null;
+    checkoutPaymentMethodViewModel.method = null;
+    checkoutPaymentMethodViewModel.selectedMethod = null;
 
     Navigator.of(context).pushNamed(CheckoutScreen.routePath);
   }

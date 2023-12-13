@@ -27,14 +27,25 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
     final checkoutPaymentMethodViewModel = Provider.of<CheckoutPaymentMethodViewModel>(context, listen: false);
     final manualTransferViewModel = Provider.of<ManualTransferViewModel>(context, listen: false);
 
-    final CreatedOrder? createdOrder = await checkoutViewModel.createOrder(
-      addressId: checkoutAddressViewModel.address!.id,
-      voucherId: checkoutVoucherViewModel.voucher?.voucherId,
-      paymentMethod: checkoutPaymentMethodViewModel.method!
-    );
+    CreatedOrder? createdOrder;
+
+    if (checkoutViewModel.purchaseType == 'buy-now') {
+      createdOrder = await checkoutViewModel.createOrder(
+        addressId: checkoutAddressViewModel.address!.id,
+        voucherId: checkoutVoucherViewModel.voucher?.voucherId,
+        paymentMethod: checkoutPaymentMethodViewModel.method!
+      );
+    } else {
+      createdOrder = await checkoutViewModel.createOrderByCart(
+        addressId: checkoutAddressViewModel.address!.id,
+        voucherId: checkoutVoucherViewModel.voucher?.voucherId,
+        paymentMethod: checkoutPaymentMethodViewModel.method!
+      );
+    }
 
     manualTransferViewModel.createdOrder = createdOrder;
 
+    /// REDIRECT TO PAYMENT SCREEN
     if (checkoutPaymentMethodViewModel.method == 'whatsapp') {
       Navigator.pushNamed(context, WhatsappTransferScreen.routePath);
     } else if (checkoutPaymentMethodViewModel.method == 'telegram') {

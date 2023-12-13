@@ -65,7 +65,7 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                 if (snapshot.data!.isNotEmpty) {
                   final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
                   final vouchers = snapshot.data!
-                    .where((element) => checkoutViewModel.product!.price! >= element.voucher.minPurchase)
+                    .where((element) => checkoutViewModel.totalProductPrice >= element.voucher.minPurchase)
                     .where((element) => element.voucher.endDate.isAfter(DateTime.now()))
                     .toList();
 
