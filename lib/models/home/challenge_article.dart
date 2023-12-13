@@ -6,6 +6,8 @@ import 'dart:convert';
 
 import 'package:intl/intl.dart';
 
+import 'package:timeago/timeago.dart' as timeago;
+
 ChallengeArticle challengeArticleFromMap(String str) => ChallengeArticle.fromMap(json.decode(str));
 
 String challengeArticleToMap(ChallengeArticle data) => json.encode(data.toMap());
@@ -48,6 +50,10 @@ class Article {
     required this.views,
     required this.createdAt,
   });
+
+  String get createdAgo {
+    return timeago.format(createdAt, locale: 'id');
+  }
 
   String get formattedDate {
     final f = DateFormat('d MMMM yyyy');

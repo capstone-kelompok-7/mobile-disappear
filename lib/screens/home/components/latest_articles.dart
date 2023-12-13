@@ -30,9 +30,7 @@ class _LatestArticlesState extends State<LatestArticles> {
             'Artikel',
             style: semiBoldBody5.copyWith(color: primary40),
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
