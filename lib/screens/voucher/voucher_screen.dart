@@ -1,258 +1,283 @@
+import 'package:disappear/models/voucher_model.dart';
+import 'package:disappear/screens/category/components/categories_placeholder.dart';
+import 'package:disappear/screens/voucher/user_voucher_components.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class VoucherScreen extends StatefulWidget {
-  static const String routePath = '/voucher-screen';
-  const VoucherScreen({super.key});
+  final VoucherModel voucherModel;
+  // static const String routePath = '/voucher-screen';
+  const VoucherScreen({super.key, required this.voucherModel});
 
   @override
   State<VoucherScreen> createState() => _VoucherScreenState();
 }
 
-List<Map<String, dynamic>> vouchers = [
-  {
-    'imageUrl':
-        'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-    'discounts': '5000',
-    'minimumSpending': '30.000',
-    'effectiveDate': '5 Nov 2023'
-  },
-  {
-    'imageUrl':
-        'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-    'discounts': '15.000',
-    'minimumSpending': '50.000',
-    'effectiveDate': '10 Nov 2023'
-  },
-  {
-    'imageUrl':
-        'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-    'discounts': '10.000',
-    'minimumSpending': '40.000',
-    'effectiveDate': '6 Nov 2023'
-  },
-  {
-    'imageUrl':
-        'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-    'discounts': '50.000',
-    'minimumSpending': '10.000',
-    'effectiveDate': '20 Des 2023'
-  },
-  {
-    'imageUrl':
-        'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-    'discounts': '10.000',
-    'minimumSpending': '20.000',
-    'effectiveDate': '12 Des 2023'
-  },
-  {
-    'imageUrl':
-        'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-    'discounts': '30.000',
-    'minimumSpending': '40.000',
-    'effectiveDate': '30 Nov 2023'
-  },
-];
-
 class _VoucherScreenState extends State<VoucherScreen> {
+  void initState() {
+    final voucherViewModel =
+        Provider.of<ChallengeMainViewModel>(context, listen: false);
+
+    voucherViewModel.addListener(_klaimVoucherMessageListener);
+
+    super.initState();
+  }
+
+  void _klaimVoucherMessageListener() {
+    final klaimVoucherViewModel =
+        Provider.of<ChallengeMainViewModel>(context, listen: false);
+    if (klaimVoucherViewModel.message != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(klaimVoucherViewModel.message!)));
+
+      klaimVoucherViewModel.message = null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget topButton() {
+    return Column(
+      children: [vouchersToClaimComponent()],
+    );
+  }
+
+  // Widget vouchersToClaimComponent() {
+  //   return Consumer<ChallengeMainViewModel>(builder: (context, state, _) {
+  //     return FutureBuilder(
+  //         future: state.fetchVouchersToClaim(),
+  //         builder: (context, snapshot) {
+  //           if (snapshot.hasError) {
+  //             return Padding(
+  //               padding:
+  //                   const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+  //               child: const Text('Tidak ada voucher tersedia untuk di klaim'),
+  //             );
+  //           }
+
+  //           if (snapshot.hasData) {
+  //             return ListView.builder(
+  //               shrinkWrap: true,
+  //               physics: const NeverScrollableScrollPhysics(),
+  //               itemCount: vouchers.length,
+  //               itemBuilder: (context, index) {
+  //                 return Container(
+  //                   height: 100,
+  //                   width: 332,
+  //                   margin: const EdgeInsets.only(
+  //                     left: 29,
+  //                     right: 29,
+  //                     bottom: 12,
+  //                   ),
+  //                   decoration: BoxDecoration(
+  //                       border: Border.all(
+  //                     color: Colors.black,
+  //                   )),
+  //                   child: Row(
+  //                     children: [
+  //                       SizedBox(
+  //                         height: 113,
+  //                         width: 100,
+  //                         child: Image.network(
+  //                           'https://s3.amazonaws.com/thumbnails.venngage.com/template/5456834b-ba95-41a9-85b2-4abd4d313c11.png',
+  //                           fit: BoxFit.fill,
+  //                         ),
+  //                       ),
+  //                       Container(
+  //                         width: 219,
+  //                         height: 100,
+  //                         padding: const EdgeInsets.only(
+  //                           left: 7,
+  //                           top: 19.5,
+  //                           bottom: 19.5,
+  //                         ),
+  //                         child: Column(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             Expanded(
+  //                               child: Text(
+  //                                 'Kupon Potongan Harga ${widget.voucherModel.discount.toString()}',
+  //                                 style: mediumBody7,
+  //                                 overflow: TextOverflow.ellipsis,
+  //                               ),
+  //                             ),
+  //                             const SizedBox(
+  //                               height: 10,
+  //                             ),
+  //                             Text(
+  //                               'Min. Blj Rp${widget.voucherModel.minPurchase.toString()}',
+  //                               style: mediumBody8,
+  //                               overflow: TextOverflow.ellipsis,
+  //                             ),
+  //                             const SizedBox(
+  //                               height: 3,
+  //                             ),
+  //                             Expanded(
+  //                               child: Row(
+  //                                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                                 mainAxisAlignment:
+  //                                     MainAxisAlignment.spaceAround,
+  //                                 children: [
+  //                                   Text(
+  //                                     'Berakhir dalam : ${widget.voucherModel.endDate.toString()}',
+  //                                     style: regularBody8,
+  //                                   ),
+  //                                   SizedBox(
+  //                                     width: 3,
+  //                                   ),
+  //                                   ElevatedButton(
+  //                                     onPressed: () {},
+  //                                     child: Text('Klaim'),
+  //                                     style: ButtonStyle(
+  //                                       backgroundColor:
+  //                                           MaterialStateProperty.all<Color>(
+  //                                               primary30),
+  //                                       // Set minimum size constraints for the button
+  //                                       minimumSize:
+  //                                           MaterialStateProperty.all<Size>(
+  //                                         Size(53, 21),
+  //                                       ), // Adjust width and height as needed
+  //                                       // Optionally, set padding
+  //                                       padding: MaterialStateProperty.all<
+  //                                               EdgeInsetsGeometry>(
+  //                                           EdgeInsets.symmetric(
+  //                                               horizontal:
+  //                                                   2)), // Adjust padding as needed
+  //                                       textStyle: MaterialStateProperty.all<
+  //                                           TextStyle>(
+  //                                         TextStyle(
+  //                                             fontSize:
+  //                                                 10), // Adjust font size as needed
+  //                                       ),
+  //                                     ),
+  //                                     // You can also set other properties like textStyle, shape, etc. here
+  //                                     // For example, to change the text style:
+  //                                   ),
+  //                                 ],
+  //                               ),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       )
+  //                     ],
+  //                   ),
+  //                 );
+  //               },
+  //             );
+  //           }
+  //           return CircularProgressIndicator();
+  //         });
+  //   });
+  // }
+
+  Widget vouchersToClaimComponent() {
+    return Consumer<ChallengeMainViewModel>(builder: (context, state, _) {
       return Container(
+        height: 100,
+        width: 332,
         margin: const EdgeInsets.only(
-          left: 75,
-          right: 75,
-          top: 16,
-          bottom: 37,
+          left: 29,
+          right: 29,
+          bottom: 12,
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 5,
-          vertical: 5,
-        ),
-        width: 240,
-        height: 30,
-        decoration: const BoxDecoration(
-          color: Color(0xffe4e4e4),
-        ),
+        decoration: BoxDecoration(
+            border: Border.all(
+          color: Colors.black,
+        )),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              width: 70,
-              height: 20,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 9,
-                  vertical: 4,
-                ),
-                child: Center(
-                  child: Text(
-                    'Tantangan',
-                    style: GoogleFonts.inter().copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
+              height: 113,
+              width: 100,
+              child: Image.network(
+                'https://s3.amazonaws.com/thumbnails.venngage.com/template/5456834b-ba95-41a9-85b2-4abd4d313c11.png',
+                fit: BoxFit.fill,
               ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            SizedBox(
-              width: 80,
-              height: 20,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 9,
-                  vertical: 4,
-                ),
-                child: Center(
-                  child: Text(
-                    'Leaderboard',
-                    style: GoogleFonts.inter().copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 5,
             ),
             Container(
-              width: 70,
-              height: 20,
-              decoration: const BoxDecoration(
-                color: Color(0xffa8a8a8),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 9,
-                  vertical: 4,
-                ),
-                child: Center(
-                  child: Text(
-                    'Kupon ku',
-                    style: GoogleFonts.inter().copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    Widget listVoucher() {
-      return SizedBox(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: vouchers.length,
-          itemBuilder: (context, index) {
-            return Container(
+              width: 219,
               height: 100,
-              width: 323,
-              margin: const EdgeInsets.only(
-                left: 28,
-                right: 39,
-                bottom: 28,
+              padding: const EdgeInsets.only(
+                left: 7,
+                top: 19.5,
+                bottom: 19.5,
               ),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                color: Colors.black,
-              )),
-              child: Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 113,
-                    width: 100,
-                    child: Image.network(
-                      'https://s3.amazonaws.com/thumbnails.venngage.com/template/5456834b-ba95-41a9-85b2-4abd4d313c11.png',
-                      fit: BoxFit.fill,
+                  Expanded(
+                    child: Text(
+                      'Kupon Potongan Harga ${widget.voucherModel.discount}',
+                      style: mediumBody7,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Container(
-                    width: 210,
-                    height: 100,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 11,
-                      vertical: 24,
-                    ),
-                    child: Column(
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Min. Blj Rp${widget.voucherModel.minPurchase.toString()}',
+                    style: mediumBody8,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Expanded(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Expanded(
-                          child: Text(
-                            'Kupon Potongan Harga Rp${vouchers[index]['discounts'].toString()}',
-                            style: GoogleFonts.inter().copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                        Text(
+                          'Berakhir dalam : ${widget.voucherModel.formattedDate}',
+                          style: regularBody8,
                         ),
-                        const SizedBox(
-                          height: 10,
+                        SizedBox(
+                          width: 3,
                         ),
-                        Expanded(
-                          child: Text(
-                            'Min. Blj Rp${vouchers[index]['minimumSpending'].toString()}',
-                            style: GoogleFonts.inter().copyWith(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
+                        ElevatedButton(
+                          onPressed: () {
+                            state.claimVoucher(widget.voucherModel.id);
+                          },
+                          child: state.isLoadingVoucherClaim ==
+                                  widget.voucherModel.id
+                              ? CircularProgressIndicator()
+                              : Text('Klaim'),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(primary30),
+                            // Set minimum size constraints for the button
+                            minimumSize: MaterialStateProperty.all<Size>(
+                              Size(53, 21),
+                            ), // Adjust width and height as needed
+                            // Optionally, set padding
+                            padding:
+                                MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                    EdgeInsets.symmetric(
+                                        horizontal:
+                                            2)), // Adjust padding as needed
+                            textStyle: MaterialStateProperty.all<TextStyle>(
+                              TextStyle(
+                                  fontSize: 10), // Adjust font size as needed
                             ),
-                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Berakhir dalam : ${vouchers[index]['effectiveDate'].toString()}',
-                            style: GoogleFonts.inter().copyWith(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                          // You can also set other properties like textStyle, shape, etc. here
+                          // For example, to change the text style:
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
-            );
-          },
+            )
+          ],
         ),
       );
-    }
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 2.5,
-        leading: const Icon(Icons.arrow_back_ios),
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: const Color(0xFFFFFFFF),
-        title: Text(
-          'Kupon',
-          style: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
-      ),
-      body: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: [
-          topButton(),
-          listVoucher(),
-        ],
-      ),
-    );
+    });
   }
 }
