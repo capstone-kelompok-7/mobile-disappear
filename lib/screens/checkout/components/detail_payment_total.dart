@@ -1,9 +1,59 @@
+import 'package:disappear/models/checkout/created_order_model.dart';
+import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
+import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_address_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
+import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class DetailPaymentTotal extends StatelessWidget {
+class DetailPaymentTotal extends StatefulWidget {
   const DetailPaymentTotal({super.key});
+
+  @override
+  State<DetailPaymentTotal> createState() => _DetailPaymentTotalState();
+}
+
+class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
+  void _createOrder() async {
+    final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
+
+    final checkoutAddressViewModel = Provider.of<CheckoutAddressViewModel>(context, listen: false);
+    final checkoutVoucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
+    final checkoutPaymentMethodViewModel = Provider.of<CheckoutPaymentMethodViewModel>(context, listen: false);
+    final manualTransferViewModel = Provider.of<ManualTransferViewModel>(context, listen: false);
+
+    CreatedOrder? createdOrder;
+
+    if (checkoutViewModel.purchaseType == 'buy-now') {
+      createdOrder = await checkoutViewModel.createOrder(
+        addressId: checkoutAddressViewModel.address!.id,
+        voucherId: checkoutVoucherViewModel.voucher?.voucherId,
+        paymentMethod: checkoutPaymentMethodViewModel.method!
+      );
+    } else {
+      createdOrder = await checkoutViewModel.createOrderByCart(
+        addressId: checkoutAddressViewModel.address!.id,
+        voucherId: checkoutVoucherViewModel.voucher?.voucherId,
+        paymentMethod: checkoutPaymentMethodViewModel.method!
+      );
+    }
+
+    if (createdOrder != null) {
+      manualTransferViewModel.createdOrder = createdOrder;
+
+      /// REDIRECT TO PAYMENT SCREEN
+      if (checkoutPaymentMethodViewModel.method == 'whatsapp') {
+        Navigator.pushNamed(context, WhatsappTransferScreen.routePath);
+      } else if (checkoutPaymentMethodViewModel.method == 'telegram') {
+        Navigator.pushNamed(context, TelegramTransferScreen.routePath);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +61,7 @@ class DetailPaymentTotal extends StatelessWidget {
       children: [
         Container(
           color: neutral00,
-          padding: const EdgeInsets.only(top: 15, bottom: 15, left: 25),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           height: 48,
           width: double.infinity,
           child: const Text(
@@ -19,167 +69,178 @@ class DetailPaymentTotal extends StatelessWidget {
             style: semiBoldBody7,
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    'Total Pembayaran',
+                  const Text(
+                    'Total Produk',
                     style: semiBoldBody8,
                   ),
-                  Text(
-                    'Rp. 120.000',
-                    style: regularBody8,
+                  Consumer<CheckoutViewModel>(
+                    builder: (context, state, _) {
+                      return Text(
+                        state.formattedTotalProductPrice,
+                        style: regularBody8,
+                      );
+                    }
                   )
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
+              const SizedBox(height: 15),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Pengiriman ( Kelas Ekonomi )',
-                    style: regularBody8,
-                  ),
-                  Text(
-                    'Rp. 45.000',
-                    style: regularBody8,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     'Biaya Admin',
                     style: regularBody8,
                   ),
                   Text(
-                    'Rp. 2.000',
+                    'Rp 2.000',
                     style: regularBody8,
-                  ),
+                  )
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
+                  const Text(
                     'Voucher',
                     style: regularBody8,
                   ),
-                  Text(
-                    'Rp. 20.000',
-                    style: regularBody8,
+                  Consumer<CheckoutVoucherViewModel>(
+                    builder: (context, state, _) {
+                      if (state.voucher != null) {
+                        return Text(
+                          state.voucher!.voucher.formattedDiscount,
+                          style: regularBody8,
+                        );
+                      }
+
+                      return const Text('Rp 0', style: regularBody8);
+                    }
                   ),
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
+                  const Text(
                     'Diskon Produk',
                     style: regularBody8,
                   ),
-                  Text(
-                    'Rp. 5.000',
-                    style: regularBody8,
+                  Consumer<CheckoutViewModel>(
+                    builder: (context, state, _) {
+                      return Text(
+                        state.formattedTotalProductDiscount,
+                        style: regularBody8,
+                      );
+                    }
                   ),
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    'Total',
+                  const Text(
+                    'Total Pembayaran',
                     style: semiBoldBody8,
                   ),
-                  Text(
-                    'Rp. 142.000',
-                    style: regularBody8,
+                  Consumer2<CheckoutViewModel, CheckoutVoucherViewModel>(
+                    builder: (context, stateCheckout, stateVoucher, _) {
+                      return Text(
+                        stateCheckout.totalPrice(checkoutVoucher: stateVoucher.voucher),
+                        style: regularBody8,
+                      );
+                    }
                   ),
                 ],
               ),
             ],
           ),
         ),
-        const Divider(
-          thickness: 1,
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
+        const Divider(height: 1, thickness: 0.1,),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
+              const Text(
                 'Dibayar Oleh Pelanggan',
                 style: regularBody8,
               ),
-              Text(
-                'Rp. 142.000',
-                style: regularBody8,
+              Consumer2<CheckoutViewModel, CheckoutVoucherViewModel>(
+                builder: (context, stateCheckout, stateVoucher, _) {
+                  return Text(
+                    stateCheckout.totalPrice(checkoutVoucher: stateVoucher.voucher),
+                    style: semiBoldBody7,
+                  );
+                }
               ),
             ],
           ),
         ),
         SizedBox(
-          height: 62,
+          height: 60,
           width: double.infinity,
           child: Row(
             children: [
-              Container(
-                width: 220,
-                height: double.infinity,
-                color: neutral00,
-                child: const Padding(
-                  padding:  EdgeInsets.only(left: 100, top: 7),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: const EdgeInsets.only(right: 20),
+                  height: double.infinity,
+                  color: neutral00,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Total Pembayaran',
                         style: mediumBody8,
                       ),
-                      SizedBox(
-                        height: 8,
+                      const SizedBox(height: 8),
+                      Consumer2<CheckoutViewModel, CheckoutVoucherViewModel>(
+                        builder: (context, stateCheckout, stateVoucher, _) {
+                          return Text(
+                            stateCheckout.totalPrice(checkoutVoucher: stateVoucher.voucher),
+                            style: semiBoldBody7,
+                          );
+                        }
                       ),
-                      Text('Rp. 142.000')
                     ],
-                  ),
+                  )
                 ),
               ),
               Expanded(
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    color: primary30,
-                    height: double.infinity,
-                    child: const Center(
-                      child: Text('Buat Pesanan'),
+                flex: 2,
+                child: Consumer3<CheckoutViewModel, CheckoutAddressViewModel, CheckoutPaymentMethodViewModel>(
+                  builder: (context, stateCheckout, stateAddress, statePayment, _) {
+                    return ElevatedButton(
+                      onPressed: (!stateCheckout.isCheckingOut && (stateAddress.address != null && statePayment.method != null)) ? _createOrder : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primary30,
+                        shape: const BeveledRectangleBorder()
+                      ),
+                      child: stateCheckout.isCheckingOut
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: whiteColor,
+                              strokeWidth: 3,
+                            ),
+                          )
+                        : Text('Buat Pesanan', style: semiBoldBody6.copyWith(color: whiteColor)
                     ),
-                  ),
+                    );
+                  }
                 ),
               ),
             ],

@@ -1,11 +1,13 @@
-import 'package:disappear/models/home_challenge_model.dart';
-import 'package:disappear/screens/detail_challenge_screen.dart';
+import 'package:disappear/models/home/challenge_article.dart';
+import 'package:disappear/screens/challenge/detail_challenge_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LatestChallengeItem extends StatefulWidget {
-  final HomeChallengeModel challenge;
+  final Challenge challenge;
 
   const LatestChallengeItem({super.key, required this.challenge});
 
@@ -14,14 +16,17 @@ class LatestChallengeItem extends StatefulWidget {
 }
 
 class _LatestChallengeItemState extends State<LatestChallengeItem> {
-  void _goToChallengeScreen() {
+  void _goToDetailChallengeScreen() {
+    final detailChallengeViewModel = Provider.of<ChallengeMainViewModel>(context, listen: false);
+    detailChallengeViewModel.challengeId = widget.challenge.id;
+
     Navigator.pushNamed(context, DetailChallengeScreen.routePath);
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _goToChallengeScreen,
+      onTap: _goToDetailChallengeScreen,
       child: SizedBox(
         width: 130,
         height: 120,
@@ -48,12 +53,12 @@ class _LatestChallengeItemState extends State<LatestChallengeItem> {
                   )
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 5),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 17, horizontal: 5),
                   height: 80,
                   decoration: BoxDecoration(
-                    color: secondary00,
-                    borderRadius: BorderRadius.circular(10)
-                  ),
+                      color: secondary00,
+                      borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -64,7 +69,9 @@ class _LatestChallengeItemState extends State<LatestChallengeItem> {
                 ),
               ],
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(
+              height: 5,
+            ),
             Flexible(
               child: Text(
                 widget.challenge.title,

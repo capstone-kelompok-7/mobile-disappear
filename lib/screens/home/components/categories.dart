@@ -1,4 +1,4 @@
-import 'package:disappear/models/category_model.dart';
+import 'package:disappear/models/home/carousel_category_product_model.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/home/components/category_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -6,7 +6,7 @@ import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class Categories extends StatefulWidget {
-  final List<CategoryModel> categories;
+  final List<Category> categories;
 
   const Categories({super.key, required this.categories});
 
@@ -21,12 +21,12 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -34,7 +34,7 @@ class _CategoriesState extends State<Categories> {
                 'Kategori',
                 style: semiBoldBody5.copyWith(color: primary40),
               ),
-              GestureDetector(
+              InkWell(
                 onTap: _goToCategoriesScreen,
                 child: Text(
                   'Lihat semua',
@@ -43,20 +43,48 @@ class _CategoriesState extends State<Categories> {
               ),
             ],
           ),
-          const SizedBox(height: 15,),
-          SizedBox(
-            height: 80,
-            child: ListView.separated(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => CategoryItem(category: widget.categories[index]),
-              separatorBuilder: (context, index) => const SizedBox(width: 20),
-              itemCount: widget.categories.length,
-            ),
-          )
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        SizedBox(
+          height: 80,
+          child: ListView.separated(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final challenge =
+                  CategoryItem(category: widget.categories[index]);
+
+              if (index == 0) {
+                return Row(
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    challenge
+                  ],
+                );
+              }
+
+              if (index == widget.categories.length - 1) {
+                return Row(
+                  children: [
+                    challenge,
+                    const SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                );
+              }
+
+              return Row(children: [challenge]);
+            },
+            separatorBuilder: (context, index) => const SizedBox(width: 20),
+            itemCount: widget.categories.length,
+          ),
+        )
+      ],
     );
   }
 }

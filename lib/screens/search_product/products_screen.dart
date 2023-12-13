@@ -1,3 +1,4 @@
+import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/search_product/components/products_filter.dart';
 import 'package:disappear/screens/search_product/components/placeholders/products_placeholder.dart';
@@ -38,7 +39,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
       
       searchProductViewModel.getProducts(
         keyword: searchFieldViewModel.keyword,
-        withPromo: filterViewModel.withPromo,
         filterType: filterViewModel.selectedFilter,
       );
     }
@@ -51,14 +51,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
     
     searchProductViewModel.getMoreProducts(
       keyword: searchFieldViewModel.keyword,
-      withPromo: filterViewModel.withPromo,
       filterType: filterViewModel.selectedFilter,
     );
   }
 
-  void _goToDetailProductScreen(int id) {
+  void _goToProductScreen(Product product) {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
-    productViewModel.productId = id;
+    productViewModel.product = product;
 
     Navigator.pushNamed(context, ProductScreen.routePath);
   }
@@ -112,7 +111,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     ),
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () => _goToDetailProductScreen(state.products[index].id),
+                        onTap: () => _goToProductScreen(state.products[index]),
                         child: Card(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
@@ -143,7 +142,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        state.products[index].name,
+                                        state.products[index].name!,
                                         style: regularBody7,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
@@ -154,31 +153,31 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 1 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 1 ? warning20 : neutral20
                                           ),
                                           const SizedBox(width: 2,),
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 2 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 2 ? warning20 : neutral20
                                           ),
                                           const SizedBox(width: 2,),
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 3 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 3 ? warning20 : neutral20
                                           ),
                                           const SizedBox(width: 2,),
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 4 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 4 ? warning20 : neutral20
                                           ),
                                           const SizedBox(width: 2,),
                                           Icon(
                                             Icons.star,
                                             size: 16,
-                                            color: state.products[index].rating >= 5 ? warning20 : neutral20
+                                            color: state.products[index].rating! >= 5 ? warning20 : neutral20
                                           ),
                                         ],
                                       ),
@@ -248,7 +247,6 @@ class _FilterState extends State<Filter> {
     
     searchProductViewModel.getProducts(
       keyword: searchFieldViewModel.keyword,
-      withPromo: filterViewModel.withPromo,
       filterType: filterViewModel.selectedFilter,
     );
   }
@@ -282,15 +280,15 @@ class _FilterState extends State<Filter> {
             SearchFieldViewModel
           >(
             builder: (context, filterState, searchProductState, searchFieldState, _) {
-              return GestureDetector(
-                onTap: filterState.togglePromo,
+              return InkWell(
+                onTap: () => filterState.selectedFilter = (filterState.selectedFilter == 5) ? 0 : 5,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
                   decoration: BoxDecoration(
-                    color: filterState.withPromo ? primary40 : primary00,
+                    color: filterState.selectedFilter == 5 ? primary40 : primary00,
                     borderRadius: BorderRadius.circular(5)
                   ),
-                  child: Text('Promo', style: regularBody6.copyWith(color: filterState.withPromo ? whiteColor : blackColor),),
+                  child: Text('Promo', style: regularBody6.copyWith(color: filterState.selectedFilter == 5 ? whiteColor : blackColor),),
                 ),
               );
             }
@@ -298,12 +296,12 @@ class _FilterState extends State<Filter> {
           const SizedBox(width: 10,),
           Consumer<FilterViewModel>(
             builder: (context, state, _) {
-              return GestureDetector(
+              return InkWell(
                 onTap: _showFilterBottomDialog,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
                   decoration: BoxDecoration(
-                    color: state.selectedFilter != 0 ? primary40 : primary00,
+                    color: (state.selectedFilter != 0 && state.selectedFilter != 5) ? primary40 : primary00,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   constraints: const BoxConstraints(minWidth: 200),
@@ -334,7 +332,7 @@ class _FilterState extends State<Filter> {
                       Icon(
                         Icons.keyboard_arrow_down,
                         size: 20,
-                        color: state.selectedFilter != 0 ? whiteColor : blackColor
+                        color: state.selectedFilter != 0 && state.selectedFilter != 5 ? whiteColor : blackColor
                       )
                     ],
                   ),

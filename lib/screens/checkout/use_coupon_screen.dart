@@ -1,6 +1,10 @@
+import 'package:disappear/models/checkout/voucher/checkout_voucher_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UseCouponScreen extends StatefulWidget {
   static const String routePath = '/use-coupon-screen';
@@ -11,75 +15,37 @@ class UseCouponScreen extends StatefulWidget {
 }
 
 class _UseCouponScreenState extends State<UseCouponScreen> {
-  int? selectedRadio;
+  @override
+  void initState() {
+    final voucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
+    voucherViewModel.voucherFuture ??= voucherViewModel.getVoucher();
 
-  List<Map<String, dynamic>> vouchers = [
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '5000',
-      'minimumSpending': '30.000',
-      'effectiveDate': '5 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '15.000',
-      'minimumSpending': '50.000',
-      'effectiveDate': '10 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '10.000',
-      'minimumSpending': '40.000',
-      'effectiveDate': '6 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '50.000',
-      'minimumSpending': '10.000',
-      'effectiveDate': '20 Des 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '15.000',
-      'minimumSpending': '50.000',
-      'effectiveDate': '10 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '10.000',
-      'minimumSpending': '40.000',
-      'effectiveDate': '6 Nov 2023'
-    },
-    {
-      'imageUrl':
-          'https://rimbakita.com/wp-content/uploads/2020/10/hari-bebas-kantong-plastik-sedunia.jpg',
-      'discounts': '100.000',
-      'minimumSpending': '10.000',
-      'effectiveDate': '20 Des 2023'
-    },
-  ];
+    super.initState();
+  }
+
+  void _chooseVoucher() {
+    final voucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
+    voucherViewModel.voucher = voucherViewModel.selectedVoucher;
+
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kupon'),
+        backgroundColor: primary40,
+        leading: IconButton(
+          icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text('Kupon', style: semiBoldBody1.copyWith(color: whiteColor)),
         centerTitle: true,
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          left: 26,
-          right: 26,
-          bottom: 15,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 26),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: _chooseVoucher,
           style: ButtonStyle(
             backgroundColor: const MaterialStatePropertyAll(primary30),
             minimumSize: MaterialStateProperty.all(const Size(double.infinity, 41)),
@@ -90,84 +56,146 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
           ),
         ),
       ),
-      body: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: vouchers.length,
-            itemBuilder: (context, index) {
-              return Container(
-                height: 100,
-                width: 219,
-                margin: const EdgeInsets.only(
-                  top: 18,
-                  left: 37,
-                  right: 36,
-                  bottom: 2,
-                ),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                  color: Colors.black,
-                )),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 113,
-                      width: 100,
-                      child: Image.network(
-                        'https://s3.amazonaws.com/thumbnails.venngage.com/template/5456834b-ba95-41a9-85b2-4abd4d313c11.png',
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    Container(
-                      width: 166,
-                      height: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 11,
-                        vertical: 10.5,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Kupon Potongan Harga ',
-                            style: mediumBody7,
-                          ),
-                          Text('Rp${vouchers[index]['discounts']}',
-                              style: mediumBody7),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Min. Blj Rp${vouchers[index]['minimumSpending']}',
-                            style: mediumBody8,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            'Berakhir dalam : ${vouchers[index]['effectiveDate']}',
-                            style: regularBody8,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Radio(
-                      value: index,
-                      groupValue: selectedRadio,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedRadio = value;
-                        });
-                      },
-                    )
-                  ],
+      body: Consumer<CheckoutVoucherViewModel>(
+        builder: (context, state, _) {
+          return FutureBuilder<List<CheckoutVoucher>>(
+            future: state.voucherFuture,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data!.isNotEmpty) {
+                  final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
+                  final vouchers = snapshot.data!
+                    .where((element) => checkoutViewModel.totalProductPrice >= element.voucher.minPurchase)
+                    .where((element) => element.voucher.endDate.isAfter(DateTime.now()))
+                    .toList();
+
+                  return ListView.separated(
+                    padding: const EdgeInsets.all(10),
+                    shrinkWrap: true,
+                    itemCount: vouchers.length,
+                    separatorBuilder: (context, index) => const SizedBox(height: 15,),
+                    itemBuilder: (context, index) {
+                      return Consumer<CheckoutVoucherViewModel>(
+                        builder: (context, state, _) {
+                          return InkWell(
+                            onTap: () => state.selectedVoucher = vouchers[index],
+                            child: Container(
+                              height: 100,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all(
+                                  width: 1,
+                                  color: blackColor,
+                                )
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(right: BorderSide(width: 1, color: blackColor)),
+                                            color: primary40
+                                          ),
+                                          child: Image.asset(
+                                            'assets/img/Coupon.png',
+                                            height: double.infinity,
+                                            width: 113,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: vouchers[index].voucher.category != 'All Customer',
+                                          child: Container(
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              color: vouchers[index].voucher.category == 'Bronze'
+                                              ? warning40
+                                                : vouchers[index].voucher.category == 'Silver'
+                                                ? neutral00
+                                                  : vouchers[index].voucher.category == 'Gold'
+                                                  ? warning30
+                                                    : null,
+                                              borderRadius: const BorderRadiusDirectional.only(
+                                                topStart: Radius.circular(4),
+                                                bottomEnd: Radius.circular(8)
+                                              )
+                                            ),
+                                            child: Text(
+                                              vouchers[index].voucher.category,
+                                              style: semiBoldBody8.copyWith(color: whiteColor)
+                                            ),
+                                          )
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10,),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          vouchers[index].voucher.name,
+                                          style: mediumBody7,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          'Min. Blj ${vouchers[index].voucher.formattedMinPurchase}',
+                                          style: mediumBody8,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          'Berakhir dalam : ${vouchers[index].voucher.formattedEndDate}',
+                                          style: regularBody8,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Radio<CheckoutVoucher>(
+                                      value: vouchers[index],
+                                      groupValue: state.selectedVoucher,
+                                      onChanged: (value) => state.selectedVoucher = value,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          );
+                        }
+                      );
+                    },
+                  );
+                } else {
+                  return const Center(child: Text('Kamu masih belum punya kupon apapun'));
+                }
+              }
+          
+              return const Center(
+                child: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: CircularProgressIndicator(
+                    color: primary40,
+                    strokeWidth: 3,
+                  ),
                 ),
               );
-            },
-          ),
-        ],
-      ),
+            }
+          );
+        }
+      )
     );
   }
 }

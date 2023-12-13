@@ -1,16 +1,20 @@
 import 'package:dio/dio.dart';
-import 'package:disappear/models/product_model.dart';
+import 'package:disappear/main.dart';
+import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/services/product_service.dart';
+import 'package:disappear/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AddToCartViewModel extends ChangeNotifier {
-  ProductModel? _product;
+  Product? _product;
 
-  set product(ProductModel? product) {
+  set product(Product? product) {
     _product = product;
   }
 
-  ProductModel? get product => _product;
+  Product? get product => _product;
 
   bool _isLoading = false;
 
@@ -44,24 +48,36 @@ class AddToCartViewModel extends ChangeNotifier {
   Future<void> addProductToCart() async {
     if (product != null) {
       isLoading = true;
-      isSuccess = null;
 
       try {
         final productService = ProductService();
         await productService.addProductToCart(product!.id, quantity);
 
-        isSuccess = true;
+        addProductToCartSuccess();
       } on DioException catch (e) {
         if (e.response != null) {
           if ([400, 403, 500].contains(e.response!.statusCode)) {
             // TODO
           }
         }
-
-        isSuccess = false;
       } finally {
         isLoading = false;
       }
     }
+  }
+
+  void addProductToCartSuccess() async {
+    await Flushbar(
+      flushbarPosition: FlushbarPosition.TOP,
+      backgroundColor: const Color(0xffE3FFF1),
+      messageColor: neutral40,
+      borderColor: const Color(0xff04C800),
+      borderWidth: 1,
+      margin: const EdgeInsets.all(10),
+      borderRadius: BorderRadius.circular(5),
+      icon: SvgPicture.asset('assets/img/SuccessIcon.svg', width: 20, height: 20,),
+      message: 'Produk telah ditambah ke keranjang',
+      duration: const Duration(seconds: 3),
+    ).show(navigatorKey.currentContext!);
   }
 }

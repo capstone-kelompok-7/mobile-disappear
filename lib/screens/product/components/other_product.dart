@@ -1,4 +1,4 @@
-import 'package:disappear/models/product_model.dart';
+import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/screens/home/components/placeholders/best_seller_product_thumbnail_placeholder.dart';
 import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class OtherProduct extends StatefulWidget {
-  final ProductModel product;
+  final Product product;
 
   const OtherProduct({super.key, required this.product});
 
@@ -19,7 +19,7 @@ class OtherProduct extends StatefulWidget {
 class _OtherProductState extends State<OtherProduct> {
   void _goToProductScreen() {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
-    productViewModel.productId = widget.product.id;
+    productViewModel.product = widget.product;
 
     Navigator.pushNamed(context, ProductScreen.routePath);
   }
@@ -69,7 +69,7 @@ class _OtherProductState extends State<OtherProduct> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.product.name,
+                        widget.product.name!,
                         style: mediumBody6,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -77,31 +77,31 @@ class _OtherProductState extends State<OtherProduct> {
                       Row(
                         children: [
                           Icon(
-                            color: widget.product.rating >= 1 ? warning30 : neutral00,
+                            color: widget.product.rating! >= 1 ? warning30 : neutral00,
                             Icons.star,
                             size: 16,
                           ),
                           const SizedBox(width: 2),
                           Icon(
-                            color: widget.product.rating >= 2 ? warning30 : neutral00,
+                            color: widget.product.rating! >= 2 ? warning30 : neutral00,
                             Icons.star,
                             size: 16,
                           ),
                           const SizedBox(width: 2),
                           Icon(
-                            color: widget.product.rating >= 3 ? warning30 : neutral00,
+                            color: widget.product.rating! >= 3 ? warning30 : neutral00,
                             Icons.star,
                             size: 16,
                           ),
                           const SizedBox(width: 2),
                           Icon(
-                            color: widget.product.rating >= 4 ? warning30 : neutral00,
+                            color: widget.product.rating! >= 4 ? warning30 : neutral00,
                             Icons.star,
                             size: 16,
                           ),
                           const SizedBox(width: 2),
                           Icon(
-                            color: widget.product.rating >= 5 ? warning30 : neutral00,
+                            color: widget.product.rating! >= 5 ? warning30 : neutral00,
                             Icons.star,
                             size: 16,
                           ),

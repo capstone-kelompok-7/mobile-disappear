@@ -1,14 +1,11 @@
-import 'package:disappear/models/product_model.dart';
+import 'package:disappear/models/home/best_seller_product_model.dart';
 import 'package:disappear/screens/home/components/best_seller_product_item.dart';
-import 'package:disappear/screens/home/components/placeholders/best_seller_products_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class BestSellerProducts extends StatefulWidget {
-  final List<ProductModel> products;
+  final List<BestSellerProduct> products;
 
   const BestSellerProducts({super.key, required this.products});
 
@@ -31,7 +28,7 @@ class _BestSellerProductsState extends State<BestSellerProducts> {
         ),
         const SizedBox(height: 10,),
         SizedBox(
-          height: 200,
+          height: 210,
           child: ListView.separated(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,

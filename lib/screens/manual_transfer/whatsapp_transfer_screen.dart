@@ -1,27 +1,55 @@
-// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
+import 'dart:io';
 
+import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
+import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class WhatsappTransferScreen extends StatelessWidget {
+class WhatsappTransferScreen extends StatefulWidget {
   static String routePath = '/whatsappTransfer';
 
   const WhatsappTransferScreen({Key? key}) : super(key: key);
 
   @override
+  State<WhatsappTransferScreen> createState() => _WhatsappTransferScreenState();
+}
+
+class _WhatsappTransferScreenState extends State<WhatsappTransferScreen> {
+  void _goToWhatsapp() async{
+    final manualTransferViewModel = Provider.of<ManualTransferViewModel>(context, listen: false);
+    
+    const contact = "+6289609233200";
+    final orderId = manualTransferViewModel.createdOrder?.idOrder;
+    final message = "Halo kak saya mau melakukan pembayaran dengan kode berikut $orderId";
+    final androidUrl = "whatsapp://send?phone=$contact&text=$message";
+    final iosUrl = "https://wa.me/$contact?text=${Uri.parse(message)}";
+    
+    if (Platform.isIOS) {
+      await launchUrl(Uri.parse(iosUrl));
+    } else {
+      await launchUrl(Uri.parse(androidUrl));
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios),
-        title: const Text(
-          "Detail Pesanan",
-          style: semiBoldBody5,
+        backgroundColor: primary40,
+        leading: IconButton(
+          icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor),
+          onPressed: () => Navigator.popUntil(context, ModalRoute.withName(MainScreen.routePath)),
         ),
-        elevation: 0,
+        title: Text('Detail Pembayaran', style: semiBoldBody1.copyWith(color: whiteColor),),
         centerTitle: true,
       ),
-      body: Column(
+      body: ListView(
         children: [
           Container(
             width: 415,
@@ -39,35 +67,36 @@ class WhatsappTransferScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Total Pembayaran",
+                  'Total Pembayaran',
                   style: semiBoldBody5.copyWith(
                     color: whiteColor,
                   ),
                 ),
-                const SizedBox(
-                  height: 10.0,
+                const SizedBox(height: 10),
+                Consumer<ManualTransferViewModel>(
+                  builder: (context, state, _) {
+                    return Text(
+                      '${state.createdOrder?.formattedTotalAmountPaid}',
+                      style: semiBoldTitle4.copyWith(color: whiteColor),
+                    );
+                  }
                 ),
-                Text(
-                  "Rp. 142.000",
-                  style: semiBoldTitle4.copyWith(
-                    color: whiteColor,
-                  ),
-                ),
-                const SizedBox(
-                  height: 18.0,
-                ),
-                Text(
-                  "12-05-2023 | 12:00",
-                  style: regularBody5.copyWith(
-                    color: whiteColor,
-                  ),
+                const SizedBox(height: 18),
+                Consumer<ManualTransferViewModel>(
+                  builder: (context, state, _) {
+                    return Text(
+                      '${state.createdOrder?.formattedCreatedAt}',
+                      style: regularBody5.copyWith(
+                        color: whiteColor,
+                      ),
+                    );
+                  }
                 ),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(
-              bottom: 0,
               left: 25,
               right: 25,
               top: 20,
@@ -78,9 +107,6 @@ class WhatsappTransferScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 15,
                     vertical: 20,
-                  ),
-                  margin: const EdgeInsets.only(
-                    bottom: 10,
                   ),
                   decoration: ShapeDecoration(
                       color: Colors.white,
@@ -99,12 +125,12 @@ class WhatsappTransferScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Metode Pembayaran",
-                        style: mediumBody5.copyWith(
-                          color: blackColor,
-                        ),
+                        'Metode Pembayaran',
+                        style: mediumBody5.copyWith(color: blackColor),
                       ),
+                      const SizedBox(height: 10,),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'WhatsApp',
@@ -112,120 +138,94 @@ class WhatsappTransferScreen extends StatelessWidget {
                               color: blackColor,
                             ),
                           ),
-                          const Spacer(),
-                          Container(
-                            height: 24,
+                          Image.asset(
+                            'assets/img/whatsappLogo.png',
                             width: 50,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image:
-                                    AssetImage('assets/img/whatsappLogo.png'),
-                              ),
-                            ),
-                          ),
+                            height: 11,
+                            fit: BoxFit.cover,
+                          )
                         ],
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 20,
-                  ),
-                  margin: const EdgeInsets.only(
-                    bottom: 10,
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Row(
                     children: [
                       const Icon(
                         Icons.access_time,
-                        size: 24.0,
+                        size: 24,
                       ),
-                      const SizedBox(
-                        width: 12.0,
-                      ),
+                      const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Selesaikan Pembayaran Sebelum",
-                            style: mediumBody6.copyWith(
-                              color: blackColor,
-                            ),
+                            'Selesaikan Pembayaran Sebelum',
+                            style: regularBody7.copyWith(color: blackColor),
                           ),
-                          const SizedBox(
-                            height: 3.0,
+                          const SizedBox(height: 3),
+                          Consumer<ManualTransferViewModel>(
+                            builder: (context, state, _) {
+                              return Text(
+                                '${state.createdOrder?.formattedPayUntil}',
+                                style: semiBoldBody7.copyWith(),
+                              );
+                            }
                           ),
+                          const SizedBox(height: 3),
                           Text(
-                            "13.20 PM",
-                            style: semiBoldBody6.copyWith(),
-                          ),
-                          const SizedBox(
-                            height: 3.0,
-                          ),
-                          Text(
-                            "Selesaikan Pembayaran dalam 1 j 20 mnt",
-                            style: mediumBody6.copyWith(
-                              color: blackColor,
-                            ),
+                            'Selesaikan Pembayaran dalam 1 j 20 mnt',
+                            maxLines: 2,
+                            style: regularBody7.copyWith(color: blackColor),
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                Image.asset(
-                  "assets/img/bigwhatsappLogo.png",
-                  width: 120.0,
-                  height: 120.0,
-                  fit: BoxFit.fill,
-                ),
-                const SizedBox(
-                  height: 25.0,
-                ),
-                SizedBox(
-                  width: 332,
-                  height: 73,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Yuk, segera bayar via WhatsApp!',
-                        style: semiBoldBody4.copyWith(
-                          color: blackColor,
-                        ),
-                      ),
-                      const SizedBox(height: 7),
-                      SizedBox(
-                        width: 310,
-                        child: Text(
-                          'Jangan lupa konfirmasi ya. Ga ribet, dan cepat\nselesai. Terima kasih!',
-                          textAlign: TextAlign.center,
-                          style: regularBody7.copyWith(
-                            color: blackColor,
-                          ),
-                        ),
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Image.asset(
+                    'assets/img/bigwhatsappLogo.png',
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fill,
                   ),
                 ),
+                const SizedBox(height: 25),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Yuk, segera bayar via WhatsApp!',
+                      style: semiBoldBody5.copyWith(color: blackColor),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 7),
+                    Text(
+                      'Jangan lupa konfirmasi ya. Ga ribet, dan cepat\nselesai. Terima kasih!',
+                      textAlign: TextAlign.center,
+                      style: regularBody7.copyWith(color: blackColor),
+                    )
+                  ],
+                )
               ],
             ),
           ),
-          const Spacer(),
-          ElevatedButton(
-            style: const ButtonStyle(
-              minimumSize: MaterialStatePropertyAll(
-                Size(340, 45),
+          Padding(
+            padding: const EdgeInsets.all(30),
+            child: ElevatedButton(
+              style: const ButtonStyle(
+                minimumSize: MaterialStatePropertyAll(Size(340, 45)),
               ),
-            ),
-            onPressed: () {},
-            child: const Text(
-              'Konfirmasi Pembayaran',
-              style: mediumBody8,
+              onPressed: _goToWhatsapp,
+              child: const Text(
+                'Konfirmasi Pembayaran',
+                style: mediumBody8,
+              ),
             ),
           ),
         ],

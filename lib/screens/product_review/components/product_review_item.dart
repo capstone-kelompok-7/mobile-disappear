@@ -1,12 +1,11 @@
-import 'package:disappear/models/review_model.dart';
+import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/timeago_message.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ProductReviewItem extends StatefulWidget {
-  final ProductReviewItemModel review;
+  final Review review;
 
   const ProductReviewItem({super.key, required this.review});
 
@@ -16,8 +15,7 @@ class ProductReviewItem extends StatefulWidget {
 
 class _ProductReviewItemState extends State<ProductReviewItem> {
   String showDate() {
-    final reviewDate = DateTime.parse(widget.review.date);
-    return timeago.format(reviewDate, locale: 'id');
+    return timeago.format(widget.review.date, locale: 'id');
   }
 
   @override
@@ -91,7 +89,7 @@ class _ProductReviewItemState extends State<ProductReviewItem> {
         ),
         const SizedBox(height: 12,),
         Visibility(
-          visible: widget.review.photos.isNotEmpty,
+          visible: widget.review.photo!.isNotEmpty,
           child: Column(
             children: [
               SizedBox(
@@ -103,7 +101,7 @@ class _ProductReviewItemState extends State<ProductReviewItem> {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Image.network(
-                        widget.review.photos[index].photo,
+                        widget.review.photo![index].photo,
                         width: 120,
                         height: 80,
                         fit: BoxFit.cover,
@@ -111,7 +109,7 @@ class _ProductReviewItemState extends State<ProductReviewItem> {
                     );
                   },
                   separatorBuilder: (context, index) => const SizedBox(width: 10,),
-                  itemCount: widget.review.photos.length
+                  itemCount: widget.review.photo!.length
                 ),
               ),
               const SizedBox(height: 10,),
