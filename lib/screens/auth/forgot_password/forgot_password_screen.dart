@@ -1,4 +1,3 @@
-import 'package:disappear/screens/auth/forgot_password/components/forgot_password_success_dialog.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
@@ -31,37 +30,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       final forgotPasswordVerifViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
 
       if (forgotPasswordViewModel.isEmailSent == true) {
-        _displaySuccessMessage(forgotPasswordViewModel.message!);
-
-        forgotPasswordViewModel.isEmailSent = null;
         forgotPasswordVerifViewModel.email = forgotPasswordViewModel.emailController.text;
       }
-
-      if (forgotPasswordViewModel.isEmailSent == false) {
-        _displayFailedMessage(forgotPasswordViewModel.message!);
-        forgotPasswordViewModel.isEmailSent = null;
-      }
     }
-  }
-
-  void _displayFailedMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message))
-    );
-  }
-
-  void _displaySuccessMessage(String message) {
-    final forgotPasswordViewModel = Provider.of<ForgotPasswordViewModel>(context, listen: false);
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) =>
-        ForgotPasswordSuccessDialog(
-          message: message,
-          email: forgotPasswordViewModel.emailController.text,
-        )
-    );
   }
 
   @override
@@ -69,7 +40,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: primary40,
-        body: ListView(
+        body: Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(
@@ -79,64 +50,65 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
               child: SvgPicture.asset('assets/img/DisappearAuthLogo.svg'),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height,
-              margin: const EdgeInsets.only(top: 90),
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 50),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50),
-                  topRight: Radius.circular(50),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(top: 90),
+                padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 50),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
+                  ),
                 ),
-              ),
-              child: Consumer<ForgotPasswordViewModel>(
-                builder: (context, state, _) {
-                  return Form(
-                    key: state.formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Text(
-                          'Lupa Kata Sandi',
-                          style: semiBoldTitle6,
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 50),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Email', style: mediumBody5),
-                            const SizedBox(height: 5),
-                            TextFormField(
-                              enabled: !state.isLoading,
-                              controller: state.emailController,
-                              decoration: const InputDecoration(
-                                hintText: 'Masukan email anda',
-                                contentPadding: EdgeInsets.all(10)
-                              ),
-                              validator: state.validateEmail
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 30),
-                        ElevatedButton(
-                          onPressed: state.isLoading ? null : state.sendEmail,
-                          child: state.isLoading
-                            ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  color: whiteColor,
-                                  strokeWidth: 3,
+                child: Consumer<ForgotPasswordViewModel>(
+                  builder: (context, state, _) {
+                    return Form(
+                      key: state.formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Text(
+                            'Lupa Kata Sandi',
+                            style: semiBoldTitle6,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 50),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Email', style: mediumBody5),
+                              const SizedBox(height: 5),
+                              TextFormField(
+                                enabled: !state.isLoading,
+                                controller: state.emailController,
+                                decoration: const InputDecoration(
+                                  hintText: 'Masukan email anda',
+                                  contentPadding: EdgeInsets.all(10)
                                 ),
+                                validator: state.validateEmail
                               )
-                            : const Text('Lanjut', style: semiBoldBody3),
-                        ),
-                      ],
-                    ),
-                  );
-                }
+                            ],
+                          ),
+                          const SizedBox(height: 30),
+                          ElevatedButton(
+                            onPressed: state.isLoading ? null : state.sendEmail,
+                            child: state.isLoading
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: whiteColor,
+                                    strokeWidth: 3,
+                                  ),
+                                )
+                              : const Text('Lanjut', style: semiBoldBody3),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                ),
               ),
             )
           ],

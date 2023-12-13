@@ -1,4 +1,4 @@
-import 'package:disappear/models/product/best_seller_product_model.dart';
+import 'package:disappear/models/home/best_seller_product_model.dart';
 import 'package:disappear/screens/home/components/best_seller_product_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';

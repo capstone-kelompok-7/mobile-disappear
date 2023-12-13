@@ -1,5 +1,3 @@
-// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables, library_private_types_in_public_api, non_constant_identifier_names
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
@@ -97,21 +95,22 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
     final cartViewModel = Provider.of<AddToCartViewModel>(context, listen: false);
 
+    final appBar = AppBar(
+      backgroundColor: primary40,
+      leading: IconButton(
+        icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+      title: Text('Detail Produk', style: semiBoldBody1.copyWith(color: whiteColor),),
+      centerTitle: true,
+    );
+
     return FutureBuilder(
       future: productFuture,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: primary40,
-              leading: IconButton(
-                icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
-                onPressed: () => Navigator.of(context).pop(),
-              ), 
-              title: Text('Detail Produk', style: semiBoldBody1.copyWith(color: whiteColor),),
-              centerTitle: true,
-            ),
+            appBar: appBar,
             body: const Center(child: Text('Produk tidak ditemukan'))
           );
         }
@@ -120,15 +119,7 @@ class _ProductScreenState extends State<ProductScreen> {
           cartViewModel.product = snapshot.data!;
 
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: primary40,
-              leading: IconButton(
-                icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
-                onPressed: () => Navigator.of(context).pop(),
-              ), 
-              title: Text('Detail Produk', style: semiBoldBody1.copyWith(color: whiteColor),),
-              centerTitle: true,
-            ),
+            appBar: appBar,
             body: ListView(
               children: [
                 Column(

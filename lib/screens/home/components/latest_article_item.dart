@@ -1,12 +1,14 @@
-import 'package:disappear/models/article_model.dart';
+import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/home/components/placeholders/latest_article_thumbnail_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LatestArticleItem extends StatefulWidget {
-  final ArticleModel article;
+  final Article article;
 
   const LatestArticleItem({super.key, required this.article});
 
@@ -16,6 +18,9 @@ class LatestArticleItem extends StatefulWidget {
 
 class _LatestArticleItemState extends State<LatestArticleItem> {
   void _goToDetailArticleScreen() {
+    final articleViewModel = Provider.of<DetailArticlesViewModel>(context, listen: false);
+    articleViewModel.articleId = widget.article.id;
+
     Navigator.pushNamed(context, DetailArticleScreen.routePath);
   }
 
@@ -63,8 +68,7 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.article.formattedDate,
-                          style: regularBody8.copyWith(color: neutral40)),
+                      Text(widget.article.formattedDate, style: regularBody8.copyWith(color: neutral40)),
                       const SizedBox(
                         height: 10,
                       ),

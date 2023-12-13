@@ -1,13 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:disappear/models/carousel_model.dart';
 import 'package:disappear/screens/home/components/placeholders/carousel_placeholder.dart';
 import 'package:disappear/screens/home/components/carousel_dots_indicator.dart';
 import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:disappear/models/home/carousel_category_product_model.dart' as model;
 
 class Carousel extends StatelessWidget {
-  final List<CarouselModel> carousels;
+  final List<model.Carousel> carousels;
 
   const Carousel({super.key, required this.carousels});
 

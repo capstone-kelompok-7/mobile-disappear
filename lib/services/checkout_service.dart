@@ -4,7 +4,6 @@ import 'package:disappear/models/checkout/address/checkout_address_model.dart';
 import 'package:disappear/models/checkout/created_order_model.dart';
 import 'package:disappear/models/checkout/voucher/checkout_voucher_model.dart';
 import 'package:disappear/services/api.dart';
-import 'package:flutter/material.dart';
 
 class CheckoutService {
   Future<List<CheckoutVoucher>> fetchVoucher() async {

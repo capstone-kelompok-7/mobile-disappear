@@ -1,10 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:disappear/main.dart';
 import 'package:disappear/models/cart/cart_model.dart';
 import 'package:disappear/screens/cart/components/loading_dialog.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/services/cart_service.dart';
-import 'package:disappear/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:another_flushbar/flushbar.dart';
 import 'package:intl/intl.dart';
 
 class CartViewModel extends ChangeNotifier {
@@ -58,8 +58,17 @@ class CartViewModel extends ChangeNotifier {
     cartItem.quantity++;
     notifyListeners();
     
-    final cartService = CartService();
-    await cartService.addCartItemQuantity(cartItem.product.id);
+    try {
+      final cartService = CartService();
+      await cartService.addCartItemQuantity(cartItem.product.id);
+    } on DioException catch (e) {
+      if (e.response != null && [400, 403, 500].contains(e.response!.statusCode)) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      }
+
+      cartItem.quantity--;
+      notifyListeners();
+    }
   }
 
   void reduceItemQuantity(CartItem cartItem) async {
@@ -67,8 +76,17 @@ class CartViewModel extends ChangeNotifier {
       cartItem.quantity--;
       notifyListeners();
 
-      final cartService = CartService();
-      await cartService.reduceCartItemQuantity(cartItem.cartItemId);
+      try {
+        final cartService = CartService();
+        await cartService.reduceCartItemQuantity(cartItem.cartItemId);
+      } on DioException catch (e) {
+        if (e.response != null && [400, 403, 500].contains(e.response!.statusCode)) {
+          showFailedFlushbar(message: e.response!.data['message']);
+        }
+
+        cartItem.quantity++;
+        notifyListeners();
+      }
     }
   }
 
@@ -94,23 +112,28 @@ class CartViewModel extends ChangeNotifier {
   void removeSelectedItems() async {
     showDeletingSelectedItemsLoading();
 
-    final cartService = CartService();
+    try {
+      final cartService = CartService();
 
-    await Future.wait(
-      selectedItems
-        .map((selectedItem) => cartService.removeCartItem(selectedItem.cartItemId))
-        .toList()
-    );
-    
-    Navigator.of(navigatorKey.currentContext!).pop();
+      await Future.wait(
+        selectedItems
+          .map((selectedItem) => cartService.removeCartItem(selectedItem.cartItemId))
+          .toList()
+      );
 
-    showDeletingSelectedItemsSuccessMessage();
+      Navigator.of(navigatorKey.currentContext!).pop();
 
-    selectedItems = [];
+      showSuccessFlushbar(message: 'Keranjang berhasil dihapus');
 
-    isLoading = true;
-
-    getCart();
+      selectedItems = [];
+    } on DioException catch (e) {
+      if (e.response != null && [400, 403, 500].contains(e.response!.statusCode)) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      }
+    } finally {
+      isLoading = true;
+      getCart();
+    }
   }
 
   void showDeletingSelectedItemsLoading() {
@@ -118,20 +141,6 @@ class CartViewModel extends ChangeNotifier {
       context: navigatorKey.currentContext!,
       builder: (context) => const LoadingDialog(),
     );
-  }
-
-  void showDeletingSelectedItemsSuccessMessage() async {
-    await Flushbar(
-      flushbarPosition: FlushbarPosition.TOP,
-      backgroundColor: const Color(0xffE3FFF1),
-      messageColor: neutral40,
-      borderColor: const Color(0xff04C800),
-      borderWidth: 1,
-      margin: const EdgeInsets.all(10),
-      borderRadius: BorderRadius.circular(5),
-      message: 'Keranjang berhasil dihapus',
-      duration: const Duration(seconds: 3),
-    ).show(navigatorKey.currentContext!);
   }
 
   String get totalPrice {
