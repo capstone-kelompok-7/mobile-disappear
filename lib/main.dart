@@ -67,11 +67,17 @@ import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:disappear/view_models/home/latest_articles_view_model.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
+import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
+import 'package:disappear/view_models/product/product_carousel_view_model.dart';
+import 'package:disappear/view_models/product/product_review_view_model.dart';
+import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
+import 'package:disappear/view_models/search_product/filter_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
 import 'package:disappear/view_models/main_view_model.dart';
+import 'package:disappear/view_models/search_product/search_products_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -97,6 +103,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (context) => SearchFieldViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => SearchProductViewModel(),
       ),
       ChangeNotifierProvider(
         create: (context) => LoginViewModel(),
@@ -166,7 +175,22 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (context) => LatestArticlesViewModel(),
-      )
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ProductViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AddToCartViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => FilterViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ProductCarouselViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ProductReviewViewModel(),
+      ),
     ],
     child: const App(),
   ));
