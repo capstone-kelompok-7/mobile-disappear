@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
+import 'package:disappear/themes/text_theme.dart';
 
 class JoinChallengeScreen extends StatefulWidget {
   static const String routePath = '/join-challenge-screen';
@@ -26,18 +27,18 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 2.5,
-        leading: const Icon(Icons.arrow_back_ios),
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: primary40,
-        title: Text(
-          'Ikuti Tantangan',
-          style: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: primary40,
+        title: Text('Ikuti Tantangan',
+            style: semiBoldBody1.copyWith(color: Colors.white)),
       ),
       body: Form(
         key: formkey,
@@ -92,46 +93,117 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Container(
-                  width: 300,
-                  height: 45,
-                  // padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      filePicker(context),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Field tidak boleh kosong';
-                            }
-                            return null;
-                          },
-                          controller: fileController,
-                          readOnly: true,
-                          decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.all(8),
-                              border: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              fillColor: Colors.white,
-                              filled: true),
-                        ),
+
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Field tidak boleh kosong';
+                    }
+                    return null;
+                  },
+                  controller: fileController,
+                  readOnly: true,
+                  decoration: InputDecoration(
+                      prefixIcon: Container(
+                        padding: EdgeInsets.all(5),
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                              padding: MaterialStateProperty.all(
+                                  EdgeInsets.only(bottom: 5, top: 5)),
+                              minimumSize: MaterialStateProperty.all<Size>(
+                                const Size(1, 1),
+                              ),
+                              fixedSize: MaterialStateProperty.all<Size>(
+                                const Size(
+                                    65, 20), // Set width and height as needed
+                              ),
+                            ),
+                            onPressed: () {
+                              _pickFile();
+                            },
+                            child:
+                                const Text('Pilih Berkas', style: mediumBody8)),
                       ),
-                    ],
-                  ),
+                      contentPadding:
+                          const EdgeInsets.only(left: 10, right: 10),
+                      // border: Border(
+                      //   top: BorderSide(color: Colors.black)
+                      // ),
+                      // enabledBorder: OutlineInputBorder(
+                      //   borderSide: BorderSide(
+                      //       color: Colors.black), // Set no borders by default
+                      //   borderRadius: BorderRadius.only(
+                      //     topLeft: Radius.circular(5), // Border only for top left
+                      //     bottomRight:
+                      //         Radius.circular(5), // Border only for bottom right
+                      //   ),
+                      // ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'Tidak ada gambar yang dipilih',
+                      hintStyle: mediumBody8),
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                // Row(
+                //   children: [
+                //     Container(
+                //       decoration: BoxDecoration(
+                //         borderRadius:
+                //             const BorderRadius.all(Radius.circular(5)),
+                //         border: Border(
+                //           left: BorderSide(
+                //               width: 1.0,
+                //               color: Colors.black), // Border for the left side
+                //           top: BorderSide(
+                //               width: 1.0,
+                //               color: Colors.black), // No border for the top
+                //           right: BorderSide.none, // No border for the right
+                //           bottom: BorderSide(
+                //               width: 1.0,
+                //               color: Colors.black), // Border for the bottom
+                //         ),
+                //       ),
+                //       child: filePicker(context),
+                //     ),
+                //     Expanded(
+                //       child: TextFormField(
+                //         validator: (value) {
+                //           if (value == null || value.isEmpty) {
+                //             return 'Field tidak boleh kosong';
+                //           }
+                //           return null;
+                //         },
+                //         controller: fileController,
+                //         readOnly: true,
+                //         decoration: InputDecoration(
+                //           contentPadding: EdgeInsets.all(8),
+                //           // border: Border(
+                //           //   top: BorderSide(color: Colors.black)
+                //           // ),
+                //           enabledBorder: OutlineInputBorder(
+                //             borderSide: BorderSide(
+                //                 color:
+                //                     Colors.black), // Set no borders by default
+                //             borderRadius: BorderRadius.only(
+                //               topLeft: Radius.circular(
+                //                   5), // Border only for top left
+                //               bottomRight: Radius.circular(
+                //                   5), // Border only for bottom right
+                //             ),
+                //           ),
+                //           fillColor: Colors.amber,
+                //           filled: true,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 180),
+                  padding: const EdgeInsets.only(top: 8, left: 230),
                   child: ElevatedButton(
                     onPressed: () {
                       if (formkey.currentState!.validate()) {
@@ -148,8 +220,12 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                           borderRadius: BorderRadius.circular(3),
                         ),
                       ),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                      minimumSize: MaterialStateProperty.all<Size>(
+                        const Size(60, 30),
+                      ),
                     ),
-                    child: const Text('Kirim'),
+                    child: Text('Kirim', style: semiBoldBody6),
                   ),
                 )
               ],
@@ -165,7 +241,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
         style: ButtonStyle(
           padding: MaterialStateProperty.all(EdgeInsets.all(5)),
           minimumSize: MaterialStateProperty.all<Size>(
-            const Size(30, 20),
+            const Size(20, 20),
           ),
         ),
         onPressed: () {
@@ -192,10 +268,8 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
     final ChallengeMainViewModel viewModel =
         Provider.of<ChallengeMainViewModel>(context, listen: false);
 
-
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
-       
       String filePath = result.files.single.path ?? ''; // Get the file path
       viewModel.filePath = filePath;
       fileController.text = filePath;
@@ -206,6 +280,4 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
   //   OpenFile.open(file.path);
   //   debugPrint(file.path);
   // }
-
-  
 }
