@@ -32,12 +32,13 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        elevation: 2.5,
-        leading: const Icon(Icons.arrow_back_ios),
-        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: primary40,
-        title: Text('Detail Tantangan', style: semiBoldBody1),
+        leading: IconButton(
+          icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text('Detail Tantangan', style: semiBoldBody1.copyWith(color: whiteColor),),
+        centerTitle: true,
       ),
       body: FutureBuilder(
           future: challengeFuture,

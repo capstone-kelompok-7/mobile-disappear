@@ -95,20 +95,22 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
     final cartViewModel = Provider.of<AddToCartViewModel>(context, listen: false);
 
+    final appBar = AppBar(
+      backgroundColor: primary40,
+      leading: IconButton(
+        icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+      title: Text('Detail Produk', style: semiBoldBody1.copyWith(color: whiteColor),),
+      centerTitle: true,
+    );
+
     return FutureBuilder(
       future: productFuture,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: primary40,
-              leading: IconButton(
-                icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
-                onPressed: () => Navigator.of(context).pop(),
-              ), 
-              title: Text('Detail Produk', style: semiBoldBody1.copyWith(color: whiteColor),),
-              centerTitle: true,
-            ),
+            appBar: appBar,
             body: const Center(child: Text('Produk tidak ditemukan'))
           );
         }
@@ -117,15 +119,7 @@ class _ProductScreenState extends State<ProductScreen> {
           cartViewModel.product = snapshot.data!;
 
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: primary40,
-              leading: IconButton(
-                icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
-                onPressed: () => Navigator.of(context).pop(),
-              ), 
-              title: Text('Detail Produk', style: semiBoldBody1.copyWith(color: whiteColor),),
-              centerTitle: true,
-            ),
+            appBar: appBar,
             body: ListView(
               children: [
                 Column(
