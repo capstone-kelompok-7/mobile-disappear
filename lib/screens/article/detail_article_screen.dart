@@ -3,7 +3,7 @@
 import 'package:disappear/models/article_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/detail_articles_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -265,7 +265,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: Text(
-              'Detail Produk',
+              'Artikel',
               style: semiBoldBody1.copyWith(color: whiteColor),
             ),
             centerTitle: true,

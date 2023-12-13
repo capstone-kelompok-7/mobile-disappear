@@ -1,4 +1,5 @@
 import 'package:disappear/screens/article/article_screen.dart';
+import 'package:disappear/screens/article/components/carousel_article_component.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/screens/auth/register/register_verification_screen.dart';
@@ -47,7 +48,10 @@ import 'package:disappear/screens/wishlist/wishlist_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
-import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
+import 'package:disappear/view_models/article/detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/filter_article_view_model.dart';
+import 'package:disappear/view_models/article/get_article_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
@@ -153,6 +157,15 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => DetailArticlesViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => ArticleFilterViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => CarouselArticleViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => GetArticleViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -229,6 +242,7 @@ class App extends StatelessWidget {
             const TelegramTransferScreen(),
         ChatBotScreen.routePath: (context) => ChatBotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
+        CarouselArticleScreen.routePath: (context) => CarouselArticleScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
