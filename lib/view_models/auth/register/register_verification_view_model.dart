@@ -1,4 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:disappear/main.dart';
+import 'package:disappear/screens/auth/register/components/register_verification_failed_dialog.dart';
+import 'package:disappear/screens/auth/register/components/register_verification_success_dialog.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -50,57 +54,20 @@ class RegisterVerificationViewModel extends ChangeNotifier {
 
   bool get isSendingOTP => _isSendingOTP;
 
-  bool? _isOTPSent;
-
-  set isOTPSent(bool? isOTPSent) {
-    _isOTPSent = isOTPSent;
-    notifyListeners();
-  }
-
-  bool? get isOTPSent => _isOTPSent;
-
-  String? _message;
-
-  set message(String? message) {
-    _message = message;
-    notifyListeners();
-  }
-
-  String? get message => _message;
-
-  bool? _isOTPCorrect;
-
-  set isOTPCorrect(bool? isOTPCorrect) {
-    _isOTPCorrect = isOTPCorrect;
-    notifyListeners();
-  }
-
-  bool? get isOTPCorrect => _isOTPCorrect;
-
   Future<void> verifyOTP() async {
     if (formKey.currentState!.validate()) {
       isLoading = true;
-      isOTPCorrect = null;
 
       try {
         final authService = AuthService();
 
-        final response = await authService.verifyRegisterOTP(email!, otp);
-        message = response['message'];
+        await authService.verifyRegisterOTP(email!, otp);
 
-        isOTPCorrect = true;
+        _showSuccessMessage('Selamat! Verifikasi email mu berhasil, nih. Silahkan ke step selanjutnya, yuk!');
 
         clearOTP();
-      } on DioException catch (error) {
-        if (error.response != null) {
-          if (error.response!.statusCode == 400) {
-            message = error.response!.data['message'];
-          } else {
-            message = 'Terjadi kesalahan pada server.';
-          }
-
-          isOTPCorrect = false;
-        }
+      } on DioException catch (_) {
+        _showFailedMessage('Sepertinya kode OTP mu salah atau sudah kadaluwarsa, nih. Coba cek lagi atau klik kirim ulang, yuk!');
       } finally {
         isLoading = false;
       }
@@ -109,30 +76,40 @@ class RegisterVerificationViewModel extends ChangeNotifier {
 
   Future<void> resendOTP() async {
     isSendingOTP = true;
-    isOTPSent = null;
 
     try {
       final authService = AuthService();
 
-      final response = await authService.resendOTP(email!);
-      message = response['message'];
+      await authService.resendOTP(email!);
 
-      isOTPSent = true;
+      showSuccessFlushbar(message: 'Kode OTP berhasil di kirim ulang!');
 
       clearOTP();
     } on DioException catch (error) {
-      if (error.response != null) {
-        if (error.response!.statusCode == 400) {
-          message = error.response!.data['message'];
-        } else {
-          message = 'Terjadi kesalahan pada server.';
-        }
-
-        isOTPSent = false;
+      if (error.response != null && error.response!.statusCode == 500) {
+        showFailedFlushbar(message: error.response!.data['message']);
       }
+
+      showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
     } finally {
       isSendingOTP = false;
     }
+  }
+
+  void _showSuccessMessage(String message) {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (context) => RegisterVerificationSuccessDialog(message: message)
+    );
+  }
+
+  void _showFailedMessage(String message) {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (context) => RegisterVerificationFailedDialog(message: message)
+    );
   }
 
   void clearOTP() {

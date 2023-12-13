@@ -1,4 +1,5 @@
 import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -7,30 +8,58 @@ class CategoriesPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      enabled: true,
-      baseColor: neutral00,
-      highlightColor: neutral20,
-      child: SizedBox(
-        height: 60,
-        child: ListView.separated(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            return Container(
-              width: 70,
-              height: 70,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Kategori',
+                style: semiBoldBody5.copyWith(color: primary40),
               ),
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(width: 20),
-          itemCount: 5
-        ),
-      )
+            ],
+          ),
+          const SizedBox(height: 15,),
+          Shimmer.fromColors(
+            enabled: true,
+            baseColor: neutral00,
+            highlightColor: neutral20,
+            child: Row(
+              children: [
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 10,),
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 10,),
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            )
+          ),
+        ],
+      ),
     );
   }
 }

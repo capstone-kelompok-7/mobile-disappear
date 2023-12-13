@@ -1,11 +1,19 @@
+import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/home/components/latest_challenge_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
-class LatestChallenges extends StatelessWidget {
-  const LatestChallenges({super.key});
+class LatestChallenges extends StatefulWidget {
+  final List<Challenge> challenges;
 
+  const LatestChallenges({super.key, required this.challenges});
+
+  @override
+  State<LatestChallenges> createState() => _LatestChallengesState();
+}
+
+class _LatestChallengesState extends State<LatestChallenges> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,20 +29,34 @@ class LatestChallenges extends StatelessWidget {
         const SizedBox(height: 16,),
         SizedBox(
           height: 120,
-          child: ListView(
+          child: ListView.separated(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            children: const [
-              SizedBox(width: 12,),
-              LatestChallengeItem(),
-              SizedBox(width: 12,),
-              LatestChallengeItem(),
-              SizedBox(width: 12,),
-              LatestChallengeItem(),
-              SizedBox(width: 12,),
-              LatestChallengeItem(),
-              SizedBox(width: 12,),
-            ],
+            itemBuilder: (context, index) {
+              final challenge = LatestChallengeItem(challenge: widget.challenges[index]);
+
+              if (index == 0) {
+                return Row(
+                  children: [
+                    const SizedBox(width: 10,),
+                    challenge,
+                  ],
+                );
+              }
+
+              if (index == widget.challenges.length - 1) {
+                return Row(
+                  children: [
+                    challenge,
+                    const SizedBox(width: 10,),
+                  ],
+                );
+              }
+
+              return challenge;
+            },
+            separatorBuilder: (context, index) => const SizedBox(width: 10,),
+            itemCount: widget.challenges.length,
           ),
         ),
       ],

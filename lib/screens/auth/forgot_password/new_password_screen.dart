@@ -1,5 +1,3 @@
-import 'package:disappear/screens/auth/forgot_password/components/reset_password_failed_dialog.dart';
-import 'package:disappear/screens/auth/forgot_password/components/reset_password_success_dialog.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
@@ -17,49 +15,6 @@ class NewPasswordScreen extends StatefulWidget {
 }
 
 class _NewPasswordScreenState extends State<NewPasswordScreen> {
-  @override
-  void initState() {
-    final newPasswordViewModel = Provider.of<NewPasswordViewModel>(context, listen: false);
-
-    newPasswordViewModel.addListener(_resetPasswordListener);
-
-    super.initState();
-  }
-
-  void _resetPasswordListener() {
-    if (mounted && context.mounted) {
-      final newPasswordViewModel = Provider.of<NewPasswordViewModel>(context, listen: false);
-
-      if (newPasswordViewModel.isPasswordReset == true) {
-        _displaySuccessMessage(newPasswordViewModel.message!);
-        newPasswordViewModel.isPasswordReset = null;
-      }
-
-      if (newPasswordViewModel.isPasswordReset == false) {
-        _displayFailedMessage(newPasswordViewModel.message!);
-        newPasswordViewModel.isPasswordReset = null;
-      }
-    }
-  }
-
-  void _displayFailedMessage(String message) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) =>
-        ResetPasswordFailedDialog(message: message)
-    );
-  }
-
-  void _displaySuccessMessage(String message) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) =>
-        ResetPasswordSuccessDialog(message: message)
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -112,7 +67,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                 contentPadding: const EdgeInsets.all(10),
                                 suffixIcon: GestureDetector(
                                   onTap: state.togglePasswordObscure,
-                                  child: Icon(state.isPasswordObscured ? Icons.visibility_outlined : Icons.visibility_off_outlined)
+                                  child: Icon(state.isPasswordObscured ? Icons.visibility_off_outlined : Icons.visibility_outlined)
                                 )
                               ),
                               obscureText: state.isPasswordObscured,
@@ -134,7 +89,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                 contentPadding: const EdgeInsets.all(10),
                                 suffixIcon: GestureDetector(
                                   onTap: state.togglePasswordConfirmationObscure,
-                                  child: Icon(state.isPasswordConfirmationObscured ? Icons.visibility_outlined : Icons.visibility_off_outlined)
+                                  child: Icon(state.isPasswordConfirmationObscured ? Icons.visibility_off_outlined : Icons.visibility_outlined)
                                 )
                               ),
                               obscureText: state.isPasswordConfirmationObscured,

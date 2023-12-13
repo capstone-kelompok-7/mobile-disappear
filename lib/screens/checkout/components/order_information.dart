@@ -1,7 +1,12 @@
+import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/checkout/checkout_view_model.dart';
+import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
+import 'package:disappear/view_models/cart/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 //INFORMASI PESANAN KOMPONEN CHECKOUT SCREEN//
 
@@ -13,7 +18,10 @@ class OrderInformation extends StatefulWidget {
 }
 
 class _OrderInformationState extends State<OrderInformation> {
-  TextEditingController notesController = TextEditingController();
+  void _goToCouponScreen() {
+    Navigator.of(context).pushNamed(UseCouponScreen.routePath);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -29,120 +37,170 @@ class _OrderInformationState extends State<OrderInformation> {
               style: semiBoldBody7,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 15, left: 39),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 67,
-                  height: 77,
-                  child: Image.asset(
-                    'assets/img/totebeg_kanvas.png',
-                    fit: BoxFit.fill,
-                  ),
+          Consumer2<CheckoutViewModel, CartViewModel>(
+            builder: (context, stateCheckout, stateCart, _) {
+              if (stateCheckout.purchaseType == 'buy-now') {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  child: OrderItem(
+                    imageUrl: stateCheckout.product!.thumbnail?.imageUrl,
+                    name: stateCheckout.product!.name!,
+                    gramPlastic: stateCheckout.product!.gramPlastic!,
+                    formattedPrice: stateCheckout.product!.formattedPrice,
+                    quantity: 1,
+                  )
+                );
+              }
+              
+              return ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                itemCount: stateCart.selectedItems.length,
+                itemBuilder: (context, index) => OrderItem(
+                  imageUrl: stateCart.selectedItems[index].product.productPhotos.first.url,
+                  name: stateCart.selectedItems[index].product.name,
+                  gramPlastic: stateCart.selectedItems[index].gramPlastic,
+                  formattedPrice: stateCart.selectedItems[index].formattedPrice,
+                  quantity: stateCart.selectedItems[index].quantity
                 ),
-                const SizedBox(
-                  width: 25,
-                ),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Totebag Kanvas',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: mediumBody6,
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      '1 Produk | 20 Gram',
-                      style: regularBody8,
-                    ),
-                    SizedBox(
-                      height: 11,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          'Rp. 20.000',
-                          style: mediumBody6,
-                        ),
-                        SizedBox(
-                          width: 130,
-                        ),
-                        Text(
-                          'x 6',
-                          style: mediumBody6,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 16.5,
-                ),
-              ],
-            ),
+                separatorBuilder: (context, index) => const SizedBox(height: 20,),
+              );
+            }
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextFormField(
-              controller: notesController,
-              decoration: const InputDecoration(
-                fillColor: Colors.transparent,
-                hintText: 'Tambah Catatan',
-                focusedBorder: InputBorder.none,
-                border: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                contentPadding: EdgeInsets.all(12),
-              ),
-              maxLines: null,
+            child: Consumer<CheckoutViewModel>(
+              builder: (context, state, _) {
+                return TextFormField(
+                  controller: state.notesController,
+                  decoration: const InputDecoration(
+                    fillColor: Colors.transparent,
+                    hintText: 'Tambah Catatan',
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.all(12),
+                  ),
+                  maxLines: null,
+                );
+              }
             ),
           ),
-          const Divider(
-            height: 1,
-            thickness: 2,
-          ),
-          
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed('/use-coupon-screen');
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 39, right: 19, bottom: 15, top: 15),
+          InkWell(
+            onTap: _goToCouponScreen,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+              decoration: const BoxDecoration(
+                border: Border.symmetric(horizontal: BorderSide(width: 1, color: neutral00))
+              ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset('assets/img/CheckoutCoupon.svg'),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Text(
-                    'Kupon Toko',
-                    style: mediumBody7,
-                  ),
-                  const SizedBox(
-                    width: 198,
+                  Row(
+                    children: [
+                      SvgPicture.asset('assets/img/CheckoutCoupon.svg'),
+                      const SizedBox(width: 10),
+                      Consumer<CheckoutVoucherViewModel>(
+                        builder: (context, state, _) {
+                          if (state.voucher != null) {
+                            return Text(
+                              state.voucher!.voucher.name,
+                              style: mediumBody7,
+                            );
+                          }
+
+                          return const Text(
+                            'Kupon toko',
+                            style: mediumBody7,
+                          );
+                        }
+                      )
+                    ],
                   ),
                   const Icon(
                     Icons.arrow_forward_ios,
-                    color: Color.fromRGBO(37, 116, 90, 1),
+                    color: primary40,
                     size: 14,
                   ),
                 ],
               ),
             ),
           ),
-          const Divider(
-            thickness: 1,
-            height: 1,
-          ),
         ],
       ),
+    );
+  }
+}
+
+class OrderItem extends StatelessWidget {
+  final String? imageUrl;
+  final String name;
+  final int gramPlastic;
+  final String formattedPrice;
+  final int quantity;
+
+  const OrderItem({
+    super.key,
+    required this.imageUrl,
+    required this.name,
+    required this.gramPlastic,
+    required this.formattedPrice,
+    required this.quantity
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(2),
+                child: Builder(
+                  builder: (context) {
+                    if (imageUrl != null) {
+                      return Image.network(
+                        imageUrl!,
+                        fit: BoxFit.cover,
+                        width: 68,
+                        height: 78,
+                      );
+                    }
+
+                    return Image.asset(
+                      'assets/img/totebeg_kanvas.png',
+                      fit: BoxFit.cover,
+                      width: 68,
+                      height: 78,
+                    );
+                  }
+                ),
+              ),
+              const SizedBox(width: 10,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: mediumBody6,
+                  ),
+                  const SizedBox(height: 6),
+                  Text('$gramPlastic Gram', style: regularBody8),
+                  const SizedBox(height: 5),
+                  Text(formattedPrice, style: mediumBody6)
+                ],
+              )
+            ],
+          ),
+        ),
+        Text('x $quantity', style: mediumBody6)
+      ],
     );
   }
 }

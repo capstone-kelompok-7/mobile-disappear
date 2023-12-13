@@ -1,15 +1,24 @@
-import 'package:disappear/screens/home/components/best_seller_products.dart';
-import 'package:disappear/screens/home/components/categories.dart';
+import 'package:disappear/models/home/carousel_category_product_model.dart' as model;
+import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/home/components/latest_articles.dart';
 import 'package:disappear/screens/home/components/latest_challenges.dart';
+import 'package:disappear/screens/home/components/placeholders/categories_placeholder.dart';
+import 'package:disappear/screens/home/components/best_seller_products.dart';
 import 'package:disappear/screens/home/components/carousel.dart';
+import 'package:disappear/screens/home/components/categories.dart';
+import 'package:disappear/screens/home/components/placeholders/best_seller_products_placeholder.dart';
+import 'package:disappear/screens/home/components/placeholders/carousel_placeholder.dart';
+import 'package:disappear/screens/home/components/placeholders/challenges_placeholder.dart';
+import 'package:disappear/screens/home/components/placeholders/latest_articles_placeholder.dart';
+import 'package:disappear/screens/home/components/search_field.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
-import 'package:disappear/screens/search_product/search_product_screen.dart';
-import 'package:disappear/screens/wishlist/wishlist_screen.dart';
+import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
-import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/cart/cart_view_model.dart';
+import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routePath = '/home';
@@ -21,16 +30,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final Future<model.CarouselCategoryProduct> _carouselCategoryProductFuture;
+
+  late final Future<ChallengeArticle> _challengeArticleFuture;
+
+  @override
+  void initState() {
+    final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
+
+    _carouselCategoryProductFuture = homeViewModel.getCarouselsCategoriesAndProducts();
+    _challengeArticleFuture = homeViewModel.getChallengesAndArticles();
+
+    super.initState();
+  }
+
   void _goToNotificationScreen() {
     Navigator.pushNamed(context, NotificationScreen.routePath);
   }
 
-  void _goToWishlistScreen() {
-    Navigator.pushNamed(context, WishListScreen.routePath);
-  }
-
-  void _goToSearchScreen() {
-    Navigator.pushNamed(context, SearchProductScreen.routePath);
+  void _goToCartScreen() {
+    final cartViewModel = Provider.of<CartViewModel>(context, listen: false);
+    cartViewModel.getCart();
+    
+    Navigator.pushNamed(context, CartScreen.routePath);
   }
 
   @override
@@ -45,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: SvgPicture.asset('assets/img/NotificationIcon.svg'),
           ),
           IconButton(
-            onPressed: _goToWishlistScreen,
+            onPressed: _goToCartScreen,
             icon: SvgPicture.asset('assets/img/CartIcon.svg')
           ),
         ],
@@ -54,54 +76,74 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.symmetric(vertical: 12),
         shrinkWrap: true,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: GestureDetector(
-              onTap: _goToSearchScreen,
-              child: TextFormField(
-                style: regularBody6.copyWith(decoration: TextDecoration.none, decorationThickness: 0),
-                decoration: InputDecoration(
-                  enabled: false,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                  fillColor: primary00,
-                  hintText: 'Pencarian',
-                  hintStyle: regularBody6.copyWith(color: primary40),
-                  suffixIcon: const Icon(Icons.search),
-                  suffixIconColor: primary40,
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    borderSide: BorderSide(color: Colors.transparent)
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    borderSide: BorderSide(color: Colors.transparent)
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    borderSide: BorderSide(color: Colors.transparent)
-                  )
-                ),
-              ),
-            ),
-          ),
+          const SearchField(),
           const SizedBox(height: 14,),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: Carousel(),
+          Consumer<HomeViewModel>(
+            builder: (context, state, _) {
+              return FutureBuilder(
+                future: _carouselCategoryProductFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Carousel(carousels: snapshot.data!.carousel,),
+                        const SizedBox(height: 20,),
+                        Categories(categories: snapshot.data!.category,),
+                        const SizedBox(height: 20,),
+                        BestSellerProducts(products: snapshot.data!.product),
+                      ],
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return const Column(
+                    children: [
+                      CarouselPlaceholder(),
+                      SizedBox(height: 20,),
+                      CategoriesPlaceholder(),
+                      SizedBox(height: 20,),
+                      BestSellerProductsPlaceholder()
+                    ],
+                  );
+                }
+              );
+            }
           ),
-          const SizedBox(height: 19,),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: Categories(),
-          ),
-          const SizedBox(height: 34,),
-          const BestSellerProducts(),
-          const SizedBox(height: 34,),
-          const LatestChallenges(),
-          const SizedBox(height: 34,),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: LatestArticles(),
+          const SizedBox(height: 20,),
+          Consumer<HomeViewModel>(
+            builder: (context, state, _) {
+              return FutureBuilder(
+                future: _challengeArticleFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LatestChallenges(challenges: snapshot.data!.challenge),
+                        const SizedBox(height: 20,),
+                        LatestArticles(articles: snapshot.data!.articles),
+                      ],
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return const Column(
+                    children: [
+                      ChallengesPlaceholder(),
+                      SizedBox(height: 20,),
+                      LatestArticlesPlaceholder()
+                    ],
+                  );
+                }
+              );
+            }
           ),
         ],
       ),

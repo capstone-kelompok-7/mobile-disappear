@@ -1,5 +1,3 @@
-import 'package:disappear/screens/auth/register/components/register_verification_failed_dialog.dart';
-import 'package:disappear/screens/auth/register/components/register_verification_success_dialog.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
@@ -19,64 +17,6 @@ class RegisterVerificationScreen extends StatefulWidget {
 }
 
 class _RegisterVerificationScreenState extends State<RegisterVerificationScreen> {
-  @override
-  void initState() {
-    final registerViewModel = Provider.of<RegisterVerificationViewModel>(context, listen: false);
-
-    registerViewModel.addListener(_otpListener);
-    registerViewModel.addListener(_resendOTPListener);
-
-    super.initState();
-  }
-
-  void _otpListener() {
-    if (mounted && context.mounted) {
-      final registerVerifViewModel = Provider.of<RegisterVerificationViewModel>(context, listen: false);
-
-      if (registerVerifViewModel.isOTPCorrect == true) {
-        _displaySuccessMessage(registerVerifViewModel.message!);
-        registerVerifViewModel.isOTPCorrect = null;
-      }
-
-      if (registerVerifViewModel.isOTPCorrect == false) {
-        _displayFailedMessage(registerVerifViewModel.message!);
-        registerVerifViewModel.isOTPCorrect = null;
-      }
-    }
-  }
-
-  void _resendOTPListener() {
-    if (mounted && context.mounted) {
-      final registerVerifViewModel = Provider.of<RegisterVerificationViewModel>(context, listen: false);
-
-      if (registerVerifViewModel.isOTPSent != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(registerVerifViewModel.message!))
-        );
-
-        registerVerifViewModel.isOTPSent = null;
-      }
-    }
-  }
-
-  void _displayFailedMessage(String message) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) =>
-        RegisterVerificationFailedDialog(message: message)
-    );
-  }
-
-  void _displaySuccessMessage(String message) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) =>
-        RegisterVerificationSuccessDialog(message: message)
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

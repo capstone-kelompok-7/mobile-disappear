@@ -1,5 +1,4 @@
 import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
-import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/auth/register/register_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -18,41 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  @override
-  void initState() {
-    final loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
-
-    loginViewModel.addListener(_loginMessageListener);
-    loginViewModel.addListener(_loginSuccessListener);
-
-    super.initState();
-  }
-
-  void _loginMessageListener() {
-    final loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
-    if (loginViewModel.message != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(loginViewModel.message!))
-      );
-
-      loginViewModel.message = null;
-    }
-  }
-
-  void _loginSuccessListener() {
-    final loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
-    if (loginViewModel.isLoginSuccess) {
-      _goToHomeScreen();
-      loginViewModel.isLoginSuccess = false;
-    }
-  }
-
   void _goToRegisterScreen() {
     Navigator.pushNamed(context, RegisterScreen.routePath);
-  }
-
-  void _goToHomeScreen() {
-    Navigator.pushNamedAndRemoveUntil(context, MainScreen.routePath, (route) => false);
   }
 
   void _goToForgotPasswordScreen() {
@@ -127,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 contentPadding: const EdgeInsets.all(10),
                                 suffixIcon: GestureDetector(
                                   onTap: state.togglePasswordObscure,
-                                  child: Icon(state.isPasswordObscured ? Icons.visibility_outlined : Icons.visibility_off_outlined)
+                                  child: Icon(state.isPasswordObscured ? Icons.visibility_off_outlined : Icons.visibility_outlined)
                                 )
                               ),
                               obscureText: state.isPasswordObscured,

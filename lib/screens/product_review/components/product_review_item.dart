@@ -1,20 +1,27 @@
+import 'package:disappear/models/product/product_model.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ProductReviewItem extends StatefulWidget {
-  const ProductReviewItem({super.key});
+  final Review review;
+
+  const ProductReviewItem({super.key, required this.review});
 
   @override
   State<ProductReviewItem> createState() => _ProductReviewItemState();
 }
 
 class _ProductReviewItemState extends State<ProductReviewItem> {
-  bool isRepondCollapsed = false;
-
-  void _toggleRespond() => setState(() => isRepondCollapsed = !isRepondCollapsed);
+  String showDate() {
+    return timeago.format(widget.review.date, locale: 'id');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -22,120 +29,97 @@ class _ProductReviewItemState extends State<ProductReviewItem> {
           children: [
             Row(
               children: [
-                ClipOval(child: Image.network('https://picsum.photos/25')),
+                ClipOval(
+                  child: Image.network(
+                    widget.review.photoProfile.isNotEmpty
+                      ? widget.review.photoProfile
+                      : 'https://picsum.photos/30',
+                    width: 30,
+                    height: 30,
+                    fit: BoxFit.cover,
+                  )
+                ),
                 const SizedBox(width: 8,),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('User 1'),
-                    SizedBox(width: 5,),
+                    Text(widget.review.name.isNotEmpty ? widget.review.name : 'User'),
+                    const SizedBox(width: 5,),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.star_border, size: 12,),
-                        SizedBox(width: 2,),
-                        Icon(Icons.star_border, size: 12,),
-                        SizedBox(width: 2,),
-                        Icon(Icons.star_border, size: 12,),
-                        SizedBox(width: 2,),
-                        Icon(Icons.star_border, size: 12,),
-                        SizedBox(width: 2,),
-                        Icon(Icons.star_border, size: 12,),
-                        SizedBox(width: 8,),
-                        Text('4.0'),
+                        Icon(
+                          color: widget.review.rating >= 1 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: widget.review.rating >= 2 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: widget.review.rating >= 3 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: widget.review.rating >= 4 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          color: widget.review.rating >= 5 ? warning30 : neutral00,
+                          Icons.star,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 5),
+                        Text('${widget.review.rating}')
                       ],
                     ),
                   ],
                 )
               ],
             ),
-            const Text('Satu hari yang lalu', style: TextStyle(fontSize: 8),)
+            Text(showDate(), style: regularBody8,)
           ],
         ),
         const SizedBox(height: 12,),
-        Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Image.network('https://picsum.photos/100/50'),
-            ),
-            const SizedBox(width: 8,),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Image.network('https://picsum.photos/100/50'),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12,),
-        const Text(
-          'Totebag kanvas ini jadi favorit sehari-hari saya. Kuat, awet, dan stylish! Bisa dipake buat belanja atau jalan-jalan. Plus, love the eco-friendly vibe! 💚🌿',
-          style: TextStyle(fontSize: 12, height: 1.5),
-        ),
-        const SizedBox(height: 16,),
-        Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(bottom: 8),
-              decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide(width: 1, color: Colors.grey))
-              ),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: _toggleRespond,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Balas ulasan', style: TextStyle(fontSize: 8),),
-                        Row(
-                          children: [
-                            const Text('Respon', style: TextStyle(fontSize: 8),),
-                            const SizedBox(width: 5,),
-                            Icon(
-                              isRepondCollapsed
-                                ? Icons.keyboard_arrow_up
-                                : Icons.keyboard_arrow_down,
-                              size: 16
-                            )
-                          ],
-                        ),
-                      ],
-                    )
-                  ),
-                  const SizedBox(height: 8,),
-                  Visibility(
-                    visible: isRepondCollapsed,
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) =>
-                        const Text(
-                          'Totebag kanvas ini jadi favorit sehari-hari saya. Kuat, awet, dan stylish! Bisa dipake buat belanja atau jalan-jalan. Plus, love the eco-friendly vibe! 💚🌿',
-                          style: TextStyle(fontSize: 12, height: 1.5),
-                        ),
-                      separatorBuilder: (context, index) => const SizedBox(height: 16,),
-                      itemCount: 2
-                    ),
-                  ),
-                ],
-              )
-            ),
-            Visibility(
-              visible: isRepondCollapsed,
-              child: Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TextFormField(),
-                    const SizedBox(height: 5,),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Balas Ulasan')
-                    )
-                  ],
+        Visibility(
+          visible: widget.review.photo!.isNotEmpty,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 80,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        widget.review.photo![index].photo,
+                        width: 120,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(width: 10,),
+                  itemCount: widget.review.photo!.length
                 ),
-              )
-            ),
-          ],
+              ),
+              const SizedBox(height: 10,),
+            ],
+          ),
+        ),
+        Text(
+          widget.review.description,
+          style: const TextStyle(fontSize: 12, height: 1.5),
+          textAlign: TextAlign.left,
         ),
       ],
     );

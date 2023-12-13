@@ -21,10 +21,7 @@ class AuthService {
 
     Response response = await dio.post(
       '/auth/register',
-      data: {
-        'email': email,
-        'password': password
-      }
+      data: { 'email': email, 'password': password }
     );
 
     return response.data;
@@ -35,10 +32,7 @@ class AuthService {
 
     Response response = await dio.post(
       '/auth/verify',
-      data: {
-        'email': email,
-        'otp': otp
-      }
+      data: { 'email': email, 'otp': otp }
     );
 
     return response.data;
@@ -49,9 +43,7 @@ class AuthService {
 
     Response response = await dio.post(
       '/auth/resend-otp',
-      data: {
-        'email': email
-      }
+      data: { 'email': email }
     );
 
     return response.data;
@@ -62,9 +54,7 @@ class AuthService {
 
     Response response = await dio.post(
       '/auth/forgot-password',
-      data: {
-        'email': email
-      }
+      data: { 'email': email }
     );
 
     return response.data;
@@ -75,10 +65,7 @@ class AuthService {
 
     Response response = await dio.post(
       '/auth/forgot-password/verify',
-      data: {
-        'email': email,
-        'otp': otp
-      }
+      data: { 'email': email, 'otp': otp }
     );
 
     return response.data;

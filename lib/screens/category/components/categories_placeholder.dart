@@ -7,7 +7,7 @@ class CategoriesPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 54, horizontal: 29),
+      padding: const EdgeInsets.all(20),
       itemCount: 9,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,

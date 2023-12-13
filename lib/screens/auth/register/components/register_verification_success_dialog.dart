@@ -19,7 +19,7 @@ class RegisterVerificationSuccessDialog extends StatefulWidget {
 class _RegisterVerificationSuccessDialogState extends State<RegisterVerificationSuccessDialog> {
   void _goToNewPasswordScreen() {
     Navigator.of(context).pop();
-    Navigator.popUntil(context, ModalRoute.withName(LoginScreen.routePath));
+    Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.routePath, (route) => false);
   }
 
   @override
@@ -33,6 +33,12 @@ class _RegisterVerificationSuccessDialogState extends State<RegisterVerification
         children: [
           SvgPicture.asset('assets/img/SuccessIcon.svg'),
           const SizedBox(height: 15,),
+          const Text(
+            'Yuhuuu!!',
+            style: semiBoldBody3,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 5,),
           Text(
             widget.message,
             style: regularBody6,

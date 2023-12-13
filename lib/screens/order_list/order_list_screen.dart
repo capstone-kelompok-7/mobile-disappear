@@ -16,13 +16,15 @@ class OrderListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary40,
-        title: const Text(
+        title: Text(
           'Pesanan',
-          style: semiBoldBody1,
+          style: semiBoldBody1.copyWith(
+            color: whiteColor,
+          ),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios, color: whiteColor),
           onPressed: () {},
         ),
       ),

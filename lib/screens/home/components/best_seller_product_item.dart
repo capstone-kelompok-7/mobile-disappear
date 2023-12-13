@@ -1,12 +1,14 @@
-import 'package:disappear/models/product_model.dart';
+import 'package:disappear/models/home/best_seller_product_model.dart';
 import 'package:disappear/screens/home/components/placeholders/best_seller_product_thumbnail_placeholder.dart';
-import 'package:disappear/screens/product_screen.dart';
+import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BestSellerProductItem extends StatefulWidget {
-  final ProductModel product;
+  final BestSellerProduct product;
 
   const BestSellerProductItem({super.key, required this.product});
 
@@ -15,35 +17,51 @@ class BestSellerProductItem extends StatefulWidget {
 }
 
 class _BestSellerProductItemState extends State<BestSellerProductItem> {
-  void _goToProductScreen() {
+  void _goToProductScreen(BestSellerProduct product) {
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    productViewModel.product = product.toProduct();
+
     Navigator.pushNamed(context, ProductScreen.routePath);
   }
   
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _goToProductScreen,
+      onTap: () => _goToProductScreen(widget.product),
       child: SizedBox(
         width: 130,
-        height: 200,
+        height: 220,
         child: Card(
           color: secondary00,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Column(
               children: [
-                Image.network(
-                  widget.product.thumbnail!.imageUrl,
-                  fit: BoxFit.cover,
-                  width: 130,
-                  height: 120,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress != null) {
-                      return const BestSellerProductThumbnailPlaceholder();
+                Builder(
+                  builder: (context) {
+                    if (widget.product.photos.url != '') {
+                      return Image.network(
+                        widget.product.photos.url,
+                        fit: BoxFit.cover,
+                        width: 130,
+                        height: 120,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress != null) {
+                            return const BestSellerProductThumbnailPlaceholder();
+                          }
+                      
+                          return child;
+                        },
+                      );
                     }
 
-                    return child;
-                  },
+                    return Image.asset(
+                      'assets/img/alat_makan.png',
+                      fit: BoxFit.cover,
+                      width: 130,
+                      height: 120,
+                    );
+                  }
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, right: 6.5, bottom: 10, left: 6.5),
@@ -56,17 +74,37 @@ class _BestSellerProductItemState extends State<BestSellerProductItem> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 3,),
-                      const Row(
+                      Row(
                         children: [
-                          Icon(Icons.star, size: 14, color: blackColor),
-                          SizedBox(width: 2,),
-                          Icon(Icons.star, size: 14, color: blackColor),
-                          SizedBox(width: 2,),
-                          Icon(Icons.star, size: 14, color: blackColor),
-                          SizedBox(width: 2,),
-                          Icon(Icons.star, size: 14, color: blackColor),
-                          SizedBox(width: 2,),
-                          Icon(Icons.star, size: 14, color: blackColor),
+                          Icon(
+                            color: widget.product.rating >= 1 ? warning30 : neutral10,
+                            Icons.star,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 2),
+                          Icon(
+                            color: widget.product.rating >= 2 ? warning30 : neutral10,
+                            Icons.star,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 2),
+                          Icon(
+                            color: widget.product.rating >= 3 ? warning30 : neutral10,
+                            Icons.star,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 2),
+                          Icon(
+                            color: widget.product.rating >= 4 ? warning30 : neutral10,
+                            Icons.star,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 2),
+                          Icon(
+                            color: widget.product.rating >= 5 ? warning30 : neutral10,
+                            Icons.star,
+                            size: 16,
+                          ),
                         ],
                       ),
                       const SizedBox(height: 3,),

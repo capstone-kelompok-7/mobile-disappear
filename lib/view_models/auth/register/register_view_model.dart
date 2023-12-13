@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:disappear/main.dart';
+import 'package:disappear/screens/auth/register/components/register_failed_dialog.dart';
+import 'package:disappear/screens/auth/register/components/register_success_dialog.dart';
 import 'package:disappear/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -31,53 +34,56 @@ class RegisterViewModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  String? _message;
+  bool _isEmailSent = false;
 
-  set message(String? message) {
-    _message = message;
-    notifyListeners();
-  }
-
-  String? get message => _message;
-
-  bool? _isEmailSent;
-
-  set isEmailSent(bool? isEmailSent) {
+  set isEmailSent(bool isEmailSent) {
     _isEmailSent = isEmailSent;
     notifyListeners();
   }
 
-  bool? get isEmailSent => _isEmailSent;
+  bool get isEmailSent => _isEmailSent;
 
   Future<void> sendEmail() async {
     if (formKey.currentState!.validate()) {
       isLoading = true;
-      isEmailSent = null;
 
       try {
-      final authService = AuthService();
+        final authService = AuthService();
+        final response = await authService.register(emailController.text, passwordController.text);
 
-      final response = await authService.register(
-        emailController.text,
-        passwordController.text
-      );
-      message = response['message'];
+        isEmailSent = true;
 
-      isEmailSent = true;
+        _showSuccessMessage(response['message']);
       } on DioException catch (error) {
         if (error.response != null) {
           if ([400, 401, 404, 409, 500].contains(error.response!.statusCode)) {
-            message = error.response!.data['message'];
-          } else {
-            message = 'Terjadi kesalahan pada server';
+            _showFailedMessage(error.response!.data['message']);
           }
-
-          isEmailSent = false;
         }
+
+        _showFailedMessage('Terjadi kesalahan pada server.');
+
+        isEmailSent = false;
       } finally {
         isLoading = false;
       }
     }
+  }
+
+  void _showSuccessMessage(String message) {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (context) => RegisterSuccessDialog(message: message)
+    );
+  }
+
+  void _showFailedMessage(String message) {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (context) => RegisterFailedDialog(message: message)
+    );
   }
   
   String? validateEmail(value) {
@@ -90,6 +96,10 @@ class RegisterViewModel extends ChangeNotifier {
 
   String? validatePassword(value) {
     if (value!.length < 8) {
+      return 'Kata sandi mininal harus berisi 8 karakter';
+    }
+
+    if (value!.trim().isEmpty) {
       return 'Kata sandi mininal harus berisi 8 karakter';
     }
 
