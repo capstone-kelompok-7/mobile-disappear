@@ -2,9 +2,7 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:disappear/themes/text_theme.dart';
 
@@ -30,7 +28,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
         centerTitle: true,
         elevation: 2.5,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -105,17 +103,17 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                   readOnly: true,
                   decoration: InputDecoration(
                       prefixIcon: Container(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         child: ElevatedButton(
                             style: ButtonStyle(
                               padding: MaterialStateProperty.all(
-                                  EdgeInsets.only(bottom: 5, top: 5)),
+                                  const EdgeInsets.only(bottom: 5, top: 5)),
                               minimumSize: MaterialStateProperty.all<Size>(
                                 const Size(1, 1),
                               ),
                               fixedSize: MaterialStateProperty.all<Size>(
                                 const Size(
-                                    65, 20), // Set width and height as needed
+                                    65, 20), 
                               ),
                             ),
                             onPressed: () {
@@ -126,24 +124,13 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                       ),
                       contentPadding:
                           const EdgeInsets.only(left: 10, right: 10),
-                      // border: Border(
-                      //   top: BorderSide(color: Colors.black)
-                      // ),
-                      // enabledBorder: OutlineInputBorder(
-                      //   borderSide: BorderSide(
-                      //       color: Colors.black), // Set no borders by default
-                      //   borderRadius: BorderRadius.only(
-                      //     topLeft: Radius.circular(5), // Border only for top left
-                      //     bottomRight:
-                      //         Radius.circular(5), // Border only for bottom right
-                      //   ),
-                      // ),
+                   
                       fillColor: Colors.white,
                       filled: true,
                       hintText: 'Tidak ada gambar yang dipilih',
                       hintStyle: mediumBody8),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
 
@@ -220,12 +207,12 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                           borderRadius: BorderRadius.circular(3),
                         ),
                       ),
-                      padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.all(5)),
                       minimumSize: MaterialStateProperty.all<Size>(
                         const Size(60, 30),
                       ),
                     ),
-                    child: Text('Kirim', style: semiBoldBody6),
+                    child: const Text('Kirim', style: semiBoldBody6),
                   ),
                 )
               ],
@@ -239,7 +226,7 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
   Widget filePicker(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
-          padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+          padding: MaterialStateProperty.all(const EdgeInsets.all(5)),
           minimumSize: MaterialStateProperty.all<Size>(
             const Size(20, 20),
           ),
@@ -276,8 +263,5 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
     }
   }
 
-  // void _openFile(PlatformFile file) {
-  //   OpenFile.open(file.path);
-  //   debugPrint(file.path);
-  // }
+ 
 }
