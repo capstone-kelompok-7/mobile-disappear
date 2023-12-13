@@ -7,15 +7,11 @@ class ProductService {
   Future<List<Product>> getBestSellerProducts() async {
     final dio = createDio();
 
-    final Response response = await dio.get('/products?page=1&pageSize=5');
-
-    if (response.data['data'] != null) {
-      return response.data['data']
-        .map((data) => Product.fromMap(response.data['data']))
-        .toList();
-    }
-
-    return [];
+    final Response response = await dio.get('/products');
+    
+    return response.data['data']
+      .map((data) => Product.fromMap(response.data['data']))
+      .toList();
   }
 
   Future<List<Product>> getProducts({

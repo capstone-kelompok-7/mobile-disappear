@@ -1,3 +1,5 @@
+import 'package:disappear/models/home/carousel_category_product_model.dart' as model;
+import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/home/components/latest_articles.dart';
 import 'package:disappear/screens/home/components/latest_challenges.dart';
 import 'package:disappear/screens/home/components/placeholders/categories_placeholder.dart';
@@ -28,9 +30,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final Future _carouselCategoryProductFuture;
+  late final Future<model.CarouselCategoryProduct> _carouselCategoryProductFuture;
 
-  late final Future _challengeArticleFuture;
+  late final Future<ChallengeArticle> _challengeArticleFuture;
 
   @override
   void initState() {
@@ -85,13 +87,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Carousel(carousels: snapshot.data['carousel'],),
+                        Carousel(carousels: snapshot.data!.carousel,),
                         const SizedBox(height: 20,),
-                        Categories(categories: snapshot.data['category'],),
+                        Categories(categories: snapshot.data!.category,),
                         const SizedBox(height: 20,),
-                        BestSellerProducts(products: snapshot.data['product']),
+                        BestSellerProducts(products: snapshot.data!.product),
                       ],
                     );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const SizedBox.shrink();
                   }
 
                   return const Column(
@@ -117,11 +123,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LatestChallenges(challenges: snapshot.data['challenge']),
+                        LatestChallenges(challenges: snapshot.data!.challenge),
                         const SizedBox(height: 20,),
-                        LatestArticles(articles: snapshot.data['article']),
+                        LatestArticles(articles: snapshot.data!.articles),
                       ],
                     );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const SizedBox.shrink();
                   }
 
                   return const Column(

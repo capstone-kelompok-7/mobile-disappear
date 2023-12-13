@@ -1,5 +1,3 @@
-// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables, library_private_types_in_public_api, non_constant_identifier_names
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
@@ -101,7 +99,6 @@ class _ProductScreenState extends State<ProductScreen> {
       future: productFuture,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          
           return Scaffold(
             appBar: AppBar(
               backgroundColor: primary40,

@@ -1,4 +1,4 @@
-import 'package:disappear/models/category_model.dart';
+import 'package:disappear/models/home/carousel_category_product_model.dart';
 import 'package:disappear/screens/home/components/placeholders/category_thumbnail_placeholder.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CategoryItem extends StatefulWidget {
-  final CategoryModel category;
+  final Category category;
 
   const CategoryItem({
     super.key,

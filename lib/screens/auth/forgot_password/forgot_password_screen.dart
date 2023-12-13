@@ -1,4 +1,5 @@
 import 'package:disappear/screens/auth/forgot_password/components/forgot_password_success_dialog.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
@@ -31,37 +32,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       final forgotPasswordVerifViewModel = Provider.of<ForgotPasswordVerificationViewModel>(context, listen: false);
 
       if (forgotPasswordViewModel.isEmailSent == true) {
-        _displaySuccessMessage(forgotPasswordViewModel.message!);
-
-        forgotPasswordViewModel.isEmailSent = null;
         forgotPasswordVerifViewModel.email = forgotPasswordViewModel.emailController.text;
       }
-
-      if (forgotPasswordViewModel.isEmailSent == false) {
-        _displayFailedMessage(forgotPasswordViewModel.message!);
-        forgotPasswordViewModel.isEmailSent = null;
-      }
     }
-  }
-
-  void _displayFailedMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message))
-    );
-  }
-
-  void _displaySuccessMessage(String message) {
-    final forgotPasswordViewModel = Provider.of<ForgotPasswordViewModel>(context, listen: false);
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) =>
-        ForgotPasswordSuccessDialog(
-          message: message,
-          email: forgotPasswordViewModel.emailController.text,
-        )
-    );
   }
 
   @override

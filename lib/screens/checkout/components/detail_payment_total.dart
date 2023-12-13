@@ -43,13 +43,15 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
       );
     }
 
-    manualTransferViewModel.createdOrder = createdOrder;
+    if (createdOrder != null) {
+      manualTransferViewModel.createdOrder = createdOrder;
 
-    /// REDIRECT TO PAYMENT SCREEN
-    if (checkoutPaymentMethodViewModel.method == 'whatsapp') {
-      Navigator.pushNamed(context, WhatsappTransferScreen.routePath);
-    } else if (checkoutPaymentMethodViewModel.method == 'telegram') {
-      Navigator.pushNamed(context, TelegramTransferScreen.routePath);
+      /// REDIRECT TO PAYMENT SCREEN
+      if (checkoutPaymentMethodViewModel.method == 'whatsapp') {
+        Navigator.pushNamed(context, WhatsappTransferScreen.routePath);
+      } else if (checkoutPaymentMethodViewModel.method == 'telegram') {
+        Navigator.pushNamed(context, TelegramTransferScreen.routePath);
+      }
     }
   }
 

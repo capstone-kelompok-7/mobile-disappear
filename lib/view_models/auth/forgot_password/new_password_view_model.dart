@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:disappear/main.dart';
+import 'package:disappear/screens/auth/forgot_password/components/reset_password_failed_dialog.dart';
+import 'package:disappear/screens/auth/forgot_password/components/reset_password_success_dialog.dart';
 import 'package:disappear/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -52,51 +55,47 @@ class NewPasswordViewModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  String? _message;
-
-  set message(String? message) {
-    _message = message;
-    notifyListeners();
-  }
-
-  String? get message => _message;
-
-  bool? _isPasswordReset;
-
-  set isPasswordReset(bool? isPasswordReset) {
-    _isPasswordReset = isPasswordReset;
-    notifyListeners();
-  }
-
-  bool? get isPasswordReset => _isPasswordReset;
-
   Future<void> resetPassword() async {
     if (formKey.currentState!.validate()) {
       isLoading = true;
-      isPasswordReset = null;
 
       try {
       final authService = AuthService();
-
       final response = await authService.resetPassword(
         passwordController.text,
         passwordConfirmationController.text,
         accessToken!
       );
-      message = response['message'];
-
-      isPasswordReset = true;
+      
+      _showSuccessMessage(response['message']);
       } on DioException catch (error) {
         if (error.response != null) {
           if ([400, 401, 404, 500].contains(error.response!.statusCode)) {
-            message = error.response!.data['message'];
-            isPasswordReset = false;
+            _showFailedMessage(error.response!.data['message']);
           }
         }
+
+        _showFailedMessage('Terjadi kesalahan pada server.');
       } finally {
         isLoading = false;
       }
     }
+  }
+
+  void _showSuccessMessage(String message) {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (context) => ResetPasswordSuccessDialog(message: message)
+    );
+  }
+
+  void _showFailedMessage(String message) {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (context) => ResetPasswordFailedDialog(message: message)
+    );
   }
 
   String? validatePassword(value) {

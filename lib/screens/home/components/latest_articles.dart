@@ -1,4 +1,4 @@
-import 'package:disappear/models/article_model.dart';
+import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/article/article_screen.dart';
 import 'package:disappear/screens/home/components/latest_article_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -6,7 +6,7 @@ import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class LatestArticles extends StatefulWidget {
-  final List<ArticleModel> articles;
+  final List<Article> articles;
 
   const LatestArticles({super.key, required this.articles});
 
@@ -36,8 +36,7 @@ class _LatestArticlesState extends State<LatestArticles> {
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) =>
-                LatestArticleItem(article: widget.articles[index]),
+            itemBuilder: (context, index) => LatestArticleItem(article: widget.articles[index]),
             separatorBuilder: (context, index) => const SizedBox(height: 10),
             itemCount: widget.articles.length,
           ),

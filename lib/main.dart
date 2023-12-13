@@ -81,13 +81,19 @@ import 'package:disappear/view_models/search_product/search_history_view_model.d
 import 'package:disappear/view_models/main_view_model.dart';
 import 'package:disappear/view_models/search_product/search_products_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 import 'package:timeago/timeago.dart' as timeago;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async {
+  await initializeDateFormatting('id');
+  
+  Intl.systemLocale = 'id';
+  
   timeago.setLocaleMessages('id', IndonesianMessage());
 
   runApp(MultiProvider(
