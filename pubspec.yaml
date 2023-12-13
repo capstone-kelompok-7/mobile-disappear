@@ -54,6 +54,7 @@ dependencies:
   timeago: ^3.6.0
   url_launcher: ^6.2.2
   telegram: ^0.0.3
+  dash_chat_2: ^0.0.19
 
 dev_dependencies:
   flutter_test:

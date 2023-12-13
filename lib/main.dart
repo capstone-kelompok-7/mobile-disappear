@@ -1,7 +1,7 @@
-import 'package:disappear/screens/article/article_screen.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/screens/auth/register/register_verification_screen.dart';
+
 import 'package:disappear/screens/challenge/challenge_main_screen.dart';
 import 'package:disappear/screens/challenge/challenge_components.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
@@ -10,6 +10,7 @@ import 'package:disappear/screens/challenge/join_challenge_screen.dart';
 import 'package:disappear/screens/change_password_screen.dart';
 import 'package:disappear/screens/chatbot/chatbot_empty_screen.dart';
 import 'package:disappear/screens/chatbot/chatbot_screen.dart';
+import 'package:disappear/screens/chatbot/new_chatbot_screen.dart';
 import 'package:disappear/screens/checkout/add_new_address_screen.dart';
 import 'package:disappear/screens/checkout/address/checkout_address_screen.dart';
 import 'package:disappear/screens/checkout/address_list_screen.dart';
@@ -17,13 +18,14 @@ import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/checkout/choose_transport_screen.dart';
 import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
+
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
 import 'package:disappear/screens/environmental_issues/environmental_issues_screen.dart';
 import 'package:disappear/screens/favorite_product/favorite_product_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
-import 'package:disappear/screens/leaderboard/leaderboard_screen.dart';
+
 import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
@@ -58,6 +60,7 @@ import 'package:disappear/view_models/auth/register/register_verification_view_m
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:disappear/view_models/cart/cart_view_model.dart';
+import 'package:disappear/view_models/chatbot/chatbot_viewmodel.dart';
 import 'package:disappear/view_models/checkout/checkout_address_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_view_model.dart';
@@ -82,14 +85,11 @@ import 'package:disappear/view_models/main_view_model.dart';
 import 'package:disappear/view_models/search_product/search_products_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:timeago/timeago.dart' as timeago;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 void main() {
   timeago.setLocaleMessages('id', IndonesianMessage());
-
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -162,18 +162,6 @@ void main() {
         create: (context) => ProductReviewViewModel(),
       ),
       ChangeNotifierProvider(
-        create: (context) => AddToCartViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CheckoutViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CheckoutVoucherViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CheckoutAddressViewModel(),
-      ),
-      ChangeNotifierProvider(
         create: (context) => CheckoutPaymentMethodViewModel(),
       ),
       ChangeNotifierProvider(
@@ -185,6 +173,9 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => ManualTransferViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => ChatbotViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -192,12 +183,11 @@ void main() {
 
 class App extends StatelessWidget {
   const App({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.routePath,
       debugShowCheckedModeBanner: false,
+      initialRoute: SplashScreen.routePath,
       navigatorKey: navigatorKey,
       routes: {
         SplashScreen.routePath: (context) => const SplashScreen(),
@@ -223,8 +213,6 @@ class App extends StatelessWidget {
         ChallengeMainScreen.routePath: (context) => const ChallengeMainScreen(),
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
-        ArticleScreen.routePath: (context) => ArticleScreen(),
-        ArticleScreen.routePath: (context) => ArticleScreen(),
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),
@@ -263,6 +251,8 @@ class App extends StatelessWidget {
             const TelegramTransferScreen(),
         ChatBotScreen.routePath: (context) => ChatBotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
+        // NewChatbotScreen.routePath: (context) => const NewChatbotScreen(),
+        ChatBotScreen.routePath :(context) =>  ChatBotScreen()
       },
       theme: ThemeData(
         fontFamily: 'Poppins',
