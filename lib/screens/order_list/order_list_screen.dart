@@ -23,10 +23,6 @@ class OrderListScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: whiteColor),
-          onPressed: () {},
-        ),
       ),
       body: DefaultTabController(
         length: 5,

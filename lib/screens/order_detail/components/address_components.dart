@@ -56,10 +56,6 @@ class _AddressComponentsState extends State<AddressComponents> {
                 widget.orderDetail.address.address,
                 style: regularBody8,
               ),
-              Text(
-                'KAB. BANDUNG, JAWA BARAT, 40111',
-                style: regularBody8,
-              ),
             ],
           )
         ],

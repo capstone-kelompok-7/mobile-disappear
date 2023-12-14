@@ -44,7 +44,7 @@ class _OrderNumberState extends State<OrderNumber> {
                 style: mediumBody8.copyWith(color: neutral20),
               ),
               Text(
-                widget.orderDetail.statusOrderDate.toString(),
+                widget.orderDetail.formattedDate.toString(),
                 style: mediumBody8.copyWith(color: neutral20),
               ),
             ],
@@ -60,7 +60,7 @@ class _OrderNumberState extends State<OrderNumber> {
                 style: mediumBody8.copyWith(color: neutral20),
               ),
               Text(
-                '30-10-2023 12:30',
+                widget.orderDetail.formattedDate.toString(),
                 style: mediumBody8.copyWith(color: neutral20),
               ),
             ],

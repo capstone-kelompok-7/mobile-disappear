@@ -40,4 +40,10 @@ class OrderService {
       throw Exception('Failed to fetch orders: $error');
     }
   }
+
+  Future<dynamic> acceptOrder(String id) async {
+    Response response = await dio.put("/order/accept-order/$id");
+
+    return response.data;
+  }
 }
