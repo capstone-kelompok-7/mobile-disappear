@@ -1,5 +1,4 @@
 import 'package:disappear/screens/article/article_screen.dart';
-import 'package:disappear/screens/article/components/carousel_article_component.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/screens/auth/register/register_verification_screen.dart';
@@ -48,6 +47,7 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/bookmark_view_model.dart';
 import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
 import 'package:disappear/view_models/article/filter_article_view_model.dart';
 import 'package:disappear/view_models/article/get_article_view_model.dart';
@@ -92,11 +92,11 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   await initializeDateFormatting('id');
-  
+
   Intl.systemLocale = 'id';
-  
+
   timeago.setLocaleMessages('id', IndonesianMessage());
-  
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -204,6 +204,9 @@ void main() async {
       ChangeNotifierProvider(
         create: (context) => ProductReviewViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => BookmarkViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -248,7 +251,7 @@ class App extends StatelessWidget {
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
-        SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
+        SaveArticleScreen.routePath: (context) => SaveArticleScreen(),
         CartScreen.routePath: (context) => const CartScreen(),
         DetailOrderScreen.routePath: (context) => const DetailOrderScreen(),
         ProfileScreen.routePath: (context) => const ProfileScreen(),
@@ -282,7 +285,6 @@ class App extends StatelessWidget {
             const TelegramTransferScreen(),
         ChatBotScreen.routePath: (context) => ChatBotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
-        CarouselArticleScreen.routePath: (context) => CarouselArticleScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',

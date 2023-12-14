@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
 
 import 'package:disappear/models/carousel_article_model.dart';
-import 'package:disappear/screens/article/components/carousel_article_component.dart';
+import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/article/components/list_articles_item.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/placeholders/list_article_placeholder.dart';
@@ -10,6 +10,7 @@ import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
 import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
 import 'package:disappear/view_models/article/filter_article_view_model.dart';
+import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,9 @@ class ArticleScreen extends StatefulWidget {
 class _ArticleScreenState extends State<ArticleScreen> {
   late ArticleFilterViewModel _articleFilterViewModel;
   late CarouselArticleViewModel _carouselArticleViewModel;
+  late HomeViewModel _challengeArticleViewModel;
+
+  late Future _challengeArticleFuture;
   late Future _articleFuture;
   late Future _articleCarouselFuture;
 
@@ -35,14 +39,18 @@ class _ArticleScreenState extends State<ArticleScreen> {
     _articleFilterViewModel =
         Provider.of<ArticleFilterViewModel>(context, listen: false);
     _articleFilterViewModel.fetchArticles();
-
     _articleFuture = _articleFilterViewModel.fetchArticles();
 
     _carouselArticleViewModel =
         Provider.of<CarouselArticleViewModel>(context, listen: false);
     _carouselArticleViewModel.getCarouselArticles();
-
     _articleCarouselFuture = _carouselArticleViewModel.getCarouselArticles();
+
+    _challengeArticleViewModel =
+        Provider.of<HomeViewModel>(context, listen: false);
+    _challengeArticleViewModel.getChallengesAndArticles();
+    _challengeArticleFuture =
+        _challengeArticleViewModel.getChallengesAndArticles();
   }
 
   void _goToDetailArticleScreen(int id) {
@@ -55,11 +63,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
 
   @override
   Widget build(BuildContext context) => buildScreen(context);
-
-  void _goToCarouselScreen() {
-    Navigator.pushNamedAndRemoveUntil(
-        context, CarouselArticleScreen.routePath, (route) => false);
-  }
 
   Widget buildScreen(BuildContext context) {
     return Scaffold(
@@ -80,9 +83,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
-              _goToCarouselScreen();
-            },
+            onPressed: () {},
             icon: const Icon(
               Icons.bookmark_border_outlined,
               color: Colors.white,
@@ -139,7 +140,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                                       .symmetric(
                                                       horizontal: 5.0),
                                                   decoration: BoxDecoration(
-                                                    color: Colors.amber,
+                                                    color: Colors.grey,
                                                     borderRadius:
                                                         const BorderRadius.all(
                                                       Radius.circular(6.0),
@@ -190,7 +191,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                     }).toList(),
                                   ),
 
-                                  // Indicator Carousel
                                   // Indicator Carousel
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
