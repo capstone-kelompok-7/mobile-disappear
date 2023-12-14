@@ -3,6 +3,7 @@
 //     final orderDetailByIdModel = orderDetailByIdModelFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 OrderDetailByIdModel orderDetailByIdModelFromJson(String str) =>
     OrderDetailByIdModel.fromJson(json.decode(str));
@@ -119,6 +120,11 @@ class OrderDetailByIdModel {
         "order_details":
             List<dynamic>.from(orderDetails.map((x) => x.toJson())),
       };
+
+  String get formattedDate {
+    final f = DateFormat('dd-MM-yyyy');
+    return f.format(createdAt);
+  }
 }
 
 class Address {

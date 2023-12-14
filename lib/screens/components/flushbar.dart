@@ -4,7 +4,8 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-void showSuccessFlushbar({ required String message, bool withIcon = false }) async {
+void showSuccessFlushbar(
+    {required String message, bool withIcon = false}) async {
   await Flushbar(
     flushbarPosition: FlushbarPosition.TOP,
     backgroundColor: const Color(0xffE3FFF1),
@@ -13,13 +14,20 @@ void showSuccessFlushbar({ required String message, bool withIcon = false }) asy
     borderWidth: 1,
     margin: const EdgeInsets.all(10),
     borderRadius: BorderRadius.circular(5),
-    icon: withIcon ? SvgPicture.asset('assets/img/SuccessIcon.svg', width: 20, height: 20,) : null,
+    icon: withIcon
+        ? SvgPicture.asset(
+            'assets/img/SuccessIcon.svg',
+            width: 20,
+            height: 20,
+          )
+        : null,
     message: message,
     duration: const Duration(seconds: 3),
   ).show(navigatorKey.currentContext!);
 }
 
-void showFailedFlushbar({ required String message, bool withIcon = false }) async {
+void showFailedFlushbar(
+    {required String message, bool withIcon = false}) async {
   await Flushbar(
     flushbarPosition: FlushbarPosition.TOP,
     backgroundColor: error10,
@@ -28,7 +36,13 @@ void showFailedFlushbar({ required String message, bool withIcon = false }) asyn
     borderWidth: 1,
     margin: const EdgeInsets.all(10),
     borderRadius: BorderRadius.circular(5),
-    icon: withIcon ? SvgPicture.asset('assets/img/FailedIcon.svg', width: 20, height: 20,) : null,
+    icon: withIcon
+        ? SvgPicture.asset(
+            'assets/img/FailedIcon.svg',
+            width: 20,
+            height: 20,
+          )
+        : null,
     message: message,
     duration: const Duration(seconds: 3),
   ).show(navigatorKey.currentContext!);
