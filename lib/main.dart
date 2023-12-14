@@ -47,8 +47,8 @@ import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
+import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
 import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
-import 'package:disappear/view_models/article/detail_articles_view_model.dart';
 import 'package:disappear/view_models/article/filter_article_view_model.dart';
 import 'package:disappear/view_models/article/get_article_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
@@ -242,8 +242,8 @@ class App extends StatelessWidget {
         ChallengeMainScreen.routePath: (context) => const ChallengeMainScreen(),
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
-        ArticleScreen.routePath: (context) => ArticleScreen(),
-        ArticleScreen.routePath: (context) => ArticleScreen(),
+        ArticleScreen.routePath: (context) => const ArticleScreen(),
+        // ArticleScreen.routePath: (context) => ArticleScreen(),
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),
