@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/preferences_helper.dart';
+import 'package:disappear/view_models/profile/user_profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const String routePath = '/edit-profile-screen';
@@ -21,6 +25,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   File? selectedImage;
 
+  @override
+  void initState() {
+    super.initState();
+    final profile = context.read<ProfileViewModel>().profile;
+    nameController = TextEditingController(text: profile?.name ?? '');
+    numberController = TextEditingController(text: profile?.phone ?? '');
+  }
+
   Future pickImageFromGallery() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
@@ -35,11 +47,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        backgroundColor: primary40,
+        title: Text(
           'Edit Profile',
-          style: TextStyle(fontWeight: FontWeight.w600),
+          style: semiBoldBody1.copyWith(color: whiteColor),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.keyboard_arrow_left,
+            size: 32,
+            color: whiteColor,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Form(
         key: formkey,
@@ -55,18 +76,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: Stack(
                     children: [
                       CircleAvatar(
-                          radius: 50,
-                          child: selectedImage != null
-                              ? ClipOval(
-                                  child: Image.file(
-                                    selectedImage!,
-                                    width: 100,
-                                    height: 100,
+                        radius: 50,
+                        backgroundColor: Colors.grey,
+                        child: selectedImage != null
+                            ? Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: FileImage(selectedImage!),
                                     fit: BoxFit.cover,
                                   ),
-                                )
-                              : SvgPicture.asset(
-                                  'assets/img/profilePicture.svg')),
+                                ),
+                              )
+                            : Center(
+                                child: SvgPicture.asset(
+                                  'assets/img/profilePicture.svg',
+                                  width: 50,
+                                  height: 50,
+                                ),
+                              ),
+                      ),
                       Positioned(
                         right: 8,
                         bottom: 10,
@@ -108,6 +139,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 const SizedBox(
                   height: 34,
                 ),
+
                 //FORMFIELD EMAIL
                 const Text(
                   'Email',
@@ -116,26 +148,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                TextFormField(
-                  validator: (value) {
-                    const String expressionEmail = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
-                    RegExp regex = RegExp(expressionEmail);
-                    return !regex.hasMatch(value!)
-                        ? "Masukkan Email yang valid"
-                        : null;
+                FutureBuilder<String?>(
+                  future: PreferencesHelper.getUserEmail(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return TextFormField(
+                        enabled: false,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: snapshot.data,
+                          hintStyle: mediumBody8.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: neutral20),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          contentPadding: const EdgeInsets.only(left: 10),
+                        ),
+                      );
+                    } else {
+                      return const Text('Loading...', style: mediumBody8);
+                    }
                   },
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                      hintText: 'Masukkan Email Anda',
-                      hintStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      contentPadding: const EdgeInsets.only(left: 10)),
                 ),
 
                 const SizedBox(
@@ -178,17 +213,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                 ElevatedButton(
                   style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(primary30),
                     minimumSize:
                         MaterialStateProperty.all(const Size.fromHeight(5)),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (formkey.currentState!.validate()) {
-                      _showDialog();
+                      final data = {
+                        'name': nameController.text,
+                        'phone': numberController.text,
+                      };
+
+                      try {
+                        await context
+                            .read<ProfileViewModel>()
+                            .editProfile(data);
+                        _showDialog();
+                      } catch (error) {
+                        showDialogFailed();
+                      }
                     }
                   },
                   child: const Text(
-                    'Simpan',
-                    style: semiBoldBody4,
+                    'Edit',
+                    style: semiBoldBody6,
                   ),
                 ),
               ],
@@ -206,7 +254,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          // contentPadding: EdgeInsets.zero,
           title: const Column(
             children: [
               Icon(Icons.check_circle_outline_outlined,
@@ -225,12 +272,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             children: [
               const Padding(
                 padding: EdgeInsets.only(bottom: 20),
-                child: Text(
-                  'Data profil mu telah berhasil diperbarui, nih. \n                Silahkan nikmati fitur lainnya!',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w400,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Selamat! Data mu sudah berhasil\ndiperbarui, nih. Silahkan nikmati fitur\nlainnya!!",
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -238,7 +288,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 padding: const EdgeInsets.only(bottom: 10, left: 40, right: 40),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).popAndPushNamed('/profile-screen');
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                   },
                   style: ButtonStyle(
                       minimumSize:
@@ -252,6 +302,59 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     'Okay',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void showDialogFailed() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/img/DialogFailedIcon.svg',
+                      height: 50,
+                      width: 50,
+                    ),
+                    const SizedBox(height: 14),
+                    const Text(
+                      'Ooops!!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Sepertinya ada kesalahan server\ninternal, nih. Atau pastikan koneksi mu\ndalam kondisi baik, ya. Coba lagi, yuk!!",
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
