@@ -51,6 +51,9 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   void _showAddToCartDialog() {
+    final addToCartViewModel = Provider.of<AddToCartViewModel>(context, listen: false);
+    addToCartViewModel.quantity = 1;
+
     showModalBottomSheet(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -198,22 +201,21 @@ class _ProductScreenState extends State<ProductScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              snapshot.data!.name,
-                              style: semiBoldBody3,
-                            ),
+                            Text(snapshot.data!.name, style: semiBoldBody3),
                             const SizedBox(height: 5,),
-                            Row(
-                              children: [
-                                Text(
-                                  snapshot.data!.formattedPrice,
-                                  style: semiBoldBody5,
-                                ),
-                                Text(
-                                  ' | ${snapshot.data!.gramPlastic} gram',
-                                  style: regularBody5.copyWith(color: neutral20),
-                                )
-                              ],
+                            FittedBox(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    snapshot.data!.formattedPrice,
+                                    style: semiBoldBody5,
+                                  ),
+                                  Text(
+                                    ' | ${snapshot.data!.gramPlastic} gram',
+                                    style: regularBody5.copyWith(color: neutral20),
+                                  )
+                                ],
+                              ),
                             )
                           ],
                         ),

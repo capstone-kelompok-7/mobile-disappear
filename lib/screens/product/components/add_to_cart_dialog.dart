@@ -1,4 +1,3 @@
-import 'package:disappear/screens/product/components/add_to_cart_success_dialog.dart';
 import 'package:disappear/screens/product/components/quantity_control.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -39,29 +38,29 @@ class _AddToCartDialogState extends State<AddToCartDialog> {
                 ),
               ),
               const SizedBox(width: 30,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Consumer<AddToCartViewModel>(
-                    builder: (context, state, _) {
-                      return Text(
-                        state.product!.name!,
-                        style: semiBoldBody5,
-                      );
-                    }
-                  ),
-                  const SizedBox(height: 8),
-                  Consumer<AddToCartViewModel>(
-                    builder: (context, state, _) {
-                      return Text(
-                        'Stock : ${state.product!.stock}',
-                        style: regularBody6,
-                      );
-                    }
-                  ),
-                  const SizedBox(height: 14),
-                  const QuantityControl()
-                ],
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Consumer<AddToCartViewModel>(
+                      builder: (context, state, _) {
+                        return Text(
+                          state.product!.name!,
+                          overflow: TextOverflow.ellipsis,
+                          style: semiBoldBody5,
+                        );
+                      }
+                    ),
+                    const SizedBox(height: 8),
+                    Consumer<AddToCartViewModel>(
+                      builder: (context, state, _) {
+                        return Text('Stok : ${state.product!.stock}', style: regularBody6);
+                      }
+                    ),
+                    const SizedBox(height: 14),
+                    const QuantityControl(),
+                  ],
+                ),
               )
             ],
           ),
