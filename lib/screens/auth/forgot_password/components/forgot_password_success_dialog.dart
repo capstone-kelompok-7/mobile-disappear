@@ -8,11 +8,9 @@ class ForgotPasswordSuccessDialog extends StatefulWidget {
   const ForgotPasswordSuccessDialog({
     super.key,
     required this.message,
-    required this.email,
   });
 
   final String message;
-  final String email;
 
   @override
   State<ForgotPasswordSuccessDialog> createState() => _ForgotPasswordSuccessDialogState();

@@ -1,5 +1,3 @@
-// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables, library_private_types_in_public_api, non_constant_identifier_names
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
@@ -57,6 +55,10 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   void _showAddToCartDialog() {
+    final addToCartViewModel =
+        Provider.of<AddToCartViewModel>(context, listen: false);
+    addToCartViewModel.quantity = 1;
+
     showModalBottomSheet(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -106,27 +108,29 @@ class _ProductScreenState extends State<ProductScreen> {
     final cartViewModel =
         Provider.of<AddToCartViewModel>(context, listen: false);
 
+    final appBar = AppBar(
+      backgroundColor: primary40,
+      leading: IconButton(
+        icon: const Icon(
+          Icons.keyboard_arrow_left,
+          size: 32,
+          color: whiteColor,
+        ),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+      title: Text(
+        'Detail Produk',
+        style: semiBoldBody1.copyWith(color: whiteColor),
+      ),
+      centerTitle: true,
+    );
+
     return FutureBuilder(
         future: productFuture,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: primary40,
-                  leading: IconButton(
-                    icon: const Icon(
-                      Icons.keyboard_arrow_left,
-                      size: 32,
-                      color: whiteColor,
-                    ),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  title: Text(
-                    'Detail Produk',
-                    style: semiBoldBody1.copyWith(color: whiteColor),
-                  ),
-                  centerTitle: true,
-                ),
+                appBar: appBar,
                 body: const Center(child: Text('Produk tidak ditemukan')));
           }
 
@@ -134,22 +138,7 @@ class _ProductScreenState extends State<ProductScreen> {
             cartViewModel.product = snapshot.data!;
 
             return Scaffold(
-              appBar: AppBar(
-                backgroundColor: primary40,
-                leading: IconButton(
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left,
-                    size: 32,
-                    color: whiteColor,
-                  ),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-                title: Text(
-                  'Detail Produk',
-                  style: semiBoldBody1.copyWith(color: whiteColor),
-                ),
-                centerTitle: true,
-              ),
+              appBar: appBar,
               body: ListView(
                 children: [
                   Column(
@@ -232,25 +221,24 @@ class _ProductScreenState extends State<ProductScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                snapshot.data!.name,
-                                style: semiBoldBody3,
-                              ),
+                              Text(snapshot.data!.name, style: semiBoldBody3),
                               const SizedBox(
                                 height: 5,
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    snapshot.data!.formattedPrice,
-                                    style: semiBoldBody5,
-                                  ),
-                                  Text(
-                                    ' | ${snapshot.data!.gramPlastic} gram',
-                                    style:
-                                        regularBody5.copyWith(color: neutral20),
-                                  )
-                                ],
+                              FittedBox(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      snapshot.data!.formattedPrice,
+                                      style: semiBoldBody5,
+                                    ),
+                                    Text(
+                                      ' | ${snapshot.data!.gramPlastic} gram',
+                                      style: regularBody5.copyWith(
+                                          color: neutral20),
+                                    )
+                                  ],
+                                ),
                               )
                             ],
                           ),
@@ -512,8 +500,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return ProductReviewItem(
-                                    review: snapshot.data!.reviews[index],
-                                  );
+                                      review: snapshot.data!.reviews[index]);
                                 },
                                 separatorBuilder: (context, index) =>
                                     const SizedBox(

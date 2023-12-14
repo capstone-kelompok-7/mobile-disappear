@@ -1,14 +1,12 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
-import 'package:disappear/main.dart';
 import 'package:disappear/models/cart/cart_model.dart';
 import 'package:disappear/models/checkout/created_order_model.dart';
 import 'package:disappear/models/checkout/voucher/checkout_voucher_model.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/services/checkout_service.dart';
-import 'package:disappear/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 
 class CheckoutViewModel extends ChangeNotifier {
   String purchaseType = 'buy-now';
@@ -98,7 +96,7 @@ class CheckoutViewModel extends ChangeNotifier {
 
   bool get isCheckingOut => _isCheckingOut;
 
-  Future<CreatedOrder?> createOrder({
+  Future<dynamic> createOrder({
     required int addressId,
     required String paymentMethod,
     int? voucherId,
@@ -107,7 +105,7 @@ class CheckoutViewModel extends ChangeNotifier {
 
     try {
       final service = CheckoutService();
-      final CreatedOrder createdOrder = await service.createOrder(
+      final dynamic createdOrder = await service.createOrder(
         productId: product!.id,
         addressId: addressId,
         note: notesController.text,
@@ -117,20 +115,11 @@ class CheckoutViewModel extends ChangeNotifier {
 
       return createdOrder;
     } on DioException catch (e) {
-      if ([403, 500].contains(e.response?.statusCode)) {
-        await Flushbar(
-          flushbarPosition: FlushbarPosition.TOP,
-          backgroundColor: error10,
-          messageColor: whiteColor,
-          borderColor: error30,
-          borderWidth: 1,
-          margin: const EdgeInsets.all(10),
-          borderRadius: BorderRadius.circular(5),
-          message: e.response!.data['message'],
-          duration: const Duration(seconds: 3),
-        ).show(navigatorKey.currentContext!);
+      if ([400, 403, 500].contains(e.response?.statusCode)) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      } else {
+        showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
       }
-      // TODO
     } finally {
       isCheckingOut = false;
     }
@@ -138,7 +127,7 @@ class CheckoutViewModel extends ChangeNotifier {
     return null;
   }
 
-  Future<CreatedOrder?> createOrderByCart({
+  Future<dynamic> createOrderByCart({
     required int addressId,
     required String paymentMethod,
     int? voucherId,
@@ -147,7 +136,7 @@ class CheckoutViewModel extends ChangeNotifier {
 
     try {
       final service = CheckoutService();
-      final CreatedOrder createdOrder = await service.createOrderByCart(
+      final dynamic createdOrder = await service.createOrderByCart(
         cartItems: selectedItems,
         addressId: addressId,
         note: notesController.text,
@@ -156,8 +145,12 @@ class CheckoutViewModel extends ChangeNotifier {
       );
 
       return createdOrder;
-    } on Exception catch (e) {
-      // TODO
+    } on DioException catch (e) {
+      if ([400, 403, 500].contains(e.response?.statusCode)) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      } else {
+        showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
+      }
     } finally {
       isCheckingOut = false;
     }

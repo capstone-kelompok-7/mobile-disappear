@@ -1,5 +1,3 @@
-import 'package:disappear/screens/auth/register/components/register_failed_dialog.dart';
-import 'package:disappear/screens/auth/register/components/register_success_dialog.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
@@ -31,37 +29,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (mounted && context.mounted) {
       final registerViewModel = Provider.of<RegisterViewModel>(context, listen: false);
       final registerVerifViewModel = Provider.of<RegisterVerificationViewModel>(context, listen: false);
-
+      
       if (registerViewModel.isEmailSent == true) {
-        _displaySuccessMessage(registerViewModel.message!);
-
-        registerViewModel.isEmailSent = null;
         registerVerifViewModel.email = registerViewModel.emailController.text;
-      }
-
-      if (registerViewModel.isEmailSent == false) {
-        _displayFailedMessage(registerViewModel.message!);
-        registerViewModel.isEmailSent = null;
+        registerViewModel.isEmailSent = false;
       }
     }
-  }
-
-  void _displayFailedMessage(String message) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) =>
-        RegisterFailedDialog(message: message)
-    );
-  }
-
-  void _displaySuccessMessage(String message) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) =>
-        RegisterSuccessDialog(message: message)
-    );
   }
 
   @override

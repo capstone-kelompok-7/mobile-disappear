@@ -1,7 +1,11 @@
+import 'package:disappear/models/address_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/address/address_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNewAddresScreen extends StatefulWidget {
   static const String routePath = '/add-new-address-screen';
@@ -23,18 +27,26 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        backgroundColor: primary40,
+        title: Text(
           'Tambah Alamat',
-          style: semiBoldBody1,
+          style: semiBoldBody1.copyWith(color: whiteColor),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.keyboard_arrow_left,
+            size: 32,
+            color: whiteColor,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Form(
         key: formkey,
         child: Padding(
           padding: const EdgeInsets.only(top: 18, left: 25, right: 25),
           child: ListView(
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Kontak',
@@ -162,9 +174,27 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
                     minimumSize: MaterialStateProperty.all(
                         const Size(double.infinity, 20)),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (formkey.currentState!.validate()) {
-                      _showDialogSuccess();
+                      final int userId = await getUserId();
+
+                      final addressViewModel =
+                          Provider.of<AddressViewModel>(context, listen: false);
+
+                      final newAddress = Address(
+                        id: 0,
+                        userId: userId,
+                        acceptedName: nameController.text,
+                        phone: numberController.text,
+                        address: addressController.text,
+                        isPrimary: isMainAddress,
+                      );
+
+                      addressViewModel.createAddress(newAddress).then((_) {
+                        _showDialogSuccess();
+                      }).catchError((error) {
+                        _showDialogFailed();
+                      });
                     }
                   },
                   child: const Text(
@@ -198,7 +228,6 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
               ),
-              SizedBox(height: 5),
             ],
           ),
           content: Column(
@@ -206,12 +235,16 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
             children: [
               const Padding(
                 padding: EdgeInsets.only(bottom: 20),
-                child: Text(
-                  'Data profil mu telah berhasil diperbarui, nih. \n                Silahkan nikmati fitur lainnya!',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w400,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Selamat! Alamat baru mu sudah\nberhasil disimpan, nih. Terima kasih\natas penambahan alamat baru mu!!',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -288,4 +321,9 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
       },
     );
   }
+}
+
+Future<int> getUserId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('userId') ?? 0;
 }

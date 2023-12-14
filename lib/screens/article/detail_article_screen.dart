@@ -265,7 +265,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: Text(
-              'Detail Produk',
+              'Artikel',
               style: semiBoldBody1.copyWith(color: whiteColor),
             ),
             centerTitle: true,

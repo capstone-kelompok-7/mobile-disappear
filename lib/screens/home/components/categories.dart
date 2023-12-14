@@ -1,4 +1,4 @@
-import 'package:disappear/models/category_model.dart';
+import 'package:disappear/models/home/carousel_category_product_model.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/home/components/category_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -6,7 +6,7 @@ import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class Categories extends StatefulWidget {
-  final List<CategoryModel> categories;
+  final List<Category> categories;
 
   const Categories({super.key, required this.categories});
 

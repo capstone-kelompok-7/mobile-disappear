@@ -1,38 +1,64 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
 
-import 'package:disappear/screens/article/components/list_articles.dart';
+import 'package:disappear/models/carousel_article_model.dart';
+import 'package:disappear/screens/article/components/carousel_article_component.dart';
+import 'package:disappear/screens/article/components/list_articles_item.dart';
+import 'package:disappear/screens/article/detail_article_screen.dart';
+import 'package:disappear/screens/article/placeholders/list_article_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
+import 'package:disappear/view_models/article/filter_article_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 
 class ArticleScreen extends StatefulWidget {
   static String routePath = '/article-screen';
-  ArticleScreen({Key? key}) : super(key: key);
+
+  const ArticleScreen({Key? key}) : super(key: key);
 
   @override
   State<ArticleScreen> createState() => _ArticleScreenState();
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
+  late ArticleFilterViewModel _articleFilterViewModel;
+  late CarouselArticleViewModel _carouselArticleViewModel;
+  late Future _articleFuture;
+  late Future _articleCarouselFuture;
+
   @override
   void initState() {
     super.initState();
+    _articleFilterViewModel =
+        Provider.of<ArticleFilterViewModel>(context, listen: false);
+    _articleFilterViewModel.fetchArticles();
+
+    _articleFuture = _articleFilterViewModel.fetchArticles();
+
+    _carouselArticleViewModel =
+        Provider.of<CarouselArticleViewModel>(context, listen: false);
+    _carouselArticleViewModel.getCarouselArticles();
+
+    _articleCarouselFuture = _carouselArticleViewModel.getCarouselArticles();
+  }
+
+  void _goToDetailArticleScreen(int id) {
+    final articleViewModel =
+        Provider.of<DetailArticlesViewModel>(context, listen: false);
+    articleViewModel.articleId = id;
+
+    Navigator.pushNamed(context, DetailArticleScreen.routePath);
   }
 
   @override
   Widget build(BuildContext context) => buildScreen(context);
 
-  int currentIndex = 0;
-  final CarouselController carouselController = CarouselController();
-
-  List<String> sortOptions = ["Urutan Berdasarkan", "Option 2", "Option 3"];
-  String selectedSortOption = "Urutan Berdasarkan";
-
-  void onSortOptionChanged(String newValue) {
-    setState(() {
-      selectedSortOption = newValue;
-    });
+  void _goToCarouselScreen() {
+    Navigator.pushNamedAndRemoveUntil(
+        context, CarouselArticleScreen.routePath, (route) => false);
   }
 
   Widget buildScreen(BuildContext context) {
@@ -54,7 +80,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _goToCarouselScreen();
+            },
             icon: const Icon(
               Icons.bookmark_border_outlined,
               color: Colors.white,
@@ -62,162 +90,229 @@ class _ArticleScreenState extends State<ArticleScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Container(
-                child: Builder(
-                  builder: (context) {
-                    List<String> images = [
-                      "https://pbs.twimg.com/media/F-USECJX0AAfKD9?format=jpg&name=medium",
-                      "https://pbs.twimg.com/media/F9uidkEbgAAWIvt?format=jpg&name=large",
-                      "https://ecomaniac.org/wp-content/uploads/2022/11/The-Green-Environment.jpg",
-                      "https://pbs.twimg.com/media/F5A9JP8WcAATr6B?format=jpg&name=900x900",
-                      "https://pbs.twimg.com/media/F0bo5RyWwAETV8s?format=jpg&name=large",
-                    ];
-
-                    List<String> titles = [
-                      'Berapa Banyak Sampah Plastik yang Ada di Lautan?',
-                      'Judul Teks Gambar 2',
-                      'Judul Teks Gambar 3',
-                      'Judul Teks Gambar 4',
-                      'Judul Teks Gambar 5',
-                    ];
-
-                    return Column(
-                      children: [
-                        // Carousel
-                        CarouselSlider(
-                          carouselController: carouselController,
-                          options: CarouselOptions(
-                            height: 195.0,
-                            autoPlay: true,
-                            enlargeCenterPage: true,
-                            onPageChanged: (index, reason) {
-                              currentIndex = index;
-                              setState(() {});
-                            },
-                          ),
-                          items: images.asMap().entries.map((entry) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return Stack(
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(6.0),
-                                        ),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                            entry.value,
-                                          ),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      left: 5,
-                                      right: 5,
-                                      child: Container(
-                                        height: 81.0,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.5),
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(6.0),
-                                            bottomRight: Radius.circular(6.0),
-                                          ),
-                                        ),
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          titles[entry.key],
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
-                        // Indicator Carousel
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: images.asMap().entries.map((entry) {
-                            return GestureDetector(
-                              onTap: () =>
-                                  carouselController.animateToPage(entry.key),
-                              child: Container(
-                                width: 12.0,
-                                height: 12.0,
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                  horizontal: 4.0,
-                                ),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: (Theme.of(context).brightness ==
-                                              Brightness.dark
-                                          ? primary40
-                                          : primary40)
-                                      .withOpacity(currentIndex == entry.key
-                                          ? 0.4
-                                          : 0.9),
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-
-                        // Dropdown
-                        Container(
-                          margin: const EdgeInsets.only(top: 20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              DropdownButton<String>(
-                                value: selectedSortOption,
-                                onChanged: (String? newValue) {
-                                  onSortOptionChanged(newValue!);
-                                },
-                                items: sortOptions.map((String option) {
-                                  return DropdownMenuItem<String>(
-                                    value: option,
-                                    child: Text(option),
-                                  );
-                                }).toList(),
-                                underline: Container(),
-                              ),
-                              const Column(
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: Consumer<ArticleFilterViewModel>(
+          builder: (context, viewModel, child) {
+            return ListView(
+              children: [
+                Column(
+                  children: [
+                    Consumer<CarouselArticleViewModel>(
+                      builder: (context, state, _) {
+                        return FutureBuilder(
+                          future: _articleCarouselFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Center(
+                                  child: Text('Artikel tidak tersedia'));
+                            } else if (snapshot.hasData) {
+                              return Column(
                                 children: [
-                                  SizedBox(
-                                    height: 10.0,
+                                  CarouselSlider(
+                                    carouselController:
+                                        state.carouselController,
+                                    options: CarouselOptions(
+                                      height: 195.0,
+                                      autoPlay: true,
+                                      enlargeCenterPage: true,
+                                      onPageChanged: (index, reason) {
+                                        state.currentIndex = index;
+                                      },
+                                    ),
+                                    items: (snapshot.data
+                                            as List<CarouselArticleModel>)
+                                        .map((carousel) {
+                                      return Builder(
+                                        builder: (BuildContext context) {
+                                          return Stack(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () =>
+                                                    _goToDetailArticleScreen(
+                                                        carousel.id),
+                                                child: Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  margin: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 5.0),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.amber,
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                      Radius.circular(6.0),
+                                                    ),
+                                                    image: DecorationImage(
+                                                      image: NetworkImage(
+                                                        carousel.photo,
+                                                      ),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                bottom: 0,
+                                                left: 5,
+                                                right: 5,
+                                                child: Container(
+                                                  height: 81.0,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black
+                                                        .withOpacity(0.5),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      bottomLeft:
+                                                          Radius.circular(6.0),
+                                                      bottomRight:
+                                                          Radius.circular(6.0),
+                                                    ),
+                                                  ),
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    carousel.title,
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }).toList(),
                                   ),
-                                  ListArticles(),
+
+                                  // Indicator Carousel
+                                  // Indicator Carousel
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: (snapshot.data
+                                            as List<CarouselArticleModel>)
+                                        .asMap()
+                                        .entries
+                                        .map((entry) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          state.carouselController
+                                              .animateToPage(entry.key,
+                                                  duration: const Duration(
+                                                      milliseconds: 300),
+                                                  curve: Curves.easeInOut);
+                                        },
+                                        child: Container(
+                                          width: 12.0,
+                                          height: 12.0,
+                                          margin: const EdgeInsets.symmetric(
+                                            vertical: 8.0,
+                                            horizontal: 4.0,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color:
+                                                entry.key == state.currentIndex
+                                                    ? primary10
+                                                    : primary40,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
                                 ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  },
+                              );
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
+                // Dropdown
+                Container(
+                  margin: const EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    children: [
+                      const Text('Urutkan Berdasarkan'),
+                      DropdownButton<int>(
+                        value: viewModel.sortOption,
+                        onChanged: (int? newValue) async {
+                          await viewModel.changeSortOption(newValue!);
+                        },
+                        items: const [
+                          DropdownMenuItem<int>(
+                            value: 0,
+                            child: Text(' Terbanyak'),
+                          ),
+                          DropdownMenuItem<int>(
+                            value: 1,
+                            child: Text(' Terlama'),
+                          ),
+                          DropdownMenuItem<int>(
+                            value: 2,
+                            child: Text(' Abjad'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                // Tampilan daftar artikel
+                Flexible(
+                  child: FutureBuilder(
+                    future: _articleFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: ListArticlePlaceholder());
+                      } else if (snapshot.hasError) {
+                        return const Center(
+                            child: Text('Artikel tidak tersedia'));
+                      } else if (snapshot.hasData) {
+                        return ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => ListArticleItem(
+                              article: viewModel.articles[index]),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 10),
+                          itemCount: viewModel.articles.length,
+                        );
+                      } else {
+                        return const ListArticlePlaceholder();
+                      }
+                    },
+                  ),
+                ),
+                // const SizedBox(height: 21),
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     await viewModel.fetchArticles();
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     elevation: 0,
+                //     backgroundColor: Colors.white,
+                //     foregroundColor: Colors.blue,
+                //     shape: const RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.all(Radius.circular(8)),
+                //       side: BorderSide(width: 2, color: Colors.blue),
+                //     ),
+                //   ),
+                //   child: const Text(
+                //     'Memuat artikel lainnya',
+                //     style: TextStyle(color: Colors.blue),
+                //   ),
+                // ),
+              ],
+            );
+          },
         ),
       ),
     );
