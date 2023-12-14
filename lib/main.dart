@@ -7,7 +7,6 @@ import 'package:disappear/screens/challenge/challenge_main_screen.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
 import 'package:disappear/screens/challenge/detail_challenge_screen.dart';
 import 'package:disappear/screens/challenge/join_challenge_screen.dart';
-import 'package:disappear/screens/change_password_screen.dart';
 import 'package:disappear/screens/chatbot/chatbot_empty_screen.dart';
 import 'package:disappear/screens/chatbot/chatbot_screen.dart';
 import 'package:disappear/screens/checkout/add_new_address_screen.dart';
@@ -35,6 +34,7 @@ import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/product_review/add_review_screen.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
+import 'package:disappear/screens/profile/change_password_screen.dart';
 import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/auth/register/register_screen.dart';
@@ -47,6 +47,7 @@ import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
+import 'package:disappear/view_models/address/address_view_model.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
 import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
 import 'package:disappear/view_models/article/filter_article_view_model.dart';
@@ -55,6 +56,7 @@ import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_verification_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/new_password_view_model.dart';
 import 'package:disappear/view_models/auth/login_view_model.dart';
+import 'package:disappear/view_models/auth/logout_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_verification_view_model.dart';
 import 'package:disappear/view_models/auth/register/register_view_model.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
@@ -77,6 +79,8 @@ import 'package:disappear/view_models/product/product_review_view_model.dart';
 import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:disappear/view_models/onboarding/onboarding_view_model.dart';
+import 'package:disappear/view_models/profile/change_password_view_model.dart';
+import 'package:disappear/view_models/profile/user_profile_view_model.dart';
 import 'package:disappear/view_models/search_product/filter_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_history_view_model.dart';
@@ -92,11 +96,11 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   await initializeDateFormatting('id');
-  
+
   Intl.systemLocale = 'id';
-  
+
   timeago.setLocaleMessages('id', IndonesianMessage());
-  
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -204,6 +208,12 @@ void main() async {
       ChangeNotifierProvider(
         create: (context) => ProductReviewViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => ProfileViewModel(),
+      ),
+      ChangeNotifierProvider(create: (context) => ChangePasswordViewModel()),
+      ChangeNotifierProvider(create: (context) => AddressViewModel()),
+      ChangeNotifierProvider(create: (context) => LogoutViewModel()),
     ],
     child: const App(),
   ));
