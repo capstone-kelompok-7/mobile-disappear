@@ -1,10 +1,19 @@
+import 'dart:io';
+
+import 'package:disappear/screens/auth/login_screen.dart';
+import 'package:disappear/screens/checkout/address_list_screen.dart';
+import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/profile/placeholders/profile_placeholder.dart';
+import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/logout_view_model.dart';
+import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
+import 'package:disappear/view_models/main_view_model.dart';
 import 'package:disappear/view_models/preferences_helper.dart';
 import 'package:disappear/view_models/profile/user_profile_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -23,6 +32,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     Provider.of<ProfileViewModel>(context, listen: false).getProfile();
+  }
+
+  void _goToVoucherScreen() {
+    final mainViewModel = Provider.of<MainViewModel>(context, listen: false);
+    mainViewModel.selectedScreenIndex = 1;
+
+    final challengeMainViewModel = Provider.of<ChallengeMainViewModel>(context, listen: false);
+    challengeMainViewModel.selectedTabChallenge = 3;
   }
 
   @override
@@ -65,21 +82,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Row(
                 children: [
                   CircleAvatar(
-                    radius: 43,
+                    radius: 40,
                     child: ClipOval(
-                      child: profile?.photoProfile != null
-                          ? Image.network(
-                              profile!.photoProfile,
+                      child: Builder(
+                        builder: (context) {
+                          if (profile != null && profile.photoProfile != '') {
+                            Image.network(
+                              profile.photoProfile,
                               width: 86,
                               height: 86,
                               fit: BoxFit.cover,
-                            )
-                          : Image.asset(
-                              'assets/img/profileBackgroundImage.png',
-                              width: 86,
-                              height: 86,
-                              fit: BoxFit.cover,
-                            ),
+                            );
+                          }
+                          
+                          return Image.asset(
+                            'assets/img/profileBackgroundImage.png',
+                            width: 86,
+                            height: 86,
+                            fit: BoxFit.cover,
+                          );
+                        }
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -93,30 +116,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(profile?.name ?? '',
-                              style: semiBoldBody7.copyWith(color: blackColor)),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          FutureBuilder<String?>(
-                            future: PreferencesHelper.getUserEmail(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(snapshot.data!, style: mediumBody8);
-                              } else {
-                                return const Text('Loading...',
-                                    style: mediumBody8);
-                              }
-                            },
-                          ),
-                          const SizedBox(
-                            height: 3,
-                          ),
-                          Text(profile?.phone ?? '',
-                              style: regularBody8.copyWith()),
-                          const SizedBox(
-                            height: 8,
-                          ),
+                          Text(profile?.name ?? '', style: semiBoldBody7.copyWith(color: blackColor)),
+                          const SizedBox(height: 8),
+                          Text(profile?.email ?? '', style: mediumBody8),
+                          const SizedBox(height: 3),
+                          Text(profile?.phone ?? '', style: regularBody8.copyWith()),
+                          const SizedBox(height: 8),
                           Container(
                             width: 55.0,
                             height: 20.0,
@@ -165,16 +170,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 42,
-                  ),
+                  const Spacer(),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushNamed('/edit-profile-screen');
                     },
-                    child: SvgPicture.asset(
-                      'assets/img/editProfileButton.svg',
-                    ),
+                    child: SvgPicture.asset('assets/img/editProfileButton.svg'),
                   ),
                 ],
               ),
@@ -295,7 +296,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     //ALAMAT
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed('/address-list-screen');
+                        Navigator.of(context).pushNamed(AddressListScreen.routePath);
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10, right: 15),
@@ -327,9 +328,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     // KUPON
                     GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/use-coupon-screen');
-                      },
+                      onTap: _goToVoucherScreen,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         child: Row(
@@ -429,12 +428,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     // KELUAR
                     GestureDetector(
-                      onTap: () async {
-                        final logoutViewModel = Provider.of<LogoutViewModel>(
-                            context,
-                            listen: false);
-                        await logoutViewModel.logout();
-                        Navigator.pushReplacementNamed(context, '/login');
+                      onTap: () {
+                        final logoutViewModel = Provider.of<LogoutViewModel>(context, listen: false);
+
+                        logoutViewModel.logout().then((value) {
+                          // APLIKASI LANGSUNG KELUAR
+                          if (Platform.isAndroid) {
+                            SystemNavigator.pop();
+                          } else if (Platform.isIOS) {
+                            exit(0);
+                          }
+
+                          // TODO: PERGI KE HALAMAN LOGIN SAAT LOGOUT
+                        });
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15),

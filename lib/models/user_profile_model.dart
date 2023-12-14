@@ -7,7 +7,6 @@ class Profile {
   final int totalGram;
   final int totalChallenge;
   final String level;
-  final List<String> preference;
 
   Profile({
     required this.id,
@@ -18,7 +17,6 @@ class Profile {
     required this.totalGram,
     required this.totalChallenge,
     required this.level,
-    required this.preference,
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) {
@@ -31,7 +29,6 @@ class Profile {
       totalGram: json['data']['total_gram'],
       totalChallenge: json['data']['total_challenge'],
       level: json['data']['level'],
-      preference: List<String>.from(json['data']['preference']),
     );
   }
 
@@ -45,7 +42,6 @@ class Profile {
       'totalGram': totalGram,
       'totalChallenge': totalChallenge,
       'level': level,
-      'preference': preference,
     };
   }
 }

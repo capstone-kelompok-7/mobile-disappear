@@ -1,3 +1,4 @@
+import 'package:disappear/screens/checkout/add_new_address_screen.dart';
 import 'package:disappear/screens/checkout/address/components/checkout_address_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -101,7 +102,7 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/add-new-address-screen');
+                    Navigator.of(context).pushNamed(AddNewAddresScreen.routePath);
                   },
                   style: ButtonStyle(
                     backgroundColor: const MaterialStatePropertyAll(primary30),

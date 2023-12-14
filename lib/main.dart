@@ -292,6 +292,7 @@ class App extends StatelessWidget {
         ChatBotScreen.routePath: (context) => ChatBotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
         CarouselArticleScreen.routePath: (context) => CarouselArticleScreen(),
+        ChangePasswordScreen.routePath: (context) => const ChangePasswordScreen(),
       },
       theme: ThemeData(
         fontFamily: 'Poppins',

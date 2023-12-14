@@ -17,8 +17,8 @@ class ProfileViewModel extends ChangeNotifier {
 
   Future<void> getProfile() async {
     try {
-      _isLoading = true;
-      notifyListeners();
+      // _isLoading = true;
+      // notifyListeners();
 
       final profileData = await _profileService.getProfile();
       _profile = Profile.fromJson(profileData);
