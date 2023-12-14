@@ -31,6 +31,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final profile = context.read<ProfileViewModel>().profile;
     nameController = TextEditingController(text: profile?.name ?? '');
     numberController = TextEditingController(text: profile?.phone ?? '');
+    emailController = TextEditingController(text: profile?.email ?? '');
   }
 
   Future pickImageFromGallery() async {
@@ -148,30 +149,47 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                FutureBuilder<String?>(
-                  future: PreferencesHelper.getUserEmail(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return TextFormField(
-                        enabled: false,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: snapshot.data,
-                          hintStyle: mediumBody8.copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: neutral20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          contentPadding: const EdgeInsets.only(left: 10),
-                        ),
-                      );
-                    } else {
-                      return const Text('Loading...', style: mediumBody8);
-                    }
-                  },
+                TextFormField(
+                  controller: emailController,
+                  enabled: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan Email Anda',
+                    hintStyle: mediumBody8.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: neutral20),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    contentPadding: const EdgeInsets.only(left: 10),
+                  ),
                 ),
+                
+                // FutureBuilder<String?>(
+                //   future: PreferencesHelper.getUserEmail(),
+                //   builder: (context, snapshot) {
+                //     if (snapshot.hasData) {
+                //       return TextFormField(
+                //         enabled: false,
+                //         keyboardType: TextInputType.emailAddress,
+                //         decoration: InputDecoration(
+                //           hintText: snapshot.data,
+                //           hintStyle: mediumBody8.copyWith(
+                //               fontSize: 12,
+                //               fontWeight: FontWeight.w400,
+                //               color: neutral20),
+                //           border: OutlineInputBorder(
+                //             borderRadius: BorderRadius.circular(8),
+                //           ),
+                //           contentPadding: const EdgeInsets.only(left: 10),
+                //         ),
+                //       );
+                //     } else {
+                //       return const Text('Loading...', style: mediumBody8);
+                //     }
+                //   },
+                // ),
 
                 const SizedBox(
                   height: 34,

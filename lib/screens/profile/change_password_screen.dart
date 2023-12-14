@@ -1,3 +1,4 @@
+import 'package:disappear/models/user_profile_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/profile/change_password_view_model.dart';
@@ -72,16 +73,24 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   },
                 ),
                 const SizedBox(height: 5),
-                FutureBuilder<String?>(
-                  future: PreferencesHelper.getUserEmail(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Text(snapshot.data!, style: mediumBody8);
-                    } else {
-                      return const Text('Loading...', style: mediumBody8);
-                    }
-                  },
+
+                Consumer<ProfileViewModel>(
+                  builder: (context, profileViewModel, _) {
+                    return Text(profileViewModel.profile?.email ?? '', style: mediumBody8);
+                  }
                 ),
+
+                // FutureBuilder<String?>(
+                //   future: PreferencesHelper.getUserEmail(),
+                //   builder: (context, snapshot) {
+                //     if (snapshot.hasData) {
+                //       return Text(snapshot.data!, style: mediumBody8);
+                //     } else {
+                //       return const Text('Loading...', style: mediumBody8);
+                //     }
+                //   },
+                // ),
+
                 const SizedBox(height: 40),
                 Text(
                   'Kata Sandi Lama',
@@ -274,42 +283,39 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                Padding(
-                    padding: const EdgeInsets.only(top: 180),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          model.setOldPassword(oldPasswordController.text);
-                          model.setNewPassword(newPasswordController.text);
-                          model.setConfirmPassword(
-                              confirmPasswordController.text);
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      model.setOldPassword(oldPasswordController.text);
+                      model.setNewPassword(newPasswordController.text);
+                      model.setConfirmPassword(
+                          confirmPasswordController.text);
 
-                          try {
-                            model.changePassword().then((_) {
-                              showConfirmationDialog();
-                            });
-                          } catch (error) {
-                            showDialogFailed();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Gagal mengubah kata sandi'),
-                              ),
-                            );
-                          }
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(340, 42),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        backgroundColor: primary30,
-                      ),
-                      child: Text('Konfirmasi', style: semiBoldBody6),
-                    )),
-                const SizedBox(height: 20),
+                      try {
+                        model.changePassword().then((_) {
+                          showConfirmationDialog();
+                        });
+                      } catch (error) {
+                        showDialogFailed();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Gagal mengubah kata sandi'),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(340, 42),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    backgroundColor: primary30,
+                  ),
+                  child: const Text('Konfirmasi', style: semiBoldBody6),
+                )
               ],
             ),
           ));
