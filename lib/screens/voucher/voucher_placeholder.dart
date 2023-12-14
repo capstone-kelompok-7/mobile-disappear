@@ -13,7 +13,6 @@ class VoucherPlaceholder extends StatelessWidget {
         highlightColor: neutral20,
         child: Container(
           height: 100,
-          width: 332,
           margin: const EdgeInsets.only(
             left: 29,
             right: 29,
@@ -34,14 +33,13 @@ class VoucherPlaceholder extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 219,
                 height: 100,
                 padding: const EdgeInsets.only(
                   left: 7,
                   top: 19.5,
                   bottom: 19.5,
                 ),
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(

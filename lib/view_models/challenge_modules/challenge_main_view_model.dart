@@ -2,47 +2,32 @@ import 'package:dio/dio.dart';
 import 'package:disappear/models/challenge_model.dart';
 import 'package:disappear/models/leaderboard_model.dart';
 import 'package:disappear/models/voucher_model.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/services/challenge_service.dart';
 import 'package:disappear/services/leaderboard_service.dart';
 import 'package:disappear/services/voucher_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ChallengeMainViewModel extends ChangeNotifier {
   int? challengeId;
   int selectedTabChallenge = 1;
 
-  String? message;
-  set errorMessage(String? errorMessage) {
-    message = errorMessage;
-    notifyListeners();
-  }
-
-  String? get errorMessage => message;
-
   int? _isLoadingVoucherClaim;
-  int? get isLoadingVoucherClaim => _isLoadingVoucherClaim;
 
+  int? get isLoadingVoucherClaim => _isLoadingVoucherClaim;
 
   //VARIABEL POSTFILE KE SERVER IKUT TANTANGAN
   String? filePath;
 
   Widget topButton() {
     return Container(
-      margin: const EdgeInsets.only(
-        left: 75,
-        right: 75,
-        top: 16,
-        bottom: 37,
-      ),
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
       padding: const EdgeInsets.symmetric(
         horizontal: 5,
         vertical: 5,
       ),
-      width: 250,
-      height: 30,
       decoration: const BoxDecoration(
         color: primary40,
       ),
@@ -238,82 +223,20 @@ class ChallengeMainViewModel extends ChangeNotifier {
 
     try {
       final claimVoucher = VoucherService();
-      return await claimVoucher.postClaimVoucher(id);
+      final response = await claimVoucher.postClaimVoucher(id);
+
+      showSuccessFlushbar(message: response['message']);
     } on DioException catch (e) {
       if (e.response != null) {
         if ([500, 501].contains(e.response!.statusCode)) {
-          message = e.response!.data['message'];
+          showFailedFlushbar(message: e.response!.data['message']);
+        } else {
+          showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
         }
       }
-      rethrow;
     } finally {
       _isLoadingVoucherClaim = null;
       notifyListeners();
     }
   }
-
-
-// void _showDialog() {
-//     showDialog(
-//       context: context,
-//       builder: (context) {
-//         return AlertDialog(
-//           shape:
-//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-//           contentPadding: EdgeInsets.zero,
-//           title: const Column(
-//             children: [
-//               Icon(
-//                 Icons.check_circle_outline_outlined,
-//                 size: 40,
-//               ),
-//               SizedBox(height: 14),
-//               Text(
-//                 'Sukses',
-//                 textAlign: TextAlign.center,
-//                 style: TextStyle(
-//                     decoration: TextDecoration.underline,
-//                     decorationThickness: 1,
-//                     decorationStyle: TextDecorationStyle.solid),
-//               ),
-//               SizedBox(height: 15.5),
-//             ],
-//           ),
-//           content: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               const Padding(
-//                 padding: EdgeInsets.symmetric(horizontal: 42.5),
-//                 child: Text(
-//                   'Data mu sudah kami simpan. Terima kasih sudah mengikuti tantangan ini !',
-//                   style: TextStyle(
-//                     color: Colors.black,
-//                     fontSize: 12,
-//                     fontFamily: 'Inter',
-//                     fontWeight: FontWeight.w400,
-//                   ),
-//                 ),
-//               ),
-//               Padding(
-//                 padding: const EdgeInsets.only(
-//                     top: 24.5, bottom: 4, left: 42.5, right: 42.5),
-//                 child: ElevatedButton(
-//                   onPressed: () {
-//                     Navigator.pop(context);
-//                   },
-//                   child: const Text('Home'),
-//                 ),
-//               ),
-//               SvgPicture.asset(
-//                 "assets/img/alertDialogComponent.svg",
-//                 fit: BoxFit.fill,
-//               )
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-
-
 }

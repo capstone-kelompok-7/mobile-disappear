@@ -1,11 +1,8 @@
 import 'package:disappear/models/voucher_model.dart';
-import 'package:disappear/screens/category/components/categories_placeholder.dart';
-import 'package:disappear/screens/voucher/user_voucher_components.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class VoucherScreen extends StatefulWidget {
@@ -18,263 +15,95 @@ class VoucherScreen extends StatefulWidget {
 }
 
 class _VoucherScreenState extends State<VoucherScreen> {
-  void initState() {
-    final voucherViewModel =
-        Provider.of<ChallengeMainViewModel>(context, listen: false);
-
-    voucherViewModel.addListener(_klaimVoucherMessageListener);
-
-    super.initState();
-  }
-
-  void _klaimVoucherMessageListener() {
-    final klaimVoucherViewModel =
-        Provider.of<ChallengeMainViewModel>(context, listen: false);
-    if (klaimVoucherViewModel.message != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(klaimVoucherViewModel.message!)));
-
-      klaimVoucherViewModel.message = null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [vouchersToClaimComponent()],
-    );
-  }
-
-  // Widget vouchersToClaimComponent() {
-  //   return Consumer<ChallengeMainViewModel>(builder: (context, state, _) {
-  //     return FutureBuilder(
-  //         future: state.fetchVouchersToClaim(),
-  //         builder: (context, snapshot) {
-  //           if (snapshot.hasError) {
-  //             return Padding(
-  //               padding:
-  //                   const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-  //               child: const Text('Tidak ada voucher tersedia untuk di klaim'),
-  //             );
-  //           }
-
-  //           if (snapshot.hasData) {
-  //             return ListView.builder(
-  //               shrinkWrap: true,
-  //               physics: const NeverScrollableScrollPhysics(),
-  //               itemCount: vouchers.length,
-  //               itemBuilder: (context, index) {
-  //                 return Container(
-  //                   height: 100,
-  //                   width: 332,
-  //                   margin: const EdgeInsets.only(
-  //                     left: 29,
-  //                     right: 29,
-  //                     bottom: 12,
-  //                   ),
-  //                   decoration: BoxDecoration(
-  //                       border: Border.all(
-  //                     color: Colors.black,
-  //                   )),
-  //                   child: Row(
-  //                     children: [
-  //                       SizedBox(
-  //                         height: 113,
-  //                         width: 100,
-  //                         child: Image.network(
-  //                           'https://s3.amazonaws.com/thumbnails.venngage.com/template/5456834b-ba95-41a9-85b2-4abd4d313c11.png',
-  //                           fit: BoxFit.fill,
-  //                         ),
-  //                       ),
-  //                       Container(
-  //                         width: 219,
-  //                         height: 100,
-  //                         padding: const EdgeInsets.only(
-  //                           left: 7,
-  //                           top: 19.5,
-  //                           bottom: 19.5,
-  //                         ),
-  //                         child: Column(
-  //                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                           crossAxisAlignment: CrossAxisAlignment.start,
-  //                           children: [
-  //                             Expanded(
-  //                               child: Text(
-  //                                 'Kupon Potongan Harga ${widget.voucherModel.discount.toString()}',
-  //                                 style: mediumBody7,
-  //                                 overflow: TextOverflow.ellipsis,
-  //                               ),
-  //                             ),
-  //                             const SizedBox(
-  //                               height: 10,
-  //                             ),
-  //                             Text(
-  //                               'Min. Blj Rp${widget.voucherModel.minPurchase.toString()}',
-  //                               style: mediumBody8,
-  //                               overflow: TextOverflow.ellipsis,
-  //                             ),
-  //                             const SizedBox(
-  //                               height: 3,
-  //                             ),
-  //                             Expanded(
-  //                               child: Row(
-  //                                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                                 mainAxisAlignment:
-  //                                     MainAxisAlignment.spaceAround,
-  //                                 children: [
-  //                                   Text(
-  //                                     'Berakhir dalam : ${widget.voucherModel.endDate.toString()}',
-  //                                     style: regularBody8,
-  //                                   ),
-  //                                   SizedBox(
-  //                                     width: 3,
-  //                                   ),
-  //                                   ElevatedButton(
-  //                                     onPressed: () {},
-  //                                     child: Text('Klaim'),
-  //                                     style: ButtonStyle(
-  //                                       backgroundColor:
-  //                                           MaterialStateProperty.all<Color>(
-  //                                               primary30),
-  //                                       // Set minimum size constraints for the button
-  //                                       minimumSize:
-  //                                           MaterialStateProperty.all<Size>(
-  //                                         Size(53, 21),
-  //                                       ), // Adjust width and height as needed
-  //                                       // Optionally, set padding
-  //                                       padding: MaterialStateProperty.all<
-  //                                               EdgeInsetsGeometry>(
-  //                                           EdgeInsets.symmetric(
-  //                                               horizontal:
-  //                                                   2)), // Adjust padding as needed
-  //                                       textStyle: MaterialStateProperty.all<
-  //                                           TextStyle>(
-  //                                         TextStyle(
-  //                                             fontSize:
-  //                                                 10), // Adjust font size as needed
-  //                                       ),
-  //                                     ),
-  //                                     // You can also set other properties like textStyle, shape, etc. here
-  //                                     // For example, to change the text style:
-  //                                   ),
-  //                                 ],
-  //                               ),
-  //                             ),
-  //                           ],
-  //                         ),
-  //                       )
-  //                     ],
-  //                   ),
-  //                 );
-  //               },
-  //             );
-  //           }
-  //           return CircularProgressIndicator();
-  //         });
-  //   });
-  // }
-
-  Widget vouchersToClaimComponent() {
     return Consumer<ChallengeMainViewModel>(builder: (context, state, _) {
       return Container(
-        height: 100,
-        width: 332,
-        margin: const EdgeInsets.only(
-          left: 29,
-          right: 29,
-          bottom: 12,
-        ),
+        margin: const EdgeInsets.symmetric(horizontal: 30),
+        height: 120,
+        width: double.infinity,
         decoration: BoxDecoration(
-            border: Border.all(
-          color: Colors.black,
-        )),
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(
+            width: 1,
+            color: blackColor,
+          )
+        ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 113,
-              width: 100,
-              child: Image.network(
-                'https://s3.amazonaws.com/thumbnails.venngage.com/template/5456834b-ba95-41a9-85b2-4abd4d313c11.png',
-                fit: BoxFit.fill,
-              ),
-            ),
-            Container(
-              width: 219,
-              height: 100,
-              padding: const EdgeInsets.only(
-                left: 7,
-                top: 19.5,
-                bottom: 19.5,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              flex: 2,
+              child: Stack(
                 children: [
-                  Expanded(
-                    child: Text(
-                      'Kupon Potongan Harga ${widget.voucherModel.discount}',
-                      style: mediumBody7,
-                      overflow: TextOverflow.ellipsis,
+                  Container(
+                    decoration: const BoxDecoration(
+                      border: Border(right: BorderSide(width: 1, color: blackColor)),
+                      color: primary40
+                    ),
+                    child: Image.asset(
+                      'assets/img/Coupon.png',
+                      height: double.infinity,
+                      width: 113,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(
+                      color: warning40,
+                      borderRadius: BorderRadiusDirectional.only(
+                        topStart: Radius.circular(4),
+                        bottomEnd: Radius.circular(8)
+                      )
+                    ),
+                    child: Text(
+                      widget.voucherModel.category!,
+                      style: semiBoldBody8.copyWith(color: whiteColor)
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(width: 10,),
+            Expanded(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Text(
-                    'Min. Blj Rp${widget.voucherModel.minPurchase.toString()}',
+                    widget.voucherModel.name!,
+                    style: mediumBody7,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Min. Blj ${widget.voucherModel.formattedMinPurchase}',
                     style: mediumBody8,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(
-                    height: 3,
+                  const SizedBox(height: 10),
+                  Text(
+                    'Berakhir dalam : ${widget.voucherModel.formattedEndDate}',
+                    style: regularBody8,
                   ),
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          'Berakhir dalam : ${widget.voucherModel.formattedDate}',
-                          style: regularBody8,
-                        ),
-                        SizedBox(
-                          width: 3,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            state.claimVoucher(widget.voucherModel.id);
-                          },
-                          child: state.isLoadingVoucherClaim ==
-                                  widget.voucherModel.id
-                              ? CircularProgressIndicator()
-                              : Text('Klaim'),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(primary30),
-                            // Set minimum size constraints for the button
-                            minimumSize: MaterialStateProperty.all<Size>(
-                              Size(53, 21),
-                            ), // Adjust width and height as needed
-                            // Optionally, set padding
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                    EdgeInsets.symmetric(
-                                        horizontal:
-                                            2)), // Adjust padding as needed
-                            textStyle: MaterialStateProperty.all<TextStyle>(
-                              TextStyle(
-                                  fontSize: 10), // Adjust font size as needed
-                            ),
-                          ),
-                          // You can also set other properties like textStyle, shape, etc. here
-                          // For example, to change the text style:
-                        ),
-                      ],
+                  ElevatedButton(
+                    onPressed: () => state.claimVoucher(widget.voucherModel.id),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(primary30),
+                      minimumSize: MaterialStateProperty.all<Size>(const Size(53, 21)),
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(horizontal: 2)),
+                      textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontSize: 10)),
                     ),
-                  ),
+                    child: state.isLoadingVoucherClaim == widget.voucherModel.id
+                      ? const Text('Klaim...')
+                      : const Text('Klaim'),
+                  )
                 ],
               ),
-            )
+            ),
           ],
         ),
       );

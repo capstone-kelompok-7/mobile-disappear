@@ -79,13 +79,7 @@ class VoucherService {
   Future<dynamic> postClaimVoucher(int id) async {
     final dio = createDio();
 
-    try {
-      final Response response =
-          await dio.post('/vouchers/claims', data: {'voucher_id': id});
-      debugPrint(response.data.toString());
-      return response.data;
-    } catch (e) {
-      rethrow;
-    }
+    final Response response = await dio.post('/vouchers/claims', data: {'voucher_id': id});
+    return response.data;
   }
 }
