@@ -1,5 +1,21 @@
 ﻿# Mobile Repository - Capstone Alterra Academy
 
+### Generate ENV
+1. Copy `.env.example` dan paste menjadi `.env`
+2. Pada file `.env`, isi variabel API_URL dengan URL dari API yang disediakan oleh tim backend
+
+   <img width="636" alt="image" src="https://github.com/capstone-kelompok-7/mobile-disappear/assets/43428328/cde6645d-49e0-4812-89a3-1b3c3a0281e0">
+
+4. Setelah itu jalankan perintah:
+   
+    ```bash
+    dart run build_runner build
+    ```
+5. Setelah itu akan muncul file `lib/env/env.g.dart`:
+
+    <img width="748" alt="image" src="https://github.com/capstone-kelompok-7/mobile-disappear/assets/43428328/72a1d793-f9c3-4555-8524-55091cd25842">
+
+
 ### Git Flow
 Git flow terdiri dari 2 branch utama, yaitu **main** dan **development**.
 
@@ -32,7 +48,9 @@ Project ini menggunakan arsitektur **MVVM** atau Model-View-ViewModel, jadi stru
 * **view_models** untuk menaruh ViewModel, yang mana merupakan _controller_ untuk masing-masing view atau UI. Nantinya ViewModel itu meng-extends kelas **ChangeNotifier**-nya package **provider**.
 
 ### API adapter
-API adapter untuk pengambilan API, tapi ntar ini menyusul...
+<img width="497" alt="image" src="https://github.com/capstone-kelompok-7/mobile-disappear/assets/43428328/7b464a18-2f7d-4f56-acda-73d9723dac2a">
+<br>
+Untuk memanggil API bisa menggunakan fungsi createDio yang ada di lib/services/api.dart
 
 ### API Documentation
 Untuk API-API nya bisa dilihat disini:
