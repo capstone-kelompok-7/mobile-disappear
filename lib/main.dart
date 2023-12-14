@@ -15,19 +15,20 @@ import 'package:disappear/screens/checkout/address_list_screen.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/checkout/choose_transport_screen.dart';
 import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
+import 'package:disappear/screens/checkout/payment_method/ewallet_transfer_screen.dart';
+import 'package:disappear/screens/checkout/payment_method/manual_transfer_screen.dart';
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
-import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
 import 'package:disappear/screens/environmental_issues/environmental_issues_screen.dart';
 import 'package:disappear/screens/favorite_product/favorite_product_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
-import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
+import 'package:disappear/screens/checkout/payment/gopay_screen.dart';
+import 'package:disappear/screens/checkout/payment/telegram_transfer_screen.dart';
 import 'package:disappear/screens/order_detail/detail_order_screen.dart';
 import 'package:disappear/screens/order_list/order_list_screen.dart';
-import 'package:disappear/screens/manual_transfer/manual_transfer_screen.dart';
-import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
+import 'package:disappear/screens/checkout/payment/whatsapp_transfer_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/new_password_screen.dart';
 import 'package:disappear/screens/product/product_reviews_screen.dart';
 import 'package:disappear/screens/product/product_screen.dart';
@@ -40,8 +41,6 @@ import 'package:disappear/screens/profile/profile_screen.dart';
 import 'package:disappear/screens/auth/register/register_screen.dart';
 import 'package:disappear/screens/search_product/search_product_screen.dart';
 import 'package:disappear/screens/splash_screen.dart';
-import 'package:disappear/screens/success_email_verification.dart';
-import 'package:disappear/screens/success_new_pasword_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_verification_screen.dart';
 import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -65,6 +64,7 @@ import 'package:disappear/view_models/checkout/checkout_address_view_model.dart'
 import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
+import 'package:disappear/view_models/checkout/gopay_view_model.dart';
 import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:disappear/view_models/category/category_view_model.dart';
@@ -209,6 +209,9 @@ void main() async {
         create: (context) => ProductReviewViewModel(),
       ),
       ChangeNotifierProvider(
+        create: (context) => GopayViewModel(),
+      ),
+      ChangeNotifierProvider(
         create: (context) => ProfileViewModel(),
       ),
       ChangeNotifierProvider(create: (context) => ChangePasswordViewModel()),
@@ -245,10 +248,6 @@ class App extends StatelessWidget {
             const DetailChallengeScreen(),
         NewPasswordScreen.routePath: (context) => const NewPasswordScreen(),
         JoinChallengeScreen.routePath: (context) => const JoinChallengeScreen(),
-        SuccessNewPasswordScreen.routePath: (context) =>
-            const SuccessNewPasswordScreen(),
-        SuccessEmailVerificationScreen.routePath: (context) =>
-            const SuccessEmailVerificationScreen(),
         ChallengeMainScreen.routePath: (context) => const ChallengeMainScreen(),
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
@@ -264,8 +263,6 @@ class App extends StatelessWidget {
         ProfileScreen.routePath: (context) => const ProfileScreen(),
         EditProfileScreen.routePath: (context) => const EditProfileScreen(),
         ProductScreen.routePath: (context) => const ProductScreen(),
-        ChangePasswordScreen.routePath: (context) =>
-            const ChangePasswordScreen(),
         CheckoutScreen.routePath: (context) => const CheckoutScreen(),
         UseCouponScreen.routePath: (context) => const UseCouponScreen(),
         CheckoutAddressScreen.routePath: (context) =>
@@ -278,10 +275,12 @@ class App extends StatelessWidget {
             const EditOldAddressScreen(),
         ManualTransferScreen.routePath: (context) =>
             const ManualTransferScreen(),
+        EWalletTransferScreen.routePath: (context) =>
+            const EWalletTransferScreen(),
         WhatsappTransferScreen.routePath: (context) =>
             const WhatsappTransferScreen(),
-        ElectronicWalletScreen.routePath: (context) =>
-            const ElectronicWalletScreen(),
+        GopayScreen.routePath: (context) =>
+            const GopayScreen(),
         EnvironmentalIssuesScreen.routePath: (context) =>
             const EnvironmentalIssuesScreen(),
         FavoriteProductScreen.routePath: (context) =>

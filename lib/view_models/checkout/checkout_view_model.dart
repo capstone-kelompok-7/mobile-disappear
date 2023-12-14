@@ -96,7 +96,7 @@ class CheckoutViewModel extends ChangeNotifier {
 
   bool get isCheckingOut => _isCheckingOut;
 
-  Future<CreatedOrder?> createOrder({
+  Future<dynamic> createOrder({
     required int addressId,
     required String paymentMethod,
     int? voucherId,
@@ -105,7 +105,7 @@ class CheckoutViewModel extends ChangeNotifier {
 
     try {
       final service = CheckoutService();
-      final CreatedOrder createdOrder = await service.createOrder(
+      final dynamic createdOrder = await service.createOrder(
         productId: product!.id,
         addressId: addressId,
         note: notesController.text,
@@ -117,9 +117,9 @@ class CheckoutViewModel extends ChangeNotifier {
     } on DioException catch (e) {
       if ([400, 403, 500].contains(e.response?.statusCode)) {
         showFailedFlushbar(message: e.response!.data['message']);
+      } else {
+        showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
       }
-
-      showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
     } finally {
       isCheckingOut = false;
     }
@@ -127,7 +127,7 @@ class CheckoutViewModel extends ChangeNotifier {
     return null;
   }
 
-  Future<CreatedOrder?> createOrderByCart({
+  Future<dynamic> createOrderByCart({
     required int addressId,
     required String paymentMethod,
     int? voucherId,
@@ -136,7 +136,7 @@ class CheckoutViewModel extends ChangeNotifier {
 
     try {
       final service = CheckoutService();
-      final CreatedOrder createdOrder = await service.createOrderByCart(
+      final dynamic createdOrder = await service.createOrderByCart(
         cartItems: selectedItems,
         addressId: addressId,
         note: notesController.text,
@@ -148,9 +148,9 @@ class CheckoutViewModel extends ChangeNotifier {
     } on DioException catch (e) {
       if ([400, 403, 500].contains(e.response?.statusCode)) {
         showFailedFlushbar(message: e.response!.data['message']);
+      } else {
+        showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
       }
-
-      showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
     } finally {
       isCheckingOut = false;
     }
