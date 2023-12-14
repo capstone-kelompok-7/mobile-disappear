@@ -1,23 +1,32 @@
-import 'package:dash_chat_2/dash_chat_2.dart';
+
+import 'package:disappear/models/chatbot_model.dart';
 import 'package:disappear/services/chatbot_service.dart';
 import 'package:flutter/material.dart';
 
 class ChatbotViewModel extends ChangeNotifier {
-  Future postQuestion(ChatMessage m) async {
+  Future postQuestion(String message) async {
     try {
       final chatbotService = ChatbotService();
-      return await chatbotService.postQuestion(m);
+      return await chatbotService.postQuestion(message);
     } catch (e) {
       rethrow;
     }
   }
 
-  Future postAnswer(ChatMessage m) async {
+  Future postAnswer(String message) async {
     try {
       final chatbotService = ChatbotService();
-      return await chatbotService.postAnswer(m);
+      return await chatbotService.postAnswer(message);
     } catch (e) {
       rethrow;
     }
   }
+
+  // Stream<ChatbotModel>getChat () async {
+  //   try {
+  //     await
+  //   } catch (e) {
+      
+  //   }
+  // }
 }

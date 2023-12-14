@@ -1,7 +1,6 @@
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/screens/auth/register/register_verification_screen.dart';
-
 import 'package:disappear/screens/challenge/challenge_main_screen.dart';
 import 'package:disappear/screens/challenge/challenge_components.dart';
 import 'package:disappear/screens/category/categories_screen.dart';
@@ -18,14 +17,12 @@ import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/checkout/choose_transport_screen.dart';
 import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
-
 import 'package:disappear/screens/e-wallet/electronic_wallet_screen.dart';
 import 'package:disappear/screens/detail_order_screen.dart';
 import 'package:disappear/screens/environmental_issues/environmental_issues_screen.dart';
 import 'package:disappear/screens/favorite_product/favorite_product_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
-
 import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
@@ -251,8 +248,8 @@ class App extends StatelessWidget {
             const TelegramTransferScreen(),
         ChatBotScreen.routePath: (context) => ChatBotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
-        // NewChatbotScreen.routePath: (context) => const NewChatbotScreen(),
-        ChatBotScreen.routePath :(context) =>  ChatBotScreen()
+        NewChatbotScreen.routePath: (context) => const NewChatbotScreen(),
+        ChatBotScreen.routePath: (context) => ChatBotScreen()
       },
       theme: ThemeData(
         fontFamily: 'Poppins',

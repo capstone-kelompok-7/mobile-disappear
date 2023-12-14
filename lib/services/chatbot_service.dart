@@ -1,19 +1,27 @@
-import 'package:dash_chat_2/dash_chat_2.dart';
+import 'dart:async';
+
 import 'package:dio/dio.dart';
+import 'package:disappear/models/chatbot_model.dart';
 import 'package:disappear/services/api.dart';
+import 'package:flutter/material.dart';
 
 class ChatbotService {
-  Future postQuestion(ChatMessage m) async {
+  final _controller = StreamController<ChatbotModel>();
+
+
+  Future postQuestion(String message) async {
     try {
       final dio = createDio();
       Response response = await dio.post(
-        '/chatbot/question',
+        '/assistant/question',
         data: {
-          "text": m,
+          "text": message,
         },
       );
+      debugPrint(response.data.toString());
       return response.data;
     } catch (e) {
+      debugPrint('Dio Error: $e');
       rethrow;
     }
   }
@@ -30,18 +38,34 @@ class ChatbotService {
   //     rethrow;
   //   }
   // }
-  Future postAnswer(ChatMessage m) async {
+  Future postAnswer(String message) async {
     try {
       final dio = createDio();
       Response response = await dio.post(
-        '/chatbot/answer',
+        '/assistant/answer',
         data: {
-          "text": m,
+          "text": message,
         },
       );
+      debugPrint(response.data.toString());
       return response.data;
     } catch (e) {
+      debugPrint('Dio Error: $e');
       rethrow;
     }
   }
+
+  //  Stream<ChatbotModel> getChat() async* {
+  //   final dio = createDio();
+  //   try {
+  //     final Response response = await dio.get('/chatbot');
+  //     final chatbotModel = ChatbotModel.fromJson(response.data);
+  //     _controller.add(chatbotModel); // Emit the fetched data through the stream
+  //     yield* _controller.stream;
+  //   } catch (e) {
+  //     // Handle error
+  //     print('Error: $e');
+  //     _controller.addError(e); // Emit error through the stream
+  //   }
+  // }
 }
