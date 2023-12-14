@@ -1,4 +1,5 @@
-import 'package:disappear/screens/manual_transfer/manual_transfer_screen.dart';
+import 'package:disappear/screens/checkout/payment_method/ewallet_transfer_screen.dart';
+import 'package:disappear/screens/checkout/payment_method/manual_transfer_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
@@ -15,6 +16,10 @@ class PaymentMethodCheckout extends StatefulWidget {
 class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
   void _goToManualTransferOptionsScreen() {
     Navigator.of(context).pushNamed(ManualTransferScreen.routePath);
+  }
+
+  void _goToEWalletOptionsScreen() {
+    Navigator.of(context).pushNamed(EWalletTransferScreen.routePath);
   }
 
   @override
@@ -108,14 +113,14 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: GestureDetector(
-            onTap: () {},
+            onTap: _goToEWalletOptionsScreen,
             child: const ListTile(
               title: Text(
                 'E-Wallet',
                 style: mediumBody7,
               ),
               subtitle: Text(
-                'Dana, OVO, LinkAja, ShopeePay, ',
+                'Gopay',
                 style: regularBody8,
                 overflow: TextOverflow.fade,
                 maxLines: 1,
