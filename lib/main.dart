@@ -1,5 +1,4 @@
 import 'package:disappear/screens/article/article_screen.dart';
-import 'package:disappear/screens/article/components/carousel_article_component.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/screens/auth/register/register_verification_screen.dart';
@@ -48,6 +47,7 @@ import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
 import 'package:disappear/view_models/address/address_view_model.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/bookmark_view_model.dart';
 import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
 import 'package:disappear/view_models/article/filter_article_view_model.dart';
 import 'package:disappear/view_models/article/get_article_view_model.dart';
@@ -209,6 +209,9 @@ void main() async {
         create: (context) => ProductReviewViewModel(),
       ),
       ChangeNotifierProvider(
+        create: (context) => BookmarkViewModel(),
+      ),y
+      ChangeNotifierProvider(
         create: (context) => GopayViewModel(),
       ),
       ChangeNotifierProvider(
@@ -257,7 +260,7 @@ class App extends StatelessWidget {
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
-        SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
+        SaveArticleScreen.routePath: (context) => SaveArticleScreen(),
         CartScreen.routePath: (context) => const CartScreen(),
         DetailOrderScreen.routePath: (context) => const DetailOrderScreen(),
         ProfileScreen.routePath: (context) => const ProfileScreen(),

@@ -1,9 +1,11 @@
 import 'package:disappear/models/article_model.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/placeholders/list_article_thumbnail_placeholder.dart';
+import 'package:disappear/services/article_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/bookmark_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +19,14 @@ class ListArticleItem extends StatefulWidget {
 }
 
 class _ListArticleItemState extends State<ListArticleItem> {
+  late BookmarkViewModel _bookmarkViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _bookmarkViewModel = Provider.of<BookmarkViewModel>(context, listen: false);
+  }
+
   void _goToDetailArticleScreen() {
     final articleViewModel =
         Provider.of<DetailArticlesViewModel>(context, listen: false);
@@ -25,8 +35,21 @@ class _ListArticleItemState extends State<ListArticleItem> {
     Navigator.pushNamed(context, DetailArticleScreen.routePath);
   }
 
+  void _toggleBookmark() async {
+    bool isBookmarked = _bookmarkViewModel.isBookmarked(widget.article.id);
+
+    try {
+      _bookmarkViewModel.toggleBookmark(widget.article.id);
+    } catch (e) {
+      // Handle the error
+      print('Error during bookmark toggle: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool isBookmarked = _bookmarkViewModel.isBookmarked(widget.article.id);
+
     return GestureDetector(
       onTap: _goToDetailArticleScreen,
       child: Card(
@@ -98,9 +121,14 @@ class _ListArticleItemState extends State<ListArticleItem> {
                               ),
                             ],
                           ),
-                          const Icon(
-                            Icons.bookmark_outline,
-                            size: 18,
+                          GestureDetector(
+                            onTap: _toggleBookmark,
+                            child: Icon(
+                              isBookmarked
+                                  ? Icons.bookmark
+                                  : Icons.bookmark_outline,
+                              size: 18,
+                            ),
                           ),
                         ],
                       ),
