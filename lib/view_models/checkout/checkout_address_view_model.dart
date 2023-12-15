@@ -34,8 +34,10 @@ class CheckoutAddressViewModel extends ChangeNotifier {
 
   void setMainAddress() {
     if (addresses.isNotEmpty && address == null) {
-      final mainAddress = addresses.where((element) => element.isPrimary).first;
-      address = mainAddress;
+      final mainAddress = addresses.where((element) => element.isPrimary);
+      if (mainAddress.isNotEmpty) {
+        address = mainAddress.first;
+      }
     }
   }
 

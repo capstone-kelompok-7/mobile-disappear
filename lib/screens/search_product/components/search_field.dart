@@ -36,37 +36,41 @@ class _SearchFieldState extends State<SearchField> {
       height: 35,
       child: Consumer2<SearchFieldViewModel, SearchProductViewModel>(
         builder: (context, state1, state2, _) {
-          return FocusScope(
-            child: Focus(
-              onFocusChange: (bool isFocus) => state2.isOnSearch = !isFocus,
-              child: TextFormField(
-                autofocus: true,
-                controller: state1.searchController,
-                cursorColor: Colors.black,
-                textInputAction: TextInputAction.go,
-                onFieldSubmitted: _onSearchFieldSubmitted,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: primary00,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: border,
-                  focusedBorder: border,
-                  enabledBorder: border,
-                  errorBorder: border,
-                  disabledBorder: border,
-                  prefixIcon: const Icon(Icons.search),
-                  prefixIconColor: Colors.black,
-                  suffixIcon: GestureDetector(
-                    onTap: state1.searchController.clear,
-                    child: const Icon(Icons.clear)
+          return Form(
+            key: state1.formKey,
+            child: FocusScope(
+              child: Focus(
+                onFocusChange: (bool isFocus) => state2.isOnSearch = !isFocus,
+                child: TextFormField(
+                  autofocus: true,
+                  controller: state1.searchController,
+                  cursorColor: Colors.black,
+                  textInputAction: TextInputAction.go,
+                  onFieldSubmitted: _onSearchFieldSubmitted,
+                  onSaved: _onSearchFieldSubmitted,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: primary00,
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    border: border,
+                    focusedBorder: border,
+                    enabledBorder: border,
+                    errorBorder: border,
+                    disabledBorder: border,
+                    prefixIcon: const Icon(Icons.search),
+                    prefixIconColor: Colors.black,
+                    suffixIcon: GestureDetector(
+                      onTap: state1.searchController.clear,
+                      child: const Icon(Icons.clear)
+                    ),
+                    suffixIconColor: Colors.black,
+                    hintText: 'Pencarian',
+                    hintStyle: regularBody6.copyWith(color: primary40),
+                    contentPadding: const EdgeInsets.only(top: 3),
                   ),
-                  suffixIconColor: Colors.black,
-                  hintText: 'Pencarian',
-                  hintStyle: regularBody6.copyWith(color: primary40),
-                  contentPadding: const EdgeInsets.only(top: 3),
-                ),
+                )
               )
-            )
+            ),
           );
         }
       ),

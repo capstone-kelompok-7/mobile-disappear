@@ -3,6 +3,7 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
+import 'package:disappear/view_models/cart/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -36,16 +37,16 @@ class _OrderInformationState extends State<OrderInformation> {
               style: semiBoldBody7,
             ),
           ),
-          Consumer<CheckoutViewModel>(
-            builder: (context, state, _) {
-              if (state.purchaseType == 'buy-now') {
+          Consumer2<CheckoutViewModel, CartViewModel>(
+            builder: (context, stateCheckout, stateCart, _) {
+              if (stateCheckout.purchaseType == 'buy-now') {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   child: OrderItem(
-                    imageUrl: state.product!.thumbnail?.imageUrl,
-                    name: state.product!.name!,
-                    gramPlastic: state.product!.gramPlastic!,
-                    formattedPrice: state.product!.formattedPrice,
+                    imageUrl: stateCheckout.product!.thumbnail?.imageUrl,
+                    name: stateCheckout.product!.name!,
+                    gramPlastic: stateCheckout.product!.gramPlastic!,
+                    formattedPrice: stateCheckout.product!.formattedPrice,
                     quantity: 1,
                   )
                 );
@@ -55,9 +56,15 @@ class _OrderInformationState extends State<OrderInformation> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                itemBuilder: (context, index) => const OrderItem(imageUrl: '', name: '', gramPlastic: 0, formattedPrice: '', quantity: 1,),
+                itemCount: stateCart.selectedItems.length,
+                itemBuilder: (context, index) => OrderItem(
+                  imageUrl: stateCart.selectedItems[index].product.productPhotos.first.url,
+                  name: stateCart.selectedItems[index].product.name,
+                  gramPlastic: stateCart.selectedItems[index].gramPlastic,
+                  formattedPrice: stateCart.selectedItems[index].formattedPrice,
+                  quantity: stateCart.selectedItems[index].quantity
+                ),
                 separatorBuilder: (context, index) => const SizedBox(height: 20,),
-                itemCount: 3,
               );
             }
           ),

@@ -1,5 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:disappear/models/product/product_model.dart';
-import 'package:disappear/models/product_model.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/services/product_service.dart';
 import 'package:flutter/foundation.dart';
 
@@ -42,7 +43,6 @@ class SearchProductViewModel extends ChangeNotifier {
 
   Future<void> getProducts({
     required String keyword,
-    bool withPromo = false,
     int filterType = 0,
   }) async {
     page = 1;
@@ -52,20 +52,26 @@ class SearchProductViewModel extends ChangeNotifier {
     isOnSearch = true;
     isSearching = true;
 
-    final productService = ProductService();
-    products = await productService.getProducts(
-      keyword: keyword,
-      page: page,
-      withPromo: withPromo,
-      filterType: filterType,
-    );
+    try {
+      final productService = ProductService();
+      products = await productService.getProducts(
+        keyword: keyword,
+        page: page,
+        filterType: filterType,
+      );
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 401) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      }
 
-    isSearching = false;
+      showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
+    } finally {
+      isSearching = false;
+    }
   }
 
   Future<void> getMoreProducts({
     required String keyword,
-    bool withPromo = false,
     int filterType = 0,
   }) async {
     page++;
@@ -73,16 +79,23 @@ class SearchProductViewModel extends ChangeNotifier {
     isOnSearch = true;
     isSearching = true;
 
-    final productService = ProductService();
-    final newProducts = await productService.getProducts(
-      keyword: keyword,
-      page: page,
-      withPromo: withPromo,
-      filterType: filterType,
-    );
-    
-    products = [...products, ...newProducts];
+    try {
+      final productService = ProductService();
+      final newProducts = await productService.getProducts(
+        keyword: keyword,
+        page: page,
+        filterType: filterType,
+      );
+      
+      products = [...products, ...newProducts];
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 401) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      }
 
-    isSearching = false;
+      showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
+    } finally {
+      isSearching = false;
+    }
   }
 }

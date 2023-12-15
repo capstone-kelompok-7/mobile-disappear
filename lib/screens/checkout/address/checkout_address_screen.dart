@@ -1,3 +1,4 @@
+import 'package:disappear/screens/checkout/add_new_address_screen.dart';
 import 'package:disappear/screens/checkout/address/components/checkout_address_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -37,11 +38,60 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
             listener: state.addAddress,
             child: Scaffold(
               appBar: AppBar(
-                title: const Text(
-                  'Alamat',
-                  style: semiBoldBody1,
-                ),
+                backgroundColor: primary40,
+                leading: IconButton(
+                  icon: const Icon(Icons.keyboard_arrow_left, size: 32, color: whiteColor,),
+                  onPressed: () => Navigator.of(context).pop(),
+                ), 
+                title: Text('Alamat', style: semiBoldBody1.copyWith(color: whiteColor),),
                 centerTitle: true,
+              ),
+              body: Builder(
+                builder: (context) {
+                  if (state.isLoading) {
+                    return const Center(
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: CircularProgressIndicator(
+                          color: primary40,
+                          strokeWidth: 3,
+                        ),
+                      ),
+                    );
+                  }
+
+                  if (state.addresses.isNotEmpty) {
+                    return Column(
+                      children: [
+                        ListView.separated(
+                          padding: const EdgeInsets.all(10),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: state.addresses.length,
+                          separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                          itemBuilder: (context, index) => CheckoutAddressItem(address: state.addresses[index])
+                        ),
+                        const SizedBox(height: 20,),
+                        Visibility(
+                          visible: state.isAddingMoreAddress,
+                          child: const Center(
+                            child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(
+                                color: primary40,
+                                strokeWidth: 3,
+                              ),
+                            ),
+                          )
+                        )
+                      ],
+                    );
+                  }
+
+                  return const Center(child: Text('Kamu belum punya alamat untuk dipakai'));
+                }
               ),
               bottomNavigationBar: Padding(
                 padding: const EdgeInsets.only(
@@ -52,7 +102,7 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/add-new-address-screen');
+                    Navigator.of(context).pushNamed(AddNewAddresScreen.routePath);
                   },
                   style: ButtonStyle(
                     backgroundColor: const MaterialStatePropertyAll(primary30),
@@ -65,45 +115,7 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                   ),
                 ),
               ),
-              body: ListView(
-                padding: const EdgeInsets.only(bottom: 10),
-                children: [
-                  Builder(
-                    builder: (context) {
-                      if (state.isLoading) {
-                        return const Center(child: Text('Loading...'));
-                      }
-                  
-                      if (state.addresses.isNotEmpty) {
-                        return ListView.separated(
-                          padding: const EdgeInsets.all(10),
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: state.addresses.length,
-                          separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                          itemBuilder: (context, index) => CheckoutAddressItem(address: state.addresses[index])
-                        );
-                      }
-                          
-                      return const Center(child: Text('Kamu belum punya alamat untuk dipakai'));
-                    }
-                  ),
-                  Visibility(
-                    visible: state.isAddingMoreAddress,
-                    child: const Center(
-                      child: SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: CircularProgressIndicator(
-                          color: primary40,
-                          strokeWidth: 3,
-                        ),
-                      ),
-                    )
-                  )
-                ],
-              ),
-            )
+            ),
         );
       }
     );

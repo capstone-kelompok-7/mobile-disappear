@@ -1,23 +1,34 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_controller.dart';
+import 'package:disappear/models/carousel_article_model.dart';
+import 'package:disappear/services/carousel_article_service.dart';
 import 'package:flutter/material.dart';
 
 class CarouselArticleViewModel extends ChangeNotifier {
-  int _currentIndex = 0;
-  final CarouselController _carouselController = CarouselController();
+  final CarouselArticleService _carouselArticleService =
+      CarouselArticleService();
+  late List<CarouselArticleModel> _carouselArticles = [];
 
-  int get currentIndex => _currentIndex;
-  CarouselController get carouselController => _carouselController;
+  List<CarouselArticleModel> get carouselArticles => _carouselArticles;
 
-  set currentIndex(int index) {
-    _currentIndex = index;
+  Future<List<CarouselArticleModel>> getCarouselArticles() async {
+    try {
+      _carouselArticles = await _carouselArticleService.getCarouselArticle();
+      notifyListeners();
+      return _carouselArticles;
+    } catch (error) {
+      print('Error fetching carousel articles: $error');
+      throw error;
+    }
+  }
+
+  final CarouselController carouselController = CarouselController();
+
+  int? _currentIndex;
+
+  set currentIndex(int? currentIndex) {
+    _currentIndex = currentIndex;
     notifyListeners();
   }
 
-  void onPageChanged(int index) {
-    currentIndex = index;
-  }
-
-  void animateToPage(int page) {
-    _carouselController.animateToPage(page);
-  }
+  int? get currentIndex => _currentIndex;
 }

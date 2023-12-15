@@ -37,13 +37,13 @@ class CreatedOrder {
   }
 
   String get formattedCreatedAt {
-    final f = DateFormat('d-M-yyyy | HH.m a');
+    final f = DateFormat('d-M-yyyy | HH.mm a');
     return f.format(createdAt);
   }
 
   String get formattedPayUntil {
-    final f = DateFormat('HH.m a');
-    return f.format(createdAt.add(const Duration(hours: 1, minutes: 30)));
+    final f = DateFormat('HH.mm a');
+    return f.format(createdAt.add(const Duration(hours: 1, minutes: 20)));
   }
 
   CreatedOrder({

@@ -1,11 +1,11 @@
-import 'package:disappear/models/home_challenge_model.dart';
+import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/home/components/latest_challenge_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class LatestChallenges extends StatefulWidget {
-  final List<HomeChallengeModel> challenges;
+  final List<Challenge> challenges;
 
   const LatestChallenges({super.key, required this.challenges});
 

@@ -65,7 +65,7 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                 if (snapshot.data!.isNotEmpty) {
                   final checkoutViewModel = Provider.of<CheckoutViewModel>(context, listen: false);
                   final vouchers = snapshot.data!
-                    .where((element) => checkoutViewModel.product!.price! >= element.voucher.minPurchase)
+                    .where((element) => checkoutViewModel.totalProductPrice >= element.voucher.minPurchase)
                     .where((element) => element.voucher.endDate.isAfter(DateTime.now()))
                     .toList();
 
@@ -108,28 +108,19 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-                                        Visibility(
-                                          visible: vouchers[index].voucher.category != 'All Customer',
-                                          child: Container(
-                                            padding: const EdgeInsets.all(5),
-                                            decoration: BoxDecoration(
-                                              color: vouchers[index].voucher.category == 'Bronze'
-                                              ? warning40
-                                                : vouchers[index].voucher.category == 'Silver'
-                                                ? neutral00
-                                                  : vouchers[index].voucher.category == 'Gold'
-                                                  ? warning30
-                                                    : null,
-                                              borderRadius: const BorderRadiusDirectional.only(
-                                                topStart: Radius.circular(4),
-                                                bottomEnd: Radius.circular(8)
-                                              )
-                                            ),
-                                            child: Text(
-                                              vouchers[index].voucher.category,
-                                              style: semiBoldBody8.copyWith(color: whiteColor)
-                                            ),
-                                          )
+                                        Container(
+                                          padding: const EdgeInsets.all(5),
+                                          decoration: const BoxDecoration(
+                                            color: warning40,
+                                            borderRadius: BorderRadiusDirectional.only(
+                                              topStart: Radius.circular(4),
+                                              bottomEnd: Radius.circular(8)
+                                            )
+                                          ),
+                                          child: Text(
+                                            vouchers[index].voucher.category,
+                                            style: semiBoldBody8.copyWith(color: whiteColor)
+                                          ),
                                         ),
                                       ],
                                     ),

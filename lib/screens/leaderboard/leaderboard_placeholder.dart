@@ -37,15 +37,11 @@ class LeaderboardPlaceholder extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15),
                     Container(
                       height: 120,
                       width: 70,
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(250, 213, 133, 1),
-                      ),
+                      decoration: const BoxDecoration(color: Color.fromRGBO(250, 213, 133, 1)),
                     ),
                   ],
                 ),

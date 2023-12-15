@@ -7,22 +7,16 @@ class ProductService {
   Future<List<Product>> getBestSellerProducts() async {
     final dio = createDio();
 
-    final Response response = await dio.get('/products?page=1&pageSize=5');
-
-    if (response.data['data'] != null) {
-      return response.data['data']
-        .map((data) => Product.fromMap(response.data['data']))
-        .toList();
-    }
-
-    return [];
+    final Response response = await dio.get('/products');
+    
+    return response.data['data']
+      .map((data) => Product.fromMap(response.data['data']))
+      .toList();
   }
 
   Future<List<Product>> getProducts({
     required String keyword,
     required int page,
-    int pageSize = 4,
-    bool withPromo = false,
     int filterType = 0,
   }) async {
     final dio = createDio();
@@ -34,12 +28,15 @@ class ProductService {
     } else if (filterType == 2) {
       filter = 'terbaru';
     } else if (filterType == 3) {
-      filter = 'termurah';
-    } else if (filterType == 4) {
       filter = 'termahal';
+    } else if (filterType == 4) {
+      filter = 'termurah';
+    } else if (filterType == 5) {
+      filter = 'promo';
     }
 
-    final Response response = await dio.get('/products?search=$keyword&page=$page&pageSize=$pageSize&filter=$filter');
+    final url = '/products/preferences?search=$keyword&page=$page&filter=$filter';
+    final Response response = await dio.get(url);
 
     if (response.data['data'] != null) {
       return response.data['data']

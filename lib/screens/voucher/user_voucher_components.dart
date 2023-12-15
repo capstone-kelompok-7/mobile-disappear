@@ -1,79 +1,89 @@
-import 'package:disappear/models/challenge_model.dart';
 import 'package:disappear/models/voucher_model.dart';
-import 'package:disappear/screens/voucher/voucher_screen.dart';
+import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class UserVoucherComponents extends StatelessWidget {
   final VoucherModel voucherModel;
+
   const UserVoucherComponents({super.key, required this.voucherModel});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 30),
       height: 100,
-      width: 332,
-      margin: const EdgeInsets.only(
-        left: 29,
-        right: 29,
-        bottom: 12,
-      ),
+      width: double.infinity,
       decoration: BoxDecoration(
-          border: Border.all(
-        color: Colors.black,
-      )),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(
+          width: 1,
+          color: blackColor,
+        )
+      ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 113,
-            width: 100,
-            child: Image.network(
-              'https://s3.amazonaws.com/thumbnails.venngage.com/template/5456834b-ba95-41a9-85b2-4abd4d313c11.png',
-              fit: BoxFit.fill,
+          Expanded(
+            flex: 2,
+            child: Stack(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    border: Border(right: BorderSide(width: 1, color: blackColor)),
+                    color: primary40
+                  ),
+                  child: Image.asset(
+                    'assets/img/Coupon.png',
+                    height: double.infinity,
+                    width: 113,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: const BoxDecoration(
+                    color: warning40,
+                    borderRadius: BorderRadiusDirectional.only(
+                      topStart: Radius.circular(4),
+                      bottomEnd: Radius.circular(8)
+                    )
+                  ),
+                  child: Text(
+                    voucherModel.category!,
+                    style: semiBoldBody8.copyWith(color: whiteColor)
+                  ),
+                )
+              ],
             ),
           ),
-          Container(
-            width: 219,
-            height: 100,
-            padding: const EdgeInsets.only(
-              left: 7,
-              top: 19.5,
-              bottom: 19.5,
-            ),
+          const SizedBox(width: 10,),
+          Expanded(
+            flex: 3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Text(
-                    'Kupon Potongan Harga Rp${voucherModel.discount}',
-                    style: mediumBody7,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                Text(
+                  voucherModel.name!,
+                  style: mediumBody7,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(
-                  height: 10,
+                const SizedBox(height: 10),
+                Text(
+                  'Min. Blj ${voucherModel.formattedMinPurchase}',
+                  style: mediumBody8,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Expanded(
-                  child: Text(
-                    'Min. Blj Rp${voucherModel.minPurchase.toString()}',
-                    style: mediumBody8,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                const SizedBox(
-                  height: 3,
-                ),
-                Expanded(
-                  child: Text(
-                    'Berakhir dalam : ${voucherModel.formattedDate}',
-                    style: regularBody8,
-                  ),
+                const SizedBox(height: 10),
+                Text(
+                  'Berakhir dalam : ${voucherModel.formattedEndDate}',
+                  style: regularBody8,
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

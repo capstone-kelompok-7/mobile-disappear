@@ -1,4 +1,3 @@
-import 'package:disappear/screens/product/components/add_to_cart_success_dialog.dart';
 import 'package:disappear/screens/product/components/quantity_control.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -15,58 +14,9 @@ class AddToCartDialog extends StatefulWidget {
 
 class _AddToCartDialogState extends State<AddToCartDialog> {
   @override
-  void initState() {
-    final provider = Provider.of<AddToCartViewModel>(context, listen: false);
-    
-    provider.addListener(_successListener);
-
-    super.initState();
-  }
-
-  void _successListener() {
-    if (mounted && context.mounted) {
-      final provider = Provider.of<AddToCartViewModel>(context, listen: false);
-      
-      if (provider.isSuccess == true) {
-        _showSuccessMessage();
-      }
-
-      if (provider.isSuccess == false) {
-        _showFailedMessage();
-      }
-
-      provider.isSuccess = null;
-    }
-  }
-
-  void _showSuccessMessage() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const AddToCartSuccessDialog()
-    );
-  }
-
-  void _showFailedMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Gagal menambah produk ke keranjang'))
-    );
-  }
-
-  @override
-  void dispose() {
-    if (mounted && context.mounted) {
-      final provider = Provider.of<AddToCartViewModel>(context, listen: false);
-      provider.removeListener(_successListener);
-    }
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -88,29 +38,29 @@ class _AddToCartDialogState extends State<AddToCartDialog> {
                 ),
               ),
               const SizedBox(width: 30,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Consumer<AddToCartViewModel>(
-                    builder: (context, state, _) {
-                      return Text(
-                        state.product!.name!,
-                        style: semiBoldBody5,
-                      );
-                    }
-                  ),
-                  const SizedBox(height: 8),
-                  Consumer<AddToCartViewModel>(
-                    builder: (context, state, _) {
-                      return Text(
-                        'Stock : ${state.product!.stock}',
-                        style: regularBody6,
-                      );
-                    }
-                  ),
-                  const SizedBox(height: 14),
-                  const QuantityControl()
-                ],
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Consumer<AddToCartViewModel>(
+                      builder: (context, state, _) {
+                        return Text(
+                          state.product!.name!,
+                          overflow: TextOverflow.ellipsis,
+                          style: semiBoldBody5,
+                        );
+                      }
+                    ),
+                    const SizedBox(height: 8),
+                    Consumer<AddToCartViewModel>(
+                      builder: (context, state, _) {
+                        return Text('Stok : ${state.product!.stock}', style: regularBody6);
+                      }
+                    ),
+                    const SizedBox(height: 14),
+                    const QuantityControl(),
+                  ],
+                ),
               )
             ],
           ),
@@ -121,13 +71,13 @@ class _AddToCartDialogState extends State<AddToCartDialog> {
                 onPressed: state.isLoading ? null : state.addProductToCart,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primary30,
-                  minimumSize: const Size(double.infinity, 30),
+                  minimumSize: const Size(double.infinity, 40),
                   padding: const EdgeInsets.all(10)
                 ),
                 child: state.isLoading
                   ? const SizedBox(
-                      width: 20,
-                      height: 20,
+                      width: 15,
+                      height: 15,
                       child: CircularProgressIndicator(
                         color: whiteColor,
                         strokeWidth: 3,

@@ -1,4 +1,6 @@
 import 'package:disappear/screens/chatbot/chatbot_screen.dart';
+import 'package:disappear/models/home/carousel_category_product_model.dart' as model;
+import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/home/components/latest_articles.dart';
 import 'package:disappear/screens/home/components/latest_challenges.dart';
 import 'package:disappear/screens/home/components/placeholders/categories_placeholder.dart';
@@ -13,6 +15,7 @@ import 'package:disappear/screens/home/components/search_field.dart';
 import 'package:disappear/screens/notification/notification_screen.dart';
 import 'package:disappear/screens/cart/cart_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/view_models/cart/cart_view_model.dart';
 import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,9 +31,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final Future _carouselCategoryProductFuture;
+  late final Future<model.CarouselCategoryProduct> _carouselCategoryProductFuture;
 
-  late final Future _challengeArticleFuture;
+  late final Future<ChallengeArticle> _challengeArticleFuture;
 
   @override
   void initState() {
@@ -48,6 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _goToCartScreen() {
+    final cartViewModel = Provider.of<CartViewModel>(context, listen: false);
+    cartViewModel.getCart();
+    
     Navigator.pushNamed(context, CartScreen.routePath);
   }
 
@@ -96,21 +102,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Carousel(
-                          carousels: snapshot.data['carousel'],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Categories(
-                          categories: snapshot.data['category'],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        BestSellerProducts(products: snapshot.data['product']),
+                        Carousel(carousels: snapshot.data!.carousel,),
+                        const SizedBox(height: 20,),
+                        Categories(categories: snapshot.data!.category,),
+                        const SizedBox(height: 20,),
+                        BestSellerProducts(products: snapshot.data!.product),
                       ],
                     );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const SizedBox.shrink();
                   }
 
                   return const Column(
@@ -139,14 +141,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LatestChallenges(
-                            challenges: snapshot.data['challenge']),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        LatestArticles(articles: snapshot.data['article']),
+                        LatestChallenges(challenges: snapshot.data!.challenge),
+                        const SizedBox(height: 20,),
+                        LatestArticles(articles: snapshot.data!.articles),
                       ],
                     );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const SizedBox.shrink();
                   }
 
                   return const Column(

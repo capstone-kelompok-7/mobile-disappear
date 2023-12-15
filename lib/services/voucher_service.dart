@@ -55,7 +55,7 @@ class VoucherService {
       //     )
       //     .toList();
 
-      List<VoucherModel> vouchersUser = (response.data['data'])
+      List<VoucherModel> vouchersUser = (response.data['data'] ?? [])
           .map<VoucherModel>((data) => VoucherModel(
                 id: data['id'] as int,
                 name: data['voucher']['name'] as String?,
@@ -79,13 +79,7 @@ class VoucherService {
   Future<dynamic> postClaimVoucher(int id) async {
     final dio = createDio();
 
-    try {
-      final Response response =
-          await dio.post('/vouchers/claims', data: {'voucher_id': id});
-      debugPrint(response.data.toString());
-      return response.data;
-    } catch (e) {
-      rethrow;
-    }
+    final Response response = await dio.post('/vouchers/claims', data: {'voucher_id': id});
+    return response.data;
   }
 }

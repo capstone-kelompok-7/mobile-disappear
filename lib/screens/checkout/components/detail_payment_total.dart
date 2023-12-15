@@ -1,12 +1,15 @@
+import 'package:disappear/models/checkout/created_order_gopay_model.dart';
 import 'package:disappear/models/checkout/created_order_model.dart';
-import 'package:disappear/screens/manual_transfer/telegram_transfer_screen.dart';
-import 'package:disappear/screens/manual_transfer/whatsapp_transfer_screen.dart';
+import 'package:disappear/screens/checkout/payment/gopay_screen.dart';
+import 'package:disappear/screens/checkout/payment/telegram_transfer_screen.dart';
+import 'package:disappear/screens/checkout/payment/whatsapp_transfer_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/checkout/checkout_address_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_payment_method_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_view_model.dart';
 import 'package:disappear/view_models/checkout/checkout_voucher_view_model.dart';
+import 'package:disappear/view_models/checkout/gopay_view_model.dart';
 import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,20 +28,42 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
     final checkoutAddressViewModel = Provider.of<CheckoutAddressViewModel>(context, listen: false);
     final checkoutVoucherViewModel = Provider.of<CheckoutVoucherViewModel>(context, listen: false);
     final checkoutPaymentMethodViewModel = Provider.of<CheckoutPaymentMethodViewModel>(context, listen: false);
+    
     final manualTransferViewModel = Provider.of<ManualTransferViewModel>(context, listen: false);
+    final gopayViewModel = Provider.of<GopayViewModel>(context, listen: false);
 
-    final CreatedOrder? createdOrder = await checkoutViewModel.createOrder(
-      addressId: checkoutAddressViewModel.address!.id,
-      voucherId: checkoutVoucherViewModel.voucher?.voucherId,
-      paymentMethod: checkoutPaymentMethodViewModel.method!
-    );
+    dynamic createdOrder;
 
-    manualTransferViewModel.createdOrder = createdOrder;
+    if (checkoutViewModel.purchaseType == 'buy-now') {
+      createdOrder = await checkoutViewModel.createOrder(
+        addressId: checkoutAddressViewModel.address!.id,
+        voucherId: checkoutVoucherViewModel.voucher?.voucherId,
+        paymentMethod: checkoutPaymentMethodViewModel.method!
+      );
+    } else {
+      createdOrder = await checkoutViewModel.createOrderByCart(
+        addressId: checkoutAddressViewModel.address!.id,
+        voucherId: checkoutVoucherViewModel.voucher?.voucherId,
+        paymentMethod: checkoutPaymentMethodViewModel.method!
+      );
+    }
 
-    if (checkoutPaymentMethodViewModel.method == 'whatsapp') {
-      Navigator.pushNamed(context, WhatsappTransferScreen.routePath);
-    } else if (checkoutPaymentMethodViewModel.method == 'telegram') {
-      Navigator.pushNamed(context, TelegramTransferScreen.routePath);
+    if (createdOrder != null) {
+      if (createdOrder is CreatedOrder) {
+        manualTransferViewModel.createdOrder = createdOrder;
+
+        /// REDIRECT TO PAYMENT SCREEN
+        if (checkoutPaymentMethodViewModel.method == 'whatsapp') {
+          Navigator.pushNamed(context, WhatsappTransferScreen.routePath);
+        } else if (checkoutPaymentMethodViewModel.method == 'telegram') {
+          Navigator.pushNamed(context, TelegramTransferScreen.routePath);
+        }
+      } else if (createdOrder is CreatedGopayOrder) {
+        gopayViewModel.createdOrder = createdOrder;
+
+        /// REDIRECT TO PAYMENT SCREEN
+        Navigator.pushNamed(context, GopayScreen.routePath);
+      }
     }
   }
 

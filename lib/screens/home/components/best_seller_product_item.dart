@@ -1,5 +1,4 @@
-import 'package:disappear/models/product/best_seller_product_model.dart';
-import 'package:disappear/models/product/product_model.dart';
+import 'package:disappear/models/home/best_seller_product_model.dart';
 import 'package:disappear/screens/home/components/placeholders/best_seller_product_thumbnail_placeholder.dart';
 import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';

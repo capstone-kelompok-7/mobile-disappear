@@ -1,14 +1,26 @@
+import 'package:dio/dio.dart';
+import 'package:disappear/models/cart/cart_model.dart';
 import 'package:disappear/models/checkout/created_order_model.dart';
 import 'package:disappear/models/checkout/voucher/checkout_voucher_model.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/services/checkout_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 
 class CheckoutViewModel extends ChangeNotifier {
   String purchaseType = 'buy-now';
 
   Product? product;
+
+  List<CartItem> _selectedItems = [];
+
+  set selectedItems(List<CartItem> selectedItems) {
+    _selectedItems = selectedItems;
+    notifyListeners();
+  }
+
+  List<CartItem> get selectedItems => _selectedItems;
 
   TextEditingController notesController = TextEditingController();
 
@@ -17,6 +29,16 @@ class CheckoutViewModel extends ChangeNotifier {
   int get totalProductPrice {
     if (purchaseType == 'buy-now') {
       return product!.price!;
+    }
+
+    if (purchaseType == 'buy-by-cart') {
+      int price = 0;
+
+      for (CartItem item in selectedItems) {
+        price += (item.price * item.quantity);
+      }
+
+      return price;
     }
 
     return 0;
@@ -30,6 +52,16 @@ class CheckoutViewModel extends ChangeNotifier {
   int get totalProductDiscount {
     if (purchaseType == 'buy-now') {
       return product!.discount!;
+    }
+
+    if (purchaseType == 'buy-by-cart') {
+      int discount = 0;
+
+      for (CartItem item in selectedItems) {
+        discount += (item.product.discount * item.quantity);
+      }
+
+      return discount;
     }
 
     return 0;
@@ -64,7 +96,7 @@ class CheckoutViewModel extends ChangeNotifier {
 
   bool get isCheckingOut => _isCheckingOut;
 
-  Future<CreatedOrder?> createOrder({
+  Future<dynamic> createOrder({
     required int addressId,
     required String paymentMethod,
     int? voucherId,
@@ -73,16 +105,52 @@ class CheckoutViewModel extends ChangeNotifier {
 
     try {
       final service = CheckoutService();
-      final CreatedOrder createdOrder = await service.createOrder(
+      final dynamic createdOrder = await service.createOrder(
         productId: product!.id,
         addressId: addressId,
         note: notesController.text,
+        voucherId: voucherId,
         paymentMethod: paymentMethod
       );
 
       return createdOrder;
-    } on Exception catch (e) {
-      // TODO
+    } on DioException catch (e) {
+      if ([400, 403, 500].contains(e.response?.statusCode)) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      } else {
+        showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
+      }
+    } finally {
+      isCheckingOut = false;
+    }
+
+    return null;
+  }
+
+  Future<dynamic> createOrderByCart({
+    required int addressId,
+    required String paymentMethod,
+    int? voucherId,
+  }) async {
+    isCheckingOut = true;
+
+    try {
+      final service = CheckoutService();
+      final dynamic createdOrder = await service.createOrderByCart(
+        cartItems: selectedItems,
+        addressId: addressId,
+        note: notesController.text,
+        voucherId: voucherId,
+        paymentMethod: paymentMethod
+      );
+
+      return createdOrder;
+    } on DioException catch (e) {
+      if ([400, 403, 500].contains(e.response?.statusCode)) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      } else {
+        showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
+      }
     } finally {
       isCheckingOut = false;
     }
