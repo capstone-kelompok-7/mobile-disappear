@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:disappear/screens/order_list/components/EmptyOrder.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -35,9 +36,9 @@ class _FailedTabState extends State<FailedTab> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return const Center(child: const Text('No data available'));
+              return const EmptyOrder();
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Text('No data available');
+              return const EmptyOrder();
             }
 
             /// Success
@@ -47,13 +48,9 @@ class _FailedTabState extends State<FailedTab> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 15),
-                    child: Column(
-                      children: [
-                        FailedCard(
-                          order: snapshot.data![index]!,
-                        ),
-                      ],
+                    padding: const EdgeInsets.all(15),
+                    child: FailedCard(
+                      order: snapshot.data![index]!,
                     ),
                   );
                 },

@@ -96,11 +96,7 @@ class _ImagePickerState extends State<ImagePicker> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey)),
-            child: Column(
-              children: [
-                const Icon(Icons.add_a_photo),
-              ],
-            ),
+            child: const Icon(Icons.add_a_photo)
           );
         },
       );

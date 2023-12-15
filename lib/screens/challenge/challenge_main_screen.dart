@@ -44,6 +44,7 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
       appBar: AppBar(
         backgroundColor: primary40,
         elevation: 2.5,
+        automaticallyImplyLeading: false,
         title: Consumer < ChallengeMainViewModel > (
           builder: (context, appBar, _) {
             return appBar.selectedTabChallenge == 1 ?

@@ -1,16 +1,12 @@
 import 'dart:io';
 
-import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/checkout/address_list_screen.dart';
-import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/profile/placeholders/profile_placeholder.dart';
-import 'package:disappear/screens/splash_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/auth/logout_view_model.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:disappear/view_models/main_view_model.dart';
-import 'package:disappear/view_models/preferences_helper.dart';
 import 'package:disappear/view_models/profile/user_profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,6 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           'Profile',
           style: semiBoldBody1.copyWith(color: whiteColor),
         ),
+        automaticallyImplyLeading: false,
         centerTitle: true,
       ),
       body: Consumer<ProfileViewModel>(
