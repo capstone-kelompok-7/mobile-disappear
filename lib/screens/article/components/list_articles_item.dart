@@ -36,8 +36,6 @@ class _ListArticleItemState extends State<ListArticleItem> {
   }
 
   void _toggleBookmark() async {
-    bool isBookmarked = _bookmarkViewModel.isBookmarked(widget.article.id);
-
     try {
       _bookmarkViewModel.toggleBookmark(widget.article.id);
     } catch (e) {
@@ -122,7 +120,7 @@ class _ListArticleItemState extends State<ListArticleItem> {
                             ],
                           ),
                           GestureDetector(
-                            onTap: _toggleBookmark,
+                            onTap: () {},
                             child: Icon(
                               isBookmarked
                                   ? Icons.bookmark
