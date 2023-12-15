@@ -1,8 +1,10 @@
 import 'package:disappear/models/order_detail_by_id_model.dart';
 import 'package:disappear/screens/order_detail/components/address_components.dart';
+import 'package:disappear/screens/order_detail/components/order_button.dart';
 import 'package:disappear/screens/order_detail/components/order_number_components.dart';
 import 'package:disappear/screens/order_detail/components/order_summary_components.dart';
 import 'package:disappear/screens/order_detail/components/payment_method_components.dart';
+import 'package:disappear/screens/order_detail/components/payment_status.dart';
 import 'package:disappear/screens/order_detail/components/products_components.dart';
 import 'package:disappear/screens/order_detail/components/status_components.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -55,11 +57,11 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
             future: state.getDetailsOrderById(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: const CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
+                return const Center(child: Text('No data available'));
               } else if (!snapshot.hasData) {
-                return Text('No data available');
+                return const Text('No data available');
               } else {
                 return ListView(
                   children: [
@@ -69,23 +71,11 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                     OrderSummary(orderDetail: snapshot.data!),
                     PaymentMethod(orderDetail: snapshot.data!),
                     OrderNumber(orderDetail: snapshot.data!),
-                    SizedBox(
+                    PaymentStatus(orderDetail: snapshot.data!),
+                    const SizedBox(
                       height: 10,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 60),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            minimumSize: const Size(double.infinity, 45)),
-                        child: const Text(
-                          'Pesanan Diterima',
-                          style: semiBoldBody7,
-                        ),
-                      ),
-                    )
+                    OrderButton(orderDetail: snapshot.data!),
                   ],
                 );
               }

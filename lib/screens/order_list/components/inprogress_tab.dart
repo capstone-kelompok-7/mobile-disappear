@@ -29,11 +29,11 @@ class _InProgressTabState extends State<InProgressTab> {
           future: state.getAllOrderUser(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: const CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return const Center(child: const Text('No data available'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Text('No data available');
+              return const Text('No data available');
             }
 
             /// Success

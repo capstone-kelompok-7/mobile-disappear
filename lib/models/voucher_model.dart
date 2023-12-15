@@ -12,6 +12,21 @@ class VoucherModel {
   final int? minPurchase;
   final int? stock;
 
+  String get formattedEndDate {
+    final f = DateFormat('d MMM yy');
+    return f.format(DateTime.parse(endDate));
+  }
+
+  String get formattedMinPurchase {
+    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ');
+    return f.format(minPurchase);
+  }
+
+  String get formattedDiscount {
+    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ');
+    return f.format(discount);
+  }
+
   VoucherModel({
     required this.id,
     this.name,

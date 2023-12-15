@@ -107,12 +107,10 @@ class _CartScreenState extends State<CartScreen> {
 
                     return Container(
                       width: double.infinity,
-                      height: 100,
+                      height: 130,
                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: primary40,
-                        ),
+                        border: Border.all(color: primary40),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Row(
@@ -136,7 +134,7 @@ class _CartScreenState extends State<CartScreen> {
                                     return Image.network(
                                       cartItem.product.productPhotos[0].url,
                                       width: 70,
-                                      height: 80,
+                                      height: 130,
                                       fit: BoxFit.cover,
                                     );
                                   }
@@ -159,54 +157,48 @@ class _CartScreenState extends State<CartScreen> {
                                     maxLines: 1,
                                     style: mediumBody6,
                                     overflow: TextOverflow.ellipsis
-                                  ,),
+                                  ),
                                   Text('${cartItem.gramPlastic} gram', style: regularBody8),
                                   Text(cartItem.formattedPrice, style: mediumBody6, overflow: TextOverflow.ellipsis,),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(color: primary40),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(vertical: 5),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () => state.reduceItemQuantity(cartItem),
+                                          child: const Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: 8),
+                                            child: Icon(
+                                              Icons.remove,
+                                              size: 16,
+                                              color: primary40,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(cartItem.quantity.toString(), style: semiBoldBody7),
+                                        GestureDetector(
+                                          onTap: () => state.addItemQuantity(cartItem),
+                                          child: const Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: 8),
+                                            child: Icon(
+                                              Icons.add,
+                                              size: 16,
+                                              color: primary40,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               )
                             ],
                           ),
-                          const Spacer(),
-                          Column(
-                            children: [
-                              const Spacer(),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: primary40),
-                                ),
-                                padding: const EdgeInsets.symmetric(vertical: 5),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () => state.reduceItemQuantity(cartItem),
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 8),
-                                        child: Icon(
-                                          Icons.remove,
-                                          size: 16,
-                                          color: primary40,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(cartItem.quantity.toString(), style: semiBoldBody7),
-                                    GestureDetector(
-                                      onTap: () => state.addItemQuantity(cartItem),
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 8),
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 16,
-                                          color: primary40,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )
                         ],
                       ),
                     );

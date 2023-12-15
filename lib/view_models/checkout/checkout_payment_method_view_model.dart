@@ -28,6 +28,10 @@ class CheckoutPaymentMethodViewModel extends ChangeNotifier {
       return 'Telegram';
     }
 
+    if (method == 'gopay') {
+      return 'Gopay';
+    }
+
     return '-';
   }
 }
