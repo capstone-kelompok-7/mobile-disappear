@@ -37,6 +37,11 @@ class OrderDetailByIdModel {
   Voucher voucher;
   List<OrderDetail> orderDetails;
 
+  String get formattedTotalAmountPaid {
+    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    return f.format(totalAmountPaid);
+  }
+
   OrderDetailByIdModel({
     required this.id,
     required this.idOrder,

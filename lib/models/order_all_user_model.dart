@@ -142,6 +142,11 @@ class Product {
   int productExp;
   List<ProductPhoto> productPhotos = [];
 
+  String get formattedPrice {
+    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    return f.format(price);
+  }
+
   Product({
     required this.id,
     required this.name,

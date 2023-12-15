@@ -6,6 +6,8 @@ import 'package:disappear/services/order_service.dart';
 import 'package:flutter/foundation.dart';
 
 class OrderViewModel extends ChangeNotifier {
+  Future<OrderDetailByIdModel>? orderDetailFuture;
+
   String? _orderStatus;
 
   set orderStatus(String? orderStatus) {
@@ -28,9 +30,18 @@ class OrderViewModel extends ChangeNotifier {
 
   String? get orderId => _orderId;
 
-  Future<OrderDetailByIdModel> getDetailsOrderById() async {
+  bool _isOrderSummaryExpanded = false;
+
+  set isOrderSummaryExpanded(bool isOrderSummaryExpanded) {
+    _isOrderSummaryExpanded = isOrderSummaryExpanded;
+    notifyListeners();
+  }
+
+  bool get isOrderSummaryExpanded => _isOrderSummaryExpanded;
+
+  Future<void> getDetailsOrderById() async {
     final orderDetailService = OrderService();
-    return await orderDetailService.getDetailsOrderById(orderId!);
+    orderDetailFuture = orderDetailService.getDetailsOrderById(orderId!);
   }
 
   Future<void> acceptOrder() async {
@@ -38,7 +49,12 @@ class OrderViewModel extends ChangeNotifier {
       final acceptOrderService = OrderService();
 
       await acceptOrderService.acceptOrder(orderId!);
-      showSuccessFlushbar(message: 'Pesanan telah diterima');
+
+      await getDetailsOrderById();
+      
+      notifyListeners();
+
+      showSuccessFlushbar(message: 'Pesanan telah diterima', withIcon: true);
     } on DioException catch (e) {
       if ([401, 500].contains(e.response?.statusCode)) {
         showFailedFlushbar(message: e.response!.data['message']);

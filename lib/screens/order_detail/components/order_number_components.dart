@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:disappear/helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:disappear/models/order_detail_by_id_model.dart';
@@ -44,7 +45,7 @@ class _OrderNumberState extends State<OrderNumber> {
                 style: mediumBody8.copyWith(color: neutral20),
               ),
               Text(
-                widget.orderDetail.formattedDate.toString(),
+                formattedDate(widget.orderDetail.createdAt, format: 'd-M-yyyy HH:mm'),
                 style: mediumBody8.copyWith(color: neutral20),
               ),
             ],
@@ -60,7 +61,7 @@ class _OrderNumberState extends State<OrderNumber> {
                 style: mediumBody8.copyWith(color: neutral20),
               ),
               Text(
-                widget.orderDetail.formattedDate.toString(),
+                formattedDate(widget.orderDetail.createdAt, format: 'd-M-yyyy HH:mm'),
                 style: mediumBody8.copyWith(color: neutral20),
               ),
             ],

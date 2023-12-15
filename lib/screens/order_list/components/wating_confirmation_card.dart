@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:disappear/helper.dart';
 import 'package:disappear/screens/order_detail/detail_order_screen.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,6 @@ class _WaitingConfirmationTabCardState
     return InkWell(
       onTap: _goToDetailOrderScreen,
       child: Container(
-        width: 370,
-        height: 198,
         padding: const EdgeInsets.all(11),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -62,8 +61,7 @@ class _WaitingConfirmationTabCardState
                 ),
                 child: Text(
                   widget.order.orderStatus!,
-                  style: regularBody3.copyWith(
-                      fontSize: 12, fontWeight: FontWeight.w600),
+                  style: regularBody8,
                 ),
               ),
             ),
@@ -107,7 +105,7 @@ class _WaitingConfirmationTabCardState
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                                'Rp. ${widget.order.orderDetails![0].product.price}',
+                                formattedPrice(widget.order.orderDetails![0].product.price),
                                 style: boldBody2.copyWith(
                                   fontSize: 13,
                                   color: neutral40,
@@ -132,42 +130,22 @@ class _WaitingConfirmationTabCardState
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 500,
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 3),
-                Text('Tampilkan produk lagi',
-                    style: mediumBody3.copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: neutral30)),
-                const SizedBox(height: 3),
-                Container(
-                  width: 500,
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 3),
+                const Divider(thickness: 0.5, color: neutral00,),
                 Padding(
                   padding: const EdgeInsets.only(right: 10, left: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Text('${widget.order.orderDetails!.length} produk', style: regularBody8,),
                       RichText(
                         text: TextSpan(
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
+                            const TextSpan(text: 'Total Pesanan : ', style: regularBody8),
                             TextSpan(
-                                text: 'Total produk : ',
-                                style: semiBoldBody3.copyWith(
-                                    fontSize: 13, fontWeight: FontWeight.w300)),
-                            TextSpan(
-                                text:
-                                    'Rp ${widget.order.formattedTotalAmountPaid}',
-                                style: semiBoldBody3.copyWith(
-                                    fontSize: 13, fontWeight: FontWeight.w700)),
+                              text: formattedPrice(widget.order.totalAmountPaid!),
+                              style: regularBody8.copyWith(fontWeight: FontWeight.w700)
+                            ),
                           ],
                         ),
                       ),
@@ -175,22 +153,21 @@ class _WaitingConfirmationTabCardState
                   ),
                 ),
                 const SizedBox(height: 3),
-                Container(
-                  width: 500,
-                  height: 1,
-                  color: Colors.grey,
-                ),
+                const Divider(thickness: 0.5, color: neutral00,),
                 const SizedBox(height: 5),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Penjual sedang memeriksa bukti \npembayaran',
-                        style: regularBody4.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: neutral30,
-                            height: 1.2)),
+                Visibility(
+                  visible: widget.order.extraInfo != null && widget.order.extraInfo != '',
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(widget.order.extraInfo!,
+                          style: regularBody4.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: neutral30,
+                              height: 1.2)),
+                    ),
                   ),
                 ),
               ],

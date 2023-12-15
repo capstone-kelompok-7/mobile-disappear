@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:disappear/helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:disappear/models/order_detail_by_id_model.dart';
@@ -56,18 +57,18 @@ class _ProductsState extends State<Products> {
                           widget.orderDetail.orderDetails[index].product.name,
                           style: mediumBody7,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 3,
                         ),
                         Text(
                           '${widget.orderDetail.orderDetails[index].totalGramPlastic} gram',
                           style: regularBody8,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
-                          'Rp. ${widget.orderDetail.orderDetails[index].product.price}',
+                          formattedPrice(widget.orderDetail.orderDetails[index].product.price),
                           style: boldBody7,
                         ),
                       ],

@@ -1,3 +1,4 @@
+import 'package:disappear/screens/order_list/components/EmptyOrder.dart';
 import 'package:disappear/screens/order_list/components/sent_card.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +31,9 @@ class _SentTabState extends State<SentTab> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return const Center(child: const Text('No data available'));
+              return const EmptyOrder();
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Text('No data available');
+              return const EmptyOrder();
             }
 
             /// Success
@@ -42,13 +43,9 @@ class _SentTabState extends State<SentTab> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 15),
-                    child: Column(
-                      children: [
-                        SentCard(
-                          order: snapshot.data![index]!,
-                        ),
-                      ],
+                    padding: const EdgeInsets.all(15),
+                    child: SentCard(
+                      order: snapshot.data![index]!,
                     ),
                   );
                 },

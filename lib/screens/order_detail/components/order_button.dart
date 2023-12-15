@@ -1,7 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:disappear/models/product/product_model.dart' as productModel;
+import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/product_review/add_review_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
+import 'package:disappear/view_models/product/product_view_model.dart';
 import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +29,13 @@ class _OrderButtonState extends State<OrderButton> {
     addReviewViewModel.orderDetail = widget.orderDetail;
     
     Navigator.pushNamed(context, AddReviewScreen.routePath);
+  }
+
+  void _goToProductScreen() {
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    productViewModel.product = productModel.Product(id: widget.orderDetail.orderDetails.first.productId);
+
+    Navigator.pushNamed(context, ProductScreen.routePath);
   }
   
   @override
@@ -59,7 +69,7 @@ class _OrderButtonState extends State<OrderButton> {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: _goToProductScreen,
                     style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: primary40),
                         shape: BeveledRectangleBorder(

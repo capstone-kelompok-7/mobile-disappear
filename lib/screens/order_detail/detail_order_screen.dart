@@ -7,6 +7,7 @@ import 'package:disappear/screens/order_detail/components/payment_method_compone
 import 'package:disappear/screens/order_detail/components/payment_status.dart';
 import 'package:disappear/screens/order_detail/components/products_components.dart';
 import 'package:disappear/screens/order_detail/components/status_components.dart';
+import 'package:disappear/screens/order_list/components/EmptyOrder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
@@ -24,16 +25,12 @@ class DetailOrderScreen extends StatefulWidget {
 }
 
 class _DetailOrderScreenState extends State<DetailOrderScreen> {
-  late final Future orderDetailFuture = _getOrder();
-
-  Future<OrderDetailByIdModel?> _getOrder() async {
+  @override
+  void initState() {
     final orderViewModel = Provider.of<OrderViewModel>(context, listen: false);
-    final reviewViewModel = Provider.of<AddProductReviewViewModel>(context, listen: false);
+    orderViewModel.getDetailsOrderById();
 
-    final order = await orderViewModel.getDetailsOrderById();
-    reviewViewModel.orderDetail = order;
-
-    return order;
+    super.initState();
   }
 
   @override
@@ -58,14 +55,17 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
       body: Consumer<OrderViewModel>(
         builder: (context, state, _) {
           return FutureBuilder(
-            future: state.getDetailsOrderById(),
+            future: state.orderDetailFuture,
             builder: (context, snapshot) {
+              final reviewViewModel = Provider.of<AddProductReviewViewModel>(context, listen: false);
+              reviewViewModel.orderDetail = snapshot.data;
+
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return const Center(child: Text('No data available'));
+                return const EmptyOrder();
               } else if (!snapshot.hasData) {
-                return const Text('No data available');
+                return const EmptyOrder();
               } else {
                 return ListView(
                   children: [

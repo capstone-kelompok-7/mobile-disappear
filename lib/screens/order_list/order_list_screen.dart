@@ -36,13 +36,11 @@ class OrderListScreen extends StatelessWidget {
                 child: TabBar(
                   isScrollable: true,
                   tabs: [
-                    Tab(
-                        child: Text('Menunggu Konfirmasi',
-                            style: TextStyle(fontSize: 13))),
-                    Tab(child: Text('Proses', style: TextStyle(fontSize: 13))),
-                    Tab(child: Text('Dikirim', style: TextStyle(fontSize: 13))),
-                    Tab(child: Text('Selesai', style: TextStyle(fontSize: 13))),
-                    Tab(child: Text('Gagal', style: TextStyle(fontSize: 13))),
+                    Tab(child: Text('Menunggu Konfirmasi', style: regularBody8)),
+                    Tab(child: Text('Proses', style: regularBody8)),
+                    Tab(child: Text('Dikirim', style: regularBody8)),
+                    Tab(child: Text('Selesai', style: regularBody8)),
+                    Tab(child: Text('Gagal', style: regularBody8)),
                   ],
                   indicatorColor: Colors.black,
                   labelColor: Colors.black,

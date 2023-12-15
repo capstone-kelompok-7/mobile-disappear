@@ -1,4 +1,3 @@
-import 'package:disappear/screens/chatbot/chatbot_screen.dart';
 import 'package:disappear/models/home/carousel_category_product_model.dart' as model;
 import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/chatbot/new_chatbot_screen.dart';
@@ -79,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 30,
           width: 100,
         ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: _goToNotificationScreen,
