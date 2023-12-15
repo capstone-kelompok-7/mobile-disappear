@@ -210,7 +210,7 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (context) => BookmarkViewModel(),
-      ),y
+      ),
       ChangeNotifierProvider(
         create: (context) => GopayViewModel(),
       ),
@@ -294,7 +294,6 @@ class App extends StatelessWidget {
             const TelegramTransferScreen(),
         ChatBotScreen.routePath: (context) => ChatBotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
-        CarouselArticleScreen.routePath: (context) => CarouselArticleScreen(),
         ChangePasswordScreen.routePath: (context) => const ChangePasswordScreen(),
       },
       theme: ThemeData(
