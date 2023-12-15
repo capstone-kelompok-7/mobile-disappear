@@ -1,3 +1,4 @@
+import 'package:disappear/screens/article/article_screen.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/screens/auth/register/register_verification_screen.dart';
@@ -300,7 +301,7 @@ class App extends StatelessWidget {
         ChatBotScreen.routePath: (context) => ChatBotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
         NewChatbotScreen.routePath: (context) => const NewChatbotScreen(),
-        ChatBotScreen.routePath: (context) => ChatBotScreen()
+        ChatBotScreen.routePath: (context) => ChatBotScreen(),
         ChangePasswordScreen.routePath: (context) => const ChangePasswordScreen(),
       },
       theme: ThemeData(

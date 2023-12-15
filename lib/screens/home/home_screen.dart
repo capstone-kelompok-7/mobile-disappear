@@ -1,6 +1,7 @@
 import 'package:disappear/screens/chatbot/chatbot_screen.dart';
 import 'package:disappear/models/home/carousel_category_product_model.dart' as model;
 import 'package:disappear/models/home/challenge_article.dart';
+import 'package:disappear/screens/chatbot/new_chatbot_screen.dart';
 import 'package:disappear/screens/home/components/latest_articles.dart';
 import 'package:disappear/screens/home/components/latest_challenges.dart';
 import 'package:disappear/screens/home/components/placeholders/categories_placeholder.dart';
@@ -60,13 +61,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: GestureDetector(
+      floatingActionButton: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, '/newchatbot');
+          Navigator.pushNamed(context, NewChatbotScreen.routePath);
         },
-        child: SvgPicture.asset(
-          'assets/img/chatbot.svg',
-          fit: BoxFit.contain,
+        child: Image.asset(
+          'assets/img/Secretary.png',
+          fit: BoxFit.cover,
+          width: 60,
+          height: 60,
         ),
       ),
       appBar: AppBar(

@@ -71,7 +71,7 @@ class ChatbotService {
       final dio = createDio();
       Response response = await dio.get('/assistant');
 
-      return response.data['data']
+      return (response.data['data'] ?? [])
           .map<ChatbotModel>(
             (data) => ChatbotModel(
               id: data['id'],
