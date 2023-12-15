@@ -1,3 +1,4 @@
+import 'package:disappear/screens/chatbot/chatbot_screen.dart';
 import 'package:disappear/models/home/carousel_category_product_model.dart' as model;
 import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/home/components/latest_articles.dart';
@@ -38,7 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
 
-    _carouselCategoryProductFuture = homeViewModel.getCarouselsCategoriesAndProducts();
+    _carouselCategoryProductFuture =
+        homeViewModel.getCarouselsCategoriesAndProducts();
     _challengeArticleFuture = homeViewModel.getChallengesAndArticles();
 
     super.initState();
@@ -58,18 +60,30 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/newchatbot');
+        },
+        child: SvgPicture.asset(
+          'assets/img/chatbot.svg',
+          fit: BoxFit.contain,
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: whiteColor,
-        title: Image.asset('assets/img/DisappearLogo.png', height: 30, width: 100,),
+        title: Image.asset(
+          'assets/img/DisappearLogo.png',
+          height: 30,
+          width: 100,
+        ),
         actions: [
           IconButton(
             onPressed: _goToNotificationScreen,
             icon: SvgPicture.asset('assets/img/NotificationIcon.svg'),
           ),
           IconButton(
-            onPressed: _goToCartScreen,
-            icon: SvgPicture.asset('assets/img/CartIcon.svg')
-          ),
+              onPressed: _goToCartScreen,
+              icon: SvgPicture.asset('assets/img/CartIcon.svg')),
         ],
       ),
       body: ListView(
@@ -77,10 +91,11 @@ class _HomeScreenState extends State<HomeScreen> {
         shrinkWrap: true,
         children: [
           const SearchField(),
-          const SizedBox(height: 14,),
-          Consumer<HomeViewModel>(
-            builder: (context, state, _) {
-              return FutureBuilder(
+          const SizedBox(
+            height: 14,
+          ),
+          Consumer<HomeViewModel>(builder: (context, state, _) {
+            return FutureBuilder(
                 future: _carouselCategoryProductFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -103,20 +118,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   return const Column(
                     children: [
                       CarouselPlaceholder(),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       CategoriesPlaceholder(),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       BestSellerProductsPlaceholder()
                     ],
                   );
-                }
-              );
-            }
+                });
+          }),
+          const SizedBox(
+            height: 20,
           ),
-          const SizedBox(height: 20,),
-          Consumer<HomeViewModel>(
-            builder: (context, state, _) {
-              return FutureBuilder(
+          Consumer<HomeViewModel>(builder: (context, state, _) {
+            return FutureBuilder(
                 future: _challengeArticleFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -137,14 +155,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   return const Column(
                     children: [
                       ChallengesPlaceholder(),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       LatestArticlesPlaceholder()
                     ],
                   );
-                }
-              );
-            }
-          ),
+                });
+          }),
         ],
       ),
     );
