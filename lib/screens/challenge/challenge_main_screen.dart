@@ -156,9 +156,9 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                                       if (snapshot.connectionState == ConnectionState.waiting) {
                                         return const Column(children: [VoucherPlaceholder()]);
                                       } else if (snapshot.hasError) {
-                                        return const Text('Tidak ada Kupon Tersedia');
+                                        return const Center(child: Text('Tidak ada Kupon Tersedia'));
                                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                                        return const Text('Tidak ada Kupon Tersedia');
+                                        const Center(child: Text('Tidak ada Kupon Tersedia'));
                                       }
 
                                       return ListView.separated(

@@ -55,7 +55,7 @@ class VoucherService {
       //     )
       //     .toList();
 
-      List<VoucherModel> vouchersUser = (response.data['data'])
+      List<VoucherModel> vouchersUser = (response.data['data'] ?? [])
           .map<VoucherModel>((data) => VoucherModel(
                 id: data['id'] as int,
                 name: data['voucher']['name'] as String?,

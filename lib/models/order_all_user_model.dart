@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 OrderAllUserModel orderAllUserModelFromJson(String str) =>
     OrderAllUserModel.fromJson(json.decode(str));
 
@@ -23,6 +25,11 @@ class OrderAllUserModel {
   DateTime? statusOrderDate;
   DateTime? createdAt;
   List<OrderDetail>? orderDetails = [];
+
+  String get formattedTotalAmountPaid {
+    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    return f.format(totalAmountPaid);
+  }
 
   OrderAllUserModel({
     this.id,
@@ -83,6 +90,11 @@ class OrderDetail {
   int totalPrice;
   int totalDiscount;
   Product product;
+
+  String get formattedPrice {
+    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    return f.format(totalPrice);
+  }
 
   OrderDetail({
     required this.id,

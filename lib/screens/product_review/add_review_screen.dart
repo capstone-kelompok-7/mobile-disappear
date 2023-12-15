@@ -28,165 +28,202 @@ class AddReviewScreen extends StatelessWidget {
           ),
           centerTitle: true,
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(20),
-          shrinkWrap: true,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.network('https://picsum.photos/67/54'),
-                const SizedBox(
-                  width: 10,
-                ),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Totebag Kanvas',
-                      style: semiBoldBody6,
-                    ),
-                    SizedBox(
-                      height: 7,
-                    ),
-                    Text(
-                      '20 gram',
-                      style: regularBody8,
-                    )
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Kualitas Produk',
-                  style: mediumBody5,
-                ),
-                Consumer<AddProductReviewViewModel>(
-                    builder: (context, state, _) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+        body: Consumer<AddProductReviewViewModel>(
+          builder: (context, state, _) {
+            return Form(
+              key: state.formKey,
+              child: ListView(
+                padding: const EdgeInsets.all(20),
+                shrinkWrap: true,
+                children: [
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) => const SizedBox(height: 30,),
+                    itemCount: state.orderDetail!.orderDetails.length,
+                    itemBuilder: (context, index) {
+                      final orderDetail = state.orderDetail!.orderDetails[index];
+              
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Builder(
+                            builder: (context) {
+                              if (orderDetail.product.productPhotos.isNotEmpty && orderDetail.product.productPhotos.first.url != '') {
+                                return Image.network(
+                                  orderDetail.product.productPhotos.first.url,
+                                  width: 70,
+                                  height: 70,
+                                  fit: BoxFit.cover,
+                                );
+                              }
+              
+                              return Image.asset(
+                                'assets/img/totebag_kanvas.png',
+                                width: 70,
+                                height: 70,
+                                fit: BoxFit.cover,
+                              );
+                            }
+                          ),
+                          const SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                orderDetail.product.name,
+                                style: semiBoldBody6,
+                              ),
+                              const SizedBox(height: 7),
+                              Text(
+                                '${orderDetail.product.gramPlastic} gram',
+                                style: regularBody8,
+                              )
+                            ],
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                          onTap: () => state.stars = 1,
-                          child: Icon(
-                            Icons.star,
-                            size: 32,
-                            color: state.stars >= 1 ? Colors.orange : neutral00,
-                          )),
-                      const SizedBox(
-                        width: 2,
+                      const Text(
+                        'Kualitas Produk',
+                        style: mediumBody5,
                       ),
-                      GestureDetector(
-                          onTap: () => state.stars = 2,
-                          child: Icon(
-                            Icons.star,
-                            size: 32,
-                            color: state.stars >= 2 ? Colors.orange : neutral00,
-                          )),
-                      const SizedBox(
-                        width: 2,
-                      ),
-                      GestureDetector(
-                          onTap: () => state.stars = 3,
-                          child: Icon(
-                            Icons.star,
-                            size: 32,
-                            color: state.stars >= 3 ? Colors.orange : neutral00,
-                          )),
-                      const SizedBox(
-                        width: 2,
-                      ),
-                      GestureDetector(
-                          onTap: () => state.stars = 4,
-                          child: Icon(
-                            Icons.star,
-                            size: 32,
-                            color: state.stars >= 4 ? Colors.orange : neutral00,
-                          )),
-                      const SizedBox(
-                        width: 2,
-                      ),
-                      GestureDetector(
-                          onTap: () => state.stars = 5,
-                          child: Icon(
-                            Icons.star,
-                            size: 32,
-                            color: state.stars >= 5 ? Colors.orange : neutral00,
-                          )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                              onTap: () => state.stars = 1,
+                              child: Icon(
+                                Icons.star,
+                                size: 32,
+                                color: state.stars >= 1 ? Colors.orange : neutral00,
+                              )),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          GestureDetector(
+                              onTap: () => state.stars = 2,
+                              child: Icon(
+                                Icons.star,
+                                size: 32,
+                                color: state.stars >= 2 ? Colors.orange : neutral00,
+                              )),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          GestureDetector(
+                              onTap: () => state.stars = 3,
+                              child: Icon(
+                                Icons.star,
+                                size: 32,
+                                color: state.stars >= 3 ? Colors.orange : neutral00,
+                              )),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          GestureDetector(
+                              onTap: () => state.stars = 4,
+                              child: Icon(
+                                Icons.star,
+                                size: 32,
+                                color: state.stars >= 4 ? Colors.orange : neutral00,
+                              )),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          GestureDetector(
+                              onTap: () => state.stars = 5,
+                              child: Icon(
+                                Icons.star,
+                                size: 32,
+                                color: state.stars >= 5 ? Colors.orange : neutral00,
+                              )),
+                        ],
+                      )
                     ],
-                  );
-                }),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: ImagePicker(),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Consumer<AddProductReviewViewModel>(builder: (context, state, _) {
-              return TextFormField(
-                controller: state.descriptionController,
-                decoration: const InputDecoration(
-                  hintText: 'Deskripsi penilaian',
-                  contentPadding: EdgeInsets.all(10),
-                ),
-                maxLines: 5,
-              );
-            }),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        minimumSize: const Size(80, 30),
-                        backgroundColor: whiteColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3),
-                            side: const BorderSide(color: primary40))),
-                    child: Text(
-                      'Batal',
-                      style: semiBoldBody7.copyWith(color: primary40),
-                    )),
-                const SizedBox(
-                  width: 15,
-                ),
-                Consumer<AddProductReviewViewModel>(
-                    builder: (context, state, _) {
-                  return ElevatedButton(
-                      onPressed: state.submitReview,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primary30,
-                        elevation: 0,
-                        minimumSize: const Size(80, 30),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3),
-                          side: const BorderSide(color: primary30),
-                        ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: ImagePicker(),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  TextFormField(
+                    controller: state.descriptionController,
+                    decoration: const InputDecoration(
+                      hintText: 'Deskripsi penilaian',
+                      contentPadding: EdgeInsets.all(10),
+                    ),
+                    maxLines: 5,
+                    validator: state.validateDescription,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              minimumSize: const Size(80, 30),
+                              backgroundColor: whiteColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(3),
+                                  side: const BorderSide(color: primary40))),
+                          child: Text(
+                            'Batal',
+                            style: semiBoldBody7.copyWith(color: primary40),
+                          )),
+                      const SizedBox(
+                        width: 15,
                       ),
-                      child: const Text(
-                        'Nilai',
-                        style: semiBoldBody7,
-                      ));
-                }),
-              ],
-            )
-          ],
+                      ElevatedButton(
+                        onPressed: state.isLoading ? null : state.submitReview,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primary30,
+                          elevation: 0,
+                          minimumSize: const Size(80, 30),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3),
+                            side: const BorderSide(color: primary30),
+                          ),
+                        ),
+                        child: Builder(
+                          builder: (context) {
+                            if (state.isLoading) {
+                              return const SizedBox(
+                                width: 15,
+                                height: 15,
+                                child: CircularProgressIndicator(
+                                  color: whiteColor,
+                                  strokeWidth: 3,
+                                ),
+                              );
+                            }
+          
+                            return const Text(
+                              'Nilai',
+                              style: semiBoldBody7,
+                            );
+                          }
+                        ))
+                    ],
+                  )
+                ],
+              ),
+            );
+          }
         ));
   }
 }

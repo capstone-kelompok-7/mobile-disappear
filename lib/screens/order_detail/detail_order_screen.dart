@@ -10,6 +10,7 @@ import 'package:disappear/screens/order_detail/components/status_components.dart
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
+import 'package:disappear/view_models/product_review/add_product_review_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,10 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
 
   Future<OrderDetailByIdModel?> _getOrder() async {
     final orderViewModel = Provider.of<OrderViewModel>(context, listen: false);
+    final reviewViewModel = Provider.of<AddProductReviewViewModel>(context, listen: false);
+
     final order = await orderViewModel.getDetailsOrderById();
+    reviewViewModel.orderDetail = order;
 
     return order;
   }
