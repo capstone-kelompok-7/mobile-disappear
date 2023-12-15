@@ -22,6 +22,7 @@ class OrderListScreen extends StatelessWidget {
             color: whiteColor,
           ),
         ),
+        automaticallyImplyLeading: false,
         centerTitle: true,
       ),
       body: DefaultTabController(

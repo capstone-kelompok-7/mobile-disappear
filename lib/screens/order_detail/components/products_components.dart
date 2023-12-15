@@ -60,7 +60,7 @@ class _ProductsState extends State<Products> {
                           height: 3,
                         ),
                         Text(
-                          '1 produk | ${widget.orderDetail.orderDetails[index].totalGramPlastic} gram',
+                          '${widget.orderDetail.orderDetails[index].totalGramPlastic} gram',
                           style: regularBody8,
                         ),
                         SizedBox(

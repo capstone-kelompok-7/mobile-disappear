@@ -94,7 +94,7 @@ class _CompletedCardState extends State<CompletedCard> {
                                 fontSize: 13, fontWeight: FontWeight.w600)),
                         const SizedBox(height: 1),
                         Text(
-                          '1 Produk | ${widget.order.orderDetails![0].totalGramPlastic} Gram',
+                          '${widget.order.orderDetails![0].totalGramPlastic} Gram',
                           style: regularBody3.copyWith(
                               fontSize: 12,
                               color: neutral30,
@@ -153,9 +153,6 @@ class _CompletedCardState extends State<CompletedCard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('1 Produk',
-                          style: regularBody3.copyWith(
-                              fontSize: 13, fontWeight: FontWeight.w400)),
                       RichText(
                         text: TextSpan(
                           style: DefaultTextStyle.of(context).style,
@@ -166,7 +163,7 @@ class _CompletedCardState extends State<CompletedCard> {
                                     fontSize: 13, fontWeight: FontWeight.w300)),
                             TextSpan(
                                 text:
-                                    'Rp ${widget.order.orderDetails![0].totalPrice}',
+                                    'Rp ${widget.order.formattedTotalAmountPaid}',
                                 style: semiBoldBody3.copyWith(
                                     fontSize: 13, fontWeight: FontWeight.w700)),
                           ],

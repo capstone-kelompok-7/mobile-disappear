@@ -44,10 +44,10 @@ class _ImagePickerState extends State<ImagePicker> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Colors.grey)),
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.add_a_photo),
+                    Icon(Icons.add_a_photo),
                     Text(
                       'Tambah Foto',
                       style: regularBody8,
