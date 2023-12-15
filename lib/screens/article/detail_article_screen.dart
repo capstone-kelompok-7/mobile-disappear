@@ -6,6 +6,7 @@ import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class DetailArticleScreen extends StatefulWidget {
   static String routePath = '/detail-article-screen';
@@ -109,54 +110,56 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                         ),
 
                         // Informasi Tanggal/View/Bookmark
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              snapshot.data!.author,
-                              style: regularBody8.copyWith(
-                                color: primary40,
+                        FittedBox(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                snapshot.data!.author,
+                                style: regularBody8.copyWith(
+                                  color: primary40,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              snapshot.data!.date,
-                              style: regularBody8.copyWith(
-                                color: primary40,
+                              const SizedBox(
+                                width: 8.0,
                               ),
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              '1 minggu yang lalu',
-                              style: regularBody8.copyWith(
-                                color: primary40,
+                              Text(
+                                snapshot.data!.date,
+                                style: regularBody8.copyWith(
+                                  color: primary40,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            const Icon(
-                              Icons.remove_red_eye,
-                              size: 18,
-                            ),
-                            const SizedBox(
-                              width: 4.0,
-                            ),
-                            Text(
-                              snapshot.data!.views.toString(),
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            const Icon(
-                              Icons.bookmark_border_outlined,
-                            )
-                          ],
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(
+                                '1 minggu yang lalu',
+                                style: regularBody8.copyWith(
+                                  color: primary40,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              const Icon(
+                                Icons.remove_red_eye,
+                                size: 18,
+                              ),
+                              const SizedBox(
+                                width: 4.0,
+                              ),
+                              Text(
+                                snapshot.data!.views.toString(),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                              const SizedBox(
+                                width: 10.0,
+                              ),
+                              const Icon(
+                                Icons.bookmark_border_outlined,
+                              )
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 10.0,
@@ -174,7 +177,8 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(snapshot.data!.content),
+                        Html(data: snapshot.data!.content,),
+                        // Text(snapshot.data!.content),
                         const SizedBox(
                           height: 20.0,
                         ),

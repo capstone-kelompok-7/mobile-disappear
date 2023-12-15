@@ -1,3 +1,4 @@
+import 'package:disappear/screens/challenge/components/join_challenge_success_dialog.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:file_picker/file_picker.dart';
@@ -43,15 +44,12 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 48, top: 50, right: 47.5),
           child: Consumer<ChallengeMainViewModel>(builder: (context, state, _) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            return ListView(
+              shrinkWrap: true,
               children: [
-                Text(
+                const Text(
                   'Formulir bukti mengikuti',
-                  style: GoogleFonts.inter().copyWith(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: semiBoldBody4,
                 ),
                 const SizedBox(height: 30),
                 Text(
@@ -130,9 +128,56 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                       hintText: 'Tidak ada gambar yang dipilih',
                       hintStyle: mediumBody8),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+
+                const SizedBox(height: 20),
+                
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: primary40, width: 1),
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        padding: const EdgeInsets.all(5),
+                        minimumSize: const Size(60, 30),
+                        backgroundColor: whiteColor,
+                        foregroundColor: primary40,
+                      ),
+                      child: const Text('Batal', style: semiBoldBody6),
+                    ),
+                    const SizedBox(width: 10,),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (formkey.currentState!.validate()) {
+                          final int id = arguments as int;
+                          final String username = usernameController.text;
+                          final String filePath = fileController.text;
+                          final response = await state.postChallenge(id, username, filePath);
+
+                          if (response != null) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) => const JoinChallengeSuccessDialog()
+                            );
+                          }
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        padding: const EdgeInsets.all(5),
+                        minimumSize: const Size(60, 30),
+                      ),
+                      child: const Text('Kirim', style: semiBoldBody6),
+                    ),
+                  ],
+                )
 
                 // Row(
                 //   children: [
@@ -188,33 +233,6 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                 //     ),
                 //   ],
                 // ),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, left: 230),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (formkey.currentState!.validate()) {
-                        final int id = arguments as int;
-                        final String username = usernameController.text;
-                        final String filePath = fileController.text;
-                        state.postChallenge(id, username, filePath);
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(5)),
-                      minimumSize: MaterialStateProperty.all<Size>(
-                        const Size(60, 30),
-                      ),
-                    ),
-                    child: const Text('Kirim', style: semiBoldBody6),
-                  ),
-                )
               ],
             );
           }),
