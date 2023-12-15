@@ -1,5 +1,6 @@
 import 'package:chat_bubbles/bubbles/bubble_normal.dart';
 import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
+import 'package:disappear/models/chatbot_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
@@ -17,7 +18,38 @@ class NewChatbotScreen extends StatefulWidget {
 }
 
 class _NewChatbotScreenState extends State<NewChatbotScreen> {
-  final List<String> _messages = []; // List to store chat messages
+  @override
+  void initState() {
+    // final chatbotProvider =
+    //     Provider.of<ChatbotViewModel>(context, listen: false);
+    // final chatHistory = chatbotProvider.getChatHistory();
+    // _messages.addAll(chatHistory);
+    getHistory();
+    super.initState();
+  }
+
+  void getHistory() async {
+    final chatbotProvider =
+        Provider.of<ChatbotViewModel>(context, listen: false);
+    final chatHistory = chatbotProvider.getChatHistory();
+    // setState(() async {
+    //   _messages.addAll(await chatHistory);
+    // });
+
+    chatHistory.then(
+      (value) {
+        for (var element in value) {
+          setState(() {
+            _messages.add(element);
+          });
+        }
+      },
+    );
+
+    debugPrint(_messages.toString());
+  }
+
+  final List<ChatbotModel> _messages = []; // List to store chat messages
   final TextEditingController _textController =
       TextEditingController(); // Controller for the text field
 
@@ -97,76 +129,77 @@ class _NewChatbotScreenState extends State<NewChatbotScreen> {
         // crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Flexible(
-            child: ListView.builder(
-              itemCount: _messages.length,
-              // reverse: true,
-              itemBuilder: (BuildContext context, int index) {
-                final message = _messages[index];
-                final isQuestion = index.isEven;
-                var alignment =
-                    isQuestion ? Alignment.centerRight : Alignment.centerLeft;
+            child: _messages.isNotEmpty
+                ? ListView.builder(
+                    itemCount: _messages.length,
+                    // reverse: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      final message = _messages[index];
+                      final isQuestion = message.role == "question";
+                      // var alignment =
+                      //     isQuestion ? Alignment.centerRight : Alignment.centerLeft;
 
-                // return Container(
-                //   alignment: alignment,
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(10.0),
-                //     child: Container(
-                //       padding: EdgeInsets.all(12),
-                //       decoration: BoxDecoration(
-                //         color: isQuestion ? Colors.blue : Colors.grey,
-                //         borderRadius: BorderRadius.only(
-                //           topLeft: isQuestion
-                //               ? Radius.circular(12.0)
-                //               : Radius.circular(0.0),
-                //           topRight: isQuestion
-                //               ? Radius.circular(0.0)
-                //               : Radius.circular(12.0),
-                //           bottomLeft: Radius.circular(12.0),
-                //           bottomRight: Radius.circular(12.0),
-                //         ),
-                //       ),
-                //       child: Text(message),
-                //     ),
-                //   ),
-                // );
+                      // return Container(
+                      //   alignment: alignment,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(10.0),
+                      //     child: Container(
+                      //       padding: EdgeInsets.all(12),
+                      //       decoration: BoxDecoration(
+                      //         color: isQuestion ? Colors.blue : Colors.grey,
+                      //         borderRadius: BorderRadius.only(
+                      //           topLeft: isQuestion
+                      //               ? Radius.circular(12.0)
+                      //               : Radius.circular(0.0),
+                      //           topRight: isQuestion
+                      //               ? Radius.circular(0.0)
+                      //               : Radius.circular(12.0),
+                      //           bottomLeft: Radius.circular(12.0),
+                      //           bottomRight: Radius.circular(12.0),
+                      //         ),
+                      //       ),
+                      //       child: Text(message),
+                      //     ),
+                      //   ),
+                      // );
 
-                return Align(
-                    alignment: alignment,
-                    // isQuestion ? WrapAlignment.end : WrapAlignment.start,
-                    child: BubbleNormal(
-                      tail: true,
-                      text: message,
-                      isSender: isQuestion ? true : false,
-                      color: isQuestion ? secondary00 : warning00,
-                    )
-                    // Container(
-                    //   padding: EdgeInsets.all(12),
-                    //   decoration: BoxDecoration(
-                    //     color: isQuestion ? secondary00 : warning00,
-                    //     borderRadius: BorderRadius.only(
-                    //       bottomLeft: isQuestion
-                    //           ? Radius.circular(20.0)
-                    //           : Radius.circular(0.0),
-                    //       bottomRight: isQuestion
-                    //           ? Radius.circular(0.0)
-                    //           : Radius.circular(20.0),
-                    //       topLeft: Radius.circular(5.0),
-                    //       topRight: Radius.circular(5.0),
-                    //     ),
-                    //   ),
-                    //   child: Container(
-                    //     child: Text(
-                    //       message,
-                    //       style:
-                    //           TextStyle(color: Colors.black, fontSize: 12),
-                    //       softWrap: true,
-                    //     ),
-                    //   ),
-                    // ),
-
-                    );
-              },
-            ),
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: BubbleNormal(
+                          tail: true,
+                          text: message.text,
+                          isSender: isQuestion ? true : false,
+                          color: isQuestion ? secondary00 : warning00,
+                        ),
+                      );
+                    },
+                  )
+                : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/img/Secretary.png",
+                        width: 70,
+                        height: 70,
+                      ),
+                      Text(
+                        "jilaru",
+                        style: boldBody1.copyWith(
+                          color: blackColor,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40 , left: 10, right: 10),
+                        child: Text(
+                          "Aku merupakan AI chatbot yang dapat membantu kamu dalam mengatasi permasalahan lingkungan hijau yang ada. Mari mengobrol!",
+                          style: regularBody5.copyWith(
+                            color: blackColor,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ],
+                  ),
           ),
           _buildTextComposer(),
         ],
@@ -225,10 +258,15 @@ class _NewChatbotScreenState extends State<NewChatbotScreen> {
                   onTap: () async {
                     if (_textController.text.isNotEmpty) {
                       final question = _textController.text;
+                      _textController.clear();
 
                       // Posting question
                       // final responseQuestion =
                       state.postQuestion(question);
+                      setState(() {
+                        _messages.add(
+                            ChatbotModel(role: 'question', text: question));
+                      });
                       // setState(() {
                       //   _messages.insert(0, responseQuestion['data']);
                       // });
@@ -237,11 +275,9 @@ class _NewChatbotScreenState extends State<NewChatbotScreen> {
                       final responseAnswer = await state.postAnswer(question);
 
                       setState(() {
-                        _messages.add(question);
-                        _messages.add(responseAnswer['data']);
+                        _messages.add(ChatbotModel(
+                            role: 'answer', text: responseAnswer['data']));
                       });
-
-                      _textController.clear();
                     }
                   },
                   child: Padding(

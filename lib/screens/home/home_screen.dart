@@ -54,18 +54,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50),
-        ),
-        backgroundColor: Colors.black,
-        onPressed: () {
-          Navigator.of(context).pushNamed('/newchatbot');
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/newchatbot');
         },
-        // child: SvgPicture.asset(
-        //   'assets/img/chatbot.svg',
-        //   fit: BoxFit.fill,
-        // ),
+        child: SvgPicture.asset(
+          'assets/img/chatbot.svg',
+          fit: BoxFit.contain,
+        ),
       ),
       appBar: AppBar(
         backgroundColor: whiteColor,

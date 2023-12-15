@@ -1,15 +1,15 @@
 class ChatbotModel {
-  late final String id;
-  late final int userId;
+  late final String? id;
+  late final int? userId;
   late final String role;
   late final String text;
-  late final DateTime createdAt;
+  late final String? createdAt;
 
   ChatbotModel({
-    required this.id,
-    required this.userId,
+    this.id,
+    this.userId,
     required this.role,
     required this.text,
-    required this.createdAt,
+    this.createdAt,
   });
 }

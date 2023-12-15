@@ -6,9 +6,6 @@ import 'package:disappear/services/api.dart';
 import 'package:flutter/material.dart';
 
 class ChatbotService {
-  final _controller = StreamController<ChatbotModel>();
-
-
   Future postQuestion(String message) async {
     try {
       final dio = createDio();
@@ -68,4 +65,25 @@ class ChatbotService {
   //     _controller.addError(e); // Emit error through the stream
   //   }
   // }
+
+  Future<List<ChatbotModel>> getChatHistory() async {
+    try {
+      final dio = createDio();
+      Response response = await dio.get('/assistant');
+
+      return response.data['data']
+          .map<ChatbotModel>(
+            (data) => ChatbotModel(
+              id: data['id'],
+              userId: data['user_id'],
+              role: data['role'],
+              createdAt: data['created_at'],
+              text: data['text'],
+            ),
+          )
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

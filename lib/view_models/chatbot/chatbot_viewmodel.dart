@@ -1,4 +1,3 @@
-
 import 'package:disappear/models/chatbot_model.dart';
 import 'package:disappear/services/chatbot_service.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,19 @@ class ChatbotViewModel extends ChangeNotifier {
   //   try {
   //     await
   //   } catch (e) {
-      
+
   //   }
   // }
+
+  Future<List<ChatbotModel>> getChatHistory() async {
+    try {
+      final chatbotService = ChatbotService();
+      return await chatbotService.getChatHistory();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  
+
 }
