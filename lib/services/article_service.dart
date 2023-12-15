@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:disappear/models/article_model.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/services/api.dart';
 
 class ArticleService {
@@ -76,21 +77,19 @@ class ArticleService {
     return [];
   }
 
-  Future<List<int>> toggleBookmark(int id, bool isBookmarked) async {
+  Future<bool> toggleBookmark(int id, bool isBookmarked) async {
     final dio = createDio();
 
     try {
       if (isBookmarked) {
-        await dio.post('/articles/bookmark', data: {'id': id});
+        await dio.post('/articles/bookmark', data: {'article_id': id});
+        showSuccessFlushbar(message: 'Artikel berhasil disimpan');
+        return true;
       } else {
         await dio.delete('/articles/bookmark/$id');
+        showSuccessFlushbar(message: 'Artikel berhasil dihapus');
+        return false;
       }
-
-      // Fetch the updated list of bookmarked article IDs
-      final Response response = await dio.get('/articles/bookmarks');
-      final List<int> bookmarkedIds = response.data['data'].cast<int>();
-
-      return bookmarkedIds;
     } on DioException catch (e) {
       print('Error during bookmark toggle: ${e.response}');
       throw e;
