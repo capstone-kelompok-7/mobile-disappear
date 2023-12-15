@@ -2,7 +2,7 @@ import 'package:disappear/services/article_service.dart';
 import 'package:flutter/material.dart';
 
 class BookmarkViewModel extends ChangeNotifier {
-  Set<int> _bookmarkedArticleIds = {};
+  List<int> _bookmarkedArticleIds = [];
 
   bool isBookmarked(int articleId) {
     return _bookmarkedArticleIds.contains(articleId);
@@ -11,14 +11,15 @@ class BookmarkViewModel extends ChangeNotifier {
   Future<void> toggleBookmark(int articleId) async {
     bool isBookmarked = _bookmarkedArticleIds.contains(articleId);
 
-    debugPrint(articleId.toString());
-
     try {
-      List<int> updatedBookmarks =
-          await ArticleService().toggleBookmark(articleId, !isBookmarked);
+      bool _isBookmarked = await ArticleService().toggleBookmark(articleId, !isBookmarked);
 
-      // Update the bookmarked article IDs set
-      _bookmarkedArticleIds = Set<int>.from(updatedBookmarks);
+      // Update the bookmarked article IDs se
+      if (_isBookmarked) {
+        _bookmarkedArticleIds.add(articleId);
+      } else {
+        _bookmarkedArticleIds.remove(articleId);
+      }
 
       notifyListeners();
     } catch (e) {

@@ -3,7 +3,7 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 
 class DetailChallengeScreen extends StatefulWidget {
@@ -52,7 +52,7 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 45, right: 45, top: 47, bottom: 80),
+                        left: 45, right: 45, top: 47, bottom: 40),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -88,10 +88,11 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          snapshot.data.description,
-                          style: regularBody7,
-                        )
+                        Html(data: snapshot.data.description,),
+                        // Text(
+                        //   snapshot.data.description,
+                        //   style: regularBody7,
+                        // )
                       ],
                     ),
                   ),
@@ -100,19 +101,18 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
                           padding: const EdgeInsets.only(
                               left: 45, right: 42, bottom: 20),
                           child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                const Color.fromRGBO(64, 64, 64, 1),
-                              ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: primary30,
+                              minimumSize: const Size(40, 0)
                             ),
-                            onPressed: () {
+                            onPressed: snapshot.data.status?.toLowerCase() == 'belum kadaluwarsa' ? () {
                               Navigator.of(context).pushNamed(
                                   '/join-challenge-screen',
                                   arguments: snapshot.data.id);
-                            },
-                            child: Text(
+                            } : null,
+                            child: const Text(
                               'Ikuti Tantangan',
-                              style: GoogleFonts.inter(),
+                              style: semiBoldBody6,
                             ),
                           ),
                         )
