@@ -5,6 +5,7 @@ import 'package:disappear/models/article_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/bookmark_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -86,12 +87,19 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
               ),
               centerTitle: true,
               actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.bookmark_border_outlined,
-                    color: Colors.white,
-                  ),
+                Consumer<BookmarkViewModel>(
+                  builder: (context, viewModel, _) {
+                    return IconButton(
+                      onPressed: () => viewModel.toggleBookmark(snapshot.data!.id),
+                      icon: Icon(
+                        viewModel.isBookmarked(snapshot.data!.id)
+                            ? Icons.bookmark
+                            : Icons.bookmark_outline,
+                        size: 18,
+                        color: whiteColor,
+                      ),
+                    );
+                  }
                 ),
               ],
             ),
@@ -161,8 +169,18 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                                 const SizedBox(
                                   width: 10.0,
                                 ),
-                                const Icon(
-                                  Icons.bookmark_border_outlined,
+                                Consumer<BookmarkViewModel>(
+                                  builder: (context, viewModel, _) {
+                                    return IconButton(
+                                      onPressed: () => viewModel.toggleBookmark(snapshot.data!.id),
+                                      icon: Icon(
+                                        viewModel.isBookmarked(snapshot.data!.id)
+                                            ? Icons.bookmark
+                                            : Icons.bookmark_outline,
+                                        size: 18,
+                                      ),
+                                    );
+                                  }
                                 ),
                               ],
                             )

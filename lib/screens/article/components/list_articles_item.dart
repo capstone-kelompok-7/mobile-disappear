@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/article_model.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/placeholders/list_article_thumbnail_placeholder.dart';
@@ -19,14 +20,6 @@ class ListArticleItem extends StatefulWidget {
 }
 
 class _ListArticleItemState extends State<ListArticleItem> {
-  late BookmarkViewModel _bookmarkViewModel;
-
-  @override
-  void initState() {
-    super.initState();
-    _bookmarkViewModel = Provider.of<BookmarkViewModel>(context, listen: false);
-  }
-
   void _goToDetailArticleScreen() {
     final articleViewModel =
         Provider.of<DetailArticlesViewModel>(context, listen: false);
@@ -36,28 +29,22 @@ class _ListArticleItemState extends State<ListArticleItem> {
   }
 
   void _toggleBookmark() async {
-    try {
-      _bookmarkViewModel.toggleBookmark(widget.article.id);
-    } catch (e) {
-      // Handle the error
-      print('Error during bookmark toggle: $e');
-    }
+    final bookmarkViewModel = Provider.of<BookmarkViewModel>(context, listen: false);
+    bookmarkViewModel.toggleBookmark(widget.article.id);
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isBookmarked = _bookmarkViewModel.isBookmarked(widget.article.id);
-
-    return GestureDetector(
-      onTap: _goToDetailArticleScreen,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                flex: 1,
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              flex: 1,
+              child: GestureDetector(
+                onTap: _goToDetailArticleScreen,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
@@ -73,69 +60,76 @@ class _ListArticleItemState extends State<ListArticleItem> {
                   ),
                 ),
               ),
-              Flexible(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(widget.article.formattedDate,
-                          style: mediumBody8.copyWith(color: primary40)),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(widget.article.title, style: semiBoldBody6),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                '1 minggu yang lalu',
-                                style: regularBody8.copyWith(
-                                  color: primary40,
-                                ),
+            ),
+            Flexible(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.article.formattedDate,
+                        style: mediumBody8.copyWith(color: primary40)),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: _goToDetailArticleScreen,
+                      child: Text(widget.article.title, style: semiBoldBody6)
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              formatToTimeago(widget.article.date),
+                              style: regularBody8.copyWith(
+                                color: primary40,
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Icon(
-                                Icons.visibility,
-                                size: 18,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                widget.article.views.toString(),
-                                style: regularBody8.copyWith(
-                                  color: primary40,
-                                ),
-                              ),
-                            ],
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Icon(
-                              isBookmarked
-                                  ? Icons.bookmark
-                                  : Icons.bookmark_outline,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            const Icon(
+                              Icons.visibility,
                               size: 18,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              widget.article.views.toString(),
+                              style: regularBody8.copyWith(
+                                color: primary40,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Consumer<BookmarkViewModel>(
+                          builder: (context, viewModel, _) {
+                            return GestureDetector(
+                              onTap: _toggleBookmark,
+                              child: Icon(
+                                viewModel.isBookmarked(widget.article.id)
+                                    ? Icons.bookmark
+                                    : Icons.bookmark_outline,
+                                size: 18,
+                              ),
+                            );
+                          }
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
