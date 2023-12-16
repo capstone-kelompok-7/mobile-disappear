@@ -3,7 +3,8 @@ import 'package:disappear/services/chatbot_service.dart';
 import 'package:flutter/material.dart';
 
 class ChatbotViewModel extends ChangeNotifier {
-  final List<ChatbotModel> listMessages = [];
+  List<ChatbotModel> listMessages = [];
+
   final TextEditingController textController = TextEditingController();
 
   Future postQuestion(String message) async {
@@ -56,6 +57,8 @@ class ChatbotViewModel extends ChangeNotifier {
 
   void getChatHistoryInit() async {
     final chatHistory = getChatHistory();
+
+    listMessages = [];
 
     chatHistory.then(
       (value) {
