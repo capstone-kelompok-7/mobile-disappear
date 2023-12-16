@@ -7,7 +7,6 @@ import 'package:disappear/screens/article/placeholders/list_article_placeholder.
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
-import 'package:disappear/view_models/article/bookmark_view_model.dart';
 import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
 import 'package:disappear/view_models/article/filter_article_view_model.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,6 @@ class ArticleScreen extends StatefulWidget {
 class _ArticleScreenState extends State<ArticleScreen> {
   late CarouselArticleViewModel _carouselArticleViewModel;
   late ArticleFilterViewModel _articleFilterViewModel;
-  late BookmarkViewModel _bookmarkViewModel;
 
   late Future _articleCarouselFuture;
 
@@ -38,11 +36,8 @@ class _ArticleScreenState extends State<ArticleScreen> {
     _carouselArticleViewModel = Provider.of<CarouselArticleViewModel>(context, listen: false);
     _articleCarouselFuture = _carouselArticleViewModel.getCarouselArticles();
 
-    _bookmarkViewModel = Provider.of<BookmarkViewModel>(context, listen: false);
-    _bookmarkViewModel.getBookmarkedArticleIds().then((value) {
-      _articleFilterViewModel = Provider.of<ArticleFilterViewModel>(context, listen: false);
-      _articleFilterViewModel.fetchArticles();
-    });
+    _articleFilterViewModel = Provider.of<ArticleFilterViewModel>(context, listen: false);
+    _articleFilterViewModel.fetchArticles();
   }
 
   void _goToDetailArticleScreen(int id) {

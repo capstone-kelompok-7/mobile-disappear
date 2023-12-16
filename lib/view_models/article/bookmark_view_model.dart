@@ -29,16 +29,18 @@ class BookmarkViewModel extends ChangeNotifier {
       final service = ArticleService();
 
       if (isBookmarked(articleId)) {
-        await service.deleteBookmark(articleId);
         _bookmarkedArticleIds.remove(articleId);
+        notifyListeners();
+
+        await service.deleteBookmark(articleId);
         showSuccessFlushbar(message: 'Artikel berhasil dihapus');
       } else {
-        await service.saveBookmark(articleId);
         _bookmarkedArticleIds.add(articleId);
+        notifyListeners();
+        
+        await service.saveBookmark(articleId);
         showSuccessFlushbar(message: 'Artikel berhasil disimpan');
       }
-
-      notifyListeners();
     } on DioException catch (e) {
       // Handle the error
       debugPrint('Error during bookmark toggle: $e');
