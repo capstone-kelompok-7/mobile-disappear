@@ -3,7 +3,9 @@ import 'package:disappear/screens/article/article_screen.dart';
 import 'package:disappear/screens/home/components/latest_article_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/article/bookmark_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LatestArticles extends StatefulWidget {
   final List<Article> articles;
@@ -15,6 +17,14 @@ class LatestArticles extends StatefulWidget {
 }
 
 class _LatestArticlesState extends State<LatestArticles> {
+  @override
+  void initState() {
+    final bookmarkViewModel = Provider.of<BookmarkViewModel>(context, listen: false);
+    bookmarkViewModel.getBookmarkedArticleIds();
+
+    super.initState();
+  }
+
   void _goToArticlesScreen() {
     Navigator.pushNamed(context, ArticleScreen.routePath);
   }

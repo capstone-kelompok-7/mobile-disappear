@@ -52,15 +52,13 @@ class _CartScreenState extends State<CartScreen> {
       body: Consumer<CartViewModel>(
         builder: (context, state, _) {
           if (state.isLoading) {
-            return const Expanded(
-              child: Center(
-                child: SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: CircularProgressIndicator(
-                    color: primary40,
-                    strokeWidth: 3,
-                  ),
+            return const Center(
+              child: SizedBox(
+                width: 30,
+                height: 30,
+                child: CircularProgressIndicator(
+                  color: primary40,
+                  strokeWidth: 3,
                 ),
               ),
             );

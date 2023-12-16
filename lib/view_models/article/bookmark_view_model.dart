@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/services/article_service.dart';
 import 'package:flutter/material.dart';
 
@@ -8,23 +10,41 @@ class BookmarkViewModel extends ChangeNotifier {
     return _bookmarkedArticleIds.contains(articleId);
   }
 
-  Future<void> toggleBookmark(int articleId) async {
-    bool isBookmarked = _bookmarkedArticleIds.contains(articleId);
-
+  Future<void> getBookmarkedArticleIds() async {
     try {
-      bool _isBookmarked = await ArticleService().toggleBookmark(articleId, !isBookmarked);
-
-      // Update the bookmarked article IDs se
-      if (_isBookmarked) {
-        _bookmarkedArticleIds.add(articleId);
-      } else {
-        _bookmarkedArticleIds.remove(articleId);
-      }
+      final service = ArticleService();
+      
+      _bookmarkedArticleIds = await service.getBookmarkedArticleIds();
 
       notifyListeners();
-    } catch (e) {
+    } on DioException catch (e) {
       // Handle the error
-      print('Error during bookmark toggle: $e');
+      debugPrint('Error during bookmark toggle: $e');
+      showFailedFlushbar(message: 'Terjadi kesalahan saat bookmark artikel');
+    }
+  }
+
+  Future<void> toggleBookmark(int articleId) async {
+    try {
+      final service = ArticleService();
+
+      if (isBookmarked(articleId)) {
+        _bookmarkedArticleIds.remove(articleId);
+        notifyListeners();
+
+        await service.deleteBookmark(articleId);
+        showSuccessFlushbar(message: 'Artikel berhasil dihapus');
+      } else {
+        _bookmarkedArticleIds.add(articleId);
+        notifyListeners();
+        
+        await service.saveBookmark(articleId);
+        showSuccessFlushbar(message: 'Artikel berhasil disimpan');
+      }
+    } on DioException catch (e) {
+      // Handle the error
+      debugPrint('Error during bookmark toggle: $e');
+      showFailedFlushbar(message: 'Terjadi kesalahan saat bookmark artikel');
     }
   }
 }

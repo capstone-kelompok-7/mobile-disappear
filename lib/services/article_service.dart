@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:disappear/models/article_model.dart';
-import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/services/api.dart';
+import 'package:flutter/material.dart';
 
 class ArticleService {
   Future<List<ArticleModel>> getLatestArticles() async {
@@ -77,22 +77,33 @@ class ArticleService {
     return [];
   }
 
-  Future<bool> toggleBookmark(int id, bool isBookmarked) async {
+  Future<List<int>> getBookmarkedArticleIds() async {
+    final dio = createDio();
+
+    final Response response = await dio.get('/articles/bookmark');
+
+    return response.data['data'].map<int>((data) => data['article_id'] as int).toList();
+  }
+
+  Future<void> saveBookmark(int id) async {
     final dio = createDio();
 
     try {
-      if (isBookmarked) {
-        await dio.post('/articles/bookmark', data: {'article_id': id});
-        showSuccessFlushbar(message: 'Artikel berhasil disimpan');
-        return true;
-      } else {
-        await dio.delete('/articles/bookmark/$id');
-        showSuccessFlushbar(message: 'Artikel berhasil dihapus');
-        return false;
-      }
+      await dio.post('/articles/bookmark', data: {'article_id': id});
     } on DioException catch (e) {
-      print('Error during bookmark toggle: ${e.response}');
-      throw e;
+      debugPrint('Error during bookmark toggle: ${e.response}');
+      rethrow;
+    }
+  }
+
+  Future<void> deleteBookmark(int id) async {
+    final dio = createDio();
+
+    try {
+      await dio.delete('/articles/bookmark/$id');
+    } on DioException catch (e) {
+      debugPrint('Error during bookmark toggle: ${e.response}');
+      rethrow;
     }
   }
 }

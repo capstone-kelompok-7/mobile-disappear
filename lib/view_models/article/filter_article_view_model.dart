@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 
 class ArticleFilterViewModel extends ChangeNotifier {
   final ArticleService _articleService = ArticleService();
+
   List<ArticleModel> _articles = [];
+
   int _currentPage = 1;
+
   int _sortOption = 0;
 
   // Getter untuk mendapatkan daftar artikel
@@ -21,10 +24,28 @@ class ArticleFilterViewModel extends ChangeNotifier {
   Future<void> changeSortOption(int option) async {
     _sortOption = option;
     _currentPage = 1; // Reset halaman ke 1 setiap kali opsi sort berubah
+
+    _articles = [];
+    isInitialLoading = true;
+    notifyListeners();
+
     await fetchArticles();
   }
 
-// Fungsi untuk mendapatkan artikel
+  // Loading saat pertama kali untuk mendapatkan artikel
+  bool isInitialLoading = true;
+
+  // Loading saat ngescroll untuk mendapatkan artikel
+  bool _isLoading = false;
+
+  set isLoading(bool isLoading) {
+    _isLoading = isLoading;
+    notifyListeners();
+  }
+
+  bool get isLoading => _isLoading;
+
+  // Fungsi untuk mendapatkan artikel
   Future<void> fetchArticles() async {
     List<ArticleModel> newArticles = await _articleService.getArticle(
       page: _currentPage,
@@ -37,11 +58,12 @@ class ArticleFilterViewModel extends ChangeNotifier {
       } else {
         _articles.addAll(newArticles);
       }
+
       _currentPage++;
-      notifyListeners();
     }
 
-    // Tambahkan baris ini
-    return Future.value(newArticles);
+    isLoading = false;
+    isInitialLoading = false;
+    notifyListeners();
   }
 }
