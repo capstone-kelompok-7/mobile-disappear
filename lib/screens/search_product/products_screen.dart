@@ -9,6 +9,7 @@ import 'package:disappear/view_models/search_product/filter_view_model.dart';
 import 'package:disappear/view_models/search_product/search_field_view_model.dart';
 import 'package:disappear/view_models/search_product/search_products_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_edge_listener/scroll_edge_listener.dart';
 
@@ -201,11 +202,18 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 }
       
                 if (!state.isSearching) {
-                  return const Column(
-                    children: [
-                      SizedBox(height: 200,),
-                      Text('Produk tidak ditemukan')
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 100,),
+                        SvgPicture.asset('assets/img/ProductNotFound.svg', width: 180, height: 180,),
+                        const SizedBox(height: 10,),
+                        const Text('Oops.. Pencarian tidak ada, nih!', style: semiBoldBody3, textAlign: TextAlign.center,),
+                        const SizedBox(height: 10,),
+                        const Text('Sepertinya kata kunci yang kamu cari kurang tepat, nih. Coba lagi, yuk!', style: regularBody6, textAlign: TextAlign.center,)
+                      ],
+                    ),
                   );
                 }
       
