@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
 
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/article_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -101,69 +102,77 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //Judul
                         Text(snapshot.data!.title, style: semiBoldBody3),
 
                         const SizedBox(
-                          height: 4.0,
+                          height: 8.0,
                         ),
 
                         // Informasi Tanggal/View/Bookmark
-                        FittedBox(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                snapshot.data!.author,
-                                style: regularBody8.copyWith(
-                                  color: primary40,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FittedBox(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    snapshot.data!.author,
+                                    style: regularBody8.copyWith(
+                                      color: primary40,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    formattedDate(snapshot.data!.date, format: 'd-MM-yyyy'),
+                                    style: regularBody8.copyWith(
+                                      color: primary40,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    formatToTimeago(snapshot.data!.date),
+                                    style: regularBody8.copyWith(
+                                      color: primary40,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.remove_red_eye,
+                                  size: 18,
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(
-                                snapshot.data!.date,
-                                style: regularBody8.copyWith(
-                                  color: primary40,
+                                const SizedBox(
+                                  width: 4.0,
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(
-                                '1 minggu yang lalu',
-                                style: regularBody8.copyWith(
-                                  color: primary40,
+                                Text(
+                                  snapshot.data!.views.toString(),
+                                  style: const TextStyle(fontSize: 12),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              const Icon(
-                                Icons.remove_red_eye,
-                                size: 18,
-                              ),
-                              const SizedBox(
-                                width: 4.0,
-                              ),
-                              Text(
-                                snapshot.data!.views.toString(),
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              const SizedBox(
-                                width: 10.0,
-                              ),
-                              const Icon(
-                                Icons.bookmark_border_outlined,
-                              )
-                            ],
-                          ),
+                                const SizedBox(
+                                  width: 10.0,
+                                ),
+                                const Icon(
+                                  Icons.bookmark_border_outlined,
+                                ),
+                              ],
+                            )
+                          ],
                         ),
+                        
                         const SizedBox(
-                          height: 10.0,
+                          height: 12.0,
                         ),
+                        
                         // Gambar Artikel
                         ClipRRect(
                           borderRadius: BorderRadius.circular(5.0),

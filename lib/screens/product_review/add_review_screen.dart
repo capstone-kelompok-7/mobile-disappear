@@ -17,7 +17,11 @@ class AddReviewScreen extends StatelessWidget {
           backgroundColor: primary40,
           leading: IconButton(
             color: whiteColor,
-            icon: const Icon(Icons.keyboard_arrow_left),
+            icon: const Icon(
+              Icons.keyboard_arrow_left,
+              size: 32,
+              color: whiteColor,
+            ),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
@@ -173,7 +177,7 @@ class AddReviewScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => Navigator.of(context).pop(),
                           style: ElevatedButton.styleFrom(
                               elevation: 0,
                               minimumSize: const Size(80, 30),

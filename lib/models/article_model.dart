@@ -9,6 +9,8 @@ class ArticleModel {
   String date;
   int views;
 
+  bool isBookmarked = false;
+
   ArticleModel(
       {required this.id,
       required this.title,
