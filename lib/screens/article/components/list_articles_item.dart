@@ -2,7 +2,6 @@ import 'package:disappear/helper.dart';
 import 'package:disappear/models/article_model.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/placeholders/list_article_thumbnail_placeholder.dart';
-import 'package:disappear/services/article_service.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
