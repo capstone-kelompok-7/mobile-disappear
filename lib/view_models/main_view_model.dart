@@ -1,5 +1,4 @@
 import 'package:disappear/screens/challenge/challenge_main_screen.dart';
-import 'package:disappear/screens/challenge/challenge_components.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/order_list/order_list_screen.dart';
 import 'package:disappear/screens/profile/profile_screen.dart';

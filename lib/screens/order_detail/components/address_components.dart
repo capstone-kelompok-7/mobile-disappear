@@ -27,21 +27,21 @@ class _AddressComponentsState extends State<AddressComponents> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
+          const Icon(
             Icons.location_on_outlined,
             size: 17,
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Alamat Pengiriman',
                 style: mediumBody7,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 3,
               ),
               Text(

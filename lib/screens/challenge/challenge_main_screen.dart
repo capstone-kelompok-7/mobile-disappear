@@ -78,18 +78,18 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                         if (snapshot.connectionState ==
                           ConnectionState.waiting) {
                           return ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: 8,
                             itemBuilder: (context, index) {
-                              return ChallengePlaceholder();
+                              return const ChallengePlaceholder();
                             },
                           );
                         } else if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         } else if (!snapshot.hasData ||
                           snapshot.data!.isEmpty) {
-                          return Text('Tidak ada Tantangan Tersedia');
+                          return const Text('Tidak ada Tantangan Tersedia');
                         } else {
                           return ListView.builder(
                             shrinkWrap: true,
@@ -112,19 +112,19 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                           ConnectionState.waiting) {
-                          return LeaderboardPlaceholder();
+                          return const LeaderboardPlaceholder();
                         } else if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         } else if (!snapshot.hasData ||
                           snapshot.data!.isEmpty) {
-                          return Text('Tidak ada Leaderboard Tersedia');
+                          return const Text('Tidak ada Leaderboard Tersedia');
                         } else {
                           return ListView(
                             shrinkWrap: true,
                             children: [
                               LeaderboardComponentPodium(
                                 leaderboardModel: snapshot.data![0]),
-                              SizedBox(
+                              const SizedBox(
                                 height: 30,
                               ),
                               LeaderboardComponentStanding(
@@ -226,40 +226,6 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
               }),
         ],
       )
-
-      // Consumer<ChallengeMainViewModel>(
-      //   builder: (context, bodyConsumer, _) {
-      //     return FutureBuilder(
-      //         future: bodyConsumer.fetchAllChallenge(),
-      //         builder: (context, snapshot) {
-      //           if (snapshot.hasError) {
-      //             return const Text('Tidak ada challenge yang tersedia');
-      //           }
-
-      //           if (snapshot.hasData) {
-      //             return ListView.builder(
-      //               itemBuilder: (context, index) {
-      //                 return Column(
-      //                   children: [
-      //                     bodyConsumer.topButton(),
-      //                     bodyConsumer.selectedTabChallenge == 1
-      //                         ? ChallengeComponents(
-      //                             challengesModel: snapshot.data![index],
-      //                           )
-      //                         : bodyConsumer.selectedTabChallenge == 2
-      //                             ? const LeaderboardScreen()
-      //                             : const VoucherScreen(),
-      //                   ],
-      //                 );
-      //               },
-      //             );
-      //           }
-      //           return Column(
-      //             children: [],
-      //           );
-      //         });
-      //   },
-      // ),
     );
   }
 }

@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:disappear/screens/order_list/components/EmptyOrder.dart';
+import 'package:disappear/screens/order_list/components/empty_order.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
 import 'package:flutter/material.dart';
 

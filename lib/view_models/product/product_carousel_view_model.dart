@@ -11,6 +11,7 @@ class ProductCarouselViewModel extends ChangeNotifier {
     _product = product;
   }
 
+  // ignore: unnecessary_getters_setters
   Product? get product => _product;
 
   int? _currentIndex;

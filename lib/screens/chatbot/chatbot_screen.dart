@@ -7,7 +7,7 @@ import '../../themes/text_theme.dart';
 
 class ChatBotScreen extends StatefulWidget {
   static String routePath = '/chatbot';
-  ChatBotScreen({Key? key}) : super(key: key);
+  const ChatBotScreen({Key? key}) : super(key: key);
 
   @override
   State<ChatBotScreen> createState() => _ChatBotScreenState();
@@ -456,7 +456,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.all(14),
-              child: Container(
+              child: SizedBox(
                 width: 385,
                 height: 60,
                 child: Column(

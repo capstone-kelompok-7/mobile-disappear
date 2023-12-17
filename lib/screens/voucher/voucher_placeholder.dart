@@ -49,7 +49,7 @@ class VoucherPlaceholder extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
                     Expanded(
@@ -59,7 +59,7 @@ class VoucherPlaceholder extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 3,
                     ),
                     Expanded(

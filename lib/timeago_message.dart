@@ -8,15 +8,15 @@ class IndonesianMessage implements timeago.LookupMessages {
   @override String suffixAgo() => '';
   @override String suffixFromNow() => '';
   @override String lessThanOneMinute(int seconds) => 'sekarang';
-  @override String aboutAMinute(int minutes) => '${minutes} menit lalu';
-  @override String minutes(int minutes) => '${minutes} menit lalu';
-  @override String aboutAnHour(int minutes) => '${minutes} menit lalu';
-  @override String hours(int hours) => '${hours} jam lalu';
-  @override String aDay(int hours) => '${hours} jam lalu';
-  @override String days(int days) => '${days} hari lalu';
-  @override String aboutAMonth(int days) => '${days} hari lalu';
-  @override String months(int months) => '${months} bulan lalu';
-  @override String aboutAYear(int year) => '${year} tahun lalu';
-  @override String years(int years) => '${years} tahun lalu';
+  @override String aboutAMinute(int minutes) => '$minutes menit lalu';
+  @override String minutes(int minutes) => '$minutes menit lalu';
+  @override String aboutAnHour(int minutes) => '$minutes menit lalu';
+  @override String hours(int hours) => '$hours jam lalu';
+  @override String aDay(int hours) => '$hours jam lalu';
+  @override String days(int days) => '$days hari lalu';
+  @override String aboutAMonth(int days) => '$days hari lalu';
+  @override String months(int months) => '$months bulan lalu';
+  @override String aboutAYear(int year) => '$year tahun lalu';
+  @override String years(int years) => '$years tahun lalu';
   @override String wordSeparator() => ' ';
 }

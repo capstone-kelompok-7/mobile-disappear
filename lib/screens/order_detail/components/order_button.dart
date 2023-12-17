@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:disappear/models/product/product_model.dart' as productModel;
+import 'package:disappear/models/product/product_model.dart' as product_model;
 import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/product_review/add_review_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -33,7 +33,7 @@ class _OrderButtonState extends State<OrderButton> {
 
   void _goToProductScreen() {
     final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
-    productViewModel.product = productModel.Product(id: widget.orderDetail.orderDetails.first.productId);
+    productViewModel.product = product_model.Product(id: widget.orderDetail.orderDetails.first.productId);
 
     Navigator.pushNamed(context, ProductScreen.routePath);
   }
@@ -46,9 +46,9 @@ class _OrderButtonState extends State<OrderButton> {
       child: Builder(
         builder: (context) {
           if (widget.orderDetail.orderStatus == 'Menunggu Konfirmasi') {
-            return SizedBox();
+            return const SizedBox();
           } else if (widget.orderDetail.orderStatus == 'Proses') {
-            return SizedBox();
+            return const SizedBox();
           } else if (widget.orderDetail.orderStatus == 'Pengiriman') {
             return ElevatedButton(
               onPressed: () {
@@ -103,7 +103,7 @@ class _OrderButtonState extends State<OrderButton> {
             return OutlinedButton(
               onPressed: () {},
               style: OutlinedButton.styleFrom(
-                  side: BorderSide(
+                  side: const BorderSide(
                     color: primary40,
                   ),
                   shape: BeveledRectangleBorder(

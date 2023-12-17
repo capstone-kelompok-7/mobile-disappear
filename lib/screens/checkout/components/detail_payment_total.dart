@@ -54,14 +54,17 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
 
         /// REDIRECT TO PAYMENT SCREEN
         if (checkoutPaymentMethodViewModel.method == 'whatsapp') {
+          // ignore: use_build_context_synchronously
           Navigator.pushNamed(context, WhatsappTransferScreen.routePath);
         } else if (checkoutPaymentMethodViewModel.method == 'telegram') {
+          // ignore: use_build_context_synchronously
           Navigator.pushNamed(context, TelegramTransferScreen.routePath);
         }
       } else if (createdOrder is CreatedGopayOrder) {
         gopayViewModel.createdOrder = createdOrder;
 
         /// REDIRECT TO PAYMENT SCREEN
+          // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, GopayScreen.routePath);
       }
     }
