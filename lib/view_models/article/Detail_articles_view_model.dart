@@ -26,4 +26,9 @@ class DetailArticlesViewModel extends ChangeNotifier {
 
     return null;
   }
+  
+  Future<List<ArticleModel>> getOtherArticles() async {
+    final articleService = ArticleService();
+    return await articleService.getOtherArticles();
+  }
 }

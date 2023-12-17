@@ -266,7 +266,7 @@ class App extends StatelessWidget {
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),
         DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
-        SaveArticleScreen.routePath: (context) => SaveArticleScreen(),
+        SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
         CartScreen.routePath: (context) => const CartScreen(),
         DetailOrderScreen.routePath: (context) => const DetailOrderScreen(),
         ProfileScreen.routePath: (context) => const ProfileScreen(),

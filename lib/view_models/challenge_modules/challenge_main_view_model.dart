@@ -18,8 +18,26 @@ class ChallengeMainViewModel extends ChangeNotifier {
 
   int? get isLoadingVoucherClaim => _isLoadingVoucherClaim;
 
+  bool _isLoadingSubmitChallenge = false;
+
+  set isLoadingSubmitChallenge(bool isLoadingSubmitChallenge) {
+    _isLoadingSubmitChallenge = isLoadingSubmitChallenge;
+    notifyListeners();
+  }
+
+  bool get isLoadingSubmitChallenge => _isLoadingSubmitChallenge;
+
   //VARIABEL POSTFILE KE SERVER IKUT TANTANGAN
   String? filePath;
+
+  double? _fileSizeInMb;
+
+  set fileSizeInMb(double? fileSizeInMb) {
+    _fileSizeInMb = fileSizeInMb;
+    notifyListeners();
+  }
+
+  double? get fileSizeInMb => _fileSizeInMb;
 
   Widget topButton() {
     return Container(
@@ -28,8 +46,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
         horizontal: 5,
         vertical: 5,
       ),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: primary40,
+        borderRadius: BorderRadius.circular(4)
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -47,8 +66,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
                 vertical: 2,
               ),
               decoration: selectedTabChallenge == 1
-                  ? const BoxDecoration(
+                  ? BoxDecoration(
                       color: secondary00,
+                      borderRadius: BorderRadius.circular(4)
                     )
                   : null,
               child: Text('Tantangan',
@@ -74,8 +94,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
                 bottom: 2,
               ),
               decoration: selectedTabChallenge == 2
-                  ? const BoxDecoration(
+                  ? BoxDecoration(
                       color: secondary00,
+                      borderRadius: BorderRadius.circular(4)
                     )
                   : null,
               child: Text('Leaderboard',
@@ -97,8 +118,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
               height: 20,
               padding: const EdgeInsets.only(left: 10, top: 2),
               decoration: selectedTabChallenge == 3
-                  ? const BoxDecoration(
+                  ? BoxDecoration(
                       color: secondary00,
+                      borderRadius: BorderRadius.circular(4)
                     )
                   : null,
               child: Text(
@@ -133,13 +155,24 @@ class ChallengeMainViewModel extends ChangeNotifier {
     return null;
   }
 
-  Future postChallenge(int id, String username, String filePath) async {
-    
+  Future<bool> postChallenge(int id, String username, String filePath) async {
+    isLoadingSubmitChallenge = true;
+
     try {
       final postChallengeService = ChallengeService();
-      return await postChallengeService.postSubmitChallenge(id, username, filePath);
-    } catch (e) {
-      rethrow;
+      await postChallengeService.postSubmitChallenge(id, username, filePath);
+
+      return true;
+    } on DioException catch (e) {
+      if (e.response != null && [401, 403, 500].contains(e.response!.statusCode)) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      } else {
+        showFailedFlushbar(message: 'Gagal mengikuti tantangan, silakan coba lagi');
+      }
+
+      return false;
+    } finally {
+      isLoadingSubmitChallenge = false;
     }
   }
 

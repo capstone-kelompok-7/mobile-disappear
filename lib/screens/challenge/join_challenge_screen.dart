@@ -3,7 +3,6 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:disappear/themes/text_theme.dart';
 
@@ -51,14 +50,14 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                   'Formulir bukti mengikuti',
                   style: semiBoldBody4,
                 ),
+
                 const SizedBox(height: 30),
-                Text(
+
+                const Text(
                   'Username',
-                  style: GoogleFonts.inter().copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: mediumBody5,
                 ),
+                
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -68,11 +67,8 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                   },
                   controller: usernameController,
                   decoration: InputDecoration(
-                    hintText: 'Masukkan username instagram anda',
-                    hintStyle: GoogleFonts.inter().copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    hintText: 'Cth : ayudimas123',
+                    hintStyle: regularBody7,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
@@ -81,13 +77,12 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                     filled: true,
                   ),
                 ),
+
                 const SizedBox(height: 15),
-                Text(
+
+                const Text(
                   'Bukti',
-                  style: GoogleFonts.inter().copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: mediumBody5,
                 ),
 
                 TextFormField(
@@ -129,6 +124,13 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                       hintStyle: mediumBody8),
                 ),
 
+                const SizedBox(height: 5),
+
+                Text(
+                  '*maksimal 2MB dengan format PNG, JPG, JPEG',
+                  style: regularBody8.copyWith(color: (state.fileSizeInMb ?? 0) > 2 ? error30 : neutral30)
+                ),
+
                 const SizedBox(height: 20),
                 
                 Row(
@@ -151,22 +153,26 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                     ),
                     const SizedBox(width: 10,),
                     ElevatedButton(
-                      onPressed: () async {
-                        if (formkey.currentState!.validate()) {
-                          final int id = arguments as int;
-                          final String username = usernameController.text;
-                          final String filePath = fileController.text;
-                          final response = await state.postChallenge(id, username, filePath);
+                      onPressed: !state.isLoadingSubmitChallenge ?
+                        () async {
+                          if (formkey.currentState!.validate()) {
+                            final int id = arguments as int;
+                            final String username = usernameController.text;
+                            final String filePath = fileController.text;
 
-                          if (response != null) {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => const JoinChallengeSuccessDialog()
-                            );
+                            final response = await state.postChallenge(id, username, filePath);
+
+                            if (response == true) {
+                              // ignore: use_build_context_synchronously
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => const JoinChallengeSuccessDialog()
+                              );
+                            }
                           }
                         }
-                      },
+                        : null,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(3),
@@ -174,65 +180,25 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                         padding: const EdgeInsets.all(5),
                         minimumSize: const Size(60, 30),
                       ),
-                      child: const Text('Kirim', style: semiBoldBody6),
+                      child: Builder(
+                        builder: (context) {
+                          if (state.isLoadingSubmitChallenge) {
+                            return const SizedBox(
+                              width: 10,
+                              height: 10,
+                              child: CircularProgressIndicator(
+                                color: whiteColor,
+                                strokeWidth: 3,
+                              ),
+                            );
+                          }
+
+                          return const Text('Kirim', style: semiBoldBody6);
+                        }
+                      ),
                     ),
                   ],
                 )
-
-                // Row(
-                //   children: [
-                //     Container(
-                //       decoration: BoxDecoration(
-                //         borderRadius:
-                //             const BorderRadius.all(Radius.circular(5)),
-                //         border: Border(
-                //           left: BorderSide(
-                //               width: 1.0,
-                //               color: Colors.black), // Border for the left side
-                //           top: BorderSide(
-                //               width: 1.0,
-                //               color: Colors.black), // No border for the top
-                //           right: BorderSide.none, // No border for the right
-                //           bottom: BorderSide(
-                //               width: 1.0,
-                //               color: Colors.black), // Border for the bottom
-                //         ),
-                //       ),
-                //       child: filePicker(context),
-                //     ),
-                //     Expanded(
-                //       child: TextFormField(
-                //         validator: (value) {
-                //           if (value == null || value.isEmpty) {
-                //             return 'Field tidak boleh kosong';
-                //           }
-                //           return null;
-                //         },
-                //         controller: fileController,
-                //         readOnly: true,
-                //         decoration: InputDecoration(
-                //           contentPadding: EdgeInsets.all(8),
-                //           // border: Border(
-                //           //   top: BorderSide(color: Colors.black)
-                //           // ),
-                //           enabledBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //                 color:
-                //                     Colors.black), // Set no borders by default
-                //             borderRadius: BorderRadius.only(
-                //               topLeft: Radius.circular(
-                //                   5), // Border only for top left
-                //               bottomRight: Radius.circular(
-                //                   5), // Border only for bottom right
-                //             ),
-                //           ),
-                //           fillColor: Colors.amber,
-                //           filled: true,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             );
           }),
@@ -262,24 +228,24 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
         ));
   }
 
-  // void _pickFile() async {
-  //   final result = await FilePicker.platform.pickFiles();
-  //   if (result != null) {}
-
-  //   // _openFile(file);
-  // }
-
   void _pickFile() async {
     final ChallengeMainViewModel viewModel =
         Provider.of<ChallengeMainViewModel>(context, listen: false);
 
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.image,
+    );
+    
     if (result != null) {
-      String filePath = result.files.single.path ?? ''; // Get the file path
-      viewModel.filePath = filePath;
-      fileController.text = filePath;
-    }
-  }
+      final int sizeInBytes = result.files.single.size;
+      viewModel.fileSizeInMb = sizeInBytes / (1024 * 1024);
 
- 
+      if (viewModel.fileSizeInMb! <= 2) {
+        String filePath = result.files.single.path ?? ''; // Get the file path
+        viewModel.filePath = filePath;
+        fileController.text = filePath;
+      }
+    }
+  } 
 }
