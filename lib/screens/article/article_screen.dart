@@ -4,7 +4,6 @@ import 'package:disappear/models/carousel_article_model.dart';
 import 'package:disappear/screens/article/components/list_articles_item.dart';
 import 'package:disappear/screens/article/detail_article_screen.dart';
 import 'package:disappear/screens/article/placeholders/list_article_placeholder.dart';
-import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
@@ -54,10 +53,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
     viewModel.fetchArticles();
   }
 
-  void _goToSavedArticlesScreen() {
-    Navigator.of(context).pushNamed(SaveArticleScreen.routePath);
-  }
-
   @override
   Widget build(BuildContext context) {
     return ScrollEdgeListener(
@@ -84,7 +79,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
           centerTitle: true,
           actions: [
             IconButton(
-              onPressed: _goToSavedArticlesScreen,
+              onPressed: () {},
               icon: const Icon(
                 Icons.bookmark_border_outlined,
                 color: Colors.white,

@@ -3,6 +3,7 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -134,9 +135,12 @@ class _LeaderboardComponentStandingState
                               child: Text('',
                                   style:
                                       mediumBody8.copyWith(color: neutral20))),
-                          const Text(
+                          Text(
                             '- EXP',
-                            style: semiBoldBody8,
+                            style: GoogleFonts.inter().copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 10,
+                            ),
                           ),
                         ],
                       ),
@@ -306,9 +310,12 @@ class _LeaderboardComponentStandingState
                                 child: Text('',
                                     style: mediumBody8.copyWith(
                                         color: neutral20))),
-                            const Text(
+                            Text(
                               '- EXP',
-                              style: semiBoldBody8,
+                              style: GoogleFonts.inter().copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                              ),
                             ),
                           ],
                         ),
@@ -364,7 +371,10 @@ class _LeaderboardComponentStandingState
                                       mediumBody8.copyWith(color: neutral20))),
                           Text(
                             '${secondPosition.exp} EXP',
-                            style: semiBoldBody8,
+                            style: GoogleFonts.inter().copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 10,
+                            ),
                           ),
                         ],
                       ),
@@ -481,9 +491,12 @@ class _LeaderboardComponentStandingState
                                 child: Text('',
                                     style: mediumBody8.copyWith(
                                         color: neutral20))),
-                            const Text(
+                            Text(
                               '- EXP',
-                              style: semiBoldBody8,
+                              style: GoogleFonts.inter().copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                              ),
                             ),
                           ],
                         ),
@@ -539,7 +552,10 @@ class _LeaderboardComponentStandingState
                                       mediumBody8.copyWith(color: neutral20))),
                           Text(
                             '${thirdPosition.exp} EXP',
-                            style: semiBoldBody8,
+                            style: GoogleFonts.inter().copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 10,
+                            ),
                           ),
                         ],
                       ),
@@ -656,9 +672,12 @@ class _LeaderboardComponentStandingState
                                 child: Text('',
                                     style: mediumBody8.copyWith(
                                         color: neutral20))),
-                            const Text(
+                            Text(
                               '0 EXP',
-                              style: semiBoldBody8,
+                              style: GoogleFonts.inter().copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                              ),
                             ),
                           ],
                         ),
@@ -714,7 +733,10 @@ class _LeaderboardComponentStandingState
                                       mediumBody8.copyWith(color: neutral20))),
                           Text(
                             '${fourthPosition.exp} EXP',
-                            style: semiBoldBody8,
+                            style: GoogleFonts.inter().copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 10,
+                            ),
                           ),
                         ],
                       ),
@@ -832,9 +854,12 @@ class _LeaderboardComponentStandingState
                                 child: Text('',
                                     style: mediumBody8.copyWith(
                                         color: neutral20))),
-                            const Text(
+                            Text(
                               '- EXP',
-                              style: semiBoldBody8,
+                              style: GoogleFonts.inter().copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                              ),
                             ),
                           ],
                         ),
@@ -890,13 +915,75 @@ class _LeaderboardComponentStandingState
                                       mediumBody8.copyWith(color: neutral20))),
                           Text(
                             '${fifthPosition.exp} EXP',
-                            style: semiBoldBody8,
+                            style: GoogleFonts.inter().copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 10,
+                            ),
                           ),
                         ],
                       ),
                     );
                   });
             }),
+
+            //BELUM TERPAKAI (TAMPILAN SEBELUM CONSUMER)
+            // Container(
+            //   padding: const EdgeInsets.all(10),
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.circular(8),
+            //     boxShadow: [
+            //       BoxShadow(
+            //         color: Colors.grey.withOpacity(0.2),
+            //         spreadRadius: 0.5,
+            //         offset: const Offset(0, 3),
+            //       ),
+            //     ],
+            //   ),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     children: [
+            //       Container(
+            //         height: 20,
+            //         width: 10,
+            //         child: Text('5'),
+            //       ),
+            //       const SizedBox(
+            //         width: 10,
+            //       ),
+            //       Container(
+            //         width: 25,
+            //         height: 25,
+            //         decoration: BoxDecoration(
+            //           shape: BoxShape.circle,
+            //           color: const Color(
+            //             0xffd9d9d9,
+            //           ),
+            //           image: DecorationImage(
+            //             fit: BoxFit.cover,
+            //             image: NetworkImage(
+            //                 widget.leaderboardModel.photoProfile.toString()),
+            //           ),
+            //         ),
+            //       ),
+            //       const SizedBox(
+            //         width: 5,
+            //       ),
+            //       Text('${widget.leaderboardModel.name.toString()} ',
+            //           style: semiBoldBody5),
+            //       Expanded(
+            //           child: Text(widget.leaderboardModel.level.toString(),
+            //               style: mediumBody8.copyWith(color: neutral20))),
+            //       Text(
+            //         '${widget.leaderboardModel.exp.toString()} EXP',
+            //         style: GoogleFonts.inter().copyWith(
+            //           fontWeight: FontWeight.w600,
+            //           fontSize: 10,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       );

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:disappear/models/article/bookmarked_article_model.dart';
 import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/services/article_service.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +22,6 @@ class BookmarkViewModel extends ChangeNotifier {
       debugPrint('Error during bookmark toggle: $e');
       showFailedFlushbar(message: 'Terjadi kesalahan saat bookmark artikel');
     }
-  }
-
-  Future<List<BookmarkedArticle>> getBookmarkedArticles() async {
-    final service = ArticleService();
-    return await service.getBookmarkedArticles();
   }
 
   Future<void> toggleBookmark(int articleId) async {

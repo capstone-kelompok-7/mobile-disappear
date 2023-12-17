@@ -1,9 +1,12 @@
+import 'package:disappear/models/user_profile_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/profile/change_password_view_model.dart';
+import 'package:disappear/view_models/preferences_helper.dart';
 import 'package:disappear/view_models/profile/user_profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -89,9 +92,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 // ),
 
                 const SizedBox(height: 40),
-                const Text(
+                Text(
                   'Kata Sandi Lama',
-                  style: mediumBody6,
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
@@ -148,9 +155,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                const Text(
+                Text(
                   'Kata Sandi Baru',
-                  style: mediumBody6,
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
@@ -207,9 +218,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                const Text(
+                Text(
                   'Masukkan kembali kata sandi baru',
-                  style: mediumBody6,
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
