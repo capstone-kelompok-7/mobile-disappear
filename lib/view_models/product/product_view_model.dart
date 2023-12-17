@@ -9,6 +9,7 @@ class ProductViewModel extends ChangeNotifier {
     _product = product;
   }
 
+  // ignore: unnecessary_getters_setters
   Product? get product => _product;
 
   Future<Product?> getProductById() async {

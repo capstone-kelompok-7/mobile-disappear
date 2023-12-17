@@ -4,7 +4,7 @@ import 'package:disappear/helper.dart';
 import 'package:disappear/models/article_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/detail_articles_view_model.dart';
 import 'package:disappear/view_models/article/bookmark_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ import 'package:flutter_html/flutter_html.dart';
 class DetailArticleScreen extends StatefulWidget {
   static String routePath = '/detail-article-screen';
 
-  DetailArticleScreen({Key? key}) : super(key: key);
+  const DetailArticleScreen({Key? key}) : super(key: key);
 
   @override
   State<DetailArticleScreen> createState() => _DetailArticleScreenState();

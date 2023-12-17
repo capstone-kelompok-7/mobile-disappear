@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:disappear/models/voucher_model.dart';
 import 'package:disappear/services/api.dart';
-import 'package:flutter/foundation.dart';
 
 class VoucherService {
   Future<List<VoucherModel>> fetchVoucherToClaim() async {
@@ -38,22 +37,6 @@ class VoucherService {
       final dio = createDio();
 
       Response response = await dio.get('/vouchers/users');
-
-      // List<VoucherModel> vouchersUser = response.data['data']
-      //     .map<VoucherModel>(
-      //       (data) => VoucherModel(
-      //         id: data['id'] as int,
-      //         name: data['voucher']['name'] as String,
-      //         code: data['voucher']['code'] as String,
-      //         category: data['voucher']['category'] as String,
-      //         description: data['voucher']['description'] as String,
-      //         discount: data['voucher']['discount'] as int,
-      //         startDate: data['voucher']['start_date'] as String,
-      //         endDate: data['voucher']['end-date'] as String,
-      //         minPurchase: data['voucher']['min_purchase'] as int,
-      //       ),
-      //     )
-      //     .toList();
 
       List<VoucherModel> vouchersUser = (response.data['data'] ?? [])
           .map<VoucherModel>((data) => VoucherModel(

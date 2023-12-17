@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:disappear/models/cart/cart_model.dart';
-import 'package:disappear/models/checkout/created_order_model.dart';
 import 'package:disappear/models/checkout/voucher/checkout_voucher_model.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/services/checkout_service.dart';

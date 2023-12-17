@@ -58,6 +58,7 @@ class ProductReview {
     "current_rating_one": currentRatingOne,
     "rating": rating,
     "total_review": totalReview,
-    "reviews": reviews != null ? List < dynamic > .from(reviews!.map((x) => x.toMap())) : [],
+    // ignore: unnecessary_null_comparison
+    "reviews": reviews != null ? List < dynamic > .from(reviews.map((x) => x.toMap())) : [],
   };
 }

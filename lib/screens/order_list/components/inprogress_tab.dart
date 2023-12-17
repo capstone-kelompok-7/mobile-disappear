@@ -1,10 +1,8 @@
-import 'package:disappear/screens/order_list/components/EmptyOrder.dart';
+import 'package:disappear/screens/order_list/components/empty_order.dart';
 import 'package:disappear/screens/order_list/components/inprogress_card.dart';
-import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class InProgressTab extends StatefulWidget {

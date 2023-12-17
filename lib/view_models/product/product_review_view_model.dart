@@ -12,6 +12,7 @@ class ProductReviewViewModel extends ChangeNotifier {
     _page = page;
   }
 
+  // ignore: unnecessary_getters_setters
   int get page => _page;
 
   bool _isLoadingMore = false;

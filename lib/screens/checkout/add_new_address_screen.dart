@@ -179,6 +179,7 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
                       final int userId = await getUserId();
 
                       final addressViewModel =
+                          // ignore: use_build_context_synchronously
                           Provider.of<AddressViewModel>(context, listen: false);
 
                       final newAddress = Address(

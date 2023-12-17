@@ -1,4 +1,3 @@
-import 'package:disappear/models/order_detail_by_id_model.dart';
 import 'package:disappear/screens/order_detail/components/address_components.dart';
 import 'package:disappear/screens/order_detail/components/order_button.dart';
 import 'package:disappear/screens/order_detail/components/order_number_components.dart';
@@ -7,7 +6,7 @@ import 'package:disappear/screens/order_detail/components/payment_method_compone
 import 'package:disappear/screens/order_detail/components/payment_status.dart';
 import 'package:disappear/screens/order_detail/components/products_components.dart';
 import 'package:disappear/screens/order_detail/components/status_components.dart';
-import 'package:disappear/screens/order_list/components/EmptyOrder.dart';
+import 'package:disappear/screens/order_list/components/empty_order.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';

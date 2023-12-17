@@ -18,8 +18,6 @@ import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
 import 'package:disappear/screens/checkout/payment_method/ewallet_transfer_screen.dart';
 import 'package:disappear/screens/checkout/payment_method/manual_transfer_screen.dart';
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
-import 'package:disappear/screens/environmental_issues/environmental_issues_screen.dart';
-import 'package:disappear/screens/favorite_product/favorite_product_screen.dart';
 import 'package:disappear/screens/home/home_screen.dart';
 import 'package:disappear/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:disappear/screens/auth/login_screen.dart';
@@ -47,9 +45,9 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/theme.dart';
 import 'package:disappear/timeago_message.dart';
 import 'package:disappear/view_models/address/address_view_model.dart';
-import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/detail_articles_view_model.dart';
 import 'package:disappear/view_models/article/bookmark_view_model.dart';
-import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
+import 'package:disappear/view_models/article/carousel_article_view_model.dart';
 import 'package:disappear/view_models/article/filter_article_view_model.dart';
 import 'package:disappear/view_models/article/get_article_view_model.dart';
 import 'package:disappear/view_models/auth/forgot_password/forgot_password_view_model.dart';
@@ -265,7 +263,7 @@ class App extends StatelessWidget {
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),
         ProductReviewsScreen.routePath: (context) =>
             const ProductReviewsScreen(),
-        DetailArticleScreen.routePath: (context) => DetailArticleScreen(),
+        DetailArticleScreen.routePath: (context) => const DetailArticleScreen(),
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
         CartScreen.routePath: (context) => const CartScreen(),
         DetailOrderScreen.routePath: (context) => const DetailOrderScreen(),
@@ -290,18 +288,14 @@ class App extends StatelessWidget {
             const WhatsappTransferScreen(),
         GopayScreen.routePath: (context) =>
             const GopayScreen(),
-        EnvironmentalIssuesScreen.routePath: (context) =>
-            const EnvironmentalIssuesScreen(),
-        FavoriteProductScreen.routePath: (context) =>
-            const FavoriteProductScreen(),
         AddReviewScreen.routePath: (context) => const AddReviewScreen(),
         OrderListScreen.routePath: (context) => const OrderListScreen(),
         TelegramTransferScreen.routePath: (context) =>
             const TelegramTransferScreen(),
-        ChatBotScreen.routePath: (context) => ChatBotScreen(),
+        ChatBotScreen.routePath: (context) => const ChatBotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
         NewChatbotScreen.routePath: (context) => const NewChatbotScreen(),
-        ChatBotScreen.routePath: (context) => ChatBotScreen(),
+        ChatBotScreen.routePath: (context) => const ChatBotScreen(),
         ChangePasswordScreen.routePath: (context) => const ChangePasswordScreen(),
       },
       theme: ThemeData(

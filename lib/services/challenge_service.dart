@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:disappear/models/challenge_model.dart';
 import 'package:disappear/services/api.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeService {

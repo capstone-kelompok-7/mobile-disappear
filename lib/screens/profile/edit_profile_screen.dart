@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/view_models/preferences_helper.dart';
 import 'package:disappear/view_models/profile/user_profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -165,31 +164,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     contentPadding: const EdgeInsets.only(left: 10),
                   ),
                 ),
-                
-                // FutureBuilder<String?>(
-                //   future: PreferencesHelper.getUserEmail(),
-                //   builder: (context, snapshot) {
-                //     if (snapshot.hasData) {
-                //       return TextFormField(
-                //         enabled: false,
-                //         keyboardType: TextInputType.emailAddress,
-                //         decoration: InputDecoration(
-                //           hintText: snapshot.data,
-                //           hintStyle: mediumBody8.copyWith(
-                //               fontSize: 12,
-                //               fontWeight: FontWeight.w400,
-                //               color: neutral20),
-                //           border: OutlineInputBorder(
-                //             borderRadius: BorderRadius.circular(8),
-                //           ),
-                //           contentPadding: const EdgeInsets.only(left: 10),
-                //         ),
-                //       );
-                //     } else {
-                //       return const Text('Loading...', style: mediumBody8);
-                //     }
-                //   },
-                // ),
 
                 const SizedBox(
                   height: 34,

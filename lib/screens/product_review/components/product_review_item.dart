@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'package:disappear/models/order_detail_by_id_model.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';

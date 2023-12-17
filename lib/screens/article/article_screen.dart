@@ -7,8 +7,8 @@ import 'package:disappear/screens/article/placeholders/list_article_placeholder.
 import 'package:disappear/screens/article/save_article_sreen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
-import 'package:disappear/view_models/article/Detail_articles_view_model.dart';
-import 'package:disappear/view_models/article/carouselArticle_view_model.dart';
+import 'package:disappear/view_models/article/detail_articles_view_model.dart';
+import 'package:disappear/view_models/article/carousel_article_view_model.dart';
 import 'package:disappear/view_models/article/filter_article_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';

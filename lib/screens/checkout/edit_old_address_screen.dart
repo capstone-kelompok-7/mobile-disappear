@@ -188,8 +188,8 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                     if (formkey.currentState!.validate()) {
                       final int userId = await getUserId();
 
-                      final addressViewModel =
-                          Provider.of<AddressViewModel>(context, listen: false);
+                      // ignore: use_build_context_synchronously
+                      final addressViewModel = Provider.of<AddressViewModel>(context, listen: false);
 
                       final updateAddress = Address(
                         id: 0,
@@ -368,6 +368,8 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                       try {
                         if (mounted) {
                           await addressViewModel.deleteAddress();
+
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context)
                               .popAndPushNamed('/address-list-screen');
                         }

@@ -16,8 +16,8 @@ class CarouselArticleViewModel extends ChangeNotifier {
       notifyListeners();
       return _carouselArticles;
     } catch (error) {
-      print('Error fetching carousel articles: $error');
-      throw error;
+      debugPrint('Error fetching carousel articles: $error');
+      rethrow;
     }
   }
 

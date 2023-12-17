@@ -64,7 +64,7 @@ class _ChatBotEmptyScreenState extends State<ChatBotEmptyScreen> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.all(14),
-              child: Container(
+              child: SizedBox(
                 width: 385,
                 height: 60,
                 child: Column(
