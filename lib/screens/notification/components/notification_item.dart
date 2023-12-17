@@ -1,25 +1,40 @@
-import 'package:disappear/themes/color_scheme.dart';
-import 'package:disappear/themes/text_theme.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:disappear/models/notification_model.dart';
+import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
+
 class NotificationItem extends StatelessWidget {
-  const NotificationItem({super.key});
+  final NotificationModel notification;
+  const NotificationItem({
+    Key? key,
+    required this.notification,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      tileColor: secondary00,
-      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      title: const Text(
-        'Gilbert, kamu telah melakukan pemesanan dan memeriksa riwayat pesanan kamu untuk detail lengkapnya',
-        style: regularBody7,
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 14,
       ),
-      shape: BeveledRectangleBorder(
-        borderRadius: BorderRadius.circular(8)
+      child: ListTile(
+        leading: SvgPicture.asset(
+          'assets/img/NewNotificationIcon.svg',
+          width: 28,
+          height: 28,
+        ),
+        tileColor: secondary00,
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        title: Text(
+          notification.body,
+          style: regularBody7,
+        ),
+        shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        minLeadingWidth: 15,
       ),
-      minLeadingWidth: 15,
-      leading: SvgPicture.asset('assets/img/NewNotificationIcon.svg', width: 28, height: 28,),
     );
   }
 }
