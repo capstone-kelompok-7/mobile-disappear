@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:disappear/screens/checkout/address_list_screen.dart';
+import 'package:disappear/screens/address/address_list_screen.dart';
 import 'package:disappear/screens/profile/placeholders/profile_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';

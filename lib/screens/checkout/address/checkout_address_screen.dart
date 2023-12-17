@@ -1,4 +1,4 @@
-import 'package:disappear/screens/checkout/add_new_address_screen.dart';
+import 'package:disappear/screens/address/add_new_address_screen.dart';
 import 'package:disappear/screens/checkout/address/components/checkout_address_item.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';

@@ -1,5 +1,5 @@
-import 'package:disappear/screens/checkout/add_new_address_screen.dart';
-import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
+import 'package:disappear/screens/address/add_new_address_screen.dart';
+import 'package:disappear/screens/address/edit_old_address_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/address/address_view_model.dart';
