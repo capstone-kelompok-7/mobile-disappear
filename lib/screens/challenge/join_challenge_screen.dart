@@ -1,4 +1,5 @@
 import 'package:disappear/screens/challenge/components/join_challenge_success_dialog.dart';
+import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:file_picker/file_picker.dart';
@@ -151,22 +152,25 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                     ),
                     const SizedBox(width: 10,),
                     ElevatedButton(
-                      onPressed: () async {
-                        if (formkey.currentState!.validate()) {
-                          final int id = arguments as int;
-                          final String username = usernameController.text;
-                          final String filePath = fileController.text;
-                          final response = await state.postChallenge(id, username, filePath);
+                      onPressed: !state.isLoadingSubmitChallenge ?
+                        () async {
+                          if (formkey.currentState!.validate()) {
+                            final int id = arguments as int;
+                            final String username = usernameController.text;
+                            final String filePath = fileController.text;
 
-                          if (response != null) {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => const JoinChallengeSuccessDialog()
-                            );
+                            final response = await state.postChallenge(id, username, filePath);
+
+                            if (response == true) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => const JoinChallengeSuccessDialog()
+                              );
+                            }
                           }
                         }
-                      },
+                        : null,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(3),
@@ -174,65 +178,25 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                         padding: const EdgeInsets.all(5),
                         minimumSize: const Size(60, 30),
                       ),
-                      child: const Text('Kirim', style: semiBoldBody6),
+                      child: Builder(
+                        builder: (context) {
+                          if (state.isLoadingSubmitChallenge) {
+                            return const SizedBox(
+                              width: 10,
+                              height: 10,
+                              child: CircularProgressIndicator(
+                                color: whiteColor,
+                                strokeWidth: 3,
+                              ),
+                            );
+                          }
+
+                          return const Text('Kirim', style: semiBoldBody6);
+                        }
+                      ),
                     ),
                   ],
                 )
-
-                // Row(
-                //   children: [
-                //     Container(
-                //       decoration: BoxDecoration(
-                //         borderRadius:
-                //             const BorderRadius.all(Radius.circular(5)),
-                //         border: Border(
-                //           left: BorderSide(
-                //               width: 1.0,
-                //               color: Colors.black), // Border for the left side
-                //           top: BorderSide(
-                //               width: 1.0,
-                //               color: Colors.black), // No border for the top
-                //           right: BorderSide.none, // No border for the right
-                //           bottom: BorderSide(
-                //               width: 1.0,
-                //               color: Colors.black), // Border for the bottom
-                //         ),
-                //       ),
-                //       child: filePicker(context),
-                //     ),
-                //     Expanded(
-                //       child: TextFormField(
-                //         validator: (value) {
-                //           if (value == null || value.isEmpty) {
-                //             return 'Field tidak boleh kosong';
-                //           }
-                //           return null;
-                //         },
-                //         controller: fileController,
-                //         readOnly: true,
-                //         decoration: InputDecoration(
-                //           contentPadding: EdgeInsets.all(8),
-                //           // border: Border(
-                //           //   top: BorderSide(color: Colors.black)
-                //           // ),
-                //           enabledBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //                 color:
-                //                     Colors.black), // Set no borders by default
-                //             borderRadius: BorderRadius.only(
-                //               topLeft: Radius.circular(
-                //                   5), // Border only for top left
-                //               bottomRight: Radius.circular(
-                //                   5), // Border only for bottom right
-                //             ),
-                //           ),
-                //           fillColor: Colors.amber,
-                //           filled: true,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             );
           }),

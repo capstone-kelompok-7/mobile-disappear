@@ -18,6 +18,15 @@ class ChallengeMainViewModel extends ChangeNotifier {
 
   int? get isLoadingVoucherClaim => _isLoadingVoucherClaim;
 
+  bool _isLoadingSubmitChallenge = false;
+
+  set isLoadingSubmitChallenge(bool isLoadingSubmitChallenge) {
+    _isLoadingSubmitChallenge = isLoadingSubmitChallenge;
+    notifyListeners();
+  }
+
+  bool get isLoadingSubmitChallenge => _isLoadingSubmitChallenge;
+
   //VARIABEL POSTFILE KE SERVER IKUT TANTANGAN
   String? filePath;
 
@@ -133,13 +142,24 @@ class ChallengeMainViewModel extends ChangeNotifier {
     return null;
   }
 
-  Future postChallenge(int id, String username, String filePath) async {
-    
+  Future<bool> postChallenge(int id, String username, String filePath) async {
+    isLoadingSubmitChallenge = true;
+
     try {
       final postChallengeService = ChallengeService();
-      return await postChallengeService.postSubmitChallenge(id, username, filePath);
-    } catch (e) {
-      rethrow;
+      await postChallengeService.postSubmitChallenge(id, username, filePath);
+
+      return true;
+    } on DioException catch (e) {
+      if (e.response != null && [401, 403, 500].contains(e.response!.statusCode)) {
+        showFailedFlushbar(message: e.response!.data['message']);
+      } else {
+        showFailedFlushbar(message: 'Gagal mengikuti tantangan, silakan coba lagi');
+      }
+
+      return false;
+    } finally {
+      isLoadingSubmitChallenge = false;
     }
   }
 
