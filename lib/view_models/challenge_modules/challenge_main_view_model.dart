@@ -30,6 +30,15 @@ class ChallengeMainViewModel extends ChangeNotifier {
   //VARIABEL POSTFILE KE SERVER IKUT TANTANGAN
   String? filePath;
 
+  double? _fileSizeInMb;
+
+  set fileSizeInMb(double? fileSizeInMb) {
+    _fileSizeInMb = fileSizeInMb;
+    notifyListeners();
+  }
+
+  double? get fileSizeInMb => _fileSizeInMb;
+
   Widget topButton() {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
@@ -37,8 +46,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
         horizontal: 5,
         vertical: 5,
       ),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: primary40,
+        borderRadius: BorderRadius.circular(4)
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,8 +66,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
                 vertical: 2,
               ),
               decoration: selectedTabChallenge == 1
-                  ? const BoxDecoration(
+                  ? BoxDecoration(
                       color: secondary00,
+                      borderRadius: BorderRadius.circular(4)
                     )
                   : null,
               child: Text('Tantangan',
@@ -83,8 +94,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
                 bottom: 2,
               ),
               decoration: selectedTabChallenge == 2
-                  ? const BoxDecoration(
+                  ? BoxDecoration(
                       color: secondary00,
+                      borderRadius: BorderRadius.circular(4)
                     )
                   : null,
               child: Text('Leaderboard',
@@ -106,8 +118,9 @@ class ChallengeMainViewModel extends ChangeNotifier {
               height: 20,
               padding: const EdgeInsets.only(left: 10, top: 2),
               decoration: selectedTabChallenge == 3
-                  ? const BoxDecoration(
+                  ? BoxDecoration(
                       color: secondary00,
+                      borderRadius: BorderRadius.circular(4)
                     )
                   : null,
               child: Text(
