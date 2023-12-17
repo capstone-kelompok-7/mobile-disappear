@@ -11,15 +11,12 @@ class ProfileViewModel extends ChangeNotifier {
 
   Profile? get profile => _profile;
 
-  bool _isLoading = false;
+  bool _isLoading = true;
 
   bool get isLoading => _isLoading;
 
   Future<void> getProfile() async {
     try {
-      // _isLoading = true;
-      // notifyListeners();
-
       final profileData = await _profileService.getProfile();
       _profile = Profile.fromJson(profileData);
 
@@ -33,6 +30,7 @@ class ProfileViewModel extends ChangeNotifier {
   }
 
   bool _isSaving = false;
+  
   bool get isSaving => _isSaving;
 
   Future<void> editProfile(Map<String, dynamic> data) async {

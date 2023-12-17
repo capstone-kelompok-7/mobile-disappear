@@ -59,8 +59,19 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
                 child: TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Field tidak boleh kosong';
+                      return 'Nama tidak boleh kosong';
                     }
+
+                    if (value.trim().isEmpty) {
+                      return 'Nama tidak boleh kosong';
+                    }
+
+                    RegExp specialCharRegExp = RegExp(r'[!@#%^&*(),.?":{}|<>]');
+
+                    if (specialCharRegExp.hasMatch(value)) {
+                      return 'Masukkan nama yang valid';
+                    }
+
                     return null;
                   },
                   controller: nameController,
@@ -85,8 +96,26 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
                 child: TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Field tidak boleh kosong';
+                      return 'Nomor tidak boleh kosong';
                     }
+
+                    if (value.trim().isEmpty) {
+                      return 'Nomor tidak boleh kosong';
+                    }
+
+                    const String expressionPhoneNumber = r'^0\d{7,14}$';
+                    RegExp regex = RegExp(expressionPhoneNumber);
+
+                    if (!regex.hasMatch(value)) {
+                      return 'Masukkan Nomor yang valid';
+                    }
+
+                    RegExp specialCharRegExp = RegExp(r'[!@#%^&*(),.?":{}|<>]');
+
+                    if (specialCharRegExp.hasMatch(value)) {
+                      return 'Masukkan nomor yang valid';
+                    }
+
                     return null;
                   },
                   controller: numberController,
@@ -119,8 +148,13 @@ class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
                 child: TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Field tidak boleh kosong';
+                      return 'Alamat tidak boleh kosong';
                     }
+
+                    if (value.trim().isEmpty) {
+                      return 'Alamat tidak boleh kosong';
+                    }
+
                     return null;
                   },
                   controller: addressController,
