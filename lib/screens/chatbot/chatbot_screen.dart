@@ -1,524 +1,148 @@
-// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
-
+import 'package:chat_bubbles/bubbles/bubble_normal.dart';
 import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/themes/text_theme.dart';
+import 'package:disappear/view_models/chatbot/chatbot_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
-import '../../themes/text_theme.dart';
-
-class ChatBotScreen extends StatefulWidget {
-  static String routePath = '/chatbot';
-  const ChatBotScreen({Key? key}) : super(key: key);
+class ChatbotScreen extends StatefulWidget {
+  static String routePath = '/newchatbot';
+  const ChatbotScreen({super.key});
 
   @override
-  State<ChatBotScreen> createState() => _ChatBotScreenState();
+  State<ChatbotScreen> createState() => _ChatbotScreenState();
 }
 
-class _ChatBotScreenState extends State<ChatBotScreen> {
+class _ChatbotScreenState extends State<ChatbotScreen> {
+  @override
+  void initState() {
+    final chatbotProvider =
+        Provider.of<ChatbotViewModel>(context, listen: false);
+
+    chatbotProvider.getChatHistoryInit();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final chatbotProvider =
+        Provider.of<ChatbotViewModel>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Chatbot',
-          style: semiBoldBody1,
-        ),
-        centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
           icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: primary40,
+        title:
+            Text('Chatbot', style: semiBoldBody1.copyWith(color: Colors.white)),
+        centerTitle: true,
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(14.0),
-              child: Column(
-                children: [
-                  Container(
-                    width: 390,
-                    height: 1150,
-                    decoration: const BoxDecoration(color: Colors.white),
-                    child: Stack(
+      body: Consumer<ChatbotViewModel>(builder: (context, state, _) {
+        return Column(
+          children: [
+            Flexible(
+              child: state.listMessages.isNotEmpty
+                  ? ListView.builder(
+                      controller: state.scrollController,
+                      itemCount: chatbotProvider.listMessages.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        final message = state.listMessages[index];
+                        final isQuestion = message.role == "question";
+
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: BubbleNormal(
+                            tail: true,
+                            text: message.text,
+                            isSender: isQuestion ? true : false,
+                            color: isQuestion ? secondary00 : warning00,
+                          ),
+                        );
+                      },
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Positioned(
-                          left: 300,
-                          top: 10,
-                          child: Container(
-                            width: 85,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFEFE5DC),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Hai !!',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
+                        Image.asset(
+                          "assets/img/Secretary.png",
+                          width: 70,
+                          height: 70,
+                        ),
+                        Text(
+                          "jilaru",
+                          style: boldBody1.copyWith(
+                            color: blackColor,
                           ),
                         ),
-                        Positioned(
-                          left: 190,
-                          top: 130,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFEFE5DC),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                ),
-                              ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 40, left: 10, right: 10),
+                          child: Text(
+                            "Aku merupakan AI chatbot yang dapat membantu kamu dalam mengatasi permasalahan lingkungan hijau yang ada. Mari mengobrol!",
+                            style: regularBody5.copyWith(
+                              color: blackColor,
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Tunjukkan kepada ku apa\nyang kamu bisa',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          top: 70,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFFCEECE),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Hai! Bagaimana kabar mu?',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          top: 210,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFFCEECE),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Sebagai AI aku bisa menjawab semua\npertanyaan mu seputar lingkungan\nhijau!!! ☘🌱🌲🌳🌴🌵',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          top: 300,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFFCEECE),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Ada yang bisa aku bantu ?',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 178,
-                          top: 355,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFEFE5DC),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Bagaimana caranya untuk \nmengurangi polusi plastik??',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          top: 430,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFFCEECE),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Cara mengurangi polusi plastik\n adalah dengan beralih ke produk yang \nberbahan dasar ramah lingkungan. \nSeperti menggunakan tas belanja dari \nkanvas, menggunakan sedotan dari\nkertas, menggunakan alat makan \nyang berbahan jerami, dan sebagainya.',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          top: 600,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFFCEECE),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Ada lagi yang ingin kamu tanyakan ?',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 120,
-                          top: 660,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFEFE5DC),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Wahh makasihh ya! penjelasan mu\n sangat jelas dan mudah dimengerti.',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          top: 740,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFFCEECE),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Terima kasih kembali pertanyaan mu\njuga sangat bagus!! 😍☘🌱',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          top: 820,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFFCEECE),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Apakah sudah cukup? atau masih ada\nyang ingin kamu tanyakan?',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 205,
-                          top: 900,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFEFE5DC),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Cukup.. makasihh yaa!!',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          top: 970,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFFCEECE),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Terima kasih kembali !!!\n Aku akhiri chatnya ya, kalau masih ada \npertanyaan, langsung tanyakan ke\naku aja. Have a nice day !!! 🙌🌸✨',
-                                  style: regularBody7.copyWith(
-                                    color: blackColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        )
                       ],
                     ),
-                  ),
-                ],
-              ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: SizedBox(
-                width: 385,
-                height: 60,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 60,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 14),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                              width: 1, color: Color(0xFFEFE5DC)),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                fillColor: Colors.transparent,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                hintText: 'Tanyakan apapun padaku',
-                                suffixIcon: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.send,
-                                    size: 24.0,
-                                  ),
-                                  padding: const EdgeInsets.all(1),
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFFBFBFBF),
-                                  fontSize: 14,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0.11,
-                                ),
-                                border: InputBorder.none,
-                              ),
-                            ),
+            Consumer<ChatbotViewModel>(
+              builder: (context, state, _) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 10.0, left: 5, right: 5),
+                  child: TextField(
+                    controller: state.textController,
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(40),
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                            width: 2.0,
                           ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(40),
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                            width: 0.5,
+                          ),
+                        ),
+                        fillColor: Colors.white,
+                        hintText: 'Tanyakan apapun padaku',
+                        suffixIcon: GestureDetector(
+                            onTap: () {
+                              state.sendMessage();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child:
+                                  SvgPicture.asset('assets/img/send_fast.svg'),
+                            ))),
+                  ),
+                );
+              },
+            )
+          ],
+        );
+      }),
     );
+  }
+
+  @override
+  void dispose() {
+    // final chatbotProvider =
+    //     Provider.of<ChatbotViewModel>(context, listen: false);
+    // chatbotProvider.textController.dispose();
+    super.dispose();
   }
 }
