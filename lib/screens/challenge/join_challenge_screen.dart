@@ -1,5 +1,4 @@
 import 'package:disappear/screens/challenge/components/join_challenge_success_dialog.dart';
-import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
 import 'package:file_picker/file_picker.dart';
