@@ -62,7 +62,8 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                   }
 
                   if (state.addresses.isNotEmpty) {
-                    return Column(
+                    return ListView(
+                      shrinkWrap: true,
                       children: [
                         ListView.separated(
                           padding: const EdgeInsets.all(10),
@@ -72,7 +73,7 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                           separatorBuilder: (context, index) => const SizedBox(height: 10,),
                           itemBuilder: (context, index) => CheckoutAddressItem(address: state.addresses[index])
                         ),
-                        const SizedBox(height: 20,),
+
                         Visibility(
                           visible: state.isAddingMoreAddress,
                           child: const Center(
@@ -85,7 +86,9 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                               ),
                             ),
                           )
-                        )
+                        ),
+
+                        const SizedBox(height: 20,),
                       ],
                     );
                   }

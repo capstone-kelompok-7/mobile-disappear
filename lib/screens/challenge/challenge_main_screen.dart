@@ -196,6 +196,7 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                                         return const Text('Tidak ada kupon untuk diklaim');
                                       } else if (snapshot.hasData) {
                                         return ListView.separated(
+                                          padding: const EdgeInsets.only(bottom: 20),
                                           physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           itemCount: snapshot.data!.length,

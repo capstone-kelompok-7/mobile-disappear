@@ -49,66 +49,6 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
           ),
         ),
 
-        //TRANSFER BANK
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: GestureDetector(
-            onTap: () {},
-            child: const ListTile(
-              title: Text(
-                'Transfer Bank',
-                style: mediumBody7,
-              ),
-              subtitle: Text(
-                'Bank Permata, Bank BCA, Bank BNI, Bank BRI.',
-                style: regularBody8,
-                overflow: TextOverflow.fade,
-                maxLines: 1,
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios_outlined,
-                size: 14,
-                color: primary40,
-              ),
-            ),
-          ),
-        ),
-
-        const Divider(
-          height: 1,
-          thickness: 0.1,
-        ),
-
-        //KARTU KREDIT / DEBIT
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: GestureDetector(
-            onTap: () {},
-            child: const ListTile(
-              title: Text(
-                'Kartu Kredit/Debit',
-                style: mediumBody7,
-              ),
-              subtitle: Text(
-                'Bank Mandiri, Bank BCA, Bank BNI, Bank BRI.',
-                style: regularBody8,
-                overflow: TextOverflow.fade,
-                maxLines: 1,
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios_outlined,
-                size: 14,
-                color: Color.fromRGBO(37, 116, 90, 1),
-              ),
-            ),
-          ),
-        ),
-
-        const Divider(
-          height: 1,
-          thickness: 0.1,
-        ),
-
         //E-WALLET
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -121,36 +61,6 @@ class _PaymentMethodCheckoutState extends State<PaymentMethodCheckout> {
               ),
               subtitle: Text(
                 'Gopay',
-                style: regularBody8,
-                overflow: TextOverflow.fade,
-                maxLines: 1,
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios_outlined,
-                size: 14,
-                color: Color.fromRGBO(37, 116, 90, 1),
-              ),
-            ),
-          ),
-        ),
-
-        const Divider(
-          height: 1,
-          thickness: 0.1,
-        ),
-
-        //GERAI RITEL
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: GestureDetector(
-            onTap: () {},
-            child: const  ListTile(
-              title: Text(
-                'Gerai Ritel',
-                style: mediumBody7,
-              ),
-              subtitle: Text(
-                'Alfamart, Indomaret',
                 style: regularBody8,
                 overflow: TextOverflow.fade,
                 maxLines: 1,
