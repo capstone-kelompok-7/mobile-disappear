@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:intl/intl.dart';
-
 OrderAllUserModel orderAllUserModelFromJson(String str) =>
     OrderAllUserModel.fromJson(json.decode(str));
 
@@ -25,11 +23,6 @@ class OrderAllUserModel {
   DateTime? statusOrderDate;
   DateTime? createdAt;
   List<OrderDetail>? orderDetails = [];
-
-  String get formattedTotalAmountPaid {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(totalAmountPaid);
-  }
 
   OrderAllUserModel({
     this.id,
@@ -91,11 +84,6 @@ class OrderDetail {
   int totalDiscount;
   Product product;
 
-  String get formattedPrice {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(totalPrice);
-  }
-
   OrderDetail({
     required this.id,
     required this.orderId,
@@ -142,11 +130,6 @@ class Product {
   int productExp;
   List<ProductPhoto> productPhotos = [];
 
-  String get formattedPrice {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(price);
-  }
-
   Product({
     required this.id,
     required this.name,
@@ -165,7 +148,7 @@ class Product {
         gramPlastic: json["gram_plastic"],
         productExp: json["product_exp"],
         productPhotos: List<ProductPhoto>.from(
-            json["product_photos"].map((x) => ProductPhoto.fromJson(x))),
+            (json["product_photos"] ?? []).map((x) => ProductPhoto.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

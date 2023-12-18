@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class ChallengesModel {
   late final int id;
   final String? title;
@@ -20,9 +18,4 @@ class ChallengesModel {
     required this.status,
     required this.exp,
   });
-
-  String get formattedDate {
-    final f = DateFormat('yyyy-MM-d');
-    return f.format(DateTime.parse(endDate));
-  }
 }

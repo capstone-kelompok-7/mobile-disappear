@@ -15,12 +15,12 @@ class SearchField extends StatefulWidget {
 
 class _SearchFieldState extends State<SearchField> {
   void _onSearchFieldSubmitted(String? keyword) {
-    if (keyword != null && keyword.isNotEmpty) {
-      final searchHistoryViewModel = Provider.of<SearchHistoryViewModel>(context, listen: false);
-      final searchProductsViewModel = Provider.of<SearchProductViewModel>(context, listen: false);
+    final searchHistoryViewModel = Provider.of<SearchHistoryViewModel>(context, listen: false);
+    final searchProductsViewModel = Provider.of<SearchProductViewModel>(context, listen: false);
 
-      searchProductsViewModel.getProducts(keyword: keyword);
-      
+    searchProductsViewModel.getProducts(keyword: keyword ?? '');
+
+    if (keyword != null && keyword.isNotEmpty) {
       searchHistoryViewModel.addHistory(keyword);
     }
   }

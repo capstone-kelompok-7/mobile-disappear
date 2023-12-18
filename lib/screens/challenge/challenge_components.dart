@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/challenge_model.dart';
 import 'package:disappear/screens/challenge/detail_challenge_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
@@ -73,7 +74,7 @@ class _ChallengeComponentsState extends State<ChallengeComponents> {
                         height: 10,
                       ),
                       Text(
-                        'Tantangan berlaku sampai ${widget.challengesModel.formattedDate}',
+                        'Tantangan berlaku sampai ${formattedDate(widget.challengesModel.endDate, format: 'd-MM-yyyy')}',
                         style: regularBody7,
                         overflow: TextOverflow.ellipsis,
                       ),

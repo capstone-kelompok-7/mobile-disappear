@@ -108,7 +108,12 @@ class _SaveArticleScreenState extends State<SaveArticleScreen> {
                                   ),
                                   GestureDetector(
                                     onTap: () => _goToDetailArticleScreen(snapshot.data![index].articleId),
-                                    child: Text(snapshot.data![index].article.title, style: semiBoldBody6)
+                                    child: Text(
+                                      snapshot.data![index].article.title,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: semiBoldBody6
+                                    )
                                   ),
                                   const SizedBox(
                                     height: 15,

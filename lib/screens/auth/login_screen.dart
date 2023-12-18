@@ -136,40 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            const Divider(thickness: 2),
-                            Container(
-                              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-                              color: whiteColor,
-                              child: Text(
-                                'or',
-                                style: regularBody7.copyWith(fontFamily: 'Inter'),
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {},
-                              child: Image.asset(
-                                'assets/img/GoogleLogo.png',
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            InkWell(
-                              onTap: () {},
-                              child: Image.asset(
-                                'assets/img/FacebookLogo.png',
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   );

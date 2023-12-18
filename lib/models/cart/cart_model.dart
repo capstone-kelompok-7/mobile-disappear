@@ -103,14 +103,14 @@ class CartProduct {
     name: json["name"],
     price: json["price"],
     discount: json["discount"],
-    productPhotos: List < CartProductPhoto > .from(json["product_photos"].map((x) => CartProductPhoto.fromMap(x))),
+    productPhotos: List < CartProductPhoto > .from((json["product_photos"] ?? []).map((x) => CartProductPhoto.fromMap(x))),
   );
 
   Map < String, dynamic > toMap() => {
     "id": id,
     "name": name,
     "price": price,
-    "product_photos": List < dynamic > .from(productPhotos.map((x) => x.toMap())),
+    "product_photos": List < dynamic > .from((productPhotos).map((x) => x.toMap())),
   };
 }
 

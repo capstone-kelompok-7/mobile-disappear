@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/profile/user_profile_view_model.dart';
@@ -71,42 +72,43 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 112.5, right: 99.5, top: 35, bottom: 28),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Stack(
                     children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.grey,
-                        child: selectedImage != null
-                            ? Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: FileImage(selectedImage!),
-                                    fit: BoxFit.cover,
+                      Align(
+                        alignment: Alignment.center,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.grey,
+                          child: selectedImage != null
+                              ? Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: FileImage(selectedImage!),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )
+                              : Center(
+                                  child: SvgPicture.asset(
+                                    'assets/img/profilePicture.svg',
+                                    width: 50,
+                                    height: 50,
                                   ),
                                 ),
-                              )
-                            : Center(
-                                child: SvgPicture.asset(
-                                  'assets/img/profilePicture.svg',
-                                  width: 50,
-                                  height: 50,
-                                ),
-                              ),
+                        ),
                       ),
                       Positioned(
-                        right: 8,
-                        bottom: 10,
+                        left: 150,
+                        bottom: 0,
                         child: GestureDetector(
                           onTap: () {
                             pickImageFromGallery();
                           },
-                          child: SvgPicture.asset(
-                              'assets/img/editProfileCameraButton.svg'),
+                          child: SvgPicture.asset('assets/img/editProfileCameraButton.svg', width: 30, height: 30,),
                         ),
                       )
                     ],
@@ -251,6 +253,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             final data = {
                               'name': nameController.text,
                               'phone': numberController.text,
+                              'photo': selectedImage != null
+                                ? await MultipartFile.fromFile(selectedImage!.path, filename: selectedImage!.path.split('/').last)
+                                : null
                             };
                       
                             try {

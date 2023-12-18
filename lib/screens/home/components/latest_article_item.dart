@@ -68,7 +68,12 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                     ),
                     GestureDetector(
                       onTap: _goToDetailArticleScreen,
-                      child: Text(widget.article.title, style: semiBoldBody6)
+                      child: Text(
+                        widget.article.title,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: semiBoldBody6
+                      )
                     ),
                     const SizedBox(
                       height: 15,

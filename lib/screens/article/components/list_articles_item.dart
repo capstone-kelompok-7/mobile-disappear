@@ -67,14 +67,19 @@ class _ListArticleItemState extends State<ListArticleItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.article.formattedDate,
+                    Text(formattedDate(widget.article.date),
                         style: mediumBody8.copyWith(color: primary40)),
                     const SizedBox(
                       height: 10,
                     ),
                     GestureDetector(
                       onTap: _goToDetailArticleScreen,
-                      child: Text(widget.article.title, style: semiBoldBody6)
+                      child: Text(
+                        widget.article.title,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: semiBoldBody6
+                      )
                     ),
                     const SizedBox(
                       height: 15,

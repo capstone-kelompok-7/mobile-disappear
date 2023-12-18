@@ -37,11 +37,6 @@ class OrderDetailByIdModel {
   Voucher voucher;
   List<OrderDetail> orderDetails;
 
-  String get formattedTotalAmountPaid {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(totalAmountPaid);
-  }
-
   OrderDetailByIdModel({
     required this.id,
     required this.idOrder,
@@ -243,7 +238,7 @@ class Product {
         gramPlastic: json["gram_plastic"],
         productExp: json["product_exp"],
         productPhotos: List<ProductPhoto>.from(
-            json["product_photos"].map((x) => ProductPhoto.fromJson(x))),
+            (json["product_photos"] ?? []).map((x) => ProductPhoto.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

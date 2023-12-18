@@ -58,7 +58,7 @@ class _OrderInformationState extends State<OrderInformation> {
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                 itemCount: stateCart.selectedItems.length,
                 itemBuilder: (context, index) => OrderItem(
-                  imageUrl: stateCart.selectedItems[index].product.productPhotos.first.url,
+                  imageUrl: stateCart.selectedItems[index].product.productPhotos.isNotEmpty ? stateCart.selectedItems[index].product.productPhotos.first.url : null,
                   name: stateCart.selectedItems[index].product.name,
                   gramPlastic: stateCart.selectedItems[index].gramPlastic,
                   formattedPrice: stateCart.selectedItems[index].formattedPrice,

@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/challenge_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -61,7 +62,7 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
                           height: 5,
                         ),
                         Text(
-                          'Tantangan Berlaku Sampai Tanggal ${snapshot.data.formattedDate}',
+                          'Tantangan Berlaku Sampai Tanggal ${formattedDate(snapshot.data.endDate, format: 'd-MM-yyyy')}',
                           style: regularBody8,
                         ),
                         const SizedBox(

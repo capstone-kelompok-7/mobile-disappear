@@ -19,7 +19,9 @@ class ProfileService {
     try {
       debugPrint('Editing profile. Payload data: $data');
 
-      final response = await dio.post('/users/edit-profile', data: data);
+      FormData formData = FormData.fromMap(data);
+
+      final response = await dio.post('/users/edit-profile', data: formData);
 
       debugPrint('Edit profile response. Status code: ${response.statusCode}');
       debugPrint('Edit profile response data: ${response.data}');

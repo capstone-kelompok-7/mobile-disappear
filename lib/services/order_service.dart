@@ -8,17 +8,16 @@ class OrderService {
 
   Future<List<OrderAllUserModel>> getAllOrderUser(String orderStatus) async {
     try {
-      Response response =
-          await dio.get('/order/by-users?order_status=$orderStatus');
+      Response response = await dio.get('/order/by-users?order_status=$orderStatus');
 
       // Check if 'data' is not null and is a List<dynamic>
-      if (response.data['data'] != null &&
-          response.data['data'] is List<dynamic>) {
+      if (response.data['data'] != null && response.data['data'] is List<dynamic>) {
         List<dynamic> orderData = response.data['data'];
-        List<OrderAllUserModel> orders =
-            orderData.map<OrderAllUserModel>((data) {
-          return OrderAllUserModel.fromJson(data);
-        }).toList();
+        List<OrderAllUserModel> orders = orderData
+          .map<OrderAllUserModel>((data) {
+            return OrderAllUserModel.fromJson(data);
+          })
+          .toList();
 
         // Assuming you want to return the first order; modify accordingly if needed
         return orders;
