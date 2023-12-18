@@ -3,6 +3,8 @@ import 'package:disappear/services/chatbot_service.dart';
 import 'package:flutter/material.dart';
 
 class ChatbotViewModel extends ChangeNotifier {
+  final ScrollController scrollController = ScrollController();
+
   List<ChatbotModel> listMessages = [];
 
   final TextEditingController textController = TextEditingController();
@@ -56,19 +58,14 @@ class ChatbotViewModel extends ChangeNotifier {
   }
 
   void getChatHistoryInit() async {
-    final chatHistory = getChatHistory();
-
     listMessages = [];
 
-    chatHistory.then(
-      (value) {
-        for (var element in value) {
-          listMessages.add(element);
-          notifyListeners();
-        }
-      },
-    );
+    final histories = await getChatHistory();
 
-    debugPrint(listMessages.toString());
+    for (var element in histories) {
+      listMessages.add(element);
+    }
+
+    notifyListeners();
   }
 }

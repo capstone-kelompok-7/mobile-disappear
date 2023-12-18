@@ -7,29 +7,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EditOldAddressScreen extends StatefulWidget {
-  static const String routePath = '/edit-old-address-screen';
-  const EditOldAddressScreen({super.key});
+class AddNewAddresScreen extends StatefulWidget {
+  static const String routePath = '/add-new-address-screen';
+  const AddNewAddresScreen({super.key});
 
   @override
-  State<EditOldAddressScreen> createState() => _EditOldAddressScreenState();
+  State<AddNewAddresScreen> createState() => _AddNewAddresScreenState();
 }
 
-class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
+class _AddNewAddresScreenState extends State<AddNewAddresScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   bool isMainAddress = true;
-  late AddressViewModel addressViewModel;
-  late int userId;
-
-  @override
-  void initState() {
-    super.initState();
-    addressViewModel = context.read<AddressViewModel>();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +29,7 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
       appBar: AppBar(
         backgroundColor: primary40,
         title: Text(
-          'Edit Alamat',
+          'Tambah Alamat',
           style: semiBoldBody1.copyWith(color: whiteColor),
         ),
         centerTitle: true,
@@ -55,7 +47,6 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
         child: Padding(
           padding: const EdgeInsets.only(top: 18, left: 25, right: 25),
           child: ListView(
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Kontak',
@@ -68,8 +59,19 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                 child: TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Field tidak boleh kosong';
+                      return 'Nama tidak boleh kosong';
                     }
+
+                    if (value.trim().isEmpty) {
+                      return 'Nama tidak boleh kosong';
+                    }
+
+                    RegExp specialCharRegExp = RegExp(r'[!@#%^&*(),.?":{}|<>]');
+
+                    if (specialCharRegExp.hasMatch(value)) {
+                      return 'Masukkan nama yang valid';
+                    }
+
                     return null;
                   },
                   controller: nameController,
@@ -94,8 +96,26 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                 child: TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Field tidak boleh kosong';
+                      return 'Nomor tidak boleh kosong';
                     }
+
+                    if (value.trim().isEmpty) {
+                      return 'Nomor tidak boleh kosong';
+                    }
+
+                    const String expressionPhoneNumber = r'^0\d{7,14}$';
+                    RegExp regex = RegExp(expressionPhoneNumber);
+
+                    if (!regex.hasMatch(value)) {
+                      return 'Masukkan Nomor yang valid';
+                    }
+
+                    RegExp specialCharRegExp = RegExp(r'[!@#%^&*(),.?":{}|<>]');
+
+                    if (specialCharRegExp.hasMatch(value)) {
+                      return 'Masukkan nomor yang valid';
+                    }
+
                     return null;
                   },
                   controller: numberController,
@@ -128,17 +148,22 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                 child: TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Field tidak boleh kosong';
+                      return 'Alamat tidak boleh kosong';
                     }
+
+                    if (value.trim().isEmpty) {
+                      return 'Alamat tidak boleh kosong';
+                    }
+
                     return null;
                   },
                   controller: addressController,
                   keyboardType: TextInputType.streetAddress,
-                  maxLines: 3,
+                  maxLines: 4,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
                     hintText:
-                        'Contoh : Jl. Mawar Blok K3 no. 2 CIWIDEY, KOTA BANDUNG, JAWA BARAT ID 83728 ',
+                        'Contoh : Jl. Mawar Blok K3 no. 2 CIWIDEY, KOTA BANDUNG, JAWA BARAT ID 83728',
                     hintStyle: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -174,12 +199,11 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                 ],
               ),
 
-              //ELEVATED BUTTON SIMPAN ALAMAT
+              //ELEVATED  BUTTON
               Padding(
-                padding: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 46),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    elevation: const MaterialStatePropertyAll(5),
                     backgroundColor: const MaterialStatePropertyAll(primary30),
                     minimumSize: MaterialStateProperty.all(
                         const Size(double.infinity, 20)),
@@ -188,10 +212,11 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                     if (formkey.currentState!.validate()) {
                       final int userId = await getUserId();
 
-                      // ignore: use_build_context_synchronously
-                      final addressViewModel = Provider.of<AddressViewModel>(context, listen: false);
+                      final addressViewModel =
+                          // ignore: use_build_context_synchronously
+                          Provider.of<AddressViewModel>(context, listen: false);
 
-                      final updateAddress = Address(
+                      final newAddress = Address(
                         id: 0,
                         userId: userId,
                         acceptedName: nameController.text,
@@ -200,7 +225,7 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                         isPrimary: isMainAddress,
                       );
 
-                      addressViewModel.updateAddress(updateAddress).then((_) {
+                      addressViewModel.createAddress(newAddress).then((_) {
                         _showDialogSuccess();
                       }).catchError((error) {
                         _showDialogFailed();
@@ -210,29 +235,6 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                   child: const Text(
                     'Simpan Alamat',
                     style: semiBoldBody6,
-                  ),
-                ),
-              ),
-
-              //ELEVATED BUTTON HAPUS ALAMAT
-              Padding(
-                padding: const EdgeInsets.only(bottom: 46),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    elevation: const MaterialStatePropertyAll(5),
-                    backgroundColor:
-                        const MaterialStatePropertyAll(Colors.white),
-                    side: const MaterialStatePropertyAll(
-                        BorderSide(color: primary40)),
-                    minimumSize: MaterialStateProperty.all(
-                        const Size(double.infinity, 20)),
-                  ),
-                  onPressed: () {
-                    _showDialogdelete();
-                  },
-                  child: Text(
-                    'Hapus Alamat',
-                    style: semiBoldBody6.copyWith(color: primary40),
                   ),
                 ),
               ),
@@ -261,7 +263,6 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
               ),
-              SizedBox(height: 5),
             ],
           ),
           content: Column(
@@ -272,7 +273,7 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Selamat! Alamat mu sudah berhasil\ndiperbarui, nih. Terima kasih atas\npembaruan informasi mu!!',
+                    'Selamat! Alamat baru mu sudah\nberhasil disimpan, nih. Terima kasih\natas penambahan alamat baru mu!!',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 11,
@@ -302,97 +303,6 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _showDialogdelete() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          title: Column(
-            children: [
-              SvgPicture.asset(
-                'assets/img/DialogWarningIcon.svg',
-                height: 50,
-                width: 50,
-              ),
-              const SizedBox(height: 15),
-              const Center(
-                child: Text("Yakin Mau Hapus Alamat?",
-                    style:
-                        TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
-              ),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Data yang sudah dihapus tidak dapat dipulihkan, lho.\nCoba dipikirkan lagi, yuk!!",
-                  style: TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Menutup dialog
-                    },
-                    child: const Text(
-                      "Batal",
-                      style: TextStyle(
-                        color: blackColor,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 25),
-                  OutlinedButton(
-                    onPressed: () async {
-                      try {
-                        if (mounted) {
-                          await addressViewModel.deleteAddress();
-
-                          // ignore: use_build_context_synchronously
-                          Navigator.of(context)
-                              .popAndPushNamed('/address-list-screen');
-                        }
-                      } catch (error) {
-                        debugPrint('Error deleting address: $error');
-                      }
-                    },
-                    style: ButtonStyle(
-                      side: MaterialStateProperty.all<BorderSide>(
-                        // ignore: prefer_const_constructors
-                        BorderSide(color: error30), // Warna garis sisi tombol
-                      ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(error20),
-                    ),
-                    child: const Text(
-                      "Hapus",
-                      style: TextStyle(
-                        color: whiteColor,
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
@@ -432,17 +342,10 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
                     const SizedBox(height: 5),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Sepertinya ada kesalahan server\ninternal, nih. Atau pastikan koneksi mu\ndalam kondisi baik, ya. Coba lagi, yuk!!",
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w400,
-                          ),
+                      child: Text(
+                          'Sepertinya ada kesalahan saat proses penyimpanan perubahan alamat, nih. Periksa koneksi mu dan coba lagi yuk!!',
                           textAlign: TextAlign.center,
-                        ),
-                      ),
+                          style: regularBody8),
                     ),
                   ],
                 ),
@@ -453,9 +356,9 @@ class _EditOldAddressScreenState extends State<EditOldAddressScreen> {
       },
     );
   }
+}
 
-  Future<int> getUserId() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('userId') ?? 0;
-  }
+Future<int> getUserId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('userId') ?? 0;
 }

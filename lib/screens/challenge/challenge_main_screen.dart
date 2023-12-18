@@ -24,16 +24,11 @@ class ChallengeMainScreen extends StatefulWidget {
 }
 
 class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
-  late Future _userVoucherFuture;
-
-  late Future _userVoucherToClaimFuture;
-
   @override
   void initState() {
     final challengeProvider = Provider.of < ChallengeMainViewModel > (context, listen: false);
-
-    _userVoucherFuture = challengeProvider.fetchUserVoucher();
-    _userVoucherToClaimFuture = challengeProvider.fetchVouchersToClaim();
+    
+    challengeProvider.fetchVouchers();
     
     super.initState();
   }
@@ -143,7 +138,7 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                       Consumer < ChallengeMainViewModel > (
                         builder: (context, state, _) {
                           return FutureBuilder(
-                            future: _userVoucherFuture,
+                            future: state.userVoucherFuture,
                             builder: (context, snapshot) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,7 +181,7 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                       Consumer < ChallengeMainViewModel > (
                         builder: (context, state, _) {
                           return FutureBuilder(
-                            future: _userVoucherToClaimFuture,
+                            future: state.userVoucherToClaimFuture,
                             builder: (context, snapshot) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,6 +196,7 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                                         return const Text('Tidak ada kupon untuk diklaim');
                                       } else if (snapshot.hasData) {
                                         return ListView.separated(
+                                          padding: const EdgeInsets.only(bottom: 20),
                                           physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           itemCount: snapshot.data!.length,

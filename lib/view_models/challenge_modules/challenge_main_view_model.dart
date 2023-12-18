@@ -231,7 +231,11 @@ class ChallengeMainViewModel extends ChangeNotifier {
     }
   }
 
-//VOUCHERS TAB FEATURE//
+  late Future userVoucherFuture;
+
+  late Future userVoucherToClaimFuture;
+
+  //VOUCHERS TAB FEATURE//
   Future<List<VoucherModel>> fetchVouchersToClaim() async {
     try {
       final voucherService = VoucherService();
@@ -248,6 +252,11 @@ class ChallengeMainViewModel extends ChangeNotifier {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> fetchVouchers() async {
+    userVoucherFuture = fetchUserVoucher();
+    userVoucherToClaimFuture = fetchVouchersToClaim();
   }
 
   Future claimVoucher(int id) async {
@@ -269,6 +278,8 @@ class ChallengeMainViewModel extends ChangeNotifier {
       }
     } finally {
       _isLoadingVoucherClaim = null;
+      fetchVouchers();
+      
       notifyListeners();
     }
   }
