@@ -42,11 +42,25 @@ class _ProductsState extends State<Products> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.network(
-                        widget.orderDetail.orderDetails[index].product
-                            .productPhotos.first.url,
-                        width: 68,
-                        height: 48),
+                    Builder(
+                      builder: (context) {
+                        if (widget.orderDetail.orderDetails[index].product.productPhotos.isNotEmpty) {
+                          return Image.network(
+                            widget.orderDetail.orderDetails[index].product.productPhotos.first.url,
+                            width: 68,
+                            height: 48,
+                            fit: BoxFit.cover,
+                          );
+                        }
+                        
+                        return Image.asset(
+                          'assets/img/totebeg_kanvas.png',
+                          width: 68,
+                          height: 48,
+                          fit: BoxFit.cover,
+                        );
+                      }
+                    ),
                     const SizedBox(
                       width: 15,
                     ),

@@ -128,7 +128,7 @@ class _CartScreenState extends State<CartScreen> {
                             children: [
                               Builder(
                                 builder: (context) {
-                                  if (cartItem.product.productPhotos[0].url != '') {
+                                  if (cartItem.product.productPhotos.isNotEmpty && cartItem.product.productPhotos[0].url != '') {
                                     return Image.network(
                                       cartItem.product.productPhotos[0].url,
                                       width: 70,

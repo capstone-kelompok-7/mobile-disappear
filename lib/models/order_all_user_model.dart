@@ -148,7 +148,7 @@ class Product {
         gramPlastic: json["gram_plastic"],
         productExp: json["product_exp"],
         productPhotos: List<ProductPhoto>.from(
-            json["product_photos"].map((x) => ProductPhoto.fromJson(x))),
+            (json["product_photos"] ?? []).map((x) => ProductPhoto.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

@@ -100,7 +100,11 @@ class ArticleService {
 
     final Response response = await dio.get('/articles/bookmark');
 
-    return response.data['data'].map<int>((data) => data['article_id'] as int).toList();
+    if (response.data['data'] != null) {
+      return response.data['data'].map<int>((data) => data['article_id'] as int).toList();
+    }
+
+    return [];
   }
 
   Future<List<BookmarkedArticle>> getBookmarkedArticles() async {

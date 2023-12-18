@@ -18,7 +18,6 @@ class OrderViewModel extends ChangeNotifier {
 
   Future<List<OrderAllUserModel?>> getAllOrderUser() async {
     final orderService = OrderService();
-
     return await orderService.getAllOrderUser(orderStatus!);
   }
 
