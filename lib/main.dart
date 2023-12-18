@@ -71,6 +71,7 @@ import 'package:disappear/view_models/home/home_category_view_model.dart';
 import 'package:disappear/view_models/home/carousel_view_model.dart';
 import 'package:disappear/view_models/home/best_seller_product_view_model.dart';
 import 'package:disappear/view_models/home/latest_articles_view_model.dart';
+import 'package:disappear/view_models/notification/notification_view_model.dart';
 import 'package:disappear/view_models/order/order_view_model.dart';
 import 'package:disappear/view_models/product/add_to_cart_view_model.dart';
 import 'package:disappear/view_models/product/product_carousel_view_model.dart';
@@ -224,6 +225,9 @@ void main() async {
       ChangeNotifierProvider(create: (context) => ChangePasswordViewModel()),
       ChangeNotifierProvider(create: (context) => AddressViewModel()),
       ChangeNotifierProvider(create: (context) => LogoutViewModel()),
+      ChangeNotifierProvider(
+        create: (context) => NotificationViewModel(),
+      ),
     ],
     child: const App(),
   ));
@@ -285,14 +289,15 @@ class App extends StatelessWidget {
             const EWalletTransferScreen(),
         WhatsappTransferScreen.routePath: (context) =>
             const WhatsappTransferScreen(),
-        GopayScreen.routePath: (context) =>
-            const GopayScreen(),
+        GopayScreen.routePath: (context) => const GopayScreen(),
         AddReviewScreen.routePath: (context) => const AddReviewScreen(),
         OrderListScreen.routePath: (context) => const OrderListScreen(),
         TelegramTransferScreen.routePath: (context) =>
             const TelegramTransferScreen(),
         ChatbotScreen.routePath: (context) => const ChatbotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
+        NewChatbotScreen.routePath: (context) => const NewChatbotScreen(),
+        ChatBotScreen.routePath: (context) => const ChatBotScreen(),
         ChangePasswordScreen.routePath: (context) => const ChangePasswordScreen(),
       },
       theme: ThemeData(
