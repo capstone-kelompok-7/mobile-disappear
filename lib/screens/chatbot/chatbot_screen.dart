@@ -45,6 +45,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       ),
       body: Consumer<ChatbotViewModel>(builder: (context, state, _) {
         return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
               child: state.listMessages.isNotEmpty
