@@ -100,134 +100,53 @@ void main() async {
   Intl.systemLocale = 'id';
 
   timeago.setLocaleMessages('id', IndonesianMessage());
+  
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(
-        create: (context) => MainViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => SearchHistoryViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => SearchFieldViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => SearchProductViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => LoginViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => OnboardingViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ForgotPasswordViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => AddProductReviewViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ForgotPasswordVerificationViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => NewPasswordViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => RegisterViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => RegisterVerificationViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => HomeCategoryViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CategoryViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ChallengeMainViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CarouselViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => BestSellerProductViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => OrderViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => HomeViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CheckoutViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CheckoutVoucherViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CheckoutAddressViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CheckoutPaymentMethodViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CheckoutPaymentMethodViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => DetailArticlesViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ArticleFilterViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CarouselArticleViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => GetArticleViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CartViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ManualTransferViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => LatestArticlesViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ProductViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => AddToCartViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => FilterViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ProductCarouselViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ProductReviewViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => BookmarkViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => GopayViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ProfileViewModel(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ChatbotViewModel(),
-      ),
+      ChangeNotifierProvider(create: (context) => MainViewModel()),
+      ChangeNotifierProvider(create: (context) => SearchHistoryViewModel()),
+      ChangeNotifierProvider(create: (context) => SearchFieldViewModel()),
+      ChangeNotifierProvider(create: (context) => SearchProductViewModel()),
+      ChangeNotifierProvider(create: (context) => LoginViewModel()),
+      ChangeNotifierProvider(create: (context) => OnboardingViewModel()),
+      ChangeNotifierProvider(create: (context) => ForgotPasswordViewModel()),
+      ChangeNotifierProvider(create: (context) => AddProductReviewViewModel()),
+      ChangeNotifierProvider(create: (context) => ForgotPasswordVerificationViewModel()),
+      ChangeNotifierProvider(create: (context) => NewPasswordViewModel()),
+      ChangeNotifierProvider(create: (context) => RegisterViewModel()),
+      ChangeNotifierProvider(create: (context) => RegisterVerificationViewModel()),
+      ChangeNotifierProvider(create: (context) => HomeCategoryViewModel()),
+      ChangeNotifierProvider(create: (context) => CategoryViewModel()),
+      ChangeNotifierProvider(create: (context) => ChallengeMainViewModel()),
+      ChangeNotifierProvider(create: (context) => CarouselViewModel()),
+      ChangeNotifierProvider(create: (context) => BestSellerProductViewModel()),
+      ChangeNotifierProvider(create: (context) => OrderViewModel()),
+      ChangeNotifierProvider(create: (context) => HomeViewModel()),
+      ChangeNotifierProvider(create: (context) => CheckoutViewModel()),
+      ChangeNotifierProvider(create: (context) => CheckoutVoucherViewModel()),
+      ChangeNotifierProvider(create: (context) => CheckoutAddressViewModel()),
+      ChangeNotifierProvider(create: (context) => CheckoutPaymentMethodViewModel()),
+      ChangeNotifierProvider(create: (context) => CheckoutPaymentMethodViewModel()),
+      ChangeNotifierProvider(create: (context) => DetailArticlesViewModel()),
+      ChangeNotifierProvider(create: (context) => ArticleFilterViewModel()),
+      ChangeNotifierProvider(create: (context) => CarouselArticleViewModel()),
+      ChangeNotifierProvider(create: (context) => GetArticleViewModel()),
+      ChangeNotifierProvider(create: (context) => CartViewModel()),
+      ChangeNotifierProvider(create: (context) => ManualTransferViewModel()),
+      ChangeNotifierProvider(create: (context) => LatestArticlesViewModel()),
+      ChangeNotifierProvider(create: (context) => ProductViewModel()),
+      ChangeNotifierProvider(create: (context) => AddToCartViewModel()),
+      ChangeNotifierProvider(create: (context) => FilterViewModel()),
+      ChangeNotifierProvider(create: (context) => ProductCarouselViewModel()),
+      ChangeNotifierProvider(create: (context) => ProductReviewViewModel()),
+      ChangeNotifierProvider(create: (context) => BookmarkViewModel()),
+      ChangeNotifierProvider(create: (context) => GopayViewModel()),
+      ChangeNotifierProvider(create: (context) => ProfileViewModel()),
+      ChangeNotifierProvider(create: (context) => ChatbotViewModel()),
       ChangeNotifierProvider(create: (context) => ChangePasswordViewModel()),
       ChangeNotifierProvider(create: (context) => AddressViewModel()),
       ChangeNotifierProvider(create: (context) => LogoutViewModel()),
-      ChangeNotifierProvider(
-        create: (context) => NotificationViewModel(),
-      ),
+      ChangeNotifierProvider(create: (context) => NotificationViewModel()),
     ],
     child: const App(),
   ));
@@ -248,24 +167,18 @@ class App extends StatelessWidget {
         HomeScreen.routePath: (context) => const HomeScreen(),
         NotificationScreen.routePath: (context) => const NotificationScreen(),
         CategoriesScreen.routePath: (context) => const CategoriesScreen(),
-        ForgotPasswordScreen.routePath: (context) =>
-            const ForgotPasswordScreen(),
-        ForgotPasswordVerificationScreen.routePath: (context) =>
-            const ForgotPasswordVerificationScreen(),
-        RegisterVerificationScreen.routePath: (context) =>
-            const RegisterVerificationScreen(),
-        DetailChallengeScreen.routePath: (context) =>
-            const DetailChallengeScreen(),
+        ForgotPasswordScreen.routePath: (context) => const ForgotPasswordScreen(),
+        ForgotPasswordVerificationScreen.routePath: (context) => const ForgotPasswordVerificationScreen(),
+        RegisterVerificationScreen.routePath: (context) => const RegisterVerificationScreen(),
+        DetailChallengeScreen.routePath: (context) => const DetailChallengeScreen(),
         NewPasswordScreen.routePath: (context) => const NewPasswordScreen(),
         JoinChallengeScreen.routePath: (context) => const JoinChallengeScreen(),
         ChallengeMainScreen.routePath: (context) => const ChallengeMainScreen(),
         LoginScreen.routePath: (context) => const LoginScreen(),
         RegisterScreen.routePath: (context) => const RegisterScreen(),
         ArticleScreen.routePath: (context) => const ArticleScreen(),
-        // ArticleScreen.routePath: (context) => ArticleScreen(),
         SearchProductScreen.routePath: (context) => const SearchProductScreen(),
-        ProductReviewsScreen.routePath: (context) =>
-            const ProductReviewsScreen(),
+        ProductReviewsScreen.routePath: (context) => const ProductReviewsScreen(),
         DetailArticleScreen.routePath: (context) => const DetailArticleScreen(),
         SaveArticleScreen.routePath: (context) => const SaveArticleScreen(),
         CartScreen.routePath: (context) => const CartScreen(),
@@ -275,29 +188,20 @@ class App extends StatelessWidget {
         ProductScreen.routePath: (context) => const ProductScreen(),
         CheckoutScreen.routePath: (context) => const CheckoutScreen(),
         UseCouponScreen.routePath: (context) => const UseCouponScreen(),
-        CheckoutAddressScreen.routePath: (context) =>
-            const CheckoutAddressScreen(),
-        ChooseTransportScreen.routePath: (context) =>
-            const ChooseTransportScreen(),
+        CheckoutAddressScreen.routePath: (context) => const CheckoutAddressScreen(),
+        ChooseTransportScreen.routePath: (context) => const ChooseTransportScreen(),
         AddressListScreen.routePath: (context) => const AddressListScreen(),
         AddNewAddresScreen.routePath: (context) => const AddNewAddresScreen(),
-        EditOldAddressScreen.routePath: (context) =>
-            const EditOldAddressScreen(),
-        ManualTransferScreen.routePath: (context) =>
-            const ManualTransferScreen(),
-        EWalletTransferScreen.routePath: (context) =>
-            const EWalletTransferScreen(),
-        WhatsappTransferScreen.routePath: (context) =>
-            const WhatsappTransferScreen(),
+        EditOldAddressScreen.routePath: (context) => const EditOldAddressScreen(),
+        ManualTransferScreen.routePath: (context) => const ManualTransferScreen(),
+        EWalletTransferScreen.routePath: (context) => const EWalletTransferScreen(),
+        WhatsappTransferScreen.routePath: (context) => const WhatsappTransferScreen(),
         GopayScreen.routePath: (context) => const GopayScreen(),
         AddReviewScreen.routePath: (context) => const AddReviewScreen(),
         OrderListScreen.routePath: (context) => const OrderListScreen(),
-        TelegramTransferScreen.routePath: (context) =>
-            const TelegramTransferScreen(),
+        TelegramTransferScreen.routePath: (context) => const TelegramTransferScreen(),
         ChatbotScreen.routePath: (context) => const ChatbotScreen(),
         ChatBotEmptyScreen.routePath: (context) => const ChatBotEmptyScreen(),
-        NewChatbotScreen.routePath: (context) => const NewChatbotScreen(),
-        ChatBotScreen.routePath: (context) => const ChatBotScreen(),
         ChangePasswordScreen.routePath: (context) => const ChangePasswordScreen(),
       },
       theme: ThemeData(
