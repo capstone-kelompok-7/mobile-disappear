@@ -67,7 +67,7 @@ class _ListArticleItemState extends State<ListArticleItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.article.formattedDate,
+                    Text(formattedDate(widget.article.date),
                         style: mediumBody8.copyWith(color: primary40)),
                     const SizedBox(
                       height: 10,

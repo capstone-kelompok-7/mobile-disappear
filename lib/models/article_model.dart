@@ -17,9 +17,4 @@ class ArticleModel {
       required this.author,
       required this.date,
       required this.views});
-
-  String get formattedDate {
-    final f = DateFormat('d MMMM yyyy');
-    return f.format(DateTime.parse(date));
-  }
 }

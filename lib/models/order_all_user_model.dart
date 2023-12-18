@@ -26,11 +26,6 @@ class OrderAllUserModel {
   DateTime? createdAt;
   List<OrderDetail>? orderDetails = [];
 
-  String get formattedTotalAmountPaid {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(totalAmountPaid);
-  }
-
   OrderAllUserModel({
     this.id,
     this.idOrder,
@@ -91,11 +86,6 @@ class OrderDetail {
   int totalDiscount;
   Product product;
 
-  String get formattedPrice {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(totalPrice);
-  }
-
   OrderDetail({
     required this.id,
     required this.orderId,
@@ -141,11 +131,6 @@ class Product {
   int gramPlastic;
   int productExp;
   List<ProductPhoto> productPhotos = [];
-
-  String get formattedPrice {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(price);
-  }
 
   Product({
     required this.id,

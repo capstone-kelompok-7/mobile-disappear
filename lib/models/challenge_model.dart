@@ -20,9 +20,4 @@ class ChallengesModel {
     required this.status,
     required this.exp,
   });
-
-  String get formattedDate {
-    final f = DateFormat('yyyy-MM-d');
-    return f.format(DateTime.parse(endDate));
-  }
 }
