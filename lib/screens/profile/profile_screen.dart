@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:disappear/screens/address/address_list_screen.dart';
+import 'package:disappear/screens/profile/edit_profile_screen.dart';
 import 'package:disappear/screens/profile/placeholders/profile_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -82,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Builder(
                     builder: (context) {
                       if (profile != null && profile.photoProfile != '') {
-                        Image.network(
+                        return Image.network(
                           profile.photoProfile,
                           width: 86,
                           height: 86,
@@ -249,15 +250,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //EDIT PROFILE
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/edit-profile-screen');
+                    Navigator.of(context).pushNamed(EditProfileScreen.routePath);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SvgPicture.asset(
-                            'assets/img/profilePersonEdit.svg'),
+                        SvgPicture.asset('assets/img/profilePersonEdit.svg'),
                         const SizedBox(
                           width: 8,
                         ),
