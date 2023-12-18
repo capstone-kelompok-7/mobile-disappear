@@ -144,6 +144,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     if (value!.isEmpty) {
                       return 'Masukkan kata sandi lama';
                     }
+
+                    if (value.trim().isEmpty) {
+                      return 'Kata sandi tidak boleh kosong';
+                    }
+
                     return null;
                   },
                 ),
@@ -203,6 +208,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     if (value!.isEmpty) {
                       return 'Masukkan kata sandi baru';
                     }
+
+                    if (value.trim().isEmpty) {
+                      return 'Kata sandi tidak boleh kosong';
+                    }
+
                     return null;
                   },
                 ),
@@ -264,6 +274,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     } else if (value != newPasswordController.text) {
                       return 'Kata sandi tidak cocok';
                     }
+
+                    if (value.trim().isEmpty) {
+                      return 'Kata sandi tidak boleh kosong';
+                    }
+
                     return null;
                   },
                 ),
