@@ -145,10 +145,8 @@ class CheckoutViewModel extends ChangeNotifier {
 
       return createdOrder;
     } on DioException catch (e) {
-      if ([400, 403, 500].contains(e.response?.statusCode)) {
+      if (e.response != null && e.response!.data != null) {
         showFailedFlushbar(message: e.response!.data['message']);
-      } else {
-        showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
       }
     } finally {
       isCheckingOut = false;

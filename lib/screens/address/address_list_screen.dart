@@ -1,5 +1,5 @@
-import 'package:disappear/screens/checkout/add_new_address_screen.dart';
-import 'package:disappear/screens/checkout/edit_old_address_screen.dart';
+import 'package:disappear/screens/address/add_new_address_screen.dart';
+import 'package:disappear/screens/address/edit_old_address_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/address/address_view_model.dart';
@@ -111,60 +111,62 @@ class _AddressListScreenState extends State<AddressListScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Alamat',
-                                      style: semiBoldBody7,
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    if (selectedAddress.isPrimary)
-                                      Container(
-                                        width: 51,
-                                        height: 21,
-                                        decoration: ShapeDecoration(
-                                          color: primary40,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Alamat',
+                                        style: semiBoldBody7,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      if (selectedAddress.isPrimary)
+                                        Container(
+                                          width: 51,
+                                          height: 21,
+                                          decoration: ShapeDecoration(
+                                            color: primary40,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
                                           ),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Utama',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w600,
+                                          child: const Center(
+                                            child: Text(
+                                              'Utama',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  selectedAddress.acceptedName,
-                                  style: semiBoldBody6,
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '${selectedAddress.phone} | ${selectedAddress.address}',
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
-                                  style: mediumBody8,
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    selectedAddress.acceptedName,
+                                    style: semiBoldBody6,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    '${selectedAddress.phone} | ${selectedAddress.address}',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                    style: mediumBody8,
+                                  ),
+                                ],
+                              ),
                             ),
                             GestureDetector(
                               onTap: () {

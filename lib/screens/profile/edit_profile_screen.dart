@@ -134,6 +134,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       contentPadding: const EdgeInsets.only(left: 10)),
+                      validator: (String? value) {
+                        if (value == '' || value == null) {
+                          return 'Nama tidak boleh kosong';
+                        }
+
+                        if (value.trim().isEmpty) {
+                          return 'Nama tidak boleh kosong';
+                        }
+
+                        RegExp specialCharRegExp = RegExp(r'[!@#%^&*(),.?":{}|<>]');
+
+                        if (specialCharRegExp.hasMatch(value)) {
+                          return 'Nama tidak valid';
+                        }
+
+                        return null;
+                      },
                 ),
 
                 const SizedBox(
@@ -179,11 +196,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 TextFormField(
                   validator: (value) {
+                    if (value == '' || value == null) {
+                      return 'Nomor tidak boleh kosong';
+                    }
+
+                    if (value.trim().isEmpty) {
+                      return 'Nomor tidak boleh kosong';
+                    }
+
                     const String expressionPhoneNumber = r'^0\d{7,14}$';
                     RegExp regex = RegExp(expressionPhoneNumber);
-                    return !regex.hasMatch(value!)
-                        ? "Masukkan Nomor yang valid"
-                        : null;
+
+                    if (!regex.hasMatch(value)) {
+                      return 'Masukkan Nomor yang valid';
+                    }
+
+                    RegExp specialCharRegExp = RegExp(r'[!@#%^&*(),.?":{}|<>]');
+
+                    if (specialCharRegExp.hasMatch(value)) {
+                      return 'Masukkan nomor yang valid';
+                    }
+
+                    return null;
                   },
                   controller: numberController,
                   keyboardType: TextInputType.number,
@@ -203,33 +237,54 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   height: 50,
                 ),
 
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(primary30),
-                    minimumSize:
-                        MaterialStateProperty.all(const Size.fromHeight(5)),
-                  ),
-                  onPressed: () async {
-                    if (formkey.currentState!.validate()) {
-                      final data = {
-                        'name': nameController.text,
-                        'phone': numberController.text,
-                      };
-
-                      try {
-                        await context
-                            .read<ProfileViewModel>()
-                            .editProfile(data);
-                        _showDialog();
-                      } catch (error) {
-                        showDialogFailed();
-                      }
-                    }
-                  },
-                  child: const Text(
-                    'Edit',
-                    style: semiBoldBody6,
-                  ),
+                Consumer<ProfileViewModel>(
+                  builder: (context, state, _) {
+                    return ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(primary30),
+                        minimumSize:
+                            MaterialStateProperty.all(const Size.fromHeight(5)),
+                      ),
+                      onPressed: !state.isSaving
+                        ? () async {
+                          if (formkey.currentState!.validate()) {
+                            final data = {
+                              'name': nameController.text,
+                              'phone': numberController.text,
+                            };
+                      
+                            try {
+                              await context
+                                  .read<ProfileViewModel>()
+                                  .editProfile(data);
+                              _showDialog();
+                            } catch (error) {
+                              showDialogFailed();
+                            }
+                          }
+                        }
+                        : null,
+                      child: Builder(
+                        builder: (context) {
+                          if (state.isSaving) {
+                            return const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: whiteColor,
+                                strokeWidth: 3,
+                              ),
+                            );
+                          }
+                    
+                          return const Text(
+                            'Edit',
+                            style: semiBoldBody6,
+                          );
+                        }
+                      ),
+                    );
+                  }
                 ),
               ],
             ),

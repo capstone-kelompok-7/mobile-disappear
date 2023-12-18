@@ -21,11 +21,11 @@ class _WhatsappTransferScreenState extends State<WhatsappTransferScreen> {
   void _goToWhatsapp() async{
     final manualTransferViewModel = Provider.of<ManualTransferViewModel>(context, listen: false);
     
-    const contact = "+6289609233200";
+    const contact = '+6289609233200';
     final orderId = manualTransferViewModel.createdOrder?.idOrder;
-    final message = "Halo kak saya mau melakukan pembayaran dengan kode berikut $orderId";
+    final message = "Halo kak saya mau melakukan pembayaran untuk pesanan dengan kode berikut: $orderId\n\nSudah saya transfer ke rekening:\nBNI 123-456-789\nBRI 987-654-321\nBCA 234-567-890\n[silakan transfer ke salah satu rekening dan lampirkan bukti transfernya]";
     final androidUrl = "whatsapp://send?phone=$contact&text=$message";
-    final iosUrl = "https://wa.me/$contact?text=${Uri.parse(message)}";
+    final iosUrl = "https://wa.me/$contact?text=${Uri.encodeComponent(message)}";
     
     if (Platform.isIOS) {
       await launchUrl(Uri.parse(iosUrl));
