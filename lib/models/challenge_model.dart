@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class ChallengesModel {
   late final int id;
   final String? title;

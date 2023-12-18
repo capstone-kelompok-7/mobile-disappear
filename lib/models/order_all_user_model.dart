@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:intl/intl.dart';
-
 OrderAllUserModel orderAllUserModelFromJson(String str) =>
     OrderAllUserModel.fromJson(json.decode(str));
 
