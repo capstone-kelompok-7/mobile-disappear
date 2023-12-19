@@ -1,4 +1,4 @@
-import 'package:disappear/models/home/carousel_category_product_model.dart' as model;
+import 'package:disappear/models/home/carousel_category_product_model.dart' as carousel_category_product_model;
 import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/chatbot/chatbot_screen.dart';
 import 'package:disappear/screens/home/components/latest_articles.dart';
@@ -31,7 +31,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final Future<model.CarouselCategoryProduct> _carouselCategoryProductFuture;
+  late final Future<carousel_category_product_model.CarouselCategoryProduct> _carouselCategoryProductFuture;
 
   late final Future<ChallengeArticle> _challengeArticleFuture;
 
@@ -121,13 +121,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   return const Column(
                     children: [
                       CarouselPlaceholder(),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(height: 20),
                       CategoriesPlaceholder(),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(height: 20),
                       BestSellerProductsPlaceholder()
                     ],
                   );
@@ -158,9 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return const Column(
                     children: [
                       ChallengesPlaceholder(),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(height: 20),
                       LatestArticlesPlaceholder()
                     ],
                   );

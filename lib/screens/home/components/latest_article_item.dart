@@ -61,7 +61,7 @@ class _LatestArticleItemState extends State<LatestArticleItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.article.formattedDate,
+                    Text(formattedDate(widget.article.createdAt),
                         style: mediumBody8.copyWith(color: primary40)),
                     const SizedBox(
                       height: 10,

@@ -8,49 +8,79 @@ class ChallengesPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Tantangan',
-                style: semiBoldBody5.copyWith(color: primary40),
-              ),
-            ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            'Tantangan',
+            style: semiBoldBody5.copyWith(color: primary40),
           ),
-          const SizedBox(height: 10,),
-          Shimmer.fromColors(
-            enabled: true,
-            baseColor: neutral00,
-            highlightColor: neutral20,
-            child: Row(
+        ),
+
+        const SizedBox(height: 15,),
+        
+        Shimmer.fromColors(
+          enabled: true,
+          baseColor: neutral00,
+          highlightColor: neutral20,
+          child: SizedBox(
+            height: 80,
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
               children: [
                 Container(
+                  width: 120,
+                  height: 80,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
-                  width: 120,
-                  height: 80,
                 ),
                 const SizedBox(width: 10,),
                 Container(
+                  width: 120,
+                  height: 80,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
+                ),
+                const SizedBox(width: 10,),
+                Container(
                   width: 120,
                   height: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 10,),
+                Container(
+                  width: 120,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 10,),
+                Container(
+                  width: 120,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
                 ),
               ],
-            )
-          ),
-        ],
-      ),
+            ),
+          )
+        )
+      ],
     );
   }
 }
