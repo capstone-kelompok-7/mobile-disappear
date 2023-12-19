@@ -4,13 +4,19 @@ import 'package:disappear/services/home_service.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  Future<CarouselCategoryProduct> getCarouselsCategoriesAndProducts() async {
+  Future<CarouselCategoryProduct>? carouselCategoryProductFuture;
+
+  Future<ChallengeArticle>? challengeArticleFuture;
+
+  Future<void> getCarouselsCategoriesAndProducts() async {
     final homeService = HomeService();
-    return await homeService.getCarouselsCategoriesAndProducts();
+    carouselCategoryProductFuture ??= homeService.getCarouselsCategoriesAndProducts();
+    notifyListeners();
   }
 
-  Future<ChallengeArticle> getChallengesAndArticles() async {
+  Future<void> getChallengesAndArticles() async {
     final homeService = HomeService();
-    return await homeService.getChallengesAndArticles();
+    challengeArticleFuture ??= homeService.getChallengesAndArticles();
+    notifyListeners();
   }
 }

@@ -2,8 +2,10 @@ import 'package:disappear/screens/auth/login_screen.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/screens/onboarding/onboarding_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
+import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:is_first_run/is_first_run.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -42,6 +44,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _goToMainScreen() {
+    final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
+
+    homeViewModel.getCarouselsCategoriesAndProducts();
+    homeViewModel.getChallengesAndArticles();
+    
     Navigator.pushNamedAndRemoveUntil(context, MainScreen.routePath, (route) => false);
   }
 

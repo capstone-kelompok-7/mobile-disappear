@@ -1,5 +1,3 @@
-import 'package:disappear/models/home/carousel_category_product_model.dart' as carousel_category_product_model;
-import 'package:disappear/models/home/challenge_article.dart';
 import 'package:disappear/screens/chatbot/chatbot_screen.dart';
 import 'package:disappear/screens/home/components/latest_articles.dart';
 import 'package:disappear/screens/home/components/latest_challenges.dart';
@@ -31,21 +29,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final Future<carousel_category_product_model.CarouselCategoryProduct> _carouselCategoryProductFuture;
-
-  late final Future<ChallengeArticle> _challengeArticleFuture;
-
-  @override
-  void initState() {
-    final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
-
-    _carouselCategoryProductFuture =
-        homeViewModel.getCarouselsCategoriesAndProducts();
-    _challengeArticleFuture = homeViewModel.getChallengesAndArticles();
-
-    super.initState();
-  }
-
   void _goToNotificationScreen() {
     Navigator.pushNamed(context, NotificationScreen.routePath);
   }
@@ -60,17 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, ChatbotScreen.routePath);
-        },
-        child: Image.asset(
-          'assets/img/Secretary.png',
-          fit: BoxFit.cover,
-          width: 60,
-          height: 60,
-        ),
-      ),
       appBar: AppBar(
         backgroundColor: whiteColor,
         title: Image.asset(
@@ -98,8 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 14,
           ),
           Consumer<HomeViewModel>(builder: (context, state, _) {
-            return FutureBuilder(
-                future: _carouselCategoryProductFuture,
+            if (state.carouselCategoryProductFuture != null) {
+              return FutureBuilder(
+                future: state.carouselCategoryProductFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Column(
@@ -118,23 +91,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     return const SizedBox.shrink();
                   }
 
-                  return const Column(
-                    children: [
-                      CarouselPlaceholder(),
-                      SizedBox(height: 20),
-                      CategoriesPlaceholder(),
-                      SizedBox(height: 20),
-                      BestSellerProductsPlaceholder()
-                    ],
-                  );
-                });
+                  return const CarouselCategoryProductPlaceholder();
+                }
+              );
+            }
+
+            return const CarouselCategoryProductPlaceholder();
           }),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           Consumer<HomeViewModel>(builder: (context, state, _) {
-            return FutureBuilder(
-                future: _challengeArticleFuture,
+            if (state.challengeArticleFuture != null) {
+              return FutureBuilder(
+                future: state.challengeArticleFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Column(
@@ -151,17 +119,58 @@ class _HomeScreenState extends State<HomeScreen> {
                     return const SizedBox.shrink();
                   }
 
-                  return const Column(
-                    children: [
-                      ChallengesPlaceholder(),
-                      SizedBox(height: 20),
-                      LatestArticlesPlaceholder()
-                    ],
-                  );
-                });
+                  return const ChallengeArticlePlaceholder();
+                }
+              );
+            }
+
+            return const ChallengeArticlePlaceholder();
           }),
         ],
       ),
+      floatingActionButton: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, ChatbotScreen.routePath);
+        },
+        child: Image.asset(
+          'assets/img/Secretary.png',
+          fit: BoxFit.cover,
+          width: 60,
+          height: 60,
+        ),
+      ),
+    );
+  }
+}
+
+class CarouselCategoryProductPlaceholder extends StatelessWidget {
+  const CarouselCategoryProductPlaceholder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        CarouselPlaceholder(),
+        SizedBox(height: 20),
+        CategoriesPlaceholder(),
+        SizedBox(height: 20),
+        BestSellerProductsPlaceholder()
+      ],
+    );
+  }
+}
+
+class ChallengeArticlePlaceholder extends StatelessWidget {
+  const ChallengeArticlePlaceholder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        ChallengesPlaceholder(),
+        SizedBox(height: 20),
+        LatestArticlesPlaceholder()
+      ],
     );
   }
 }
