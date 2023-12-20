@@ -12,7 +12,7 @@ class ChallengePlaceholder extends StatelessWidget {
       highlightColor: neutral20,
       child: Column(
         children: [
-          Container(height: 171, width: 340, color: primary00),
+          Container(height: 171, color: primary00),
           const SizedBox(
             height: 5,
           ),

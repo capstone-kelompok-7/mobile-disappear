@@ -162,15 +162,16 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState ==
                         ConnectionState.waiting) {
-                        return ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 8,
-                          itemBuilder: (context, index) {
-                            return const ChallengePlaceholder();
-                          },
-                        );
+                          return ListView.separated(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: 3,
+                            separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                            itemBuilder: (context, index) {
+                              return const ChallengePlaceholder();
+                            },
+                          );
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else if (!snapshot.hasData ||

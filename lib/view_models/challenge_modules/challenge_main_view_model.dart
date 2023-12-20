@@ -46,7 +46,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
   double? get fileSizeInMb => _fileSizeInMb;
 
 //Challenge Viewmodel FEATURE//
-  Future<List<ChallengesModel>> fetchAllChallenge() async {
+  Future<List<Challenge>> fetchAllChallenge() async {
     try {
       final challengeService = ChallengeService();
       return await challengeService.fetchAllChallenge();
@@ -55,7 +55,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
     }
   }
 
-  Future<ChallengesModel?> getChallengeById() async {
+  Future<Challenge?> getChallengeById() async {
     if (challengeId != null) {
       final challengeByIdService = ChallengeService();
       return await challengeByIdService.getChallengeById(challengeId!);

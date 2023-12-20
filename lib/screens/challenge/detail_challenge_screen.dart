@@ -20,7 +20,7 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
 
   late final Future challengeFuture = _getChallengeId();
 
-  Future<ChallengesModel?> _getChallengeId() async {
+  Future<Challenge?> _getChallengeId() async {
     final productViewModel =
         Provider.of<ChallengeMainViewModel>(context, listen: false);
 

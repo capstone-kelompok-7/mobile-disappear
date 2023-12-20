@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChallengeComponents extends StatefulWidget {
-  final ChallengesModel challengesModel;
+  final Challenge challengesModel;
   const ChallengeComponents({super.key, required this.challengesModel});
 
   @override
