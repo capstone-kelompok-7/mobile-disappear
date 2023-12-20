@@ -3,9 +3,9 @@ import 'package:disappear/screens/challenge/challenge_placeholder.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_standing.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_placeholder.dart';
 import 'package:disappear/screens/leaderboard/leaderboard_podium.dart';
-import 'package:disappear/screens/voucher/user_voucher_components.dart';
+import 'package:disappear/screens/voucher/user_voucher.dart';
 import 'package:disappear/screens/voucher/voucher_placeholder.dart';
-import 'package:disappear/screens/voucher/voucher_screen.dart';
+import 'package:disappear/screens/voucher/claimable_voucher.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
@@ -234,7 +234,7 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                                  padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
                                   child: Text('Kupon Saya', style: mediumBody5.copyWith()),
                                 ),
                                 Builder(
@@ -256,7 +256,7 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                                       itemCount: snapshot.data!.length,
                                       separatorBuilder: (context, index) => const SizedBox(height: 10,),
                                       itemBuilder: (context, index) {
-                                        return UserVoucherComponents(
+                                        return UserVoucher(
                                           voucherModel:
                                           snapshot.data![index]
                                         );
@@ -299,7 +299,7 @@ class _ChallengeMainScreenState extends State < ChallengeMainScreen > {
                                           itemCount: snapshot.data!.length,
                                           separatorBuilder: (context, index) => const SizedBox(height: 10,),
                                           itemBuilder: (context, index) {
-                                            return VoucherScreen(
+                                            return ClaimableVoucher(
                                               voucherModel:
                                               snapshot.data![index],
                                             );

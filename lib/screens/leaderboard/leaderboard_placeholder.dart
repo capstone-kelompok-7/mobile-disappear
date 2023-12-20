@@ -108,9 +108,10 @@ class LeaderboardPlaceholder extends StatelessWidget {
           ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             shrinkWrap: true,
-            itemCount: 5,
+            itemCount: 3,
             itemBuilder: (context, index) {
               int displayIndex = index + 1;
+              
               return Shimmer.fromColors(
                 baseColor: neutral00,
                 highlightColor: neutral20,

@@ -4,10 +4,10 @@ import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
-class UserVoucherComponents extends StatelessWidget {
+class UserVoucher extends StatelessWidget {
   final Voucher voucherModel;
 
-  const UserVoucherComponents({super.key, required this.voucherModel});
+  const UserVoucher({super.key, required this.voucherModel});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,6 @@ class UserVoucherComponents extends StatelessWidget {
                   child: Image.asset(
                     'assets/img/Coupon.png',
                     height: double.infinity,
-                    width: 113,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -51,7 +50,7 @@ class UserVoucherComponents extends StatelessWidget {
                     )
                   ),
                   child: Text(
-                    voucherModel.voucher.category,
+                    voucherModel.category,
                     style: semiBoldBody8.copyWith(color: whiteColor)
                   ),
                 )
@@ -60,29 +59,32 @@ class UserVoucherComponents extends StatelessWidget {
           ),
           const SizedBox(width: 10,),
           Expanded(
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  voucherModel.voucher.name,
-                  style: mediumBody7,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  'Min. Blj ${formattedPrice(voucherModel.voucher.minPurchase)}',
-                  style: mediumBody8,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  'Berakhir dalam : ${formattedDate(voucherModel.voucher.endDate)}',
-                  style: regularBody8,
-                ),
-              ],
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    voucherModel.name,
+                    style: mediumBody7,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Min. Blj ${formattedPrice(voucherModel.minPurchase)}',
+                    style: mediumBody8,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    'Berakhir dalam : ${formattedDate(voucherModel.endDate, format: 'dd MMM y')}',
+                    style: regularBody8,
+                  ),
+                ],
+              ),
             ),
           ),
         ],

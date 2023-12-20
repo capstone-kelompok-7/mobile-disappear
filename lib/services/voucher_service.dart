@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:disappear/models/voucher_model.dart';
 import 'package:disappear/services/api.dart';
+import 'package:flutter/material.dart';
 
 class VoucherService {
   Future<List<Voucher>> fetchVoucherToClaim() async {
@@ -28,11 +29,12 @@ class VoucherService {
       Response response = await dio.get('/vouchers/users');
 
       List<Voucher> vouchersUser = (response.data['data'] ?? [])
-        .map<Voucher>((data) => Voucher.fromMap(data))
+        .map<Voucher>((data) => Voucher.fromMap(data['voucher']))
         .toList();
 
       return vouchersUser;
     } catch (e) {
+      debugPrint(e.toString());
       rethrow;
     }
   }

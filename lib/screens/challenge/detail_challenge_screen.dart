@@ -1,5 +1,6 @@
 import 'package:disappear/helper.dart';
 import 'package:disappear/models/challenge_model.dart';
+import 'package:disappear/screens/challenge/join_challenge_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/challenge_modules/challenge_main_view_model.dart';
@@ -50,71 +51,60 @@ class _DetailChallengeScreenState extends State<DetailChallengeScreen> {
 
             if (snapshot.hasData) {
               return ListView(
+                padding: const EdgeInsets.all(20),
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 45, right: 45, top: 47, bottom: 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(snapshot.data.title, style: semiBoldBody3),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Tantangan Berlaku Sampai Tanggal ${formattedDate(snapshot.data.endDate, format: 'd-MM-yyyy')}',
-                          style: regularBody8,
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text('${snapshot.data.exp} EXP', style: semiBoldBody8),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 300,
-                          height: 110,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: const Color.fromRGBO(64, 64, 64, 1),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                snapshot.data.photo,
-                              ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(snapshot.data.title, style: semiBoldBody3),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Tantangan Berlaku Sampai Tanggal ${formattedDate(snapshot.data.endDate, format: 'dd-MM-yyyy')}',
+                        style: regularBody8,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text('${snapshot.data.exp} EXP', style: semiBoldBody8),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 110,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: const Color.fromRGBO(64, 64, 64, 1),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              snapshot.data.photo,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Html(data: snapshot.data.description,),
-                        // Text(
-                        //   snapshot.data.description,
-                        //   style: regularBody7,
-                        // )
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Html(data: snapshot.data.description,),
+                    ],
                   ),
                   isFinished
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              left: 45, right: 42, bottom: 20),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: primary30,
-                              minimumSize: const Size(40, 0)
-                            ),
-                            onPressed: snapshot.data.status?.toLowerCase() == 'belum kadaluwarsa' ? () {
-                              Navigator.of(context).pushNamed(
-                                  '/join-challenge-screen',
-                                  arguments: snapshot.data.id);
-                            } : null,
-                            child: const Text(
-                              'Ikuti Tantangan',
-                              style: semiBoldBody6,
-                            ),
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            backgroundColor: primary30,
+                            minimumSize: const Size(40, 0)
+                          ),
+                          onPressed: snapshot.data.status?.toLowerCase() == 'belum kadaluwarsa' ? () {
+                            Navigator.of(context).pushNamed(
+                                JoinChallengeScreen.routePath,
+                                arguments: snapshot.data.id);
+                          } : null,
+                          child: const Text(
+                            'Ikuti Tantangan',
+                            style: semiBoldBody6,
                           ),
                         )
                       : const SizedBox(
