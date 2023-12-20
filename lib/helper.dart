@@ -11,7 +11,7 @@ String formattedDate(date, { String format = 'd MMMM yyyy' }) {
   return f.format(DateTime.parse(date));
 }
 
-String formattedPrice(int price) {
+String formattedPrice(dynamic price) {
   final f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   return f.format(price);
 }

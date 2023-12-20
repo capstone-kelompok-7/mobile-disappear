@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/checkout/voucher/checkout_voucher_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -140,13 +141,13 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                          'Min. Blj ${vouchers[index].voucher.formattedMinPurchase}',
+                                          'Min. Blj ${formattedPrice(vouchers[index].voucher.minPurchase)}',
                                           style: mediumBody8,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                          'Berakhir dalam : ${vouchers[index].voucher.formattedEndDate}',
+                                          'Berakhir dalam : ${formattedDate(vouchers[index].voucher.endDate, format: 'd MMM yy')}',
                                           style: regularBody8,
                                         ),
                                       ],

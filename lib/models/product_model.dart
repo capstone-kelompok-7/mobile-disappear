@@ -1,7 +1,6 @@
 import 'package:disappear/models/category_model.dart';
 import 'package:disappear/models/product_image_model.dart';
 import 'package:disappear/models/review_model.dart';
-import 'package:intl/intl.dart';
 
 class ProductModel {
   int id;
@@ -86,10 +85,5 @@ class ProductModel {
     for (Map category in categories) {
       addReviewFromMap(category);
     }
-  }
-
-  String get formattedPrice {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(price);
   }
 }

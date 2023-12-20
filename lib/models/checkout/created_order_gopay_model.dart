@@ -50,16 +50,6 @@ class CreatedGopayOrder {
   String threeDsVersion;
   DateTime expiryTime;
 
-  String get formattedTotalAmountPaid {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(double.parse(grossAmount));
-  }
-
-  String get formattedCreatedAt {
-    final f = DateFormat('d-M-yyyy | HH.mm a');
-    return f.format(transactionTime);
-  }
-
   String get formattedPayUntil {
     final f = DateFormat('HH.mm a');
     return f.format(transactionTime.add(const Duration(hours: 1, minutes: 20)));

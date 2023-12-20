@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/home/best_seller_product_model.dart';
 import 'package:disappear/screens/home/components/placeholders/best_seller_product_thumbnail_placeholder.dart';
 import 'package:disappear/screens/product/product_screen.dart';
@@ -108,7 +109,7 @@ class _BestSellerProductItemState extends State<BestSellerProductItem> {
                         ],
                       ),
                       const SizedBox(height: 3,),
-                      Text(widget.product.formattedPrice, style: semiBoldBody7),
+                      Text(formattedPrice(widget.product.price), style: semiBoldBody7),
                     ],
                   ),
                 )

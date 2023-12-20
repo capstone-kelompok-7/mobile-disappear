@@ -1,15 +1,13 @@
-import 'dart:io';
-
+import 'package:disappear/helper.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/checkout/gopay_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class GopayScreen extends StatefulWidget {
-  static String routePath = '/gopayTransfer';
+  static String routePath = '/gopay-screen';
 
   const GopayScreen({Key? key}) : super(key: key);
 
@@ -18,20 +16,6 @@ class GopayScreen extends StatefulWidget {
 }
 
 class _GopayScreenState extends State<GopayScreen> {
-  void _goToApp() async{
-    final gopayViewModel = Provider.of<GopayViewModel>(context, listen: false);
-    final url = gopayViewModel.createdOrder!.actions
-      .where((element) => element.name == 'deeplink-redirect')
-      .first
-      .url;
-
-    if (Platform.isIOS) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      await launchUrl(Uri.parse(url));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +55,7 @@ class _GopayScreenState extends State<GopayScreen> {
                 Consumer<GopayViewModel>(
                   builder: (context, state, _) {
                     return Text(
-                      '${state.createdOrder?.formattedTotalAmountPaid}',
+                      formattedPrice(double.parse(state.createdOrder!.grossAmount)),
                       style: semiBoldTitle4.copyWith(color: whiteColor),
                     );
                   }
@@ -80,7 +64,7 @@ class _GopayScreenState extends State<GopayScreen> {
                 Consumer<GopayViewModel>(
                   builder: (context, state, _) {
                     return Text(
-                      '${state.createdOrder?.formattedCreatedAt}',
+                      formattedDate(state.createdOrder?.transactionTime, format: 'd-M-yyyy | HH.mm a'),
                       style: regularBody5.copyWith(
                         color: whiteColor,
                       ),
@@ -203,15 +187,19 @@ class _GopayScreenState extends State<GopayScreen> {
           ),
           Padding(
             padding: const EdgeInsets.all(30),
-            child: ElevatedButton(
-              style: const ButtonStyle(
-                minimumSize: MaterialStatePropertyAll(Size(340, 45)),
-              ),
-              onPressed: _goToApp,
-              child: const Text(
-                'Lanjutkan ke Aplikasi',
-                style: mediumBody8,
-              ),
+            child: Consumer<GopayViewModel>(
+              builder: (context, state, _) {
+                return ElevatedButton(
+                  style: const ButtonStyle(
+                    minimumSize: MaterialStatePropertyAll(Size(340, 45)),
+                  ),
+                  onPressed: state.pay,
+                  child: const Text(
+                    'Lanjutkan ke Aplikasi',
+                    style: mediumBody8,
+                  ),
+                );
+              }
             ),
           ),
         ],

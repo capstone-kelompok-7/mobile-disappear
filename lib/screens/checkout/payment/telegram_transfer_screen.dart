@@ -1,13 +1,13 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telegram/telegram.dart';
 
 class TelegramTransferScreen extends StatefulWidget {
-  static String routePath = '/telegramTransfer';
+  static String routePath = '/telegram-screen';
 
   const TelegramTransferScreen({Key? key}) : super(key: key);
 
@@ -16,16 +16,6 @@ class TelegramTransferScreen extends StatefulWidget {
 }
 
 class _TelegramTransferScreenState extends State<TelegramTransferScreen> {
-  void _goToTelegram() async{
-    final manualTransferViewModel = Provider.of<ManualTransferViewModel>(context, listen: false);
-    
-    const username = "novilfahlevy";
-    final orderId = manualTransferViewModel.createdOrder?.idOrder;
-    final message = "Halo kak saya mau melakukan pembayaran dengan kode berikut $orderId";
-    
-    Telegram.send(username: username, message: message);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +55,7 @@ class _TelegramTransferScreenState extends State<TelegramTransferScreen> {
                 Consumer<ManualTransferViewModel>(
                   builder: (context, state, _) {
                     return Text(
-                      '${state.createdOrder?.formattedTotalAmountPaid}',
+                      formattedPrice(state.createdOrder!.totalAmountPaid),
                       style: semiBoldTitle4.copyWith(color: whiteColor),
                     );
                   }
@@ -74,7 +64,7 @@ class _TelegramTransferScreenState extends State<TelegramTransferScreen> {
                 Consumer<ManualTransferViewModel>(
                   builder: (context, state, _) {
                     return Text(
-                      '${state.createdOrder?.formattedCreatedAt}',
+                      formattedDate(state.createdOrder?.createdAt, format: 'd-M-yyyy | HH.mm a'),
                       style: regularBody5.copyWith(
                         color: whiteColor,
                       ),
@@ -206,15 +196,19 @@ class _TelegramTransferScreenState extends State<TelegramTransferScreen> {
           ),
           Padding(
             padding: const EdgeInsets.all(30),
-            child: ElevatedButton(
-              style: const ButtonStyle(
-                minimumSize: MaterialStatePropertyAll(Size(340, 45)),
-              ),
-              onPressed: _goToTelegram,
-              child: const Text(
-                'Konfirmasi Pembayaran',
-                style: mediumBody8,
-              ),
+            child: Consumer<ManualTransferViewModel>(
+              builder: (context, state, _) {
+                return ElevatedButton(
+                  style: const ButtonStyle(
+                    minimumSize: MaterialStatePropertyAll(Size(340, 45)),
+                  ),
+                  onPressed: state.payTelegram,
+                  child: const Text(
+                    'Konfirmasi Pembayaran',
+                    style: mediumBody8,
+                  ),
+                );
+              }
             ),
           ),
         ],

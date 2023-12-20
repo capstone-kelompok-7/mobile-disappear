@@ -106,46 +106,48 @@ class LeaderboardPlaceholder extends StatelessWidget {
 
           //STANDING KLASMEN PLACEHOLDER
           ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             shrinkWrap: true,
             itemCount: 5,
             itemBuilder: (context, index) {
               int displayIndex = index + 1;
               return Shimmer.fromColors(
-                  baseColor: neutral00,
-                  highlightColor: neutral20,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          height: 20,
-                          width: 10,
-                          child: Text('$displayIndex'),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 25,
-                          height: 25,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(
-                              0xffd9d9d9,
-                            ),
+                baseColor: neutral00,
+                highlightColor: neutral20,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                        width: 10,
+                        child: Text('$displayIndex'),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 25,
+                        height: 25,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(
+                            0xffd9d9d9,
                           ),
                         ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Expanded(
-                            child: Text('',
-                                style: mediumBody8.copyWith(color: neutral20))),
-                        const Text(' EXP', style: semiBoldBody8),
-                      ],
-                    ),
-                  ));
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                          child: Text('',
+                              style: mediumBody8.copyWith(color: neutral20))),
+                      const Text(' EXP', style: semiBoldBody8),
+                    ],
+                  ),
+                )
+              );
             },
           )
         ],

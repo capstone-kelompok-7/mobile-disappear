@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/screens/checkout/use_coupon_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -46,7 +47,7 @@ class _OrderInformationState extends State<OrderInformation> {
                     imageUrl: stateCheckout.product!.thumbnail?.imageUrl,
                     name: stateCheckout.product!.name!,
                     gramPlastic: stateCheckout.product!.gramPlastic!,
-                    formattedPrice: stateCheckout.product!.formattedPrice,
+                    formattedPrice: formattedPrice(stateCheckout.product!.price!),
                     quantity: 1,
                   )
                 );
@@ -61,7 +62,7 @@ class _OrderInformationState extends State<OrderInformation> {
                   imageUrl: stateCart.selectedItems[index].product.productPhotos.isNotEmpty ? stateCart.selectedItems[index].product.productPhotos.first.url : null,
                   name: stateCart.selectedItems[index].product.name,
                   gramPlastic: stateCart.selectedItems[index].gramPlastic,
-                  formattedPrice: stateCart.selectedItems[index].formattedPrice,
+                  formattedPrice: formattedPrice(stateCart.selectedItems[index].price),
                   quantity: stateCart.selectedItems[index].quantity
                 ),
                 separatorBuilder: (context, index) => const SizedBox(height: 20,),

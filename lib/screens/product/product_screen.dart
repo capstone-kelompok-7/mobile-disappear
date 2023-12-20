@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/screens/product/components/add_to_cart_dialog.dart';
@@ -229,7 +230,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      snapshot.data!.formattedPrice,
+                                      formattedPrice(snapshot.data!.price),
                                       style: semiBoldBody5,
                                     ),
                                     Text(

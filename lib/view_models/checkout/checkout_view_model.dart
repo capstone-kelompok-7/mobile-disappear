@@ -43,11 +43,6 @@ class CheckoutViewModel extends ChangeNotifier {
     return 0;
   }
 
-  String get formattedTotalProductPrice {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(totalProductPrice);
-  }
-
   int get totalProductDiscount {
     if (purchaseType == 'buy-now') {
       return product!.discount!;
@@ -64,11 +59,6 @@ class CheckoutViewModel extends ChangeNotifier {
     }
 
     return 0;
-  }
-
-  String get formattedTotalProductDiscount {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(totalProductDiscount);
   }
 
   String totalPrice({ required CheckoutVoucher? checkoutVoucher }) {

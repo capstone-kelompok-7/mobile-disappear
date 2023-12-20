@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:disappear/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:disappear/models/order_detail_by_id_model.dart';
@@ -62,7 +63,7 @@ class _OrderStatusState extends State<OrderStatus> {
                       width: MediaQuery.of(context).size.width * 0.6,
                       decoration: const BoxDecoration(),
                       child: Text(
-                        'Pesanan akan dijadwalkan paling lambat ${widget.orderDetail.formattedDate}',
+                        'Pesanan akan dijadwalkan paling lambat ${formattedDate(widget.orderDetail.createdAt, format: 'dd-MM-yyyy')}',
                         style: regularBody8,
                         textAlign: TextAlign.justify,
                       ),
@@ -72,7 +73,7 @@ class _OrderStatusState extends State<OrderStatus> {
                       height: MediaQuery.of(context).size.height * 0.05,
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Text(
-                        'Nilai pesanan sebelum  ${widget.orderDetail.formattedDate} dan dapatkan ${widget.orderDetail.grandTotalExp} EXP!!!',
+                        'Nilai pesanan sebelum  ${formattedDate(widget.orderDetail.createdAt, format: 'dd-MM-yyyy')} dan dapatkan ${widget.orderDetail.grandTotalExp} EXP!!!',
                         style: regularBody8,
                         textAlign: TextAlign.justify,
                       ),

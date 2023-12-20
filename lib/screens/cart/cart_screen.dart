@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/screens/checkout/checkout_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -157,7 +158,7 @@ class _CartScreenState extends State<CartScreen> {
                                     overflow: TextOverflow.ellipsis
                                   ),
                                   Text('${cartItem.gramPlastic} gram', style: regularBody8),
-                                  Text(cartItem.formattedPrice, style: mediumBody6, overflow: TextOverflow.ellipsis,),
+                                  Text(formattedPrice(cartItem.price), style: mediumBody6, overflow: TextOverflow.ellipsis,),
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),

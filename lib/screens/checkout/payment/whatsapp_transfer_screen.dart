@@ -1,15 +1,13 @@
-import 'dart:io';
-
+import 'package:disappear/helper.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/checkout/manual_transfer_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class WhatsappTransferScreen extends StatefulWidget {
-  static String routePath = '/whatsappTransfer';
+  static String routePath = '/whatsapp-screen';
 
   const WhatsappTransferScreen({Key? key}) : super(key: key);
 
@@ -18,22 +16,6 @@ class WhatsappTransferScreen extends StatefulWidget {
 }
 
 class _WhatsappTransferScreenState extends State<WhatsappTransferScreen> {
-  void _goToWhatsapp() async{
-    final manualTransferViewModel = Provider.of<ManualTransferViewModel>(context, listen: false);
-    
-    const contact = '+6289609233200';
-    final orderId = manualTransferViewModel.createdOrder?.idOrder;
-    final message = "Halo kak saya mau melakukan pembayaran untuk pesanan dengan kode berikut: $orderId\n\nSudah saya transfer ke rekening:\nBNI 123-456-789\nBRI 987-654-321\nBCA 234-567-890\n[silakan transfer ke salah satu rekening dan lampirkan bukti transfernya]";
-    final androidUrl = "whatsapp://send?phone=$contact&text=$message";
-    final iosUrl = "https://wa.me/$contact?text=${Uri.encodeComponent(message)}";
-    
-    if (Platform.isIOS) {
-      await launchUrl(Uri.parse(iosUrl));
-    } else {
-      await launchUrl(Uri.parse(androidUrl));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +55,7 @@ class _WhatsappTransferScreenState extends State<WhatsappTransferScreen> {
                 Consumer<ManualTransferViewModel>(
                   builder: (context, state, _) {
                     return Text(
-                      '${state.createdOrder?.formattedTotalAmountPaid}',
+                      formattedPrice(state.createdOrder!.totalAmountPaid),
                       style: semiBoldTitle4.copyWith(color: whiteColor),
                     );
                   }
@@ -82,7 +64,7 @@ class _WhatsappTransferScreenState extends State<WhatsappTransferScreen> {
                 Consumer<ManualTransferViewModel>(
                   builder: (context, state, _) {
                     return Text(
-                      '${state.createdOrder?.formattedCreatedAt}',
+                      formattedDate(state.createdOrder?.createdAt, format: 'd-M-yyyy | HH.mm a'),
                       style: regularBody5.copyWith(
                         color: whiteColor,
                       ),
@@ -214,15 +196,19 @@ class _WhatsappTransferScreenState extends State<WhatsappTransferScreen> {
           ),
           Padding(
             padding: const EdgeInsets.all(30),
-            child: ElevatedButton(
-              style: const ButtonStyle(
-                minimumSize: MaterialStatePropertyAll(Size(340, 45)),
-              ),
-              onPressed: _goToWhatsapp,
-              child: const Text(
-                'Konfirmasi Pembayaran',
-                style: mediumBody8,
-              ),
+            child: Consumer<ManualTransferViewModel>(
+              builder: (context, state, _) {
+                return ElevatedButton(
+                  style: const ButtonStyle(
+                    minimumSize: MaterialStatePropertyAll(Size(340, 45)),
+                  ),
+                  onPressed: state.payWhatsapp,
+                  child: const Text(
+                    'Konfirmasi Pembayaran',
+                    style: mediumBody8,
+                  ),
+                );
+              }
             ),
           ),
         ],

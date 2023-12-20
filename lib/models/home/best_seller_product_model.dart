@@ -5,7 +5,6 @@
 import 'dart:convert';
 
 import 'package:disappear/models/product/product_model.dart';
-import 'package:intl/intl.dart';
 
 BestSellerProduct bestSellerProductFromMap(String str) => BestSellerProduct.fromMap(json.decode(str));
 
@@ -17,11 +16,6 @@ class BestSellerProduct {
   num rating;
   int price;
   Photos photos;
-
-  String get formattedPrice {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(price);
-  }
 
   BestSellerProduct({
     required this.id,

@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/product/product_model.dart';
 import 'package:disappear/screens/product/product_screen.dart';
 import 'package:disappear/screens/search_product/components/products_filter.dart';
@@ -184,7 +185,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                       ),
                                       const SizedBox(height: 3,),
                                       Text(
-                                        state.products[index].formattedPrice,
+                                        formattedPrice(state.products[index].price!),
                                         style: regularBody7,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,

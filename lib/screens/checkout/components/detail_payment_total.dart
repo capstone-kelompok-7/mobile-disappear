@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/checkout/created_order_gopay_model.dart';
 import 'package:disappear/models/checkout/created_order_model.dart';
 import 'package:disappear/screens/checkout/payment/gopay_screen.dart';
@@ -98,7 +99,7 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
                   Consumer<CheckoutViewModel>(
                     builder: (context, state, _) {
                       return Text(
-                        state.formattedTotalProductPrice,
+                        formattedPrice(state.totalProductPrice),
                         style: regularBody8,
                       );
                     }
@@ -131,7 +132,7 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
                     builder: (context, state, _) {
                       if (state.voucher != null) {
                         return Text(
-                          state.voucher!.voucher.formattedDiscount,
+                          formattedPrice(state.voucher!.voucher.discount),
                           style: regularBody8,
                         );
                       }
@@ -152,7 +153,7 @@ class _DetailPaymentTotalState extends State<DetailPaymentTotal> {
                   Consumer<CheckoutViewModel>(
                     builder: (context, state, _) {
                       return Text(
-                        state.formattedTotalProductDiscount,
+                        formattedPrice(state.totalProductDiscount),
                         style: regularBody8,
                       );
                     }

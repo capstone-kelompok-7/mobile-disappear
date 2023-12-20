@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:intl/intl.dart';
-
 CheckoutVoucher checkoutVoucherFromMap(String str) => CheckoutVoucher.fromMap(json.decode(str));
 
 String checkoutVoucherToMap(CheckoutVoucher data) => json.encode(data.toMap());
@@ -60,21 +58,6 @@ class Voucher {
     required this.minPurchase,
     required this.status,
   });
-
-  String get formattedEndDate {
-    final f = DateFormat('d MMM yy');
-    return f.format(endDate);
-  }
-
-  String get formattedMinPurchase {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ');
-    return f.format(minPurchase);
-  }
-
-  String get formattedDiscount {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ');
-    return f.format(discount);
-  }
 
   factory Voucher.fromMap(Map < String, dynamic > json) => Voucher(
     name: json["name"],

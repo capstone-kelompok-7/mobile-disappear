@@ -31,16 +31,6 @@ class CreatedOrder {
   DateTime createdAt;
   List < OrderDetail > orderDetails;
 
-  String get formattedTotalAmountPaid {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(totalAmountPaid);
-  }
-
-  String get formattedCreatedAt {
-    final f = DateFormat('d-M-yyyy | HH.mm a');
-    return f.format(createdAt);
-  }
-
   String get formattedPayUntil {
     final f = DateFormat('HH.mm a');
     return f.format(createdAt.add(const Duration(hours: 1, minutes: 20)));

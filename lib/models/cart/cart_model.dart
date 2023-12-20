@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:intl/intl.dart';
-
 Cart cartFromMap(String str) => Cart.fromMap(json.decode(str));
 
 String cartToMap(Cart data) => json.encode(data.toMap());
@@ -46,11 +44,6 @@ class CartItem {
   int quantity;
   int totalPrice;
   CartProduct product;
-
-  String get formattedPrice {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(price);
-  }
 
   CartItem({
     required this.cartItemId,

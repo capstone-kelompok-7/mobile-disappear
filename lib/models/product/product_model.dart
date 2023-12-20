@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:intl/intl.dart';
-
 Product productFromMap(String str) => Product.fromMap(json.decode(str));
 
 String productToMap(Product data) => json.encode(data.toMap());
@@ -25,11 +23,6 @@ class Product {
   List < Category >? categories;
   List < ImageUrl >? imageUrl;
   List < Review >? reviews;
-
-  String get formattedPrice {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-    return f.format(price);
-  }
 
   ImageUrl? get thumbnail {
     if (imageUrl == null) {
