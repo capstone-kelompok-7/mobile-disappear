@@ -31,12 +31,7 @@ class _ChallengeComponentsState extends State<ChallengeComponents> {
         _goToDetailChallengeScreen(widget.challengesModel.id);
       },
       child: Container(
-        margin: const EdgeInsets.only(
-          right: 25,
-          left: 25,
-          bottom: 20,
-        ),
-        width: 340,
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         height: 171,
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -73,10 +68,11 @@ class _ChallengeComponentsState extends State<ChallengeComponents> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        'Tantangan berlaku sampai ${formattedDate(widget.challengesModel.endDate, format: 'd-MM-yyyy')}',
-                        style: regularBody7,
-                        overflow: TextOverflow.ellipsis,
+                      FittedBox(
+                        child: Text(
+                          'Tantangan berlaku sampai ${formattedDate(widget.challengesModel.endDate, format: 'd-MM-yyyy')}',
+                          style: regularBody7,
+                        ),
                       ),
                     ],
                   ),

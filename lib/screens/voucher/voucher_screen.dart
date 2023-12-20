@@ -1,3 +1,4 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/voucher_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
@@ -6,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VoucherScreen extends StatefulWidget {
-  final VoucherModel voucherModel;
-  // static const String routePath = '/voucher-screen';
+  final Voucher voucherModel;
+  
   const VoucherScreen({super.key, required this.voucherModel});
 
   @override
@@ -58,7 +59,7 @@ class _VoucherScreenState extends State<VoucherScreen> {
                       )
                     ),
                     child: Text(
-                      widget.voucherModel.category!,
+                      widget.voucherModel.voucher.category,
                       style: semiBoldBody8.copyWith(color: whiteColor)
                     ),
                   )
@@ -73,20 +74,20 @@ class _VoucherScreenState extends State<VoucherScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.voucherModel.name!,
+                    widget.voucherModel.voucher.name,
                     style: mediumBody7,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Min. Blj ${widget.voucherModel.formattedMinPurchase}',
+                    'Min. Blj ${formattedPrice(widget.voucherModel.voucher.minPurchase)}',
                     style: mediumBody8,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Berakhir dalam : ${widget.voucherModel.formattedEndDate}',
+                    'Berakhir dalam : ${formattedDate(widget.voucherModel.voucher.endDate)}',
                     style: regularBody8,
                   ),
                   ElevatedButton(

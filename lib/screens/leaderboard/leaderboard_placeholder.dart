@@ -41,6 +41,8 @@ class LeaderboardPlaceholder extends StatelessWidget {
                 ],
               ),
 
+              const SizedBox(width: 10,),
+
               //JUARA 1//
               Column(
                 children: [
@@ -54,9 +56,7 @@ class LeaderboardPlaceholder extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     height: 150,
                     width: 70,
@@ -68,6 +68,8 @@ class LeaderboardPlaceholder extends StatelessWidget {
                   ),
                 ],
               ),
+
+              const SizedBox(width: 10,),
 
               //JUARA 3//
               Column(
@@ -82,9 +84,7 @@ class LeaderboardPlaceholder extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     height: 90,
                     width: 70,
@@ -139,7 +139,6 @@ class LeaderboardPlaceholder extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text('', style: semiBoldBody5),
                         Expanded(
                             child: Text('',
                                 style: mediumBody8.copyWith(color: neutral20))),

@@ -1,47 +1,85 @@
-import 'package:intl/intl.dart';
+// To parse this JSON data, do
+//
+//     final voucher = voucherFromMap(jsonString);
 
-class VoucherModel {
-  late final int id;
-  final String? name;
-  final String? code;
-  final String? category;
-  final String? description;
-  final int? discount;
-  final String? startDate;
-  final String endDate;
-  final int? minPurchase;
-  final int? stock;
+import 'dart:convert';
 
-  String get formattedEndDate {
-    final f = DateFormat('d MMM yy');
-    return f.format(DateTime.parse(endDate));
-  }
+Voucher voucherFromMap(String str) => Voucher.fromMap(json.decode(str));
 
-  String get formattedMinPurchase {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ');
-    return f.format(minPurchase);
-  }
+String voucherToMap(Voucher data) => json.encode(data.toMap());
 
-  String get formattedDiscount {
-    var f = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ');
-    return f.format(discount);
-  }
+class Voucher {
+  int id;
+  int userId;
+  int voucherId;
+  VoucherClass voucher;
 
-  VoucherModel({
+  Voucher({
     required this.id,
-    this.name,
-    this.code,
-    this.category,
-    this.description,
-    this.discount,
-    this.startDate,
-    required this.endDate,
-    this.minPurchase,
-    this.stock,
+    required this.userId,
+    required this.voucherId,
+    required this.voucher,
   });
 
-  String get formattedDate {
-    final f = DateFormat('yyyy-MM-d');
-    return f.format(DateTime.parse(endDate));
-  }
+  factory Voucher.fromMap(Map < String, dynamic > json) => Voucher(
+    id: json["id"],
+    userId: json["user_id"],
+    voucherId: json["voucher_id"],
+    voucher: VoucherClass.fromMap(json["voucher"]),
+  );
+
+  Map < String, dynamic > toMap() => {
+    "id": id,
+    "user_id": userId,
+    "voucher_id": voucherId,
+    "voucher": voucher.toMap(),
+  };
+}
+
+class VoucherClass {
+  String name;
+  String code;
+  String category;
+  String description;
+  int discount;
+  DateTime startDate;
+  DateTime endDate;
+  int minPurchase;
+  String status;
+
+  VoucherClass({
+    required this.name,
+    required this.code,
+    required this.category,
+    required this.description,
+    required this.discount,
+    required this.startDate,
+    required this.endDate,
+    required this.minPurchase,
+    required this.status,
+  });
+
+  factory VoucherClass.fromMap(Map < String, dynamic > json) => VoucherClass(
+    name: json["name"],
+    code: json["code"],
+    category: json["category"],
+    description: json["description"],
+    discount: json["discount"],
+    startDate: DateTime.parse(json["start_date"]),
+    endDate: DateTime.parse(json["end_date"]),
+    minPurchase: json["min_purchase"],
+    status: json["status"],
+  );
+
+  Map < String, dynamic > toMap() => {
+    "name": name,
+    "code": code,
+    "category": category,
+    "description": description,
+    "discount": discount,
+    "start_date": startDate.toIso8601String(),
+    "end_date": endDate.toIso8601String(),
+    "min_purchase": minPurchase,
+    "status": status,
+  };
 }

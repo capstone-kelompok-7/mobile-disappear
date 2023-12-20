@@ -1,10 +1,11 @@
+import 'package:disappear/helper.dart';
 import 'package:disappear/models/voucher_model.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class UserVoucherComponents extends StatelessWidget {
-  final VoucherModel voucherModel;
+  final Voucher voucherModel;
 
   const UserVoucherComponents({super.key, required this.voucherModel});
 
@@ -50,7 +51,7 @@ class UserVoucherComponents extends StatelessWidget {
                     )
                   ),
                   child: Text(
-                    voucherModel.category!,
+                    voucherModel.voucher.category,
                     style: semiBoldBody8.copyWith(color: whiteColor)
                   ),
                 )
@@ -65,20 +66,20 @@ class UserVoucherComponents extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  voucherModel.name!,
+                  voucherModel.voucher.name,
                   style: mediumBody7,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  'Min. Blj ${voucherModel.formattedMinPurchase}',
+                  'Min. Blj ${formattedPrice(voucherModel.voucher.minPurchase)}',
                   style: mediumBody8,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  'Berakhir dalam : ${voucherModel.formattedEndDate}',
+                  'Berakhir dalam : ${formattedDate(voucherModel.voucher.endDate)}',
                   style: regularBody8,
                 ),
               ],

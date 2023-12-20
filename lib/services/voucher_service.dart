@@ -3,55 +3,33 @@ import 'package:disappear/models/voucher_model.dart';
 import 'package:disappear/services/api.dart';
 
 class VoucherService {
-  Future<List<VoucherModel>> fetchVoucherToClaim() async {
+  Future<List<Voucher>> fetchVoucherToClaim() async {
     try {
       final dio = createDio();
 
       Response response = await dio.get('/vouchers/to-claims');
 
-      List<VoucherModel> vouchersToClaim = response.data['data']
-          .map<VoucherModel>(
-            (data) => VoucherModel(
-              id: data['id'] as int,
-              name: data['name'] as String,
-              code: data['code'] as String,
-              category: data['category'] as String,
-              description: data['description'] as String,
-              discount: data['discount'] as int,
-              startDate: data['start_date'] as String,
-              endDate: data['end-date'] as String,
-              minPurchase: data['min_purchase'] as int,
-              stock: data['stock'] as int,
-            ),
-          )
+      if (response.data['data'] != null) {
+        return response.data['data']
+          .map<Voucher>((data) => Voucher.fromMap(data))
           .toList();
+      }
 
-      return vouchersToClaim;
+      return [];
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<List<VoucherModel>> fetchUserVoucher() async {
+  Future<List<Voucher>> fetchUserVoucher() async {
     try {
       final dio = createDio();
 
       Response response = await dio.get('/vouchers/users');
 
-      List<VoucherModel> vouchersUser = (response.data['data'] ?? [])
-          .map<VoucherModel>((data) => VoucherModel(
-                id: data['id'] as int,
-                name: data['voucher']['name'] as String?,
-                code: data['voucher']['code'] as String?,
-                category: data['voucher']['category'] as String?,
-                description: data['voucher']['description'] as String?,
-                discount: data['voucher']['discount'] as int?,
-                startDate: data['voucher']['start_date'] as String?,
-                endDate: data['voucher']['end_date'] as String,
-                minPurchase: data['voucher']['min_purchase'] as int?,
-                // Additional fields if needed
-              ))
-          .toList();
+      List<Voucher> vouchersUser = (response.data['data'] ?? [])
+        .map<Voucher>((data) => Voucher.fromMap(data))
+        .toList();
 
       return vouchersUser;
     } catch (e) {

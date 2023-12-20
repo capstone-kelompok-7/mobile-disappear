@@ -6,13 +6,19 @@ import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/services/challenge_service.dart';
 import 'package:disappear/services/leaderboard_service.dart';
 import 'package:disappear/services/voucher_service.dart';
-import 'package:disappear/themes/color_scheme.dart';
-import 'package:disappear/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeMainViewModel extends ChangeNotifier {
   int? challengeId;
-  int selectedTabChallenge = 1;
+
+  int _selectedTabChallenge = 1;
+
+  set selectedTabChallenge(int selectedTabChallenge) {
+    _selectedTabChallenge = selectedTabChallenge;
+    notifyListeners();
+  }
+
+  int get selectedTabChallenge => _selectedTabChallenge;
 
   int? _isLoadingVoucherClaim;
 
@@ -38,103 +44,6 @@ class ChallengeMainViewModel extends ChangeNotifier {
   }
 
   double? get fileSizeInMb => _fileSizeInMb;
-
-  Widget topButton() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 5,
-        vertical: 5,
-      ),
-      decoration: BoxDecoration(
-        color: primary40,
-        borderRadius: BorderRadius.circular(4)
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          GestureDetector(
-            onTap: () {
-              selectedTabChallenge = 1;
-              notifyListeners();
-            },
-            child: Container(
-              width: 72,
-              height: 20,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 6,
-                vertical: 2,
-              ),
-              decoration: selectedTabChallenge == 1
-                  ? BoxDecoration(
-                      color: secondary00,
-                      borderRadius: BorderRadius.circular(4)
-                    )
-                  : null,
-              child: Text('Tantangan',
-                  style: selectedTabChallenge == 1
-                      ? semiBoldBody8
-                      : semiBoldBody8.copyWith(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          GestureDetector(
-            onTap: () {
-              selectedTabChallenge = 2;
-              notifyListeners();
-            },
-            child: Container(
-              width: 85,
-              height: 20,
-              padding: const EdgeInsets.only(
-                left: 8,
-                top: 2,
-                bottom: 2,
-              ),
-              decoration: selectedTabChallenge == 2
-                  ? BoxDecoration(
-                      color: secondary00,
-                      borderRadius: BorderRadius.circular(4)
-                    )
-                  : null,
-              child: Text('Leaderboard',
-                  style: selectedTabChallenge == 2
-                      ? semiBoldBody8
-                      : semiBoldBody8.copyWith(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          GestureDetector(
-            onTap: () {
-              selectedTabChallenge = 3;
-              notifyListeners();
-            },
-            child: Container(
-              width: 65,
-              height: 20,
-              padding: const EdgeInsets.only(left: 10, top: 2),
-              decoration: selectedTabChallenge == 3
-                  ? BoxDecoration(
-                      color: secondary00,
-                      borderRadius: BorderRadius.circular(4)
-                    )
-                  : null,
-              child: Text(
-                'Kuponku',
-                style: selectedTabChallenge == 3
-                    ? semiBoldBody8
-                    : semiBoldBody8.copyWith(color: Colors.white),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
 //Challenge Viewmodel FEATURE//
   Future<List<ChallengesModel>> fetchAllChallenge() async {
@@ -177,55 +86,10 @@ class ChallengeMainViewModel extends ChangeNotifier {
   }
 
 //LEADERBOARD TAB FEATURE//
-  Future<List<LeaderboardModel>> fetchLeaderboard() async {
+  Future<List<Leaderboard>> fetchLeaderboard() async {
     try {
       final leaderboardService = LeaderboardService();
       return await leaderboardService.fetchLeaderboard();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<LeaderboardModel?> fetchFirstPosition() async {
-    try {
-      final fetchFirstPlace = LeaderboardService();
-      return await fetchFirstPlace.fetchFirstLeaderboard();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<LeaderboardModel?> fetchSecondPosition() async {
-    try {
-      final fetchSecondPlace = LeaderboardService();
-      return await fetchSecondPlace.fetchSecondLeaderboard();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<LeaderboardModel?> fetchThirdPosition() async {
-    try {
-      final fetchThirdPlace = LeaderboardService();
-      return await fetchThirdPlace.fetchThirdLeaderboard();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<LeaderboardModel?> fetchFourthPosition() async {
-    try {
-      final fetchFourthPlace = LeaderboardService();
-      return await fetchFourthPlace.fetchFourthLeaderboard();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<LeaderboardModel?> fetchFifthPosition() async {
-    try {
-      final fetchFifthPlace = LeaderboardService();
-      return await fetchFifthPlace.fetchFifthLeaderboard();
     } catch (e) {
       rethrow;
     }
@@ -236,7 +100,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
   late Future userVoucherToClaimFuture;
 
   //VOUCHERS TAB FEATURE//
-  Future<List<VoucherModel>> fetchVouchersToClaim() async {
+  Future<List<Voucher>> fetchVouchersToClaim() async {
     try {
       final voucherService = VoucherService();
       return await voucherService.fetchVoucherToClaim();
@@ -245,7 +109,7 @@ class ChallengeMainViewModel extends ChangeNotifier {
     }
   }
 
-  Future<List<VoucherModel>> fetchUserVoucher() async {
+  Future<List<Voucher>> fetchUserVoucher() async {
     try {
       final voucherService = VoucherService();
       return await voucherService.fetchUserVoucher();
