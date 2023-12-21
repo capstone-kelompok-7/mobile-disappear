@@ -3,7 +3,9 @@ import 'package:disappear/main.dart';
 import 'package:disappear/screens/components/flushbar.dart';
 import 'package:disappear/screens/main_screen.dart';
 import 'package:disappear/services/auth_service.dart';
+import 'package:disappear/view_models/home/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginViewModel extends ChangeNotifier {
@@ -75,6 +77,11 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void _goToHomeScreen() {
+    final homeViewModel = Provider.of<HomeViewModel>(navigatorKey.currentContext!, listen: false);
+
+    homeViewModel.getCarouselsCategoriesAndProducts();
+    homeViewModel.getChallengesAndArticles();
+    
     Navigator.pushNamedAndRemoveUntil(navigatorKey.currentContext!, MainScreen.routePath, (route) => false);
   }
 
