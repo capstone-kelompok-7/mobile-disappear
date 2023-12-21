@@ -51,17 +51,24 @@ class _OrderButtonState extends State<OrderButton> {
             return const SizedBox();
           } else if (widget.orderDetail.orderStatus == 'Pengiriman') {
             return ElevatedButton(
-              onPressed: () {
-                orderViewModel.acceptOrder();
-              },
+              onPressed: orderViewModel.isAcceptingOrder ? null : orderViewModel.acceptOrder,
               style: ElevatedButton.styleFrom(
                   backgroundColor: primary30,
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   minimumSize: const Size(double.infinity, 45)),
-              child: const Text(
-                'Pesanan Diterima',
-                style: semiBoldBody7,
-              ),
+              child: orderViewModel.isAcceptingOrder
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: whiteColor,
+                      strokeWidth: 3,
+                    ),
+                  )
+                : const Text(
+                  'Pesanan Diterima',
+                  style: semiBoldBody7,
+                ),
             );
           } else if (widget.orderDetail.orderStatus == 'Selesai') {
             return Row(

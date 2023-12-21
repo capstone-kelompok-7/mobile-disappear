@@ -43,7 +43,18 @@ class OrderViewModel extends ChangeNotifier {
     orderDetailFuture = orderDetailService.getDetailsOrderById(orderId!);
   }
 
+  bool _isAcceptingOrder = false;
+
+  set isAcceptingOrder(bool isAcceptingOrder) {
+    _isAcceptingOrder = isAcceptingOrder;
+    notifyListeners();
+  }
+
+  bool get isAcceptingOrder => _isAcceptingOrder;
+
   Future<void> acceptOrder() async {
+    isAcceptingOrder = true;
+
     try {
       final acceptOrderService = OrderService();
 
@@ -60,6 +71,8 @@ class OrderViewModel extends ChangeNotifier {
       } else {
         showFailedFlushbar(message: 'Terjadi kesalahan pada server.');
       }
+    } finally {
+      isAcceptingOrder = false;
     }
   }
 }
