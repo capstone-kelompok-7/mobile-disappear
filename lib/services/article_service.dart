@@ -1,63 +1,36 @@
 import 'package:dio/dio.dart';
-import 'package:disappear/models/article/bookmarked_article_model.dart';
+import 'package:disappear/models/article/bookmarked_article_model.dart' as bookmarked;
 import 'package:disappear/models/article_model.dart';
 import 'package:disappear/services/api.dart';
 import 'package:flutter/material.dart';
 
 class ArticleService {
-  Future<List<ArticleModel>> getLatestArticles() async {
+  Future<List<Article>> getLatestArticles() async {
     final dio = createDio();
 
     final Response response = await dio.get('/articles/latest-article');
 
-    return response.data['data'].map<ArticleModel>((data) {
-      return ArticleModel(
-          id: data['id'] as int,
-          title: data['title'] as String,
-          photo: data['photo'] as String,
-          content: data['content'] as String,
-          author: data['author'] as String,
-          date: data['date'] as String,
-          views: data['views'] as int);
-    }).toList();
+    return response.data['data'].map<Article>((data) => Article.fromMap(data)).toList();
   }
 
-  Future<List<ArticleModel>> getOtherArticles() async {
+  Future<List<Article>> getOtherArticles() async {
     final dio = createDio();
 
     final Response response = await dio.get('/articles/other-article');
-
-    return response.data['data'].map<ArticleModel>((data) {
-      return ArticleModel(
-          id: data['id'] as int,
-          title: data['title'] as String,
-          photo: data['photo'] as String,
-          content: data['content'] as String,
-          author: data['author'] as String,
-          date: data['date'] as String,
-          views: data['views'] as int);
-    }).toList();
+    
+    return response.data['data'].map<Article>((data) => Article.fromMap(data)).toList();
   }
 
-  Future<ArticleModel> getArticleById(int id) async {
+  Future<Article> getArticleById(int id) async {
     final dio = createDio();
 
     final Response response = await dio.get('/articles/$id');
     final data = response.data['data'];
 
-    final article = ArticleModel(
-        id: data['id'] as int,
-        title: data['title'] as String,
-        photo: data['photo'] as String,
-        content: data['content'] as String,
-        author: data['author'] as String,
-        date: data['date'] as String,
-        views: data['views'] as int);
-
-    return article;
+    return Article.fromMap(data);
   }
 
-  Future<List<ArticleModel>> getArticle({
+  Future<List<Article>> getArticle({
     required int page,
     int sortOptions = 0,
   }) async {
@@ -77,19 +50,7 @@ class ArticleService {
         await dio.get('/articles/preferences?page=$page&filter=$filter');
 
     if (response.data['data'] != null) {
-      return response.data['data'].map<ArticleModel>((data) {
-        final article = ArticleModel(
-          id: data['id'] as int,
-          title: data['title'] as String,
-          photo: data['photo'] as String,
-          content: data['content'] as String,
-          author: data['author'] as String,
-          date: data['date'] as String,
-          views: data['views'] as int,
-        );
-
-        return article;
-      }).toList();
+      return response.data['data'].map<Article>((data) => Article.fromMap(data)).toList();
     }
 
     return [];
@@ -107,12 +68,12 @@ class ArticleService {
     return [];
   }
 
-  Future<List<BookmarkedArticle>> getBookmarkedArticles() async {
+  Future<List<bookmarked.BookmarkedArticle>> getBookmarkedArticles() async {
     final dio = createDio();
 
     final Response response = await dio.get('/articles/bookmark');
 
-    return response.data['data'].map<BookmarkedArticle>((data) => BookmarkedArticle.fromMap(data)).toList();
+    return response.data['data'].map<bookmarked.BookmarkedArticle>((data) => bookmarked.BookmarkedArticle.fromMap(data)).toList();
   }
 
   Future<void> saveBookmark(int id) async {

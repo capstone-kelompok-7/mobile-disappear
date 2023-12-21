@@ -21,14 +21,14 @@ class GetArticleViewModel extends ChangeNotifier {
 
   bool get isSearching => _isSearching;
 
-  List<ArticleModel> _articles = [];
+  List<Article> _articles = [];
 
-  set articles(List<ArticleModel> articles) {
+  set articles(List<Article> articles) {
     _articles = articles;
     notifyListeners();
   }
 
-  List<ArticleModel> get articles => _articles;
+  List<Article> get articles => _articles;
 
   int _page = 1;
 

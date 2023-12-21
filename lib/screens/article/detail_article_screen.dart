@@ -2,6 +2,7 @@
 
 import 'package:disappear/helper.dart';
 import 'package:disappear/models/article_model.dart';
+import 'package:disappear/screens/article/placeholders/other_articles_placeholder.dart';
 import 'package:disappear/themes/color_scheme.dart';
 import 'package:disappear/themes/text_theme.dart';
 import 'package:disappear/view_models/article/detail_articles_view_model.dart';
@@ -22,9 +23,9 @@ class DetailArticleScreen extends StatefulWidget {
 class _DetailArticleScreenState extends State<DetailArticleScreen> {
   late final Future articleFuture = _getArticle();
 
-  late final Future<List<ArticleModel>> otherArticleFuture = _getOtherArticles();
+  late final Future<List<Article>> otherArticleFuture = _getOtherArticles();
 
-  Future<ArticleModel?> _getArticle() async {
+  Future<Article?> _getArticle() async {
     final articleViewModel =
         Provider.of<DetailArticlesViewModel>(context, listen: false);
 
@@ -33,7 +34,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
     return article;
   }
 
-  Future<List<ArticleModel>> _getOtherArticles() async {
+  Future<List<Article>> _getOtherArticles() async {
     final articleViewModel =
         Provider.of<DetailArticlesViewModel>(context, listen: false);
 
@@ -208,77 +209,85 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                   ),
                 ),
                 
-                //Artikel Lainnya
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'Artikel Lainnya',
-                    style: semiBoldBody6.copyWith(color: primary40),
-                  ),
-                ),
                 FutureBuilder(
                   future: otherArticleFuture,
                   builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const OtherArticlesPlaceholder();
+                    }
+
                     if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                      return SizedBox(
-                        height: 175,
-                        child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                          shrinkWrap: true,
-                          itemCount: 3,
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) => const SizedBox(width: 20,),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () => _goToDetailArticleScreen(snapshot.data![index].id),
-                              child: SizedBox(
-                                width: 250,
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                        child: Image.network(
-                                          snapshot.data![index].photo,
-                                          height: 175,
-                                          width: 250,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      left: 0,
-                                      right: 0,
-                                      child: Container(
-                                        height: 61.0,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.5),
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(6.0),
-                                            bottomRight: Radius.circular(6.0),
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              'Artikel Lainnya',
+                              style: semiBoldBody6.copyWith(color: primary40),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 175,
+                            child: ListView.separated(
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                              shrinkWrap: true,
+                              itemCount: 3,
+                              scrollDirection: Axis.horizontal,
+                              separatorBuilder: (context, index) => const SizedBox(width: 20,),
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () => _goToDetailArticleScreen(snapshot.data![index].id),
+                                  child: SizedBox(
+                                    width: 250,
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            child: Image.network(
+                                              snapshot.data![index].photo,
+                                              height: 175,
+                                              width: 250,
+                                              fit: BoxFit.fill,
+                                            ),
                                           ),
                                         ),
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          snapshot.data![index].title,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
+                                        Positioned(
+                                          bottom: 0,
+                                          left: 0,
+                                          right: 0,
+                                          child: Container(
+                                            height: 61.0,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black.withOpacity(0.5),
+                                              borderRadius: const BorderRadius.only(
+                                                bottomLeft: Radius.circular(6.0),
+                                                bottomRight: Radius.circular(6.0),
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              snapshot.data![index].title,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       );
                     }
 

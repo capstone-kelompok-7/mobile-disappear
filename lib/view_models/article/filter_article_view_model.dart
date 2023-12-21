@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 class ArticleFilterViewModel extends ChangeNotifier {
   final ArticleService _articleService = ArticleService();
 
-  List<ArticleModel> _articles = [];
+  List<Article> _articles = [];
 
   int _currentPage = 1;
 
   int _sortOption = 0;
 
   // Getter untuk mendapatkan daftar artikel
-  List<ArticleModel> get articles => _articles;
+  List<Article> get articles => _articles;
 
   // Getter untuk mendapatkan halaman saat ini
   int get currentPage => _currentPage;
@@ -47,7 +47,7 @@ class ArticleFilterViewModel extends ChangeNotifier {
 
   // Fungsi untuk mendapatkan artikel
   Future<void> fetchArticles() async {
-    List<ArticleModel> newArticles = await _articleService.getArticle(
+    List<Article> newArticles = await _articleService.getArticle(
       page: _currentPage,
       sortOptions: _sortOption,
     );

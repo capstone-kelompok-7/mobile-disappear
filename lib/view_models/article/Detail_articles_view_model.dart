@@ -5,7 +5,7 @@ import 'package:disappear/services/article_service.dart';
 import 'package:flutter/material.dart';
 
 class DetailArticlesViewModel extends ChangeNotifier {
-  Future<List<ArticleModel>> getDetailArticles() async {
+  Future<List<Article>> getDetailArticles() async {
     final articleService = ArticleService();
     return await articleService.getLatestArticles();
   }
@@ -18,7 +18,7 @@ class DetailArticlesViewModel extends ChangeNotifier {
 
   int? get articleId => _articleId;
 
-  Future<ArticleModel?> getArticleById() async {
+  Future<Article?> getArticleById() async {
     if (articleId != null) {
       final articleService = ArticleService();
       return await articleService.getArticleById(articleId!);
@@ -27,7 +27,7 @@ class DetailArticlesViewModel extends ChangeNotifier {
     return null;
   }
   
-  Future<List<ArticleModel>> getOtherArticles() async {
+  Future<List<Article>> getOtherArticles() async {
     final articleService = ArticleService();
     return await articleService.getOtherArticles();
   }

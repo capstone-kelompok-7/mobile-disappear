@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ListArticleItem extends StatefulWidget {
-  final ArticleModel article;
+  final Article article;
 
   const ListArticleItem({super.key, required this.article});
 

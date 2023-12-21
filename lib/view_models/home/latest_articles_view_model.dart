@@ -3,7 +3,7 @@ import 'package:disappear/services/article_service.dart';
 import 'package:flutter/material.dart';
 
 class LatestArticlesViewModel extends ChangeNotifier {
-  Future<List<ArticleModel>> getLatestArticles() async {
+  Future<List<Article>> getLatestArticles() async {
     final articleService = ArticleService();
     return await articleService.getLatestArticles();
   }
